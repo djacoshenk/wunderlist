@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  font-size: 16px;
+}
+
+html {
+  background-color: #fff;
+  color: #333;
+  font-family: 'Lato', sans-serif;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+@import 'header';
+
+@import 'search';
+
+@import 'card';
