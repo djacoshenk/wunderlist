@@ -10,9 +10,9 @@ import '../styles/styles.scss';
 export default function App() {
   const [places, setPlaces] = useState([]);
 
-  async function searchPlaces(location) {
+  async function searchPlaces(term, location) {
     const res = await axios.get(
-      `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}`,
+      `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
       {
         headers: {
           Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,

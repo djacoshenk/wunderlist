@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
 
+const defaultParams = {
+  term: '',
+  location: '',
+};
+
 export default function Search({ searchPlaces }) {
-  const [text, setText] = useState('');
+  const [params, setParams] = useState(defaultParams);
 
   function handleChange(e) {
-    setText(e.target.value);
+    let { name, value } = e.target;
+
+    setParams((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    searchPlaces(text);
+    let { term, location } = params;
 
-    setText('');
+    searchPlaces(term, location);
+
+    setParams((prevState) => ({
+      ...prevState,
+      ...defaultParams,
+    }));
   }
 
   return (
@@ -20,9 +35,16 @@ export default function Search({ searchPlaces }) {
       <form className='form' onSubmit={handleSubmit}>
         <input
           type='text'
-          name='text'
-          placeholder='e.g. los angeles'
-          value={text}
+          name='term'
+          placeholder='sushi, pizza, cocktail bar...'
+          value={params.term}
+          onChange={handleChange}
+        />
+        <input
+          type='text'
+          name='location'
+          placeholder='city'
+          value={params.location}
           onChange={handleChange}
         />
         <button>
