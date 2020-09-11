@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import Marker from './Marker';
@@ -11,15 +11,12 @@ const defaultCenter = {
 const defaultZoom = 11;
 
 export default function Map({ places }) {
-  const [center, setCenter] = useState(defaultCenter);
-  const [zoom, setZoom] = useState(defaultZoom);
-
   return (
     <div style={{ height: '84vh', width: '45%' }} className='map-container'>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}
-        defaultCenter={center}
-        defaultZoom={zoom}
+        defaultCenter={defaultCenter}
+        defaultZoom={defaultZoom}
       >
         {places.map((place) => {
           return (
