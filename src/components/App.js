@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
+
 import Header from './Header';
 import Search from './Search';
+import Map from './Map';
 import CardList from './CardList';
 
 import axios from 'axios';
@@ -28,10 +30,13 @@ export default function App() {
   }
 
   return (
-    <div className='container'>
+    <Fragment>
       <Header />
-      <Search searchPlaces={searchPlaces} />
-      <CardList places={places} />
-    </div>
+      <Search searchPlaces={searchPlaces} places={places} />
+      <div className='main-container'>
+        <Map places={places} />
+        <CardList places={places} />
+      </div>
+    </Fragment>
   );
 }

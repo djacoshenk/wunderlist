@@ -36,14 +36,14 @@ export default function Search({ searchPlaces }) {
         <input
           type='text'
           name='term'
-          placeholder='sushi, pizza, cocktail bar...'
+          placeholder='what'
           value={params.term}
           onChange={handleChange}
         />
         <input
           type='text'
           name='location'
-          placeholder='city'
+          placeholder='where'
           value={params.location}
           onChange={handleChange}
         />

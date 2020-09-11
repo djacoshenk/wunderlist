@@ -1,5 +1,12 @@
 .header-container {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #38b2ac;
   padding: 1rem 0;
+  height: 8vh;
+
+  img {
+    margin-right: 0.2rem;
+  }
 }

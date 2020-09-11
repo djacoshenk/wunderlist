@@ -18,14 +18,20 @@ html {
   font-family: 'Lato', sans-serif;
 }
 
-.container {
-  height: 100%;
+.main-container {
+  display: flex;
+  flex-direction: row;
   width: 100%;
+  height: 84vh;
 }
 
 @import 'header';
 
 @import 'search';
+
+@import 'map';
+
+@import 'marker';
 
 @import 'card';
 

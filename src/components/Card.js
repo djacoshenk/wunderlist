@@ -3,12 +3,14 @@ import Stars from './Stars';
 
 export default function Card({
   image,
+  rank,
   title,
   rating,
   review_count,
   price,
   phone,
   address,
+  tags,
 }) {
   return (
     <div className='card-container'>
@@ -17,7 +19,9 @@ export default function Card({
       </div>
       <div className='content-container'>
         <div className='title-row'>
-          <h3>{title}</h3>
+          <h3>
+            {rank}. {title}
+          </h3>
         </div>
         <div className='ratings-row'>
           <div className='stars-container'>
@@ -26,7 +30,9 @@ export default function Card({
           <p>{review_count}</p>
         </div>
         <div className='price-category-row'>
-          <p>{price}</p>
+          <p>
+            {price != null ? `${price} \u2022` : null} {tags[0].title}
+          </p>
         </div>
         <div className='address-row'>
           <p>{phone}</p>

@@ -7,12 +7,14 @@ export default function Stars({ rating }) {
 
   const starsContainer = [];
 
-  for (let i = 0; i < filledStars; i++) {
-    const fullStar = React.createElement('i', {
-      className: 'fas fa-star',
-    });
+  if (filledStars > 0) {
+    for (let i = 0; i < filledStars; i++) {
+      const fullStar = React.createElement('i', {
+        className: 'fas fa-star',
+      });
 
-    starsContainer.push(fullStar);
+      starsContainer.push(fullStar);
+    }
   }
 
   if (halfStars > 0) {
@@ -23,12 +25,14 @@ export default function Stars({ rating }) {
     starsContainer.push(halfStar);
   }
 
-  for (let i = 0; i < emptyStars; i++) {
-    const emptyStar = React.createElement('i', {
-      className: 'far fa-star',
-    });
+  if (emptyStars > 0) {
+    for (let i = 0; i < emptyStars; i++) {
+      const emptyStar = React.createElement('i', {
+        className: 'far fa-star',
+      });
 
-    starsContainer.push(emptyStar);
+      starsContainer.push(emptyStar);
+    }
   }
 
   return <Fragment>{starsContainer}</Fragment>;
