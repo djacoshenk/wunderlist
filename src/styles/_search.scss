@@ -3,43 +3,44 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 8vh;
   width: 100%;
 
   .form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: fit-content;
+    width: 100%;
     border-radius: 5px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
     input {
       width: 250px;
       padding: 0.5rem;
       background-color: #f7fafc;
       border: 0;
-      outline: none;
+      border-radius: 5px;
       height: 100%;
-    }
-
-    input[name='term'] {
-      border-top-left-radius: 5px;
-      border-bottom-left-radius: 5px;
-      border-right: 1px solid #edf2f7;
+      display: block;
+      margin: 0.5rem 0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
 
     button {
       padding: 0.5rem;
       border: 0;
       background-color: #667eea;
-      outline: none;
       width: 70px;
       color: #fff;
-      border-top-right-radius: 5px;
-      border-bottom-right-radius: 5px;
+      border-radius: 5px;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+      &:hover {
+        background-color: darken(#667eea, 5%);
+      }
     }
   }
 }

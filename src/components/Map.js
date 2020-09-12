@@ -3,20 +3,13 @@ import GoogleMapReact from 'google-map-react';
 
 import Marker from './Marker';
 
-const defaultCenter = {
-  lat: 34.0407,
-  lng: -118.2468,
-};
-
-const defaultZoom = 11;
-
-export default function Map({ places }) {
+export default function Map({ places, center, zoom }) {
   return (
-    <div style={{ height: '84vh', width: '45%' }} className='map-container'>
+    <div className='map-container'>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}
-        defaultCenter={defaultCenter}
-        defaultZoom={defaultZoom}
+        center={center}
+        zoom={zoom}
       >
         {places.map((place) => {
           return (

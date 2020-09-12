@@ -15,7 +15,7 @@ export default function Card({
   return (
     <div className='card-container'>
       <div className='image-container'>
-        <img src={image} alt='' height='200px' width='225px' />
+        <img src={image} alt='' />
       </div>
       <div className='content-container'>
         <div className='title-row'>
