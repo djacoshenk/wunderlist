@@ -38,29 +38,29 @@ export default function App() {
     setPlaces(res.data.businesses);
   }
 
-  async function fetchMorePlaces({ term, location }) {
-    const res = await axios.get(
-      `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
-        },
-        params: {
-          sort_by: 'review_count',
-          limit: limit,
-          offset: offset,
-        },
-      }
-    );
+  // async function fetchMorePlaces({ term, location }) {
+  //   const res = await axios.get(
+  //     `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
+  //       },
+  //       params: {
+  //         sort_by: 'review_count',
+  //         limit: limit,
+  //         offset: offset,
+  //       },
+  //     }
+  //   );
 
-    setOffset((prevState) => {
-      return prevState + limit;
-    });
+  //   setOffset((prevState) => {
+  //     return prevState + limit;
+  //   });
 
-    setPlaces((prevState) => {
-      return prevState.concat(res.data.businesses);
-    });
-  }
+  //   setPlaces((prevState) => {
+  //     return prevState.concat(res.data.businesses);
+  //   });
+  // }
 
   useEffect(() => {
     if (places.length === 0) {
