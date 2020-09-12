@@ -20,6 +20,7 @@ export default function CardList({ places }) {
           />
         );
       })}
+      <div></div>
     </div>
   );
 }
