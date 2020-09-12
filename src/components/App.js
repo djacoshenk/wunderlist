@@ -15,7 +15,7 @@ export default function App() {
     lat: 34.0407,
     lng: -118.2468,
   });
-  const [offset, setOffset] = useState(10);
+  // const [offset, setOffset] = useState(10);
   const [loading, setLoading] = useState(false);
 
   const zoom = 13;
