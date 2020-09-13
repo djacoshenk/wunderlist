@@ -11,7 +11,7 @@ export default function Map({ places }) {
 
   const zoom = 13;
 
-  function getMapBounds(map, maps) {
+  function getMapBounds(maps) {
     const bounds = new maps.LatLngBounds();
 
     places.forEach((place) => {
@@ -23,8 +23,8 @@ export default function Map({ places }) {
     return bounds;
   }
 
-  function handleApiLoaded(map, maps, places) {
-    const bounds = getMapBounds(map, maps, places);
+  function handleApiLoaded(map, maps) {
+    const bounds = getMapBounds(maps);
 
     map.fitBounds(bounds);
   }

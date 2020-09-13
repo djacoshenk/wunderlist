@@ -4,20 +4,28 @@ export default function Search({ handleSubmit, handleChange, term, location }) {
   return (
     <div className='search-container'>
       <form className='form' onSubmit={handleSubmit}>
-        <input
-          type='text'
-          name='term'
-          placeholder='what'
-          value={term}
-          onChange={handleChange}
-        />
-        <input
-          type='text'
-          name='location'
-          placeholder='where'
-          value={location}
-          onChange={handleChange}
-        />
+        <label htmlFor='term'>
+          <div className='term-label'>Find</div>
+          <input
+            type='text'
+            id='term'
+            name='term'
+            placeholder='pizza, sushi, cocktail bar...'
+            value={term}
+            onChange={handleChange}
+          />
+        </label>
+        <label htmlFor='location'>
+          <div className='location-label'>Near</div>
+          <input
+            type='text'
+            id='location'
+            name='location'
+            placeholder='los angeles, ca'
+            value={location}
+            onChange={handleChange}
+          />
+        </label>
         <button>
           <i className='fas fa-search'></i>
         </button>

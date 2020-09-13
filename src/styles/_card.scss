@@ -25,12 +25,12 @@
     }
 
     .image-container {
-      height: 175px;
-      width: 175px;
+      height: 160px;
+      width: 160px;
 
       img {
-        height: 175px;
-        width: 175px;
+        height: 160px;
+        width: 160px;
         object-fit: cover;
         border: 0;
         border-radius: 3px;
@@ -42,8 +42,8 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: flex-start;
-      height: 175px;
-      width: 175px;
+      height: 160px;
+      width: 160px;
 
       .title-row {
         display: flex;
@@ -61,6 +61,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    grid-column: 1 / -1;
 
     .bubble {
       animation: expand 0.75s ease-in-out infinite;

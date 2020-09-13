@@ -9,7 +9,7 @@
 html,
 body {
   width: 100%;
-  height: auto;
+  height: 100%;
   font-size: 16px;
 }
 
@@ -25,7 +25,7 @@ html {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 149px - 55px);
+  height: calc(100vh - 157px - 55px);
 }
 
 @import 'header';
@@ -51,13 +51,14 @@ html {
       align-items: center;
       margin: 1rem 0 2rem 0;
       width: fit-content;
+      border-radius: 5px;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
-      input,
-      button {
-        box-shadow: none;
+      label {
+        width: fit-content;
         margin: 0;
+        box-shadow: none;
       }
 
       input {
