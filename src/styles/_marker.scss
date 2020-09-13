@@ -1,4 +1,16 @@
-.fas.fa-map-marker-alt {
-  font-size: 1.5rem;
+.fas.fa-map-marker {
+  font-size: 2rem;
   color: #38b2ac;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    position: absolute;
+    top: 6px;
+    font-size: 12px;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+  }
 }
