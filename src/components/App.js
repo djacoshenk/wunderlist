@@ -1,9 +1,10 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 
 import Header from './Header';
 import Search from './Search';
 import Map from './Map';
 import CardList from './CardList';
+import IsLoading from './IsLoading';
 
 import axios from 'axios';
 
@@ -13,13 +14,8 @@ export default function App() {
   const [searchParams, setSearchParams] = useState({ term: '', location: '' });
   const [fetchParams, setFetchParams] = useState({ term: '', location: '' });
   const [places, setPlaces] = useState([]);
-  const [center, setCenter] = useState({
-    lat: 34.0407,
-    lng: -118.2468,
-  });
-  const [loading, setLoading] = useState(false);
-
-  const zoom = 13;
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleChange(e) {
     let { name, value } = e.target;
@@ -33,10 +29,19 @@ export default function App() {
   function handleSubmit(e) {
     e.preventDefault();
 
+    // remove main content
+    setHasLoaded(false);
+
+    // show the main content loader
+    setIsLoading(true);
+
+    // fetch data
     searchPlaces(searchParams);
 
+    // store fetch params for lazy loading
     setFetchParams(searchParams);
 
+    // clear search params
     setSearchParams((prevState) => ({
       ...prevState,
       term: '',
@@ -58,40 +63,15 @@ export default function App() {
       }
     );
 
+    // update places array
     setPlaces(res.data.businesses);
+
+    // remove main content loader
+    setIsLoading(false);
+
+    // load map with markers and cards
+    setHasLoaded(true);
   }
-
-  useEffect(() => {
-    if (places.length === 0) {
-      return;
-    } else {
-      const total = places.length;
-
-      const avgLat =
-        places
-          .map((place) => {
-            return place.coordinates.latitude;
-          })
-          .reduce((acc, curr) => {
-            return acc + curr;
-          }) / total;
-
-      const avgLng =
-        places
-          .map((place) => {
-            return place.coordinates.longitude;
-          })
-          .reduce((acc, curr) => {
-            return acc + curr;
-          }) / total;
-
-      setCenter((prevState) => {
-        return { ...prevState, lat: avgLat, lng: avgLng };
-      });
-
-      setLoading(true);
-    }
-  }, [places]);
 
   return (
     <Fragment>
@@ -102,9 +82,14 @@ export default function App() {
         term={searchParams.term}
         location={searchParams.location}
       />
-      {loading ? (
+
+      {isLoading ? (
+        <IsLoading term={fetchParams.term} location={fetchParams.location} />
+      ) : null}
+
+      {hasLoaded ? (
         <div className='main-container'>
-          <Map places={places} center={center} zoom={zoom} />
+          <Map places={places} />
           <CardList
             places={places}
             setPlaces={setPlaces}
