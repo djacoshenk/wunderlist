@@ -10,16 +10,39 @@ import axios from 'axios';
 import '../styles/styles.scss';
 
 export default function App() {
+  const [searchParams, setSearchParams] = useState({ term: '', location: '' });
+  const [fetchParams, setFetchParams] = useState({ term: '', location: '' });
   const [places, setPlaces] = useState([]);
   const [center, setCenter] = useState({
     lat: 34.0407,
     lng: -118.2468,
   });
-  // const [offset, setOffset] = useState(10);
   const [loading, setLoading] = useState(false);
 
   const zoom = 13;
-  const limit = 10;
+
+  function handleChange(e) {
+    let { name, value } = e.target;
+
+    setSearchParams((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    searchPlaces(searchParams);
+
+    setFetchParams(searchParams);
+
+    setSearchParams((prevState) => ({
+      ...prevState,
+      term: '',
+      location: '',
+    }));
+  }
 
   async function searchPlaces({ term, location }) {
     const res = await axios.get(
@@ -30,37 +53,13 @@ export default function App() {
         },
         params: {
           sort_by: 'best_match',
-          limit: limit,
+          limit: 10,
         },
       }
     );
 
     setPlaces(res.data.businesses);
   }
-
-  // async function fetchMorePlaces({ term, location }) {
-  //   const res = await axios.get(
-  //     `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
-  //       },
-  //       params: {
-  //         sort_by: 'review_count',
-  //         limit: limit,
-  //         offset: offset,
-  //       },
-  //     }
-  //   );
-
-  //   setOffset((prevState) => {
-  //     return prevState + limit;
-  //   });
-
-  //   setPlaces((prevState) => {
-  //     return prevState.concat(res.data.businesses);
-  //   });
-  // }
 
   useEffect(() => {
     if (places.length === 0) {
@@ -97,11 +96,20 @@ export default function App() {
   return (
     <Fragment>
       <Header />
-      <Search searchPlaces={searchPlaces} setLoading={setLoading} />
+      <Search
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        term={searchParams.term}
+        location={searchParams.location}
+      />
       {loading ? (
         <div className='main-container'>
           <Map places={places} center={center} zoom={zoom} />
-          <CardList places={places} />
+          <CardList
+            places={places}
+            setPlaces={setPlaces}
+            fetchParams={fetchParams}
+          />
         </div>
       ) : null}
     </Fragment>

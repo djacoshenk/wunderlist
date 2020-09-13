@@ -1,7 +1,62 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Card from './Card';
 
-export default function CardList({ places }) {
+import axios from 'axios';
+
+export default function CardList({ places, setPlaces, fetchParams }) {
+  const obs = new IntersectionObserver(
+    (entries) => {
+      const first = entries[0];
+
+      if (first.isIntersecting) {
+        searchMorePlaces(fetchParams);
+      }
+    },
+    { threshold: 1 }
+  );
+  const observer = useRef(obs);
+  const [loadRef, setLoadRef] = useState(null);
+  const [offset, setOffset] = useState(10);
+
+  useEffect(() => {
+    const currentElement = loadRef;
+    const currentObserver = observer.current;
+
+    if (currentElement) {
+      currentObserver.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        currentObserver.unobserve(currentElement);
+      }
+    };
+  }, [loadRef]);
+
+  async function searchMorePlaces({ term, location }) {
+    const res = await axios.get(
+      `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
+        },
+        params: {
+          sort_by: 'best_match',
+          limit: 10,
+          offset: offset,
+        },
+      }
+    );
+
+    setPlaces((prevState) => {
+      return prevState.concat(res.data.businesses);
+    });
+
+    setOffset((prevState) => {
+      return prevState + 10;
+    });
+  }
+
   return (
     <div className='card-list-container'>
       {places.map((place, index) => {
@@ -20,7 +75,11 @@ export default function CardList({ places }) {
           />
         );
       })}
-      <div></div>
+      <div ref={setLoadRef} className='card-list-loader'>
+        <div className='bubble'></div>
+        <div className='bubble'></div>
+        <div className='bubble'></div>
+      </div>
     </div>
   );
 }
