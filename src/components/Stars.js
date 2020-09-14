@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 Stars.propTypes = {
-  rating: PropTypes.number.isRequired,
+  rating: PropTypes.number,
 };
 
 const STARS = [0, 1, 2, 3, 4];

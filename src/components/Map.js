@@ -23,7 +23,7 @@ export default function Map({ places }) {
     return bounds;
   }
 
-  function handleApiLoaded(map, maps) {
+  function handleMapBounds(map, maps) {
     const bounds = getMapBounds(maps);
 
     map.fitBounds(bounds);
@@ -36,7 +36,7 @@ export default function Map({ places }) {
         center={center}
         zoom={zoom}
         yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+        onGoogleApiLoaded={({ map, maps }) => handleMapBounds(map, maps)}
       >
         {places.map((place, index) => {
           return (
@@ -44,6 +44,7 @@ export default function Map({ places }) {
               lat={place.coordinates.latitude}
               lng={place.coordinates.longitude}
               key={place.id}
+              id={place.id}
               text={index + 1}
             />
           );

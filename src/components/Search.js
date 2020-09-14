@@ -21,7 +21,7 @@ export default function Search({ handleSubmit, handleChange, term, location }) {
             type='text'
             id='location'
             name='location'
-            placeholder='los angeles, ca'
+            placeholder='Los Angeles, CA'
             value={location}
             onChange={handleChange}
           />

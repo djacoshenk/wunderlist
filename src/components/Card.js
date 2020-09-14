@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import Stars from './Stars';
 
 Card.propTypes = {
-  image: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
+  image: PropTypes.string,
+  rating: PropTypes.number,
 };
 
 export default function Card({
+  id,
   image,
   rank,
   title,
@@ -20,7 +21,7 @@ export default function Card({
   tags,
 }) {
   return (
-    <div className='card-container'>
+    <div className='card-container' id={id}>
       <div className='image-container'>
         <img src={image} alt='' />
       </div>

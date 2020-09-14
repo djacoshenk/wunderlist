@@ -48,8 +48,6 @@ export default function CardList({ places, setPlaces, searchParams }) {
       }
     );
 
-    console.log(offset);
-
     setPlaces((prevState) => {
       return prevState.concat(res.data.businesses);
     });
@@ -63,6 +61,7 @@ export default function CardList({ places, setPlaces, searchParams }) {
         return (
           <Card
             key={place.id}
+            id={place.id}
             image={place.image_url}
             rank={index + 1}
             title={place.name}

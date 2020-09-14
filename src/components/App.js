@@ -11,7 +11,10 @@ import IsLoading from './IsLoading';
 import '../styles/styles.scss';
 
 export default function App() {
-  const [searchParams, setSearchParams] = useState({ term: '', location: '' });
+  const [searchParams, setSearchParams] = useState({
+    term: '',
+    location: 'Los Angeles, CA',
+  });
   const [places, setPlaces] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
