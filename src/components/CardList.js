@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Card from './Card';
-
 import axios from 'axios';
 
-export default function CardList({ places, setPlaces, fetchParams }) {
+import Card from './Card';
+
+export default function CardList({ places, setPlaces, searchParams }) {
+  let offset = 10;
   const obs = new IntersectionObserver(
     (entries) => {
       const first = entries[0];
 
       if (first.isIntersecting) {
-        searchMorePlaces(fetchParams);
+        searchMorePlaces(searchParams);
       }
     },
-    { threshold: 1 }
+    { threshold: 0 }
   );
   const observer = useRef(obs);
   const [loadRef, setLoadRef] = useState(null);
-  const [offset, setOffset] = useState(10);
 
   useEffect(() => {
     const currentElement = loadRef;
@@ -48,13 +48,13 @@ export default function CardList({ places, setPlaces, fetchParams }) {
       }
     );
 
+    console.log(offset);
+
     setPlaces((prevState) => {
       return prevState.concat(res.data.businesses);
     });
 
-    setOffset((prevState) => {
-      return prevState + 10;
-    });
+    offset += 10;
   }
 
   return (

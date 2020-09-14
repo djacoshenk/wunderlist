@@ -1,18 +1,17 @@
 import React, { useState, Fragment } from 'react';
 
+import axios from 'axios';
+
 import Header from './Header';
 import Search from './Search';
 import Map from './Map';
 import CardList from './CardList';
 import IsLoading from './IsLoading';
 
-import axios from 'axios';
-
 import '../styles/styles.scss';
 
 export default function App() {
   const [searchParams, setSearchParams] = useState({ term: '', location: '' });
-  const [fetchParams, setFetchParams] = useState({ term: '', location: '' });
   const [places, setPlaces] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,16 +36,6 @@ export default function App() {
 
     // fetch data
     searchPlaces(searchParams);
-
-    // store fetch params for lazy loading
-    setFetchParams(searchParams);
-
-    // clear search params
-    setSearchParams((prevState) => ({
-      ...prevState,
-      term: '',
-      location: '',
-    }));
   }
 
   async function searchPlaces({ term, location }) {
@@ -84,7 +73,7 @@ export default function App() {
       />
 
       {isLoading ? (
-        <IsLoading term={fetchParams.term} location={fetchParams.location} />
+        <IsLoading term={searchParams.term} location={searchParams.location} />
       ) : null}
 
       {hasLoaded ? (
@@ -93,7 +82,7 @@ export default function App() {
           <CardList
             places={places}
             setPlaces={setPlaces}
-            fetchParams={fetchParams}
+            searchParams={searchParams}
           />
         </div>
       ) : null}

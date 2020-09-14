@@ -1,39 +1,22 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
+Stars.propTypes = {
+  rating: PropTypes.number.isRequired,
+};
+
+const STARS = [0, 1, 2, 3, 4];
 
 export default function Stars({ rating }) {
-  const filledStars = Math.floor(rating);
-  const halfStars = Math.ceil(rating - filledStars);
-  const emptyStars = 5 - filledStars - halfStars;
+  return STARS.map((n) => {
+    let starRating = 'far fa-star';
 
-  const starsContainer = [];
-
-  if (filledStars > 0) {
-    for (let i = 0; i < filledStars; i++) {
-      const fullStar = React.createElement('i', {
-        className: 'fas fa-star',
-      });
-
-      starsContainer.push(fullStar);
+    if (rating - n === 0.5) {
+      starRating = 'fas fa-star-half-alt';
+    } else if (rating > n) {
+      starRating = 'fas fa-star';
     }
-  }
 
-  if (halfStars > 0) {
-    const halfStar = React.createElement('i', {
-      className: 'fas fa-star-half-alt',
-    });
-
-    starsContainer.push(halfStar);
-  }
-
-  if (emptyStars > 0) {
-    for (let i = 0; i < emptyStars; i++) {
-      const emptyStar = React.createElement('i', {
-        className: 'far fa-star',
-      });
-
-      starsContainer.push(emptyStar);
-    }
-  }
-
-  return <Fragment>{starsContainer}</Fragment>;
+    return <i className={starRating} key={n}></i>;
+  });
 }

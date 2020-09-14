@@ -1,5 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Stars from './Stars';
+
+Card.propTypes = {
+  image: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+};
 
 export default function Card({
   image,
