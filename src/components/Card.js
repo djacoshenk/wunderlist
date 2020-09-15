@@ -4,8 +4,16 @@ import PropTypes from 'prop-types';
 import Stars from './Stars';
 
 Card.propTypes = {
+  id: PropTypes.string,
   image: PropTypes.string,
+  rank: PropTypes.number,
+  title: PropTypes.string,
   rating: PropTypes.number,
+  review_count: PropTypes.number,
+  price: PropTypes.string,
+  phone: PropTypes.string,
+  address: PropTypes.arrayOf(PropTypes.string),
+  tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
 };
 
 export default function Card({

@@ -1,4 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+Search.propTypes = {
+  handleSubmit: PropTypes.func,
+  handleChange: PropTypes.func,
+  term: PropTypes.string,
+  location: PropTypes.string,
+};
 
 export default function Search({ handleSubmit, handleChange, term, location }) {
   return (

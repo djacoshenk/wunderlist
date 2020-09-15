@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 import Card from './Card';
+
+CardList.propTypes = {
+  places: PropTypes.arrayOf(PropTypes.object),
+  setPlaces: PropTypes.func,
+  searchParams: PropTypes.objectOf(PropTypes.string),
+};
 
 export default function CardList({ places, setPlaces, searchParams }) {
   let offset = 10;

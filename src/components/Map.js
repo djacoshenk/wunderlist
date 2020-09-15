@@ -1,7 +1,12 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
+import PropTypes from 'prop-types';
 
 import Marker from './Marker';
+
+Map.propTypes = {
+  places: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default function Map({ places }) {
   const center = {
