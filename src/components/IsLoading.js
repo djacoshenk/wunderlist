@@ -1,4 +1,10 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+
+IsLoading.propTypes = {
+  term: PropTypes.string,
+  location: PropTypes.string,
+};
 
 export default function IsLoading({ term, location }) {
   return (

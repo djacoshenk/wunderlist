@@ -1,4 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+Marker.propTypes = {
+  text: PropTypes.string,
+  id: PropTypes.string,
+};
 
 export default function Marker({ text, id }) {
   return (
