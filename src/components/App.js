@@ -18,6 +18,7 @@ export default function App() {
   const [places, setPlaces] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [hoverID, setHoverID] = useState('');
 
   function handleChange(e) {
     let { name, value } = e.target;
@@ -65,6 +66,16 @@ export default function App() {
     setHasLoaded(true);
   }
 
+  function handleHover(e) {
+    const { id } = e.target;
+
+    if (e.type === 'mouseenter') {
+      setHoverID(id);
+    } else if (e.type === 'mouseleave') {
+      setHoverID('');
+    }
+  }
+
   return (
     <Fragment>
       <Header />
@@ -81,11 +92,12 @@ export default function App() {
 
       {hasLoaded ? (
         <div className='main-container'>
-          <Map places={places} />
+          <Map places={places} hoverID={hoverID} handleHover={handleHover} />
           <CardList
             places={places}
             setPlaces={setPlaces}
             searchParams={searchParams}
+            handleHover={handleHover}
           />
         </div>
       ) : null}

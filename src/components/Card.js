@@ -14,6 +14,7 @@ Card.propTypes = {
   phone: PropTypes.string,
   address: PropTypes.arrayOf(PropTypes.string),
   tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  handleHover: PropTypes.func,
 };
 
 export default function Card({
@@ -27,9 +28,15 @@ export default function Card({
   phone,
   address,
   tags,
+  handleHover,
 }) {
   return (
-    <div className='card-container' id={id}>
+    <div
+      className='card-container'
+      id={id}
+      onMouseEnter={handleHover}
+      onMouseLeave={handleHover}
+    >
       <div className='image-container'>
         <img src={image} alt='' />
       </div>

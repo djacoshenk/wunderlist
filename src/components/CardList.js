@@ -8,9 +8,15 @@ CardList.propTypes = {
   places: PropTypes.arrayOf(PropTypes.object),
   setPlaces: PropTypes.func,
   searchParams: PropTypes.objectOf(PropTypes.string),
+  handleHover: PropTypes.func,
 };
 
-export default function CardList({ places, setPlaces, searchParams }) {
+export default function CardList({
+  places,
+  setPlaces,
+  searchParams,
+  handleHover,
+}) {
   let offset = 10;
   const obs = new IntersectionObserver(
     (entries) => {
@@ -78,6 +84,7 @@ export default function CardList({ places, setPlaces, searchParams }) {
             phone={place.display_phone}
             address={place.location.display_address}
             tags={place.categories}
+            handleHover={handleHover}
           />
         );
       })}

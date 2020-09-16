@@ -6,15 +6,17 @@ import Marker from './Marker';
 
 Map.propTypes = {
   places: PropTypes.arrayOf(PropTypes.object),
+  hoverID: PropTypes.string,
+  handleHover: PropTypes.func,
 };
 
-export default function Map({ places }) {
-  const center = {
+export default function Map({ places, hoverID, handleHover }) {
+  const defaultCenter = {
     lat: 34.0407,
     lng: -118.2468,
   };
 
-  const zoom = 13;
+  const defaultZoom = 13;
 
   function getMapBounds(maps) {
     const bounds = new maps.LatLngBounds();
@@ -38,8 +40,8 @@ export default function Map({ places }) {
     <div className='map-container'>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}
-        center={center}
-        zoom={zoom}
+        center={defaultCenter}
+        zoom={defaultZoom}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => handleMapBounds(map, maps)}
       >
@@ -51,6 +53,8 @@ export default function Map({ places }) {
               key={place.id}
               id={place.id}
               text={index + 1}
+              hoverID={hoverID}
+              handleHover={handleHover}
             />
           );
         })}
