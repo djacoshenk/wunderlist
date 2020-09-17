@@ -44,6 +44,7 @@ export default function Map({ places, hoverID, handleHover }) {
         zoom={defaultZoom}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => handleMapBounds(map, maps)}
+        options={{ gestureHandling: 'greedy' }}
       >
         {places.map((place, index) => {
           return (

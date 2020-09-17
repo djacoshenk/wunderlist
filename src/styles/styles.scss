@@ -26,7 +26,7 @@ html {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 157px - 55px);
+  height: calc(100vh - 145px - 39px);
 }
 
 @import 'header';
@@ -42,6 +42,25 @@ html {
 @import 'card';
 
 @import 'stars';
+
+@media (min-width: 481px) {
+  .main-container {
+    height: calc(100vh - 55px - 79px);
+
+    .map-container {
+      height: 50vh;
+      width: 100%;
+    }
+
+    .card-list-container {
+      grid-template-columns: repeat(auto-fit, 375px);
+
+      .card-list-loader {
+        height: 5rem;
+      }
+    }
+  }
+}
 
 @media (min-width: 769px) {
   .search-container {
@@ -84,7 +103,7 @@ html {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(100vh - 55px - 79px);
+    height: calc(100vh - 39px - 83px);
 
     .map-container {
       height: 100%;
@@ -114,6 +133,10 @@ html {
       .content-container {
         height: 210px;
         width: 210px;
+      }
+
+      .card-list-loader {
+        height: 2rem;
       }
     }
   }
