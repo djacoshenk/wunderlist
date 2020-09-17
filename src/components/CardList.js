@@ -16,6 +16,7 @@ export default function CardList({
   setPlaces,
   searchParams,
   handleHover,
+  setMapKey,
 }) {
   let offset = 10;
   const obs = new IntersectionObserver(
@@ -63,6 +64,10 @@ export default function CardList({
 
     setPlaces((prevState) => {
       return prevState.concat(res.data.businesses);
+    });
+
+    setMapKey((prevState) => {
+      return prevState + 1;
     });
 
     offset += 10;

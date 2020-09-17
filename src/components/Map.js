@@ -10,7 +10,7 @@ Map.propTypes = {
   handleHover: PropTypes.func,
 };
 
-export default function Map({ places, hoverID, handleHover }) {
+export default function Map({ places, hoverID, handleHover, mapKey }) {
   const defaultCenter = {
     lat: 34.0407,
     lng: -118.2468,
@@ -39,6 +39,7 @@ export default function Map({ places, hoverID, handleHover }) {
   return (
     <div className='map-container'>
       <GoogleMapReact
+        key={mapKey}
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}
         center={defaultCenter}
         zoom={defaultZoom}
