@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 Marker.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.number,
   id: PropTypes.string,
   hoverID: PropTypes.string,
   handleHover: PropTypes.func,
@@ -25,6 +25,8 @@ export default function Marker({ text, id, hoverID, handleHover }) {
       style={hoverID === id ? hoveredMarkerStyles : null}
       onMouseEnter={handleHover}
       onMouseLeave={handleHover}
+      onTouchStart={handleHover}
+      onTouchEnd={handleHover}
     >
       <p style={hoverID === id ? hoveredTextStyles : null}>{text}</p>
     </i>
