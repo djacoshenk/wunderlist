@@ -19,6 +19,7 @@ export default function App() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [hoverID, setHoverID] = useState('');
+  const [mapKey, setMapKey] = useState(0);
 
   function handleChange(e) {
     let { name, value } = e.target;
@@ -92,12 +93,18 @@ export default function App() {
 
       {hasLoaded ? (
         <div className='main-container'>
-          <Map places={places} hoverID={hoverID} handleHover={handleHover} />
+          <Map
+            places={places}
+            hoverID={hoverID}
+            handleHover={handleHover}
+            mapKey={mapKey}
+          />
           <CardList
             places={places}
             setPlaces={setPlaces}
             searchParams={searchParams}
             handleHover={handleHover}
+            setMapKey={setMapKey}
           />
         </div>
       ) : null}
