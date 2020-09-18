@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Stars from './Stars';
 
 Card.propTypes = {
+  hover: PropTypes.func,
   id: PropTypes.string,
   image: PropTypes.string,
   rank: PropTypes.number,
@@ -11,13 +12,13 @@ Card.propTypes = {
   rating: PropTypes.number,
   review_count: PropTypes.number,
   price: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
   phone: PropTypes.string,
   address: PropTypes.arrayOf(PropTypes.string),
-  tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-  handleHover: PropTypes.func,
 };
 
 export default function Card({
+  hover,
   id,
   image,
   rank,
@@ -25,11 +26,16 @@ export default function Card({
   rating,
   review_count,
   price,
+  tags,
   phone,
   address,
-  tags,
-  handleHover,
 }) {
+  function handleHover(e) {
+    const { id } = e.target;
+
+    hover(e, id);
+  }
+
   return (
     <div
       className='card-container'

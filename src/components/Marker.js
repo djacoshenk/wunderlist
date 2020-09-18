@@ -5,19 +5,25 @@ Marker.propTypes = {
   text: PropTypes.number,
   id: PropTypes.string,
   hoverID: PropTypes.string,
-  handleHover: PropTypes.func,
+  hover: PropTypes.func,
 };
 
-const hoveredMarkerStyles = {
-  color: '#333',
-  transform: 'translate(0, -5px)',
-};
+export default function Marker({ text, id, hoverID, hover }) {
+  const hoveredMarkerStyles = {
+    color: '#333',
+    transform: 'translate(0, -5px)',
+  };
 
-const hoveredTextStyles = {
-  color: '#38b2ac',
-};
+  const hoveredTextStyles = {
+    color: '#38b2ac',
+  };
 
-export default function Marker({ text, id, hoverID, handleHover }) {
+  function handleHover(e) {
+    const { id } = e.target;
+
+    hover(e, id);
+  }
+
   return (
     <i
       className='fas fa-map-marker'
@@ -25,8 +31,6 @@ export default function Marker({ text, id, hoverID, handleHover }) {
       style={hoverID === id ? hoveredMarkerStyles : null}
       onMouseEnter={handleHover}
       onMouseLeave={handleHover}
-      onTouchStart={handleHover}
-      onTouchEnd={handleHover}
     >
       <p style={hoverID === id ? hoveredTextStyles : null}>{text}</p>
     </i>

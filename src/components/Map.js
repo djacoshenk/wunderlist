@@ -7,10 +7,11 @@ import Marker from './Marker';
 Map.propTypes = {
   places: PropTypes.arrayOf(PropTypes.object),
   hoverID: PropTypes.string,
-  handleHover: PropTypes.func,
+  mapKey: PropTypes.number,
+  hover: PropTypes.func,
 };
 
-export default function Map({ places, hoverID, handleHover, mapKey }) {
+export default function Map({ places, hoverID, mapKey, hover }) {
   const defaultCenter = {
     lat: 34.0407,
     lng: -118.2468,
@@ -56,7 +57,7 @@ export default function Map({ places, hoverID, handleHover, mapKey }) {
               id={place.id}
               text={index + 1}
               hoverID={hoverID}
-              handleHover={handleHover}
+              hover={hover}
             />
           );
         })}

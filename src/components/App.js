@@ -6,7 +6,7 @@ import Header from './Header';
 import Search from './Search';
 import Map from './Map';
 import CardList from './CardList';
-import IsLoading from './IsLoading';
+import BubbleLoader from './BubbleLoader';
 
 import '../styles/styles.scss';
 
@@ -16,34 +16,32 @@ export default function App() {
     location: 'Los Angeles, CA',
   });
   const [places, setPlaces] = useState([]);
-  const [hasLoaded, setHasLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [showMainContent, setShowMainContent] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const [hoverID, setHoverID] = useState('');
   const [mapKey, setMapKey] = useState(0);
 
-  function handleChange(e) {
-    let { name, value } = e.target;
+  let offset = 10;
 
+  function change(name, value) {
     setSearchParams((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
+  function submit() {
     // remove main content
-    setHasLoaded(false);
+    setShowMainContent(false);
 
-    // show the main content loader
-    setIsLoading(true);
+    // show loader
+    setShowLoader(true);
 
     // fetch data
-    searchPlaces(searchParams);
+    fetchPlaces(searchParams);
   }
 
-  async function searchPlaces({ term, location }) {
+  async function fetchPlaces({ term, location }) {
     const res = await axios.get(
       `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
       {
@@ -61,15 +59,42 @@ export default function App() {
     setPlaces(res.data.businesses);
 
     // remove main content loader
-    setIsLoading(false);
+    setShowLoader(false);
 
     // load map with markers and cards
-    setHasLoaded(true);
+    setShowMainContent(true);
   }
 
-  function handleHover(e) {
-    const { id } = e.target;
+  async function fetchMorePlaces({ term, location }) {
+    const res = await axios.get(
+      `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
+        },
+        params: {
+          sort_by: 'best_match',
+          limit: 10,
+          offset: offset,
+        },
+      }
+    );
 
+    // add new places to current places array
+    setPlaces((prevState) => {
+      return prevState.concat(res.data.businesses);
+    });
+
+    // increment map key, so map re-renders
+    setMapKey((prevState) => {
+      return prevState + 1;
+    });
+
+    // increment offset counter
+    offset += 10;
+  }
+
+  function hover(e, id) {
     if (e.type === 'mouseenter') {
       setHoverID(id);
     } else if (e.type === 'mouseleave') {
@@ -80,31 +105,23 @@ export default function App() {
   return (
     <Fragment>
       <Header />
-      <Search
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        term={searchParams.term}
-        location={searchParams.location}
-      />
+      <Search change={change} submit={submit} searchParams={searchParams} />
 
-      {isLoading ? (
-        <IsLoading term={searchParams.term} location={searchParams.location} />
-      ) : null}
+      {showLoader ? <BubbleLoader searchParams={searchParams} /> : null}
 
-      {hasLoaded ? (
+      {showMainContent ? (
         <div className='main-container'>
           <Map
             places={places}
             hoverID={hoverID}
-            handleHover={handleHover}
+            hover={hover}
             mapKey={mapKey}
           />
           <CardList
             places={places}
-            setPlaces={setPlaces}
             searchParams={searchParams}
-            handleHover={handleHover}
-            setMapKey={setMapKey}
+            fetchMorePlaces={fetchMorePlaces}
+            hover={hover}
           />
         </div>
       ) : null}

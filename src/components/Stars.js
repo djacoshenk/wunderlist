@@ -5,10 +5,10 @@ Stars.propTypes = {
   rating: PropTypes.number,
 };
 
-const STARS = [0, 1, 2, 3, 4];
-
 export default function Stars({ rating }) {
-  return STARS.map((n) => {
+  const STARS = [0, 1, 2, 3, 4];
+
+  const totalRating = STARS.map((n) => {
     let starRating = 'far fa-star';
 
     if (rating - n === 0.5) {
@@ -19,4 +19,6 @@ export default function Stars({ rating }) {
 
     return <i className={starRating} key={n}></i>;
   });
+
+  return totalRating;
 }

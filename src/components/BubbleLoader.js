@@ -2,16 +2,15 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 IsLoading.propTypes = {
-  term: PropTypes.string,
-  location: PropTypes.string,
+  searchParams: PropTypes.objectOf(PropTypes.string),
 };
 
-export default function IsLoading({ term, location }) {
+export default function IsLoading({ searchParams }) {
   return (
     <Fragment>
       <div className='main-loader'>
         <h3>
-          Finding you the best {term} in {location}
+          Finding you the best {searchParams.term} in {searchParams.location}
         </h3>
         <div className='bubble-loader'>
           <div className='bubble'></div>
