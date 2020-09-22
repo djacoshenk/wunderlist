@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-Marker.propTypes = {
+import './GoogleMapMarker.scss';
+
+GoogleMapMarker.propTypes = {
   text: PropTypes.number,
   id: PropTypes.string,
   hoverID: PropTypes.string,
-  hover: PropTypes.func,
+  handleHover: PropTypes.func,
 };
 
-export default function Marker({ text, id, hoverID, hover }) {
+export default function GoogleMapMarker({ text, id, hoverID, handleHover }) {
   const hoveredMarkerStyles = {
     color: '#333',
     transform: 'translate(0, -5px)',
@@ -18,10 +20,10 @@ export default function Marker({ text, id, hoverID, hover }) {
     color: '#38b2ac',
   };
 
-  function handleHover(e) {
+  function hover(e) {
     const { id } = e.target;
 
-    hover(e, id);
+    handleHover(e, id);
   }
 
   return (
@@ -29,8 +31,8 @@ export default function Marker({ text, id, hoverID, hover }) {
       className='fas fa-map-marker'
       id={id}
       style={hoverID === id ? hoveredMarkerStyles : null}
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHover}
+      onMouseEnter={hover}
+      onMouseLeave={hover}
     >
       <p style={hoverID === id ? hoveredTextStyles : null}>{text}</p>
     </i>

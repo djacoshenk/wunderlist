@@ -1,30 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-Search.propTypes = {
-  submit: PropTypes.func,
-  change: PropTypes.func,
+import './SearchRestaurantBar.scss';
+
+SearchRestaurantBar.propTypes = {
+  handleSubmit: PropTypes.func,
+  handleChange: PropTypes.func,
   searchParams: PropTypes.objectOf(PropTypes.string),
 };
 
-export default function Search({ submit, change, searchParams }) {
-  function handleChange(e) {
+export default function SearchRestaurantBar({
+  handleSubmit,
+  handleChange,
+  searchParams,
+}) {
+  function change(e) {
     e.preventDefault();
 
     let { name, value } = e.target;
 
-    change(name, value);
+    handleChange(name, value);
   }
 
-  function handleSubmit(e) {
+  function submit(e) {
     e.preventDefault();
 
-    submit();
+    handleSubmit();
   }
 
   return (
     <div className='search-container'>
-      <form className='form' onSubmit={handleSubmit}>
+      <form className='form' onSubmit={submit}>
         <label htmlFor='term'>
           <div className='term-label'>Find</div>
           <input
@@ -33,7 +39,7 @@ export default function Search({ submit, change, searchParams }) {
             name='term'
             placeholder='pizza, sushi, cocktail bar...'
             value={searchParams.term}
-            onChange={handleChange}
+            onChange={change}
           />
         </label>
         <label htmlFor='location'>
@@ -44,7 +50,7 @@ export default function Search({ submit, change, searchParams }) {
             name='location'
             placeholder='Los Angeles, CA'
             value={searchParams.location}
-            onChange={handleChange}
+            onChange={change}
           />
         </label>
         <button>

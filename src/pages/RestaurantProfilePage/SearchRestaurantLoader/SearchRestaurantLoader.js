@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-IsLoading.propTypes = {
+import './SearchRestaurantLoader.scss';
+
+SearchRestaurantLoader.propTypes = {
   searchParams: PropTypes.objectOf(PropTypes.string),
 };
 
-export default function IsLoading({ searchParams }) {
+export default function SearchRestaurantLoader({ searchParams }) {
   return (
     <Fragment>
       <div className='main-loader'>

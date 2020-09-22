@@ -1,19 +1,34 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Card from './Card';
+import RestaurantCard from '../RestaurantCard/RestaurantCard';
 
-CardList.propTypes = {
-  places: PropTypes.arrayOf(PropTypes.object),
+import './RestaurantCardList.scss';
+
+RestaurantCardList.propTypes = {
+  places: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      image: PropTypes.string,
+      rank: PropTypes.number,
+      title: PropTypes.string,
+      rating: PropTypes.number,
+      review_count: PropTypes.number,
+      price: PropTypes.string,
+      tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+      phone: PropTypes.string,
+      address: PropTypes.arrayOf(PropTypes.string),
+    })
+  ),
   searchParams: PropTypes.objectOf(PropTypes.string),
-  hover: PropTypes.func,
+  handleHover: PropTypes.func,
   fetchMorePlaces: PropTypes.func,
 };
 
-export default function CardList({
+export default function RestaurantCardList({
   places,
   searchParams,
-  hover,
+  handleHover,
   fetchMorePlaces,
 }) {
   const obs = new IntersectionObserver(
@@ -48,9 +63,9 @@ export default function CardList({
     <div className='card-list-container'>
       {places.map((place, index) => {
         return (
-          <Card
+          <RestaurantCard
             key={place.id}
-            hover={hover}
+            handleHover={handleHover}
             id={place.id}
             image={place.image_url}
             rank={index + 1}

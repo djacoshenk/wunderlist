@@ -20,29 +20,6 @@ html {
   font-family: 'Lato', sans-serif;
 }
 
-.main-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: calc(100vh - 145px - 39px);
-}
-
-@import 'header';
-
-@import 'search';
-
-@import 'isloading';
-
-@import 'map';
-
-@import 'marker';
-
-@import 'card';
-
-@import 'stars';
-
 @media (min-width: 481px) {
   .main-container {
     height: calc(100vh - 55px - 79px);

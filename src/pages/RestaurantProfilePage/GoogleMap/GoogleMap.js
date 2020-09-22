@@ -2,16 +2,18 @@ import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 
-import Marker from './Marker';
+import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
-Map.propTypes = {
+import './GoogleMap.scss';
+
+GoogleMap.propTypes = {
   places: PropTypes.arrayOf(PropTypes.object),
   hoverID: PropTypes.string,
   mapKey: PropTypes.number,
-  hover: PropTypes.func,
+  handleHover: PropTypes.func,
 };
 
-export default function Map({ places, hoverID, mapKey, hover }) {
+export default function GoogleMap({ places, hoverID, mapKey, handleHover }) {
   const defaultCenter = {
     lat: 34.0407,
     lng: -118.2468,
@@ -50,14 +52,14 @@ export default function Map({ places, hoverID, mapKey, hover }) {
       >
         {places.map((place, index) => {
           return (
-            <Marker
+            <GoogleMapMarker
               lat={place.coordinates.latitude}
               lng={place.coordinates.longitude}
               key={place.id}
               id={place.id}
               text={index + 1}
               hoverID={hoverID}
-              hover={hover}
+              handleHover={handleHover}
             />
           );
         })}

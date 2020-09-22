@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Stars from './Stars';
+import RestaurantCardStars from '../RestaurantCardStars/RestaurantCardStars';
 
-Card.propTypes = {
-  hover: PropTypes.func,
+import './RestaurantCard.scss';
+
+RestaurantCard.propTypes = {
+  handleHover: PropTypes.func,
   id: PropTypes.string,
   image: PropTypes.string,
   rank: PropTypes.number,
@@ -17,8 +19,8 @@ Card.propTypes = {
   address: PropTypes.arrayOf(PropTypes.string),
 };
 
-export default function Card({
-  hover,
+export default function RestaurantCard({
+  handleHover,
   id,
   image,
   rank,
@@ -30,18 +32,18 @@ export default function Card({
   phone,
   address,
 }) {
-  function handleHover(e) {
+  function hover(e) {
     const { id } = e.target;
 
-    hover(e, id);
+    handleHover(e, id);
   }
 
   return (
     <div
       className='card-container'
       id={id}
-      onMouseEnter={handleHover}
-      onMouseLeave={handleHover}
+      onMouseEnter={hover}
+      onMouseLeave={hover}
     >
       <div className='image-container'>
         <img src={image} alt='' />
@@ -54,7 +56,7 @@ export default function Card({
         </div>
         <div className='ratings-row'>
           <div className='stars-container'>
-            <Stars rating={rating} />
+            <RestaurantCardStars rating={rating} />
           </div>
           <p>{review_count}</p>
         </div>

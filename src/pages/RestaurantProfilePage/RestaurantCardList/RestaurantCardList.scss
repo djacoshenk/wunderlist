@@ -1,0 +1,51 @@
+.card-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 1fr);
+  grid-gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  overflow-y: scroll;
+
+  .card-list-loader {
+    height: 8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    grid-column: 1 / -1;
+
+    .bubble {
+      animation: expand 0.75s ease-in-out infinite;
+      border-radius: 50%;
+      display: inline-block;
+      transform-origin: center center;
+      margin: 0 3px;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .bubble:nth-child(1) {
+      background: #7f9cf5;
+    }
+
+    .bubble:nth-child(2) {
+      animation-delay: 180ms;
+      background: #7f9cf5;
+    }
+
+    .bubble:nth-child(3) {
+      animation-delay: 360ms;
+      background: #7f9cf5;
+    }
+
+    @keyframes expand {
+      0% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1.55);
+      }
+    }
+  }
+}

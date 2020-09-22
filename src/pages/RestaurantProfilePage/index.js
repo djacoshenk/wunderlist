@@ -2,15 +2,14 @@ import React, { useState, Fragment } from 'react';
 
 import axios from 'axios';
 
-import Header from './Header';
-import Search from './Search';
-import Map from './Map';
-import CardList from './CardList';
-import BubbleLoader from './BubbleLoader';
+import Header from './Header/Header';
+import SearchRestaurantBar from './SearchRestaurantBar/SearchRestaurantBar';
+import MainContent from './MainContent/MainContent';
+import SearchRestaurantLoader from './SearchRestaurantLoader/SearchRestaurantLoader';
 
-import '../styles/styles.scss';
+import './styles.scss';
 
-export default function App() {
+export default function RestaurantProfilePage() {
   const [searchParams, setSearchParams] = useState({
     term: '',
     location: 'Los Angeles, CA',
@@ -23,14 +22,14 @@ export default function App() {
 
   let offset = 10;
 
-  function change(name, value) {
+  function handleChange(name, value) {
     setSearchParams((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   }
 
-  function submit() {
+  function handleSubmit() {
     // remove main content
     setShowMainContent(false);
 
@@ -94,7 +93,7 @@ export default function App() {
     offset += 10;
   }
 
-  function hover(e, id) {
+  function handleHover(e, id) {
     if (e.type === 'mouseenter') {
       setHoverID(id);
     } else if (e.type === 'mouseleave') {
@@ -105,25 +104,23 @@ export default function App() {
   return (
     <Fragment>
       <Header />
-      <Search change={change} submit={submit} searchParams={searchParams} />
-
-      {showLoader ? <BubbleLoader searchParams={searchParams} /> : null}
-
+      <SearchRestaurantBar
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        searchParams={searchParams}
+      />
+      {showLoader ? (
+        <SearchRestaurantLoader searchParams={searchParams} />
+      ) : null}
       {showMainContent ? (
-        <div className='main-container'>
-          <Map
-            places={places}
-            hoverID={hoverID}
-            hover={hover}
-            mapKey={mapKey}
-          />
-          <CardList
-            places={places}
-            searchParams={searchParams}
-            fetchMorePlaces={fetchMorePlaces}
-            hover={hover}
-          />
-        </div>
+        <MainContent
+          places={places}
+          hoverID={hoverID}
+          handleHover={handleHover}
+          mapKey={mapKey}
+          searchParams={searchParams}
+          fetchMorePlaces={fetchMorePlaces}
+        />
       ) : null}
     </Fragment>
   );
