@@ -15,8 +15,8 @@ GoogleMap.propTypes = {
 
 export default function GoogleMap({ places, hoverID, mapKey, handleHover }) {
   const defaultCenter = {
-    lat: 34.0407,
-    lng: -118.2468,
+    lat: 0,
+    lng: 0,
   };
 
   const defaultZoom = 13;

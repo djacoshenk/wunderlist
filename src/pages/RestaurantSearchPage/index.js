@@ -9,7 +9,7 @@ import SearchRestaurantLoader from './SearchRestaurantLoader/SearchRestaurantLoa
 
 import './styles.scss';
 
-export default function RestaurantProfilePage() {
+export default function RestaurantSearchPage() {
   const [searchParams, setSearchParams] = useState({
     term: '',
     location: 'Los Angeles, CA',
@@ -79,6 +79,9 @@ export default function RestaurantProfilePage() {
       }
     );
 
+    // increment offset counter
+    offset += 10;
+
     // add new places to current places array
     setPlaces((prevState) => {
       return prevState.concat(res.data.businesses);
@@ -88,9 +91,6 @@ export default function RestaurantProfilePage() {
     setMapKey((prevState) => {
       return prevState + 1;
     });
-
-    // increment offset counter
-    offset += 10;
   }
 
   function handleHover(e, id) {
@@ -111,8 +111,7 @@ export default function RestaurantProfilePage() {
       />
       {showLoader ? (
         <SearchRestaurantLoader searchParams={searchParams} />
-      ) : null}
-      {showMainContent ? (
+      ) : showMainContent ? (
         <MainContent
           places={places}
           hoverID={hoverID}

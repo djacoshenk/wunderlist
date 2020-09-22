@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import RestaurantProfilePage from './pages/RestaurantProfilePage/index';
+import RestaurantSearchPage from './pages/RestaurantSearchPage/index';
 
 export default function App() {
   return (
     <Fragment>
       <BrowserRouter>
         <Switch>
-          <Route path='/search' component={RestaurantProfilePage} />
+          <Route path='/search' component={RestaurantSearchPage} />
         </Switch>
       </BrowserRouter>
     </Fragment>
