@@ -1,6 +1,7 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
+import block from 'bem-cn';
 
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
@@ -12,6 +13,8 @@ GoogleMap.propTypes = {
   mapKey: PropTypes.number,
   handleHover: PropTypes.func,
 };
+
+const b = block('RestaurantSearchPage');
 
 export default function GoogleMap({ places, hoverID, mapKey, handleHover }) {
   const defaultCenter = {
@@ -40,7 +43,7 @@ export default function GoogleMap({ places, hoverID, mapKey, handleHover }) {
   }
 
   return (
-    <div className='map-container'>
+    <div className={b('google-map-container')}>
       <GoogleMapReact
         key={mapKey}
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}

@@ -1,4 +1,23 @@
-.map-container {
-  height: 33vh;
-  width: 100%;
+.RestaurantSearchPage {
+  &__google-map-container {
+    height: 33vh;
+    width: 100%;
+    display: none;
+
+    @media (min-width: 481px) {
+      height: 40vh;
+      width: 100%;
+      display: block;
+    }
+
+    @media (min-width: 769px) {
+      height: 100%;
+      width: 50%;
+    }
+
+    @media (min-width: 1025px) {
+      height: 100%;
+      width: 45%;
+    }
+  }
 }

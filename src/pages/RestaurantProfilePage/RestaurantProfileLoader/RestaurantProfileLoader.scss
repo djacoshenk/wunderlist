@@ -1,0 +1,40 @@
+.bubble-loader {
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .bubble {
+    animation: expand 0.75s ease-in-out infinite;
+    border-radius: 50%;
+    display: inline-block;
+    transform-origin: center center;
+    margin: 0 3px;
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .bubble:nth-child(1) {
+    background: #7f9cf5;
+  }
+
+  .bubble:nth-child(2) {
+    animation-delay: 180ms;
+    background: #7f9cf5;
+  }
+
+  .bubble:nth-child(3) {
+    animation-delay: 360ms;
+    background: #7f9cf5;
+  }
+
+  @keyframes expand {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.55);
+    }
+  }
+}

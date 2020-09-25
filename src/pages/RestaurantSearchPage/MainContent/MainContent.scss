@@ -1,8 +1,23 @@
-.main-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  height: calc(100vh - 145px - 39px);
+.RestaurantSearchPage {
+  &__main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 145px - 39px);
+
+    @media (min-width: 481px) {
+      height: calc(100vh - 55px - 79px);
+    }
+
+    @media (min-width: 769px) {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: calc(100vh - 39px - 83px);
+    }
+  }
 }

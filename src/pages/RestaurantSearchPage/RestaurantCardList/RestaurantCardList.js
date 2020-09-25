@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import block from 'bem-cn';
 
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
+import SearchRestaurantLoaderBubbles from '../SearchRestaurantLoaderBubbles/SearchRestaurantLoaderBubbles';
 
 import './RestaurantCardList.scss';
 
@@ -9,6 +11,7 @@ RestaurantCardList.propTypes = {
   places: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
+      alias: PropTypes.string,
       image: PropTypes.string,
       rank: PropTypes.number,
       title: PropTypes.string,
@@ -24,6 +27,8 @@ RestaurantCardList.propTypes = {
   handleHover: PropTypes.func,
   fetchMorePlaces: PropTypes.func,
 };
+
+const b = block('RestaurantSearchPage');
 
 export default function RestaurantCardList({
   places,
@@ -60,13 +65,14 @@ export default function RestaurantCardList({
   }, [loadRef]);
 
   return (
-    <div className='card-list-container'>
+    <div className={b('card-list-container')}>
       {places.map((place, index) => {
         return (
           <RestaurantCard
             key={place.id}
             handleHover={handleHover}
             id={place.id}
+            alias={place.alias}
             image={place.image_url}
             rank={index + 1}
             title={place.name}
@@ -79,10 +85,8 @@ export default function RestaurantCardList({
           />
         );
       })}
-      <div ref={setLoadRef} className='card-list-loader'>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
+      <div ref={setLoadRef} className={b('card-list-bubble-loader')}>
+        <SearchRestaurantLoaderBubbles />
       </div>
     </div>
   );

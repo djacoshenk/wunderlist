@@ -10,30 +10,12 @@ SearchRestaurantBar.propTypes = {
   searchParams: PropTypes.objectOf(PropTypes.string),
 };
 
-const b = block('RestaurantSearchPage');
+const b = block('RestaurantProfilePage');
 
-export default function SearchRestaurantBar({
-  handleSubmit,
-  handleChange,
-  searchParams,
-}) {
-  function change(e) {
-    e.preventDefault();
-
-    let { name, value } = e.target;
-
-    handleChange(name, value);
-  }
-
-  function submit(e) {
-    e.preventDefault();
-
-    handleSubmit();
-  }
-
+export default function SearchRestaurantBar() {
   return (
     <div className={b('search-bar-container')}>
-      <form className={b('search-bar-form')} onSubmit={submit}>
+      <form className={b('search-bar-form')}>
         <label htmlFor='term'>
           <div>Find</div>
           <input
@@ -41,8 +23,6 @@ export default function SearchRestaurantBar({
             id='term'
             name='term'
             placeholder='pizza, sushi, cocktail bar...'
-            value={searchParams.term}
-            onChange={change}
           />
         </label>
         <label htmlFor='location'>
@@ -52,8 +32,6 @@ export default function SearchRestaurantBar({
             id='location'
             name='location'
             placeholder='Los Angeles, CA'
-            value={searchParams.location}
-            onChange={change}
           />
         </label>
         <button>

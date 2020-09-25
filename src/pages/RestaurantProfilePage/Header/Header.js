@@ -4,7 +4,7 @@ import block from 'bem-cn';
 
 import './Header.scss';
 
-const b = block('RestaurantSearchPage');
+const b = block('RestaurantProfilePage');
 
 export default function Header() {
   return (

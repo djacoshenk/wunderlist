@@ -48,7 +48,6 @@ export default function RestaurantSearchPage() {
           Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
         },
         params: {
-          sort_by: 'best_match',
           limit: 10,
         },
       }

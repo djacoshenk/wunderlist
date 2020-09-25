@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import block from 'bem-cn';
+
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantCardList from '../RestaurantCardList/RestaurantCardList';
 
@@ -14,6 +16,8 @@ MainContent.propTypes = {
   fetchMorePlaces: PropTypes.func,
 };
 
+const b = block('RestaurantSearchPage');
+
 export default function MainContent({
   places,
   hoverID,
@@ -23,7 +27,7 @@ export default function MainContent({
   fetchMorePlaces,
 }) {
   return (
-    <div className='main-container'>
+    <div className={b('main-container')}>
       <GoogleMap
         places={places}
         hoverID={hoverID}
