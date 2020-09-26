@@ -10,9 +10,15 @@ export default function App() {
     <Fragment>
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route exact path='/search' component={RestaurantSearchPage} />
-          <Route path='/search/:slug' component={RestaurantProfilePage} />
+          <Route exact path='/'>
+            <HomePage />
+          </Route>
+          <Route exact path='/search'>
+            <RestaurantSearchPage />
+          </Route>
+          <Route path='/search/:slug'>
+            <RestaurantProfilePage />
+          </Route>
         </Switch>
       </BrowserRouter>
     </Fragment>
