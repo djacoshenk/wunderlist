@@ -1,8 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Header from './Header/Header';
-import SearchRestaurantBar from './SearchRestaurantBar/SearchRestaurantBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
@@ -50,8 +48,6 @@ export default function RestaurantProfilePage() {
 
   return (
     <Fragment>
-      <Header />
-      <SearchRestaurantBar />
       {showMainLoader ? (
         <RestaurantProfileLoader />
       ) : (
