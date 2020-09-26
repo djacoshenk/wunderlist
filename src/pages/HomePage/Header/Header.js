@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { block } from 'bem-cn';
+
+import globe from '../../../assets/global.png';
 
 import './Header.scss';
 
+const b = block('HomePage');
+
 export default function Header() {
   return (
-    <div className='header-container'>
-      <h1>
-        <Link to='/search' className='header-link'>
-          wunderlist
-        </Link>
-      </h1>
+    <div className={b('header-container')}>
+      <img src={globe} alt='blue-green-globe' />
+      <h1>wunderlist</h1>
+      <h3>find, save, and share your new favorite place</h3>
     </div>
   );
 }

@@ -12,12 +12,15 @@
 
     @media (min-width: 769px) {
       height: 100%;
-      width: 50%;
+      width: calc(100% - 532px);
     }
 
-    @media (min-width: 1025px) {
-      height: 100%;
-      width: 45%;
+    @media (min-width: 1601px) {
+      width: calc(100% - 1048px);
+    }
+
+    @media (min-width: 2101px) {
+      width: calc(100% - 1564px);
     }
   }
 }

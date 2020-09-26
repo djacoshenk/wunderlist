@@ -93,5 +93,9 @@
 
   &__phone-number-row {
     display: none;
+
+    @media (min-width: 769px) {
+      display: block;
+    }
   }
 }

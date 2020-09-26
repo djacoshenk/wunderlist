@@ -16,13 +16,16 @@
     @media (min-width: 769px) {
       grid-template-columns: repeat(auto-fit, 500px);
       height: 100%;
-      width: 50%;
+      width: 532px;
       padding-top: 0rem;
     }
 
-    @media (min-width: 1025px) {
-      height: 100%;
-      width: 55%;
+    @media (min-width: 1601px) {
+      width: 1048px;
+    }
+
+    @media (min-width: 2101px) {
+      width: 1564px;
     }
   }
 
