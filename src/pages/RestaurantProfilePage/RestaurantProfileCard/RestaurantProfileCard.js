@@ -57,7 +57,11 @@ export default function RestaurantProfileCard({ place, reviews }) {
           <div className={b('restaurant-prof-price-category')}>
             <p>
               {place.price != null ? `${place.price} \u2022` : null}{' '}
-              {place.categories[0].title}
+              {place.categories
+                .map((tag) => {
+                  return tag.title;
+                })
+                .join(', ')}
             </p>
           </div>
           {place.display_phone !== '' ? (
