@@ -9,14 +9,12 @@ import './GoogleMap.scss';
 
 GoogleMap.propTypes = {
   places: PropTypes.arrayOf(PropTypes.object),
-  hoverID: PropTypes.string,
   mapKey: PropTypes.number,
-  handleHover: PropTypes.func,
 };
 
 const b = block('RestaurantSearchPage');
 
-export default function GoogleMap({ places, hoverID, mapKey, handleHover }) {
+export default function GoogleMap({ places, mapKey }) {
   const defaultCenter = {
     lat: 0,
     lng: 0,
@@ -59,10 +57,7 @@ export default function GoogleMap({ places, hoverID, mapKey, handleHover }) {
               lat={place.coordinates.latitude}
               lng={place.coordinates.longitude}
               key={place.id}
-              id={place.id}
               text={index + 1}
-              hoverID={hoverID}
-              handleHover={handleHover}
             />
           );
         })}

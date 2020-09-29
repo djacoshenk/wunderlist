@@ -33,6 +33,7 @@ RestaurantProfileCard.propTypes = {
 const b = block('RestaurantProfilePage');
 
 export default function RestaurantProfileCard({ place, reviews }) {
+  const nameString = place.name.split(' ').join('+');
   const addressArray = place.location.display_address;
   const addressString = addressArray.join(' ').split(' ').join('+');
 
@@ -76,7 +77,7 @@ export default function RestaurantProfileCard({ place, reviews }) {
             <div className={b('restaurant-prof-directions-btn')}>
               <Link
                 to={{
-                  pathname: `https://www.google.com/maps/place/${addressString}`,
+                  pathname: `https://www.google.com/maps/search/?api=1&query=${nameString}%2C+${addressString}`,
                 }}
                 target='_blank'
               >

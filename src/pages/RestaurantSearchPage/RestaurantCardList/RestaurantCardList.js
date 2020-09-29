@@ -10,7 +10,6 @@ import './RestaurantCardList.scss';
 RestaurantCardList.propTypes = {
   places: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
       alias: PropTypes.string,
       image: PropTypes.string,
       rank: PropTypes.number,
@@ -24,7 +23,6 @@ RestaurantCardList.propTypes = {
     })
   ),
   searchParams: PropTypes.objectOf(PropTypes.string),
-  handleHover: PropTypes.func,
   fetchMorePlaces: PropTypes.func,
 };
 
@@ -33,7 +31,6 @@ const b = block('RestaurantSearchPage');
 export default function RestaurantCardList({
   places,
   searchParams,
-  handleHover,
   fetchMorePlaces,
 }) {
   const obs = new IntersectionObserver(
@@ -70,8 +67,6 @@ export default function RestaurantCardList({
         return (
           <RestaurantCard
             key={place.id}
-            handleHover={handleHover}
-            id={place.id}
             alias={place.alias}
             image={place.image_url}
             rank={index + 1}

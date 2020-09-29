@@ -8,8 +8,6 @@ import RestaurantCardStars from '../RestaurantCardStars/RestaurantCardStars';
 import './RestaurantCard.scss';
 
 RestaurantCard.propTypes = {
-  handleHover: PropTypes.func,
-  id: PropTypes.string,
   alias: PropTypes.string,
   image: PropTypes.string,
   rank: PropTypes.number,
@@ -25,8 +23,6 @@ RestaurantCard.propTypes = {
 const b = block('RestaurantSearchPage');
 
 export default function RestaurantCard({
-  handleHover,
-  id,
   alias,
   image,
   rank,
@@ -38,19 +34,8 @@ export default function RestaurantCard({
   phone,
   address,
 }) {
-  function hover(e) {
-    const { id } = e.target;
-
-    handleHover(e, id);
-  }
-
   return (
-    <div
-      className={b('card-container')}
-      id={id}
-      onMouseEnter={hover}
-      onMouseLeave={hover}
-    >
+    <div className={b('card-container')}>
       <div className={b('image-container')}>
         <img src={image} alt='' />
       </div>
@@ -59,7 +44,7 @@ export default function RestaurantCard({
           <h3>
             {rank}.{' '}
             <Link
-              to={{ pathname: `/search/${alias}`, title: title }}
+              to={{ pathname: `/search/${alias}` }}
               className={b('card-title-link')}
             >
               {title}
