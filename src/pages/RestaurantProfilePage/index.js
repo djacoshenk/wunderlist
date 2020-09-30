@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './Header/Header';
@@ -9,9 +9,6 @@ import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard
 
 export default function RestaurantProfilePage() {
   const { alias } = useParams();
-  const {
-    state: { title },
-  } = useLocation();
   const [place, setPlace] = useState([]);
   const [showMainLoader, setShowMainLoader] = useState(true);
   const [reviews, setReviews] = useState(null);
@@ -55,7 +52,7 @@ export default function RestaurantProfilePage() {
       <Header />
       <RestaurantSearchBar />
       {showMainLoader ? (
-        <RestaurantProfileLoader title={title} />
+        <RestaurantProfileLoader />
       ) : (
         <RestaurantProfileCard place={place} reviews={reviews} />
       )}

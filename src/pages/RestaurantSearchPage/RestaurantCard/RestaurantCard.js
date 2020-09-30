@@ -35,42 +35,43 @@ export default function RestaurantCard({
   address,
 }) {
   return (
-    <div className={b('card-container')}>
-      <div className={b('image-container')}>
-        <img src={image} alt='' />
-      </div>
-      <div className={b('content-container')}>
-        <div className={b('title-row')}>
-          <h3>
-            {rank}.{' '}
-            <Link
-              to={{ pathname: `/business/${alias}`, state: { title: title } }}
-              className={b('card-title-link')}
-            >
-              {title}
-            </Link>
-          </h3>
+    <Link
+      to={{ pathname: `/business/${alias}`, state: { title: title } }}
+      className={b('card-container-link')}
+    >
+      <div className={b('card-container')}>
+        <div className={b('image-container')}>
+          <img src={image} alt='' />
         </div>
-        <div className={b('ratings-row')}>
-          <div className={b('stars-container')}>
-            <RestaurantCardStars rating={rating} />
+        <div className={b('content-container')}>
+          <div className={b('title-row')}>
+            <h3>
+              {rank}. {title}
+            </h3>
           </div>
-          <p>{review_count}</p>
-        </div>
-        <div className={b('price-category-row')}>
-          <p>
-            {price != null ? `${price} \u2022` : null} {tags[0].title}
-          </p>
-        </div>
-        <div className={b('phone-number-row')}>
-          <p>{phone}</p>
-        </div>
-        <div className={b('address-row')}>
-          {address.map((adrs, index) => {
-            return <p key={index}>{adrs}</p>;
-          })}
+          <div className={b('ratings-row')}>
+            <div className={b('stars-container')}>
+              <RestaurantCardStars rating={rating} />
+            </div>
+            <p>{review_count}</p>
+          </div>
+          <div className={b('price-category-row')}>
+            <p>
+              {price != null ? `${price} \u2022` : null} {tags[0].title}
+            </p>
+          </div>
+          {phone !== '' ? (
+            <div className={b('phone-number-row')}>
+              <p>{phone}</p>
+            </div>
+          ) : null}
+          <div className={b('address-row')}>
+            {address.map((adrs, index) => {
+              return <p key={index}>{adrs}</p>;
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

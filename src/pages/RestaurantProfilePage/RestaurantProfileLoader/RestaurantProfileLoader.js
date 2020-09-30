@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { block } from 'bem-cn';
 
 import RestaurantProfileLoaderBubbles from '../RestaurantProfileLoaderBubbles/RestaurantProfileLoaderBubbles';
@@ -8,15 +7,10 @@ import './RestaurantProfileLoader.scss';
 
 const b = block('RestaurantProfilePage');
 
-RestaurantProfileLoader.propTypes = {
-  title: PropTypes.string,
-};
-
-export default function RestaurantProfileLoader({ title }) {
+export default function RestaurantProfileLoader() {
   return (
     <Fragment>
       <div className={b('restaurant-prof-loader')}>
-        <h3>Finding you more on {title}</h3>
         <div className={b('restaurant-prof-bubble-loader')}>
           <RestaurantProfileLoaderBubbles />
         </div>
