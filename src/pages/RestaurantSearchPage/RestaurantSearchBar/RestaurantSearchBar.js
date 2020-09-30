@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import block from 'bem-cn';
 
-import './SearchRestaurantBar.scss';
+import './RestaurantSearchBar.scss';
 
 const b = block('RestaurantSearchPage');
 
@@ -19,7 +19,7 @@ export default function SearchRestaurantBar({ params, handleFormSubmit }) {
     term: params.term,
     location: params.location,
   });
-  const { term, location } = searchParams;
+  let { term, location } = searchParams;
 
   function onInputChange(e) {
     e.preventDefault();
@@ -34,6 +34,10 @@ export default function SearchRestaurantBar({ params, handleFormSubmit }) {
 
   function onFormSubmit(e) {
     e.preventDefault();
+
+    if (term === '') {
+      term = 'food';
+    }
 
     handleFormSubmit(term, location);
   }

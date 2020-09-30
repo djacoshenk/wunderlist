@@ -4,9 +4,9 @@ import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './Header/Header';
-import SearchRestaurantBar from './SearchRestaurantBar/SearchRestaurantBar';
+import RestaurantSearchBar from './RestaurantSearchBar/RestaurantSearchBar';
 import MainContent from './MainContent/MainContent';
-import SearchRestaurantLoader from './SearchRestaurantLoader/SearchRestaurantLoader';
+import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 
 export default function RestaurantSearchPage() {
   const [places, setPlaces] = useState([]);
@@ -87,12 +87,12 @@ export default function RestaurantSearchPage() {
   return (
     <Fragment>
       <Header />
-      <SearchRestaurantBar
+      <RestaurantSearchBar
         handleFormSubmit={handleFormSubmit}
         params={params}
       />
       {showLoader ? (
-        <SearchRestaurantLoader params={params} />
+        <RestaurantSearchLoader params={params} />
       ) : showMainContent ? (
         <MainContent
           places={places}

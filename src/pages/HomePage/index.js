@@ -2,7 +2,7 @@ import React from 'react';
 import { block } from 'bem-cn';
 
 import Header from './Header/Header';
-import SearchRestaurantBar from './SearchRestaurantBar/SearchRestaurantBar';
+import RestaurantSearchBar from './RestaurantSearchBar/RestaurantSearchBar';
 
 import './styles.scss';
 
@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div className={b('home-container')}>
       <Header />
-      <SearchRestaurantBar />
+      <RestaurantSearchBar />
     </div>
   );
 }

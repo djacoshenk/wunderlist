@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import block from 'bem-cn';
 
-import SearchRestaurantLoaderBubbles from '../SearchRestaurantLoaderBubbles/SearchRestaurantLoaderBubbles';
+import RestaurantSearchLoaderBubbles from '../RestaurantSearchLoaderBubbles/RestaurantSearchLoaderBubbles';
 
-import './SearchRestaurantLoader.scss';
+import './RestaurantSearchLoader.scss';
 
 SearchRestaurantLoader.propTypes = {
   params: PropTypes.shape({
@@ -25,7 +25,7 @@ export default function SearchRestaurantLoader({ params }) {
           Finding you the best {term} in {location}
         </h3>
         <div className={b('main-content-bubble-loader')}>
-          <SearchRestaurantLoaderBubbles />
+          <RestaurantSearchLoaderBubbles />
         </div>
       </div>
     </Fragment>

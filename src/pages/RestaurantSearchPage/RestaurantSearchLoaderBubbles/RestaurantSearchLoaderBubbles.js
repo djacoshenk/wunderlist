@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import block from 'bem-cn';
 
-import './SearchRestaurantLoaderBubbles.scss';
+import './RestaurantSearchLoaderBubbles.scss';
 
 const b = block('RestaurantSearchPage');
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import block from 'bem-cn';
 
-import './SearchRestaurantBar.scss';
+import './RestaurantSearchBar.scss';
 
 const b = block('HomePage');
 
@@ -12,7 +12,7 @@ export default function SearchRestaurantBar() {
     location: 'Los Angeles, CA',
   });
   const history = useHistory();
-  const { term, location } = searchParams;
+  let { term, location } = searchParams;
 
   function onInputChange(e) {
     e.preventDefault();
@@ -27,6 +27,10 @@ export default function SearchRestaurantBar() {
 
   function onFormSubmit(e) {
     e.preventDefault();
+
+    if (term === '') {
+      term = 'food';
+    }
 
     history.push(`/search/${term}/${location}`);
   }

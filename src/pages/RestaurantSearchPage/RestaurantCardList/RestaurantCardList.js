@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import block from 'bem-cn';
 
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
-import SearchRestaurantLoaderBubbles from '../SearchRestaurantLoaderBubbles/SearchRestaurantLoaderBubbles';
+import RestaurantSearchLoaderBubbles from '../RestaurantSearchLoaderBubbles/RestaurantSearchLoaderBubbles';
 
 import './RestaurantCardList.scss';
 
@@ -81,7 +81,7 @@ export default function RestaurantCardList({
         );
       })}
       <div ref={setLoadRef} className={b('card-list-bubble-loader')}>
-        <SearchRestaurantLoaderBubbles />
+        <RestaurantSearchLoaderBubbles />
       </div>
     </div>
   );
