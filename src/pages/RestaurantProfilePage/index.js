@@ -1,21 +1,25 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
+
+import Header from './Header/Header';
+import RestaurantSearchBar from './RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
-import './styles.scss';
-
 export default function RestaurantProfilePage() {
-  const params = useParams();
+  const { alias } = useParams();
+  const {
+    state: { title },
+  } = useLocation();
   const [place, setPlace] = useState([]);
   const [showMainLoader, setShowMainLoader] = useState(true);
   const [reviews, setReviews] = useState(null);
 
   useEffect(() => {
-    async function fetchPlace(slug) {
+    async function fetchPlace(alias) {
       const res = await axios.get(
-        `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${slug}`,
+        `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${alias}`,
         {
           headers: {
             Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
@@ -23,9 +27,9 @@ export default function RestaurantProfilePage() {
         }
       );
 
-      async function fetchReviews(slug) {
+      async function fetchReviews(alias) {
         const res = await axios.get(
-          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${slug}/reviews`,
+          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${alias}/reviews`,
           {
             headers: {
               Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
@@ -38,18 +42,20 @@ export default function RestaurantProfilePage() {
         setShowMainLoader(false);
       }
 
-      fetchReviews(params.slug);
+      fetchReviews(alias);
 
       setPlace(res.data);
     }
 
-    fetchPlace(params.slug);
-  }, [params.slug]);
+    fetchPlace(alias);
+  }, [alias]);
 
   return (
     <Fragment>
+      <Header />
+      <RestaurantSearchBar />
       {showMainLoader ? (
-        <RestaurantProfileLoader />
+        <RestaurantProfileLoader title={title} />
       ) : (
         <RestaurantProfileCard place={place} reviews={reviews} />
       )}

@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -7,38 +8,19 @@ import SearchRestaurantBar from './SearchRestaurantBar/SearchRestaurantBar';
 import MainContent from './MainContent/MainContent';
 import SearchRestaurantLoader from './SearchRestaurantLoader/SearchRestaurantLoader';
 
-import './styles.scss';
-
 export default function RestaurantSearchPage() {
-  const [searchParams, setSearchParams] = useState({
-    term: '',
-    location: 'Los Angeles, CA',
-  });
   const [places, setPlaces] = useState([]);
   const [showMainContent, setShowMainContent] = useState(false);
-  const [showLoader, setShowLoader] = useState(false);
-  const [hoverID, setHoverID] = useState('');
+  const [showLoader, setShowLoader] = useState(true);
   const [mapKey, setMapKey] = useState(0);
+  const params = useParams();
+  const history = useHistory();
 
   let offset = 10;
 
-  function handleChange(name, value) {
-    setSearchParams((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  }
-
-  function handleSubmit() {
-    // remove main content
-    setShowMainContent(false);
-
-    // show loader
-    setShowLoader(true);
-
-    // fetch data
-    fetchPlaces(searchParams);
-  }
+  useEffect(() => {
+    fetchPlaces(params);
+  }, [params]);
 
   async function fetchPlaces({ term, location }) {
     const res = await axios.get(
@@ -92,31 +74,30 @@ export default function RestaurantSearchPage() {
     });
   }
 
-  function handleHover(e, id) {
-    if (e.type === 'mouseenter') {
-      setHoverID(id);
-    } else if (e.type === 'mouseleave') {
-      setHoverID('');
-    }
+  function handleFormSubmit(term, location) {
+    // remove main content
+    setShowMainContent(false);
+
+    // show main content loader
+    setShowLoader(true);
+
+    history.push(`/search/${term}/${location}`);
   }
 
   return (
     <Fragment>
       <Header />
       <SearchRestaurantBar
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        searchParams={searchParams}
+        handleFormSubmit={handleFormSubmit}
+        params={params}
       />
       {showLoader ? (
-        <SearchRestaurantLoader searchParams={searchParams} />
+        <SearchRestaurantLoader params={params} />
       ) : showMainContent ? (
         <MainContent
           places={places}
-          hoverID={hoverID}
-          handleHover={handleHover}
           mapKey={mapKey}
-          searchParams={searchParams}
+          params={params}
           fetchMorePlaces={fetchMorePlaces}
         />
       ) : null}

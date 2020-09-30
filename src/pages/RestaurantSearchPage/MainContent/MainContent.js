@@ -10,7 +10,7 @@ import './MainContent.scss';
 MainContent.propTypes = {
   places: PropTypes.arrayOf(PropTypes.object),
   mapKey: PropTypes.number,
-  searchParams: PropTypes.objectOf(PropTypes.string),
+  params: PropTypes.objectOf(PropTypes.string),
   fetchMorePlaces: PropTypes.func,
 };
 
@@ -19,7 +19,7 @@ const b = block('RestaurantSearchPage');
 export default function MainContent({
   places,
   mapKey,
-  searchParams,
+  params,
   fetchMorePlaces,
 }) {
   return (
@@ -27,7 +27,7 @@ export default function MainContent({
       <GoogleMap places={places} mapKey={mapKey} />
       <RestaurantCardList
         places={places}
-        searchParams={searchParams}
+        params={params}
         fetchMorePlaces={fetchMorePlaces}
       />
     </div>

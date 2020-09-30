@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { block } from 'bem-cn';
 
 import Header from './Header/Header';
+import SearchRestaurantBar from './SearchRestaurantBar/SearchRestaurantBar';
 
 import './styles.scss';
 
@@ -12,9 +12,7 @@ export default function HomePage() {
   return (
     <div className={b('home-container')}>
       <Header />
-      <Link to='/search'>
-        <button>Get Started</button>
-      </Link>
+      <SearchRestaurantBar />
     </div>
   );
 }

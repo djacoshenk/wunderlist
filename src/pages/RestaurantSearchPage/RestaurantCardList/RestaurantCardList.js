@@ -22,7 +22,7 @@ RestaurantCardList.propTypes = {
       address: PropTypes.arrayOf(PropTypes.string),
     })
   ),
-  searchParams: PropTypes.objectOf(PropTypes.string),
+  params: PropTypes.objectOf(PropTypes.string),
   fetchMorePlaces: PropTypes.func,
 };
 
@@ -30,7 +30,7 @@ const b = block('RestaurantSearchPage');
 
 export default function RestaurantCardList({
   places,
-  searchParams,
+  params,
   fetchMorePlaces,
 }) {
   const obs = new IntersectionObserver(
@@ -38,7 +38,7 @@ export default function RestaurantCardList({
       const first = entries[0];
 
       if (first.isIntersecting) {
-        fetchMorePlaces(searchParams);
+        fetchMorePlaces(params);
       }
     },
     { threshold: 0 }

@@ -44,7 +44,7 @@ export default function RestaurantCard({
           <h3>
             {rank}.{' '}
             <Link
-              to={{ pathname: `/search/${alias}` }}
+              to={{ pathname: `/business/${alias}`, state: { title: title } }}
               className={b('card-title-link')}
             >
               {title}

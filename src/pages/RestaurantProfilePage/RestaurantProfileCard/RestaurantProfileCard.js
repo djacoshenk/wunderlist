@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import block from 'bem-cn';
 
-import Header from '../Header/Header';
 import RestaurantProfileStars from '../RestaurantProfileStars/RestaurantProfileStars';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
@@ -39,7 +38,6 @@ export default function RestaurantProfileCard({ place, reviews }) {
 
   return (
     <Fragment>
-      <Header />
       <div className={b('restaurant-prof-card')}>
         <div className={b('restaurant-prof-images')}>
           {place.photos.map((photo, index) => {

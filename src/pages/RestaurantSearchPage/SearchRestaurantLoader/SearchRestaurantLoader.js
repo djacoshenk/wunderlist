@@ -7,17 +7,22 @@ import SearchRestaurantLoaderBubbles from '../SearchRestaurantLoaderBubbles/Sear
 import './SearchRestaurantLoader.scss';
 
 SearchRestaurantLoader.propTypes = {
-  searchParams: PropTypes.objectOf(PropTypes.string),
+  params: PropTypes.shape({
+    term: PropTypes.string,
+    location: PropTypes.string,
+  }),
 };
 
 const b = block('RestaurantSearchPage');
 
-export default function SearchRestaurantLoader({ searchParams }) {
+export default function SearchRestaurantLoader({ params }) {
+  const { term, location } = params;
+
   return (
     <Fragment>
       <div className={b('main-content-loader')}>
         <h3>
-          Finding you the best {searchParams.term} in {searchParams.location}
+          Finding you the best {term} in {location}
         </h3>
         <div className={b('main-content-bubble-loader')}>
           <SearchRestaurantLoaderBubbles />

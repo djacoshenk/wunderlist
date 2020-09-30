@@ -1,24 +1,17 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import block from 'bem-cn';
 
-import './SearchRestaurantBar.scss';
+import './RestaurantSearchBar.scss';
 
-const b = block('RestaurantSearchPage');
+const b = block('HomePage');
 
-SearchRestaurantBar.propTypes = {
-  params: PropTypes.shape({
-    term: PropTypes.string,
-    location: PropTypes.string,
-  }),
-  handleFormSubmit: PropTypes.func,
-};
-
-export default function SearchRestaurantBar({ params, handleFormSubmit }) {
+export default function SearchRestaurantBar() {
   const [searchParams, setSearchParams] = useState({
-    term: params.term,
-    location: params.location,
+    term: '',
+    location: 'Los Angeles, CA',
   });
+  const history = useHistory();
   const { term, location } = searchParams;
 
   function onInputChange(e) {
@@ -35,7 +28,7 @@ export default function SearchRestaurantBar({ params, handleFormSubmit }) {
   function onFormSubmit(e) {
     e.preventDefault();
 
-    handleFormSubmit(term, location);
+    history.push(`/search/${term}/${location}`);
   }
 
   return (

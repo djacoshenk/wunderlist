@@ -8,6 +8,10 @@
     width: 100%;
     padding: 1rem 1rem 0rem 1rem;
 
+    @media (min-width: 481px) {
+      padding: 0rem 1rem;
+    }
+
     @media (min-width: 1201px) {
       justify-content: center;
       padding-left: 10rem;
