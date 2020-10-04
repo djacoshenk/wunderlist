@@ -28,11 +28,20 @@ export default function SearchRestaurantBar() {
   function onFormSubmit(e) {
     e.preventDefault();
 
-    if (term === '') {
-      term = 'food';
+    function formatLocationForUrl(loc) {
+      return loc
+        .toLowerCase()
+        .split('')
+        .filter((val) => val !== ',')
+        .map((val) => (val === ' ' ? '-' : val))
+        .join('');
     }
 
-    history.push(`/search/${term}/${location}`);
+    location = formatLocationForUrl(location);
+
+    if (term) {
+      history.push(`/search/${term}/${location}`);
+    }
   }
 
   return (

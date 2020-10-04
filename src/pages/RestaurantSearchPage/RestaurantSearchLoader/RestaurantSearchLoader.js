@@ -7,17 +7,13 @@ import RestaurantSearchLoaderBubbles from '../RestaurantSearchLoaderBubbles/Rest
 import './RestaurantSearchLoader.scss';
 
 SearchRestaurantLoader.propTypes = {
-  params: PropTypes.shape({
-    term: PropTypes.string,
-    location: PropTypes.string,
-  }),
+  term: PropTypes.string,
+  location: PropTypes.string,
 };
 
 const b = block('RestaurantSearchPage');
 
-export default function SearchRestaurantLoader({ params }) {
-  const { term, location } = params;
-
+export default function SearchRestaurantLoader({ term, location }) {
   return (
     <Fragment>
       <div className={b('main-content-loader')}>

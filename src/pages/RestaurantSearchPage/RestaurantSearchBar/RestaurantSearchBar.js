@@ -7,19 +7,20 @@ import './RestaurantSearchBar.scss';
 const b = block('RestaurantSearchPage');
 
 SearchRestaurantBar.propTypes = {
-  params: PropTypes.shape({
-    term: PropTypes.string,
-    location: PropTypes.string,
-  }),
+  term: PropTypes.string,
+  location: PropTypes.string,
   handleFormSubmit: PropTypes.func,
 };
 
-export default function SearchRestaurantBar({ params, handleFormSubmit }) {
+export default function SearchRestaurantBar({
+  term,
+  location,
+  handleFormSubmit,
+}) {
   const [searchParams, setSearchParams] = useState({
-    term: params.term,
-    location: params.location,
+    term: term,
+    location: location,
   });
-  let { term, location } = searchParams;
 
   function onInputChange(e) {
     e.preventDefault();
@@ -35,11 +36,9 @@ export default function SearchRestaurantBar({ params, handleFormSubmit }) {
   function onFormSubmit(e) {
     e.preventDefault();
 
-    if (term === '') {
-      term = 'food';
+    if (searchParams.term) {
+      handleFormSubmit(searchParams);
     }
-
-    handleFormSubmit(term, location);
   }
 
   return (
@@ -52,7 +51,7 @@ export default function SearchRestaurantBar({ params, handleFormSubmit }) {
             id='term'
             name='term'
             placeholder='pizza, sushi, cocktail bar...'
-            value={term}
+            value={searchParams.term}
             onChange={onInputChange}
           />
         </label>
@@ -63,7 +62,7 @@ export default function SearchRestaurantBar({ params, handleFormSubmit }) {
             id='location'
             name='location'
             placeholder='Los Angeles, CA'
-            value={location}
+            value={searchParams.location}
             onChange={onInputChange}
           />
         </label>

@@ -14,6 +14,7 @@ export default function RestaurantSearchPage() {
   const [showLoader, setShowLoader] = useState(true);
   const [mapKey, setMapKey] = useState(0);
   const params = useParams();
+  let { term, location } = params;
   const history = useHistory();
 
   let offset = 10;
@@ -74,25 +75,58 @@ export default function RestaurantSearchPage() {
     });
   }
 
-  function handleFormSubmit(term, location) {
+  function handleFormSubmit(params) {
     // remove main content
     setShowMainContent(false);
 
     // show main content loader
     setShowLoader(true);
 
+    function formatLocationForUrl(loc) {
+      return loc
+        .toLowerCase()
+        .split('')
+        .filter((val) => val !== ',')
+        .map((val) => (val === ' ' ? '-' : val))
+        .join('');
+    }
+
+    location = formatLocationForUrl(params.location);
+
     history.push(`/search/${term}/${location}`);
   }
+
+  function formatLocationParams(loc) {
+    loc = loc.split('');
+    loc.splice(loc.length - 3, 0, ',');
+
+    for (let i = 0; i < loc.length; i++) {
+      if (i === 0) {
+        loc[i] = loc[i].toUpperCase();
+      } else if (loc[i] === '-') {
+        loc[i] = ' ';
+      } else if (loc[i - 1] === ' ') {
+        loc[i] = loc[i].toUpperCase();
+      } else if (i === loc.length - 1) {
+        loc[i] = loc[i].toUpperCase();
+      }
+    }
+
+    return loc.join('');
+  }
+
+  location = formatLocationParams(location);
 
   return (
     <Fragment>
       <Header />
       <RestaurantSearchBar
         handleFormSubmit={handleFormSubmit}
-        params={params}
+        term={term}
+        location={location}
       />
       {showLoader ? (
-        <RestaurantSearchLoader params={params} />
+        <RestaurantSearchLoader term={term} location={location} />
       ) : showMainContent ? (
         <MainContent
           places={places}
