@@ -91,9 +91,9 @@ export default function RestaurantSearchPage() {
         .join('');
     }
 
-    location = formatLocationForUrl(params.location);
+    params.location = formatLocationForUrl(params.location);
 
-    history.push(`/search/${term}/${location}`);
+    history.push(`/search/${params.term}/${params.location}`);
   }
 
   function formatLocationParams(loc) {

@@ -11,7 +11,7 @@ export default function RestaurantProfilePage() {
   const { alias } = useParams();
   const [place, setPlace] = useState([]);
   const [showMainLoader, setShowMainLoader] = useState(true);
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     async function fetchPlace(alias) {
