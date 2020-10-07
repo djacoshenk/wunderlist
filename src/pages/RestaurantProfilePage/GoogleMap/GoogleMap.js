@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 import block from 'bem-cn';
 
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
+
+import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import './GoogleMap.scss';
 
@@ -19,7 +21,11 @@ GoogleMap.propTypes = {
 
 const b = block('RestaurantProfilePage');
 
-export default function GoogleMap({ place }) {
+export default function GoogleMap() {
+  const {
+    state: { place },
+  } = useContext(RestaurantProfileContext);
+
   const center = {
     lat: place.coordinates.latitude,
     lng: place.coordinates.longitude,
@@ -38,7 +44,6 @@ export default function GoogleMap({ place }) {
         <GoogleMapMarker
           lat={place.coordinates.latitude}
           lng={place.coordinates.longitude}
-          id={place.id}
         />
       </GoogleMapReact>
     </div>

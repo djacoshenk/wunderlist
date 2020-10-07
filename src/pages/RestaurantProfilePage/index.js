@@ -1,6 +1,7 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+
+import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
 import Header from './Header/Header';
 import RestaurantSearchBar from './RestaurantSearchBar/RestaurantSearchBar';
@@ -8,53 +9,27 @@ import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfile
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
 export default function RestaurantProfilePage() {
+  const { state, setMainLoader, fetchData } = useContext(
+    RestaurantProfileContext
+  );
   const { alias } = useParams();
-  const [place, setPlace] = useState([]);
-  const [showMainLoader, setShowMainLoader] = useState(true);
-  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    async function fetchPlace(alias) {
-      const res = await axios.get(
-        `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${alias}`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
-          },
-        }
-      );
+    // enable the main loader
+    setMainLoader();
 
-      async function fetchReviews(alias) {
-        const res = await axios.get(
-          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${alias}/reviews`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
-            },
-          }
-        );
-
-        setReviews(res.data.reviews);
-
-        setShowMainLoader(false);
-      }
-
-      fetchReviews(alias);
-
-      setPlace(res.data);
-    }
-
-    fetchPlace(alias);
-  }, [alias]);
+    // fetch data and disable the main loader
+    fetchData(alias);
+  }, [alias, setMainLoader, fetchData]);
 
   return (
     <Fragment>
       <Header />
       <RestaurantSearchBar />
-      {showMainLoader ? (
+      {state.showMainLoader ? (
         <RestaurantProfileLoader />
       ) : (
-        <RestaurantProfileCard place={place} reviews={reviews} />
+        <RestaurantProfileCard />
       )}
     </Fragment>
   );

@@ -82,7 +82,7 @@ export default function RestaurantSearchPage() {
     // show main content loader
     setShowLoader(true);
 
-    function formatLocationForUrl(loc) {
+    function formatForUrl(loc) {
       return loc
         .toLowerCase()
         .split('')
@@ -91,7 +91,9 @@ export default function RestaurantSearchPage() {
         .join('');
     }
 
-    params.location = formatLocationForUrl(params.location);
+    params.term = formatForUrl(params.term);
+
+    params.location = formatForUrl(params.location);
 
     history.push(`/search/${params.term}/${params.location}`);
   }

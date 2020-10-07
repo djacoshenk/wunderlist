@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import block from 'bem-cn';
@@ -6,6 +6,7 @@ import block from 'bem-cn';
 import RestaurantProfileStars from '../RestaurantProfileStars/RestaurantProfileStars';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
+import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import './RestaurantProfileCard.scss';
 
@@ -26,15 +27,22 @@ RestaurantProfileCard.propTypes = {
       display_address: PropTypes.arrayOf(PropTypes.string),
     }),
   }),
-  reviews: PropTypes.array,
 };
 
 const b = block('RestaurantProfilePage');
 
-export default function RestaurantProfileCard({ place, reviews }) {
-  const nameString = place.name.split(' ').join('+');
-  const addressArray = place.location.display_address;
-  const addressString = addressArray.join(' ').split(' ').join('+');
+export default function RestaurantProfileCard() {
+  const {
+    state: { place },
+  } = useContext(RestaurantProfileContext);
+
+  function formatNameForUrl() {
+    return place.name.split(' ').join('+');
+  }
+
+  function formatAddressForUrl() {
+    return place.location.display_address.join(' ').split(' ').join('+');
+  }
 
   return (
     <Fragment>
@@ -49,7 +57,7 @@ export default function RestaurantProfileCard({ place, reviews }) {
             <h3>{place.name}</h3>
           </div>
           <div className={b('restaurant-prof-stars-reviews')}>
-            <RestaurantProfileStars rating={place.rating} />
+            <RestaurantProfileStars />
             <p>{place.review_count} Reviews</p>
           </div>
           <div className={b('restaurant-prof-price-category')}>
@@ -75,11 +83,11 @@ export default function RestaurantProfileCard({ place, reviews }) {
         </div>
         <div className={b('restaurant-prof-map-reviews')}>
           <div className={b('restaurant-prof-map-directions')}>
-            <GoogleMap place={place} />
+            <GoogleMap />
             <div className={b('restaurant-prof-directions-btn')}>
               <Link
                 to={{
-                  pathname: `https://www.google.com/maps/search/?api=1&query=${nameString}%2C+${addressString}`,
+                  pathname: `https://www.google.com/maps/search/?api=1&query=${formatNameForUrl()}%2C+${formatAddressForUrl()}`,
                 }}
                 target='_blank'
               >
@@ -88,7 +96,7 @@ export default function RestaurantProfileCard({ place, reviews }) {
             </div>
           </div>
           <div className={b('restaurant-prof-reviews-container')}>
-            <RestaurantProfileCardReviews reviews={reviews} />
+            <RestaurantProfileCardReviews />
           </div>
         </div>
       </div>

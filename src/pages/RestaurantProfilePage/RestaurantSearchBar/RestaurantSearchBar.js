@@ -12,7 +12,6 @@ export default function SearchRestaurantBar() {
     location: 'Los Angeles, CA',
   });
   const history = useHistory();
-  let { term, location } = searchParams;
 
   function onInputChange(e) {
     e.preventDefault();
@@ -28,7 +27,9 @@ export default function SearchRestaurantBar() {
   function onFormSubmit(e) {
     e.preventDefault();
 
-    function formatLocationForUrl(loc) {
+    let { term, location } = searchParams;
+
+    function formatForUrl(loc) {
       return loc
         .toLowerCase()
         .split('')
@@ -37,7 +38,9 @@ export default function SearchRestaurantBar() {
         .join('');
     }
 
-    location = formatLocationForUrl(location);
+    term = formatForUrl(term);
+
+    location = formatForUrl(location);
 
     if (term) {
       history.push(`/search/${term}/${location}`);
@@ -54,7 +57,7 @@ export default function SearchRestaurantBar() {
             id='term'
             name='term'
             placeholder='pizza, sushi, cocktail bar...'
-            value={term}
+            value={searchParams.term}
             onChange={onInputChange}
           />
         </label>
@@ -65,7 +68,7 @@ export default function SearchRestaurantBar() {
             id='location'
             name='location'
             placeholder='Los Angeles, CA'
-            value={location}
+            value={searchParams.location}
             onChange={onInputChange}
           />
         </label>
