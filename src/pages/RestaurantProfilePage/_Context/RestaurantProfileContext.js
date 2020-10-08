@@ -14,18 +14,13 @@ const ACTIONS = {
 // create a reducer function
 export function reducer(state, action) {
   if (action.type === ACTIONS.SHOW_MAIN_LOADER) {
-    return { ...state, showMainLoader: true };
+    return { ...state, ...action.payload };
   } else if (action.type === ACTIONS.HANDLE_FETCH_DATA) {
-    return {
-      ...state,
-      place: action.payload.place,
-      reviews: action.payload.reviews,
-      showMainLoader: false,
-    };
+    return { ...state, ...action.payload };
   } else if (action.typee === ACTIONS.SET_ERROR) {
-    return { ...state, error: action.payload };
+    return { ...state, ...action.payload };
   } else {
-    throw new Error();
+    return state;
   }
 }
 
@@ -45,18 +40,16 @@ export function RestaurantProfileProvider({ children }) {
   function showMainLoader() {
     dispatch({
       type: ACTIONS.SHOW_MAIN_LOADER,
+      payload: {
+        showMainLoader: true,
+      },
     });
   }
 
   async function fetchData(alias) {
     try {
-      const res = {
-        place: null,
-        reviews: null,
-      };
-
       // fetch data on place
-      res.place = await axios.get(
+      const placeRes = await axios.get(
         `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${alias}`,
         {
           headers: {
@@ -66,7 +59,7 @@ export function RestaurantProfileProvider({ children }) {
       );
 
       // fetch data on reviews
-      res.reviews = await axios.get(
+      const reviewsRes = await axios.get(
         `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/${alias}/reviews`,
         {
           headers: {
@@ -75,17 +68,21 @@ export function RestaurantProfileProvider({ children }) {
         }
       );
 
-      const { place, reviews } = res;
-
       dispatch({
         type: ACTIONS.HANDLE_FETCH_DATA,
         payload: {
-          place: place.data,
-          reviews: reviews.data,
+          place: placeRes.data,
+          reviews: reviewsRes.data,
+          showMainLoader: false,
         },
       });
     } catch (err) {
-      dispatch({ type: ACTIONS.SET_ERROR, payload: err });
+      dispatch({
+        type: ACTIONS.SET_ERROR,
+        payload: {
+          error: err,
+        },
+      });
     }
   }
 

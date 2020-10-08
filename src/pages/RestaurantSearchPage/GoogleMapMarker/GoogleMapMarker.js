@@ -5,9 +5,6 @@ import './GoogleMapMarker.scss';
 
 GoogleMapMarker.propTypes = {
   text: PropTypes.number,
-  id: PropTypes.string,
-  hoverID: PropTypes.string,
-  handleHover: PropTypes.func,
 };
 
 export default function GoogleMapMarker({ text }) {

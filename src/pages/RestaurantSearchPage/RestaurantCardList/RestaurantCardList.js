@@ -1,38 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import block from 'bem-cn';
 
+import { RestaurantSearchContext } from '../_Context/RestaurantSearchContext';
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
 import RestaurantSearchLoaderBubbles from '../RestaurantSearchLoaderBubbles/RestaurantSearchLoaderBubbles';
 
 import './RestaurantCardList.scss';
 
-RestaurantCardList.propTypes = {
-  places: PropTypes.arrayOf(
-    PropTypes.shape({
-      alias: PropTypes.string,
-      image: PropTypes.string,
-      rank: PropTypes.number,
-      title: PropTypes.string,
-      rating: PropTypes.number,
-      review_count: PropTypes.number,
-      price: PropTypes.string,
-      tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-      phone: PropTypes.string,
-      address: PropTypes.arrayOf(PropTypes.string),
-    })
-  ),
-  params: PropTypes.objectOf(PropTypes.string),
-  fetchMorePlaces: PropTypes.func,
-};
-
 const b = block('RestaurantSearchPage');
 
-export default function RestaurantCardList({
-  places,
-  params,
-  fetchMorePlaces,
-}) {
+export default function RestaurantCardList() {
+  const { state, fetchMorePlaces } = useContext(RestaurantSearchContext);
+  const params = useParams();
   const obs = new IntersectionObserver(
     (entries) => {
       const first = entries[0];
@@ -63,22 +43,8 @@ export default function RestaurantCardList({
 
   return (
     <div className={b('card-list-container')}>
-      {places.map((place, index) => {
-        return (
-          <RestaurantCard
-            key={place.id}
-            alias={place.alias}
-            image={place.image_url}
-            rank={index + 1}
-            title={place.name}
-            rating={place.rating}
-            review_count={place.review_count}
-            price={place.price}
-            tags={place.categories}
-            phone={place.display_phone}
-            address={place.location.display_address}
-          />
-        );
+      {state.places.map((place, index) => {
+        return <RestaurantCard key={place.id} place={place} index={index} />;
       })}
       <div ref={setLoadRef} className={b('card-list-bubble-loader')}>
         <RestaurantSearchLoaderBubbles />

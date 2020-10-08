@@ -8,65 +8,60 @@ import RestaurantCardStars from '../RestaurantCardStars/RestaurantCardStars';
 import './RestaurantCard.scss';
 
 RestaurantCard.propTypes = {
-  alias: PropTypes.string,
-  image: PropTypes.string,
-  rank: PropTypes.number,
-  title: PropTypes.string,
-  rating: PropTypes.number,
-  review_count: PropTypes.number,
-  price: PropTypes.string,
-  tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-  phone: PropTypes.string,
-  address: PropTypes.arrayOf(PropTypes.string),
+  place: PropTypes.shape({
+    alias: PropTypes.string,
+    image: PropTypes.string,
+    rank: PropTypes.number,
+    title: PropTypes.string,
+    rating: PropTypes.number,
+    review_count: PropTypes.number,
+    price: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    phone: PropTypes.string,
+    address: PropTypes.arrayOf(PropTypes.string),
+  }),
+  index: PropTypes.number,
 };
 
 const b = block('RestaurantSearchPage');
 
-export default function RestaurantCard({
-  alias,
-  image,
-  rank,
-  title,
-  rating,
-  review_count,
-  price,
-  tags,
-  phone,
-  address,
-}) {
+export default function RestaurantCard({ place, index }) {
   return (
     <Link
-      to={{ pathname: `/business/${alias}`, state: { title: title } }}
+      to={{
+        pathname: `/business/${place.alias}`,
+      }}
       className={b('card-container-link')}
     >
       <div className={b('card-container')}>
         <div className={b('image-container')}>
-          <img src={image} alt='' />
+          <img src={place.image_url} alt='' />
         </div>
         <div className={b('content-container')}>
           <div className={b('title-row')}>
             <h3>
-              {rank}. {title}
+              {index + 1}. {place.name}
             </h3>
           </div>
           <div className={b('ratings-row')}>
             <div className={b('stars-container')}>
-              <RestaurantCardStars rating={rating} />
+              <RestaurantCardStars rating={place.rating} />
             </div>
-            <p>{review_count}</p>
+            <p>{place.review_count}</p>
           </div>
           <div className={b('price-category-row')}>
             <p>
-              {price != null ? `${price} \u2022` : null} {tags[0].title}
+              {place.price != null ? `${place.price} \u2022` : null}{' '}
+              {place.categories[0].title}
             </p>
           </div>
-          {phone !== '' ? (
+          {place.phone !== '' ? (
             <div className={b('phone-number-row')}>
-              <p>{phone}</p>
+              <p>{place.display_phone}</p>
             </div>
           ) : null}
           <div className={b('address-row')}>
-            {address.map((adrs, index) => {
+            {place.location.display_address.map((adrs, index) => {
               return <p key={index}>{adrs}</p>;
             })}
           </div>
