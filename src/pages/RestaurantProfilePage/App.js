@@ -9,18 +9,18 @@ import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfile
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
 export default function App() {
-  const { state, setMainLoader, fetchData } = useContext(
+  const { state, showMainLoader, fetchData } = useContext(
     RestaurantProfileContext
   );
   const { alias } = useParams();
 
   useEffect(() => {
     // enable the main loader
-    setMainLoader();
+    showMainLoader();
 
     // fetch data and disable the main loader
     fetchData(alias);
-  }, [alias, setMainLoader, fetchData]);
+  }, []);
 
   return (
     <Fragment>

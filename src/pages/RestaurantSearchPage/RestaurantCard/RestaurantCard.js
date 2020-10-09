@@ -10,15 +10,16 @@ import './RestaurantCard.scss';
 RestaurantCard.propTypes = {
   place: PropTypes.shape({
     alias: PropTypes.string,
-    image: PropTypes.string,
-    rank: PropTypes.number,
-    title: PropTypes.string,
+    image_url: PropTypes.string,
+    name: PropTypes.string,
     rating: PropTypes.number,
     review_count: PropTypes.number,
     price: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-    phone: PropTypes.string,
-    address: PropTypes.arrayOf(PropTypes.string),
+    categories: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+    display_phone: PropTypes.string,
+    location: PropTypes.shape({
+      display_address: PropTypes.arrayOf(PropTypes.string),
+    }),
   }),
   index: PropTypes.number,
 };
@@ -26,6 +27,8 @@ RestaurantCard.propTypes = {
 const b = block('RestaurantSearchPage');
 
 export default function RestaurantCard({ place, index }) {
+  console.log(place);
+
   return (
     <Link
       to={{
@@ -55,7 +58,7 @@ export default function RestaurantCard({ place, index }) {
               {place.categories[0].title}
             </p>
           </div>
-          {place.phone !== '' ? (
+          {place.display_phone !== '' ? (
             <div className={b('phone-number-row')}>
               <p>{place.display_phone}</p>
             </div>

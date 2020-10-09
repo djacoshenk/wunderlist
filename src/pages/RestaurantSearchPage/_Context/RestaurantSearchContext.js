@@ -1,6 +1,11 @@
 import React, { createContext, useReducer } from 'react';
+import PropTypes from 'prop-types';
 
 import axios from 'axios';
+
+RestaurantSearchProvider.propTypes = {
+  children: PropTypes.object,
+};
 
 // create context
 export const RestaurantSearchContext = createContext();
@@ -15,11 +20,15 @@ const ACTIONS = {
 // reducer function
 function reducer(state, action) {
   if (action.type === ACTIONS.SHOW_MAIN_LOADER) {
-    return { ...state, ...action.payload };
+    return { ...state, showMainLoader: true };
   } else if (action.type === ACTIONS.FETCH_PLACES) {
-    return { ...state, ...action.payload };
+    return { ...state, places: action.payload, showMainLoader: false };
   } else if (action.type === ACTIONS.FETCH_MORE_PLACES) {
-    return { ...state, ...action.payload };
+    return {
+      ...state,
+      places: state.places.concat(action.payload),
+      mapKey: state.mapKey + 1,
+    };
   }
 }
 
@@ -31,19 +40,17 @@ const initialState = {
   errors: null,
 };
 
+let offset = 10;
+
 // provider function
 export function RestaurantSearchProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  let offset = 10;
-
   function showMainLoader() {
+    offset = 10;
+
     dispatch({
       type: ACTIONS.SHOW_MAIN_LOADER,
-      payload: {
-        showMainLoader: true,
-        offset: 10,
-      },
     });
   }
 
@@ -62,10 +69,7 @@ export function RestaurantSearchProvider({ children }) {
 
     dispatch({
       type: ACTIONS.FETCH_PLACES,
-      payload: {
-        places: res.data.businesses,
-        showMainLoader: false,
-      },
+      payload: res.data.businesses,
     });
   }
 
@@ -88,10 +92,7 @@ export function RestaurantSearchProvider({ children }) {
 
     dispatch({
       type: ACTIONS.FETCH_MORE_PLACES,
-      payload: {
-        places: state.places.concat(res.data.businesses),
-        mapKey: state.mapKey + 1,
-      },
+      payload: res.data.businesses,
     });
   }
 

@@ -1,12 +1,17 @@
 import React, { createContext, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
+
+RestaurantProfileProvider.propTypes = {
+  children: PropTypes.object,
+};
 
 // create context
 export const RestaurantProfileContext = createContext();
 
 // create an actions store
 const ACTIONS = {
-  SHOW_MAIN_LOADER: 'TOGGLE_MAIN_LOADER',
+  SHOW_MAIN_LOADER: 'SHOW_MAIN_LOADER',
   HANDLE_FETCH_DATA: 'HANDLE_FETCH_DATA',
   SET_ERROR: 'SET_ERROR',
 };
@@ -14,11 +19,16 @@ const ACTIONS = {
 // create a reducer function
 export function reducer(state, action) {
   if (action.type === ACTIONS.SHOW_MAIN_LOADER) {
-    return { ...state, ...action.payload };
+    return { ...state, showMainLoader: true };
   } else if (action.type === ACTIONS.HANDLE_FETCH_DATA) {
-    return { ...state, ...action.payload };
-  } else if (action.typee === ACTIONS.SET_ERROR) {
-    return { ...state, ...action.payload };
+    return {
+      ...state,
+      place: action.payload.place,
+      reviews: action.payload.reviews,
+      showMainLoader: false,
+    };
+  } else if (action.type === ACTIONS.SET_ERROR) {
+    return { ...state, error: action.payload };
   } else {
     return state;
   }
@@ -36,13 +46,12 @@ const initialState = {
 export function RestaurantProfileProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  console.log(typeof children);
+
   // function to show the main loader
   function showMainLoader() {
     dispatch({
       type: ACTIONS.SHOW_MAIN_LOADER,
-      payload: {
-        showMainLoader: true,
-      },
     });
   }
 
@@ -73,15 +82,12 @@ export function RestaurantProfileProvider({ children }) {
         payload: {
           place: placeRes.data,
           reviews: reviewsRes.data,
-          showMainLoader: false,
         },
       });
     } catch (err) {
       dispatch({
         type: ACTIONS.SET_ERROR,
-        payload: {
-          error: err,
-        },
+        payload: err,
       });
     }
   }
