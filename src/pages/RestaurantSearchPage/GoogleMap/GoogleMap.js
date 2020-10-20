@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import GoogleMapReact from 'google-map-react';
-import block from 'bem-cn';
 
 import { RestaurantSearchContext } from '../_Context/RestaurantSearchContext';
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
-import './GoogleMap.scss';
-
-const b = block('RestaurantSearchPage');
+import styles from './GoogleMap.module.scss';
 
 const defaultCenter = {
   lat: 0,
@@ -17,12 +14,14 @@ const defaultCenter = {
 const defaultZoom = 13;
 
 export default function GoogleMap() {
-  const { state } = useContext(RestaurantSearchContext);
+  const {
+    state: { places, mapKey },
+  } = useContext(RestaurantSearchContext);
 
   function getMapBounds(maps) {
     const bounds = new maps.LatLngBounds();
 
-    state.places.forEach((place) => {
+    places.forEach((place) => {
       bounds.extend(
         new maps.LatLng(place.coordinates.latitude, place.coordinates.longitude)
       );
@@ -38,9 +37,9 @@ export default function GoogleMap() {
   }
 
   return (
-    <div className={b('google-map-container')}>
+    <div className={styles['google-map-container']}>
       <GoogleMapReact
-        key={state.mapKey}
+        key={mapKey}
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}
         center={defaultCenter}
         zoom={defaultZoom}
@@ -48,7 +47,7 @@ export default function GoogleMap() {
         onGoogleApiLoaded={({ map, maps }) => handleMapBounds(map, maps)}
         options={{ gestureHandling: 'greedy' }}
       >
-        {state.places.map((place, index) => {
+        {places.map((place, index) => {
           return (
             <GoogleMapMarker
               lat={place.coordinates.latitude}

@@ -1,5 +1,11 @@
-.RestaurantSearchPage {
-  &__bubble {
+.restaurant-prof-bubble-loader {
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  .bubble {
     animation: expand 0.75s ease-in-out infinite;
     border-radius: 50%;
     display: inline-block;

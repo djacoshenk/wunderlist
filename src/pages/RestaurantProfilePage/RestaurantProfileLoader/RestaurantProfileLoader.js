@@ -1,20 +1,13 @@
-import React, { Fragment } from 'react';
-import { block } from 'bem-cn';
+import React from 'react';
 
-import RestaurantProfileLoaderBubbles from '../RestaurantProfileLoaderBubbles/RestaurantProfileLoaderBubbles';
+import RestaurantLoaderBubbles from '../../../components/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
-import './RestaurantProfileLoader.scss';
-
-const b = block('RestaurantProfilePage');
+import styles from './RestaurantProfileLoader.module.scss';
 
 export default function RestaurantProfileLoader() {
   return (
-    <Fragment>
-      <div className={b('restaurant-prof-loader')}>
-        <div className={b('restaurant-prof-bubble-loader')}>
-          <RestaurantProfileLoaderBubbles />
-        </div>
-      </div>
-    </Fragment>
+    <div className={styles['restaurant-prof-loader']}>
+      <RestaurantLoaderBubbles />
+    </div>
   );
 }

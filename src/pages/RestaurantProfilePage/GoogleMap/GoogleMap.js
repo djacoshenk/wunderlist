@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
-import block from 'bem-cn';
 
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
-
 import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
-import './GoogleMap.scss';
+import styles from './GoogleMap.module.scss';
 
 GoogleMap.propTypes = {
   place: PropTypes.shape({
@@ -18,8 +16,6 @@ GoogleMap.propTypes = {
     }),
   }),
 };
-
-const b = block('RestaurantProfilePage');
 
 export default function GoogleMap() {
   const {
@@ -34,7 +30,7 @@ export default function GoogleMap() {
   const zoom = 14;
 
   return (
-    <div className={b('google-map-container')}>
+    <div className={styles['google-map-container']}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}
         center={center}

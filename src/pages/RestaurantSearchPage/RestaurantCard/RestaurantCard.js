@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import block from 'bem-cn';
 
-import RestaurantCardStars from '../RestaurantCardStars/RestaurantCardStars';
+import RestaurantRatingStars from '../../../components/RestaurantRatingStars/RestaurantRatingStars';
 
-import './RestaurantCard.scss';
+import styles from './RestaurantCard.module.scss';
 
 RestaurantCard.propTypes = {
   place: PropTypes.shape({
@@ -24,46 +23,42 @@ RestaurantCard.propTypes = {
   index: PropTypes.number,
 };
 
-const b = block('RestaurantSearchPage');
-
 export default function RestaurantCard({ place, index }) {
-  console.log(place);
-
   return (
     <Link
       to={{
         pathname: `/business/${place.alias}`,
       }}
-      className={b('card-container-link')}
+      className={styles['card-container-link']}
     >
-      <div className={b('card-container')}>
-        <div className={b('image-container')}>
+      <div className={styles['card-container']}>
+        <div className={styles['image-container']}>
           <img src={place.image_url} alt='' />
         </div>
-        <div className={b('content-container')}>
-          <div className={b('title-row')}>
+        <div className={styles['content-container']}>
+          <div className={styles['title-row']}>
             <h3>
               {index + 1}. {place.name}
             </h3>
           </div>
-          <div className={b('ratings-row')}>
-            <div className={b('stars-container')}>
-              <RestaurantCardStars rating={place.rating} />
+          <div className={styles['ratings-row']}>
+            <div className={styles['stars-container']}>
+              <RestaurantRatingStars rating={place.rating} />
             </div>
             <p>{place.review_count}</p>
           </div>
-          <div className={b('price-category-row')}>
+          <div className={styles['price-category-row']}>
             <p>
-              {place.price != null ? `${place.price} \u2022` : null}{' '}
+              {place.price && `${place.price} \u2022` + ' '}
               {place.categories[0].title}
             </p>
           </div>
-          {place.display_phone !== '' ? (
-            <div className={b('phone-number-row')}>
+          {place.display_phone && (
+            <div className={styles['phone-number-row']}>
               <p>{place.display_phone}</p>
             </div>
-          ) : null}
-          <div className={b('address-row')}>
+          )}
+          <div className={styles['address-row']}>
             {place.location.display_address.map((adrs, index) => {
               return <p key={index}>{adrs}</p>;
             })}

@@ -4,19 +4,21 @@ import { useParams } from 'react-router-dom';
 import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
 import Header from './Header/Header';
-import RestaurantSearchBar from './RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
 export default function App() {
-  const { state, showMainLoader, fetchData } = useContext(
-    RestaurantProfileContext
-  );
   const { alias } = useParams();
+  const {
+    state: { showMainLoader },
+    toggleMainLoader,
+    fetchData,
+  } = useContext(RestaurantProfileContext);
 
   useEffect(() => {
     // enable the main loader
-    showMainLoader();
+    toggleMainLoader();
 
     // fetch data and disable the main loader
     fetchData(alias);
@@ -26,11 +28,7 @@ export default function App() {
     <Fragment>
       <Header />
       <RestaurantSearchBar />
-      {state.showMainLoader ? (
-        <RestaurantProfileLoader />
-      ) : (
-        <RestaurantProfileCard />
-      )}
+      {showMainLoader ? <RestaurantProfileLoader /> : <RestaurantProfileCard />}
     </Fragment>
   );
 }

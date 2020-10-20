@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import block from 'bem-cn';
 
-import './RestaurantSearchBar.scss';
-
-const b = block('RestaurantSearchPage');
+import styles from './RestaurantSearchBar.module.scss';
 
 export default function SearchRestaurantBar() {
   const history = useHistory();
@@ -29,25 +26,14 @@ export default function SearchRestaurantBar() {
 
     let { term, location } = searchParams;
 
-    term = formatForUrl(term);
-    location = formatForUrl(location);
-
-    history.push(`/search/${term}/${location}`);
-  }
-
-  // after form submit, format the param for the URL
-  function formatForUrl(param) {
-    return param
-      .toLowerCase()
-      .split('')
-      .filter((val) => val !== ',')
-      .map((val) => (val === ' ' ? '-' : val))
-      .join('');
+    if (term && location) {
+      history.push(`/search/${term}/${location}`);
+    }
   }
 
   return (
-    <div className={b('search-bar-container')}>
-      <form className={b('search-bar-form')} onSubmit={onFormSubmit}>
+    <div className={styles['search-bar-container']}>
+      <form className={styles['search-bar-form']} onSubmit={onFormSubmit}>
         <label htmlFor='term'>
           <div>Find</div>
           <input
@@ -71,7 +57,7 @@ export default function SearchRestaurantBar() {
           />
         </label>
         <button>
-          <i className='fas fa-search'></i>
+          <i className={'fas fa-search'}></i>
         </button>
       </form>
     </div>

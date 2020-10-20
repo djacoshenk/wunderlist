@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import block from 'bem-cn';
 
-import './Header.scss';
-
-const b = block('RestaurantSearchPage');
+import styles from './Header.module.scss';
 
 export default function Header() {
   return (
-    <div className={b('header-container')}>
+    <div className={styles['header-container']}>
       <h1>
-        <Link to='/' className='header-link'>
+        <Link to='/' className={styles['header-link']}>
           wunderlist
         </Link>
       </h1>

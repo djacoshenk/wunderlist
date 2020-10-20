@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './RestaurantCardStars.scss';
+import './RestaurantRatingStars.scss';
 
-RestaurantCardStars.propTypes = {
+RestaurantRatingStars.propTypes = {
   rating: PropTypes.number,
 };
 
-export default function RestaurantCardStars({ rating }) {
+export default function RestaurantRatingStars({ rating }) {
   const STARS = [0, 1, 2, 3, 4];
 
   const totalRating = STARS.map((n) => {

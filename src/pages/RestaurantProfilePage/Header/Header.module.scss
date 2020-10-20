@@ -1,0 +1,15 @@
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .header-link {
+    text-decoration: none;
+    color: #38b2ac;
+  }
+
+  img {
+    margin-right: 0.2rem;
+  }
+}

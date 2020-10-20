@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import block from 'bem-cn';
 
 import { RestaurantSearchContext } from '../_Context/RestaurantSearchContext';
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
-import RestaurantSearchLoaderBubbles from '../RestaurantSearchLoaderBubbles/RestaurantSearchLoaderBubbles';
+import RestaurantLoaderBubbles from '../../../components/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
-import './RestaurantCardList.scss';
-
-const b = block('RestaurantSearchPage');
+import styles from './RestaurantCardList.module.scss';
 
 export default function RestaurantCardList() {
   const { state, fetchMorePlaces } = useContext(RestaurantSearchContext);
@@ -42,12 +39,12 @@ export default function RestaurantCardList() {
   }, [loadRef]);
 
   return (
-    <div className={b('card-list-container')}>
+    <div className={styles['card-list-container']}>
       {state.places.map((place, index) => {
         return <RestaurantCard key={place.id} place={place} index={index} />;
       })}
-      <div ref={setLoadRef} className={b('card-list-bubble-loader')}>
-        <RestaurantSearchLoaderBubbles />
+      <div ref={setLoadRef} className={styles['card-list-bubble-loader']}>
+        <RestaurantLoaderBubbles />
       </div>
     </div>
   );

@@ -1,16 +1,13 @@
 import React from 'react';
-import { block } from 'bem-cn';
 
 import Header from './Header/Header';
-import RestaurantSearchBar from './RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
 
-import './styles.scss';
-
-const b = block('HomePage');
+import styles from './styles.module.scss';
 
 export default function HomePage() {
   return (
-    <div className={b('home-container')}>
+    <div className={styles['home-container']}>
       <Header />
       <RestaurantSearchBar />
     </div>

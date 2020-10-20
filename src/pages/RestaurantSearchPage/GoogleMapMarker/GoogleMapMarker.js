@@ -9,7 +9,7 @@ GoogleMapMarker.propTypes = {
 
 export default function GoogleMapMarker({ text }) {
   return (
-    <i className='fas fa-map-marker'>
+    <i className={'fas fa-map-marker'}>
       <p>{text}</p>
     </i>
   );

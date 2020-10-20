@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { block } from 'bem-cn';
 
-import RestaurantProfileStars from '../RestaurantProfileStars/RestaurantProfileStars';
+import RestaurantProfileStars from '../../../components/RestaurantRatingStars/RestaurantRatingStars';
 import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
-import './RestaurantProfileCardReviews.scss';
+import styles from './RestaurantProfileCardReviews.module.scss';
 
 RestaurantProfileCardReviews.propTypes = {
   reviews: PropTypes.shape({
@@ -17,8 +16,6 @@ RestaurantProfileCardReviews.propTypes = {
   }),
 };
 
-const b = block('RestaurantProfilePage');
-
 export default function RestaurantProfileCardReviews() {
   const {
     state: { reviews },
@@ -26,14 +23,14 @@ export default function RestaurantProfileCardReviews() {
 
   return reviews.reviews.map((review, index) => {
     return (
-      <div className={b('restaurant-prof-reviews-card')} key={index}>
-        <div className={b('restaurant-reviews-image-name')}>
+      <div className={styles['restaurant-prof-reviews-card']} key={index}>
+        <div className={styles['restaurant-reviews-image-name']}>
           <p>{review.user.name}</p>
         </div>
-        <div className={b('restaurant-reviews-rating')}>
+        <div className={styles['restaurant-reviews-rating']}>
           <RestaurantProfileStars rating={review.rating} />
         </div>
-        <div className={b('restaurant-reviews-text')}>{review.text}</div>
+        <div className={styles['restaurant-reviews-text']}>{review.text}</div>
       </div>
     );
   });

@@ -11,14 +11,14 @@ export const RestaurantProfileContext = createContext();
 
 // create an actions store
 const ACTIONS = {
-  SHOW_MAIN_LOADER: 'SHOW_MAIN_LOADER',
+  TOGGLE_MAIN_LOADER: 'TOGGLE_MAIN_LOADER',
   HANDLE_FETCH_DATA: 'HANDLE_FETCH_DATA',
   SET_ERROR: 'SET_ERROR',
 };
 
 // create a reducer function
 export function reducer(state, action) {
-  if (action.type === ACTIONS.SHOW_MAIN_LOADER) {
+  if (action.type === ACTIONS.TOGGLE_MAIN_LOADER) {
     return { ...state, showMainLoader: true };
   } else if (action.type === ACTIONS.HANDLE_FETCH_DATA) {
     return {
@@ -46,12 +46,10 @@ const initialState = {
 export function RestaurantProfileProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  console.log(typeof children);
-
   // function to show the main loader
-  function showMainLoader() {
+  function toggleMainLoader() {
     dispatch({
-      type: ACTIONS.SHOW_MAIN_LOADER,
+      type: ACTIONS.TOGGLE_MAIN_LOADER,
     });
   }
 
@@ -92,7 +90,7 @@ export function RestaurantProfileProvider({ children }) {
     }
   }
 
-  const value = { state, showMainLoader, fetchData };
+  const value = { state, toggleMainLoader, fetchData };
 
   return (
     <RestaurantProfileContext.Provider value={value}>
