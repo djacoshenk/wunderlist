@@ -22,7 +22,7 @@ export default function App() {
 
     // fetch data and disable the main loader
     fetchData(alias);
-  }, []);
+  }, [alias, toggleMainLoader, fetchData]);
 
   return (
     <Fragment>

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -47,13 +47,13 @@ export function RestaurantProfileProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // function to show the main loader
-  function toggleMainLoader() {
+  const toggleMainLoader = useCallback(() => {
     dispatch({
       type: ACTIONS.TOGGLE_MAIN_LOADER,
     });
-  }
+  }, []);
 
-  async function fetchData(alias) {
+  const fetchData = useCallback(async (alias) => {
     try {
       // fetch data on place
       const placeRes = await axios.get(
@@ -88,7 +88,7 @@ export function RestaurantProfileProvider({ children }) {
         payload: err,
       });
     }
-  }
+  }, []);
 
   const value = { state, toggleMainLoader, fetchData };
 

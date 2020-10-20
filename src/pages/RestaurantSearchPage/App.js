@@ -19,7 +19,7 @@ export default function App() {
     toggleMainLoader();
 
     fetchPlaces(params);
-  }, [params]);
+  }, [params, toggleMainLoader, fetchPlaces]);
 
   return (
     <Fragment>

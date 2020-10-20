@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
@@ -50,15 +50,15 @@ let offset = 10;
 export function RestaurantSearchProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  function toggleMainLoader() {
+  const toggleMainLoader = useCallback(() => {
     offset = 10;
 
     dispatch({
       type: ACTIONS.TOGGLE_MAIN_LOADER,
     });
-  }
+  }, []);
 
-  async function fetchPlaces({ term, location }) {
+  const fetchPlaces = useCallback(async ({ term, location }) => {
     try {
       const res = await axios.get(
         `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
@@ -79,9 +79,9 @@ export function RestaurantSearchProvider({ children }) {
     } catch (err) {
       dispatch({ type: ACTIONS.SET_ERROR, payload: err });
     }
-  }
+  }, []);
 
-  async function fetchMorePlaces({ term, location }) {
+  const fetchMorePlaces = useCallback(async ({ term, location }) => {
     try {
       const res = await axios.get(
         `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}`,
@@ -106,7 +106,7 @@ export function RestaurantSearchProvider({ children }) {
     } catch (err) {
       dispatch({ type: ACTIONS.SET_ERROR, payload: err });
     }
-  }
+  }, []);
 
   const value = { state, toggleMainLoader, fetchPlaces, fetchMorePlaces };
 
