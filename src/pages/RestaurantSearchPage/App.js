@@ -29,6 +29,12 @@ export default function App() {
         <title>
           Wunderlist - The best {term} in {location}
         </title>
+        <meta name='title' content='Wunderlist' />
+        <meta
+          name='description'
+          content={`Wunderlist - The best ${term} in ${location}`}
+        />
+        <meta name='image' content='https://wunderlist.me/image-preview.png' />
       </Helmet>
       <Header />
       <RestaurantSearchBar />
