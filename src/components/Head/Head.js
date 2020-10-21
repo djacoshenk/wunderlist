@@ -2,6 +2,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
+import previewImage from '../../../public/image-preview.png';
+
 Head.propTypes = {
   children: PropTypes.object,
 };
@@ -10,8 +12,6 @@ export default function Head({ children }) {
   const title = 'wunderlist';
   const description = 'Find, share, and save your new favorite place.';
   const currentURL = 'https://wunderlist.me/';
-  const previewImage =
-    'https://d33wubrfki0l68.cloudfront.net/5f909ba9aed798000778b5ac/screenshot.png';
 
   return (
     <Helmet>
@@ -19,6 +19,7 @@ export default function Head({ children }) {
       {children}
       <meta name='title' content={title} />
       <meta name='description' content={description} />
+      <meta name='image' content={previewImage} />
 
       {/* <!-- Open Graph / Facebook --> */}
       <meta property='og:type' content='website' />
