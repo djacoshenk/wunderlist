@@ -2,8 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
-import previewImage from '../../assets/preview-image.png';
-
 Head.propTypes = {
   children: PropTypes.object,
 };
@@ -12,6 +10,8 @@ export default function Head({ children }) {
   const title = 'wunderlist';
   const description = 'Find, share, and save your new favorite place.';
   const currentURL = 'https://wunderlist.me/';
+  const previewImage =
+    'https://d33wubrfki0l68.cloudfront.net/5f909ba9aed798000778b5ac/screenshot.png';
 
   return (
     <Helmet>
