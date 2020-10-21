@@ -19,21 +19,21 @@ export default function Head({ children }) {
       {children}
       <meta name='title' content={title} />
       <meta name='description' content={description} />
-      <meta name='image' content={previewImage} />
+      <meta name='image' content={`${currentURL}${previewImage}`} />
 
       {/* <!-- Open Graph / Facebook --> */}
       <meta property='og:type' content='website' />
       <meta property='og:url' content={currentURL} />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
-      <meta property='og:image' content={previewImage} />
+      <meta property='og:image' content={`${currentURL}${previewImage}`} />
 
       {/* <!-- Twitter --> */}
       <meta property='twitter:card' content='summary_large_image' />
       <meta property='twitter:url' content={currentURL} />
       <meta property='twitter:title' content={title} />
       <meta property='twitter:description' content={description} />
-      <meta property='twitter:image' content={previewImage} />
+      <meta property='twitter:image' content={`${currentURL}${previewImage}`} />
     </Helmet>
   );
 }
