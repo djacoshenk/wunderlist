@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
-import previewImage from '../../../public/image-preview.png';
+import previewImage from '../../assets/image-preview.png';
 
 Head.propTypes = {
   children: PropTypes.object,
