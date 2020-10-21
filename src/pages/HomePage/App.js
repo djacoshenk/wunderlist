@@ -1,6 +1,6 @@
 import React, { Fragment, useContext, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
-import Head from '../../components/Head/Head';
 import Header from './Header/Header';
 import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
@@ -20,11 +20,11 @@ export default function App() {
 
   return (
     <Fragment>
-      <Head>
+      <Helmet>
         <title>
-          Find, share, and save your new favorite place - wunderlist
+          Wunderlist - Find, share, and save your new favorite place
         </title>
-      </Head>
+      </Helmet>
       <Header />
       <RestaurantSearchBar />
       <RestaurantTypeCards />

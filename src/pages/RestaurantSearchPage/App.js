@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
-import Head from '../../components/Head/Head';
 import Header from './Header/Header';
 import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
 import MainContent from './MainContent/MainContent';
@@ -25,11 +25,11 @@ export default function App() {
 
   return (
     <Fragment>
-      <Head>
+      <Helmet>
         <title>
-          The best {term} in {location} - wunderlist
+          Wunderlist - The best {term} in {location}
         </title>
-      </Head>
+      </Helmet>
       <Header />
       <RestaurantSearchBar />
       {showMainLoader ? <RestaurantSearchLoader /> : <MainContent />}

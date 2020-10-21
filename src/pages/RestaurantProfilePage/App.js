@@ -1,9 +1,9 @@
 import React, { useEffect, Fragment, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
 import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
-import Head from '../../components/Head/Head';
 import Header from './Header/Header';
 import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
@@ -27,7 +27,9 @@ export default function App() {
 
   return (
     <Fragment>
-      <Head>{place.name && <title>{`${place.name} - wunderlist`}</title>}</Head>
+      <Helmet>
+        {place.name && <title>{`Wunderlist - ${place.name}`}</title>}
+      </Helmet>
       <Header />
       <RestaurantSearchBar />
       {showMainLoader ? <RestaurantProfileLoader /> : <RestaurantProfileCard />}
