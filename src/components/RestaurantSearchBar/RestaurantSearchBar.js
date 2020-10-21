@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { RestaurantSearchBarContext } from './RestaurantSearchBarContext';
 
 import styles from './RestaurantSearchBar.module.scss';
 
 export default function SearchRestaurantBar() {
   const history = useHistory();
-  const [searchParams, setSearchParams] = useState({
-    term: '',
-    location: '',
-  });
+  const { searchParams, setSearchParams } = useContext(
+    RestaurantSearchBarContext
+  );
 
   function onInputChange(e) {
-    e.preventDefault();
-
     let { name, value } = e.target;
 
     setSearchParams((prevState) => ({

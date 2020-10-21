@@ -5,7 +5,11 @@
   align-items: center;
   width: 100%;
   text-align: center;
-  padding-bottom: 1rem;
+  padding: 2rem 0rem;
+
+  @media (min-width: 481px) {
+    padding-top: calc((100vh - 189px - 83px - 256px) / 2);
+  }
 
   h1 {
     color: #38b2ac;

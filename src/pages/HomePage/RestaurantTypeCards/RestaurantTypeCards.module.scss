@@ -1,0 +1,45 @@
+.restaurant-type-cards-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .restaurant-type-cards-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 305px;
+    grid-gap: 1rem;
+    padding: 2rem 0rem;
+
+    @media (min-width: 481px) {
+      grid-template-columns: repeat(3, 1fr);
+      width: 680px;
+      padding: 0;
+    }
+
+    .restaurant-type-card-link {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .restaurant-type-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #edf2f7;
+      border-radius: 5px;
+      transition: all 0.5s;
+      background-color: #f7fafc;
+      height: 120px;
+
+      &:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      p {
+        padding-top: 0.5rem;
+      }
+    }
+  }
+}

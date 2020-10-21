@@ -1,15 +1,13 @@
 import React from 'react';
 
-import Header from './Header/Header';
-import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
+import { RestaurantSearchBarProvider } from '../../components/RestaurantSearchBar/RestaurantSearchBarContext';
 
-import styles from './styles.module.scss';
+import App from './App';
 
 export default function HomePage() {
   return (
-    <div className={styles['home-container']}>
-      <Header />
-      <RestaurantSearchBar />
-    </div>
+    <RestaurantSearchBarProvider>
+      <App />
+    </RestaurantSearchBarProvider>
   );
 }
