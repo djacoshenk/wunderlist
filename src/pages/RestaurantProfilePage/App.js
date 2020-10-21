@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
+import Head from '../../components/Head/Head';
 import Header from './Header/Header';
 import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
@@ -11,7 +12,7 @@ import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard
 export default function App() {
   const { alias } = useParams();
   const {
-    state: { showMainLoader },
+    state: { showMainLoader, place },
     toggleMainLoader,
     fetchData,
   } = useContext(RestaurantProfileContext);
@@ -26,6 +27,7 @@ export default function App() {
 
   return (
     <Fragment>
+      <Head>{place.name && <title>{`${place.name} - wunderlist`}</title>}</Head>
       <Header />
       <RestaurantSearchBar />
       {showMainLoader ? <RestaurantProfileLoader /> : <RestaurantProfileCard />}
