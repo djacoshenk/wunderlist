@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { RestaurantProfileProvider } from './_Context/RestaurantProfileContext';
-import { RestaurantSearchBarProvider } from '../../components/RestaurantSearchBar/RestaurantSearchBarContext';
+import { RestaurantSearchBarProvider } from '../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
 import App from './App';
 
 export default function RestaurantProfilePage() {

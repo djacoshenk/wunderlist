@@ -2,10 +2,10 @@ import React, { Fragment, useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
 import Header from './Header/Header';
-import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
 
-import { RestaurantSearchBarContext } from '../../components/RestaurantSearchBar/RestaurantSearchBarContext';
+import { RestaurantSearchBarContext } from '../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
 
 export default function App() {
   const { setSearchParams } = useContext(RestaurantSearchBarContext);

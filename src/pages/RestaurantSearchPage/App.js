@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
 import Header from './Header/Header';
-import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
 import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 import { RestaurantSearchContext } from './_Context/RestaurantSearchContext';

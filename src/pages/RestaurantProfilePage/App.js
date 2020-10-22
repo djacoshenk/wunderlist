@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
 import Header from './Header/Header';
-import RestaurantSearchBar from '../../components/RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 

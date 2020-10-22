@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RestaurantSearchBarProvider } from '../../components/RestaurantSearchBar/RestaurantSearchBarContext';
+import { RestaurantSearchBarProvider } from '../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
 
 import App from './App';
 

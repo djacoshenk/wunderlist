@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import RestaurantRatingStars from '../../../components/RestaurantRatingStars/RestaurantRatingStars';
+import RestaurantRatingStars from '../../../shared/RestaurantRatingStars/RestaurantRatingStars';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
 import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
