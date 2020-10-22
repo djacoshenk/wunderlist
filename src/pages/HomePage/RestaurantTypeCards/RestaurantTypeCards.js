@@ -57,7 +57,9 @@ export default function RestaurantTypeCards() {
             return (
               <Link
                 to={{
-                  pathname: `/search/${type.name}/${searchParams.location}`,
+                  pathname: `/search/${type.name.toLowerCase()}/${
+                    searchParams.location
+                  }`,
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}

@@ -24,12 +24,6 @@ export default function App() {
         <title>
           Wunderlist - Find, share, and save your new favorite place
         </title>
-        <meta name='title' content='Wunderlist' />
-        <meta
-          name='description'
-          content='Wunderlist - Find, share, and save your new favorite place'
-        />
-        <meta name='image' content='https://wunderlist.me/image-preview.png' />
       </Helmet>
       <Header />
       <RestaurantSearchBar />

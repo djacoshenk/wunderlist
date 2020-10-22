@@ -11,7 +11,7 @@ export default function SearchRestaurantLoader() {
   return (
     <div className={styles['main-content-loader']}>
       <h3>
-        Finding you the best {term} in {location}
+        Finding you the best {term.toUpperCase()} in {location}
       </h3>
       <div className={styles['main-content-bubble-loader']}>
         <RestaurantLoaderBubbles />

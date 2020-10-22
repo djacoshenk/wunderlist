@@ -27,14 +27,8 @@ export default function App() {
     <Fragment>
       <Helmet>
         <title>
-          Wunderlist - The best {term} in {location}
+          Wunderlist - The best {term.toUpperCase()} in {location}
         </title>
-        <meta name='title' content='Wunderlist' />
-        <meta
-          name='description'
-          content={`Wunderlist - The best ${term} in ${location}`}
-        />
-        <meta name='image' content='https://wunderlist.me/image-preview.png' />
       </Helmet>
       <Header />
       <RestaurantSearchBar />

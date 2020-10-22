@@ -28,6 +28,9 @@ export default function RestaurantCard({ place, index }) {
     <Link
       to={{
         pathname: `/business/${place.alias}`,
+        state: {
+          place: place.name,
+        },
       }}
       className={styles['card-container-link']}
     >

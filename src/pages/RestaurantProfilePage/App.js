@@ -29,11 +29,6 @@ export default function App() {
     <Fragment>
       <Helmet>
         {place.name && <title>{`Wunderlist - ${place.name}`}</title>}
-        <meta name='title' content='Wunderlist' />
-        {place.name && (
-          <meta name='description' content={`Wunderlist - ${place.name}`} />
-        )}
-        {place.photos && <meta name='image' content={place.photos[0]} />}
       </Helmet>
       <Header />
       <RestaurantSearchBar />
