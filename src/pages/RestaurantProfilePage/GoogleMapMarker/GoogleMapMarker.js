@@ -9,10 +9,12 @@ GoogleMapMarker.propTypes = {
   id: PropTypes.string,
 };
 
-export default function GoogleMapMarker() {
+function GoogleMapMarker() {
   const {
     state: { place },
   } = useContext(RestaurantProfileContext);
 
   return <i className={'fas fa-map-marker-alt'} id={place.id}></i>;
 }
+
+export default React.memo(GoogleMapMarker);

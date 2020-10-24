@@ -10,7 +10,6 @@ import { RestaurantSearchContext } from './_Context/RestaurantSearchContext';
 
 export default function App() {
   const params = useParams();
-  const { term, location } = params;
   const {
     state: { showMainLoader },
     toggleMainLoader,
@@ -27,7 +26,7 @@ export default function App() {
     <Fragment>
       <Helmet>
         <title>
-          Wunderlist - The best {term.toUpperCase()} in {location}
+          Wunderlist - The best {params.term.toUpperCase()} in {params.location}
         </title>
       </Helmet>
       <Header />

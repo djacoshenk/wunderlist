@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
-
-import { RestaurantSearchBarContext } from '../../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
 
 import burger from '../../../assets/burger.png';
 import sushi from '../../../assets/sushi.png';
@@ -13,9 +11,7 @@ import chili from '../../../assets/chili.png';
 
 import styles from './RestaurantTypeCards.module.scss';
 
-export default function RestaurantTypeCards() {
-  const { searchParams } = useContext(RestaurantSearchBarContext);
-
+function RestaurantTypeCards() {
   const restaurantTypes = [
     {
       name: 'Burgers',
@@ -53,43 +49,24 @@ export default function RestaurantTypeCards() {
     <div className={styles['restaurant-type-cards-main-container']}>
       <div className={styles['restaurant-type-cards-grid-container']}>
         {restaurantTypes.map((type) => {
-          if (searchParams.location) {
-            return (
-              <Link
-                to={{
-                  pathname: `/search/${type.name.toLowerCase()}/${
-                    searchParams.location
-                  }`,
-                }}
-                className={styles['restaurant-type-card-link']}
-                key={uuidv4()}
-              >
-                <div className={styles['restaurant-type-card']}>
-                  <img src={type.icon} alt={type.alt} />
-                  <p>{type.name}</p>
-                </div>
-              </Link>
-            );
-          } else {
-            return (
-              <Link
-                to={{
-                  pathname: `/search/${type.name}/${searchParams.location}`,
-                }}
-                className={styles['restaurant-type-card-link']}
-                // if a location search param is not present, prevent link from being click
-                onClick={(e) => e.preventDefault()}
-                key={uuidv4()}
-              >
-                <div className={styles['restaurant-type-card']}>
-                  <img src={type.icon} alt={type.alt} />
-                  <p>{type.name}</p>
-                </div>
-              </Link>
-            );
-          }
+          return (
+            <Link
+              to={{
+                pathname: `/search/${type.name.toLowerCase()}/Los Angeles, CA`,
+              }}
+              className={styles['restaurant-type-card-link']}
+              key={uuidv4()}
+            >
+              <div className={styles['restaurant-type-card']}>
+                <img src={type.icon} alt={type.alt} />
+                <p>{type.name}</p>
+              </div>
+            </Link>
+          );
         })}
       </div>
     </div>
   );
 }
+
+export default React.memo(RestaurantTypeCards);

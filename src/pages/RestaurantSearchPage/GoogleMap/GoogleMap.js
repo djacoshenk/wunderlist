@@ -13,7 +13,7 @@ const defaultCenter = {
 
 const defaultZoom = 13;
 
-export default function GoogleMap() {
+function GoogleMap() {
   const {
     state: { places, mapKey },
   } = useContext(RestaurantSearchContext);
@@ -61,3 +61,5 @@ export default function GoogleMap() {
     </div>
   );
 }
+
+export default React.memo(GoogleMap);

@@ -5,7 +5,7 @@ import RestaurantCardList from '../RestaurantCardList/RestaurantCardList';
 
 import styles from './MainContent.module.scss';
 
-export default function MainContent() {
+function MainContent() {
   return (
     <div className={styles['main-container']}>
       <GoogleMap />
@@ -13,3 +13,5 @@ export default function MainContent() {
     </div>
   );
 }
+
+export default React.memo(MainContent);

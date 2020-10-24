@@ -17,7 +17,7 @@ GoogleMap.propTypes = {
   }),
 };
 
-export default function GoogleMap() {
+function GoogleMap() {
   const {
     state: { place },
   } = useContext(RestaurantProfileContext);
@@ -45,3 +45,5 @@ export default function GoogleMap() {
     </div>
   );
 }
+
+export default React.memo(GoogleMap);

@@ -7,7 +7,7 @@ RestaurantRatingStars.propTypes = {
   rating: PropTypes.number,
 };
 
-export default function RestaurantRatingStars({ rating }) {
+function RestaurantRatingStars({ rating }) {
   const STARS = [0, 1, 2, 3, 4];
 
   const totalRating = STARS.map((n) => {
@@ -24,3 +24,5 @@ export default function RestaurantRatingStars({ rating }) {
 
   return totalRating;
 }
+
+export default React.memo(RestaurantRatingStars);

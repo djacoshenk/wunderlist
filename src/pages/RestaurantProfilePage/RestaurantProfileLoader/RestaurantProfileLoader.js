@@ -5,7 +5,7 @@ import RestaurantLoaderBubbles from '../../../shared/RestaurantLoaderBubbles/Res
 
 import styles from './RestaurantProfileLoader.module.scss';
 
-export default function RestaurantProfileLoader() {
+function RestaurantProfileLoader() {
   const { state } = useLocation();
 
   return (
@@ -15,3 +15,5 @@ export default function RestaurantProfileLoader() {
     </div>
   );
 }
+
+export default React.memo(RestaurantProfileLoader);

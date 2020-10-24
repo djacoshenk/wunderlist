@@ -7,7 +7,7 @@ import RestaurantLoaderBubbles from '../../../shared/RestaurantLoaderBubbles/Res
 
 import styles from './RestaurantCardList.module.scss';
 
-export default function RestaurantCardList() {
+function RestaurantCardList() {
   const { state, fetchMorePlaces } = useContext(RestaurantSearchContext);
   const params = useParams();
   const obs = new IntersectionObserver(
@@ -49,3 +49,5 @@ export default function RestaurantCardList() {
     </div>
   );
 }
+
+export default React.memo(RestaurantCardList);

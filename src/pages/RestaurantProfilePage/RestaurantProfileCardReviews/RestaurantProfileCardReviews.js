@@ -16,7 +16,7 @@ RestaurantProfileCardReviews.propTypes = {
   }),
 };
 
-export default function RestaurantProfileCardReviews() {
+function RestaurantProfileCardReviews() {
   const {
     state: { reviews },
   } = useContext(RestaurantProfileContext);
@@ -35,3 +35,5 @@ export default function RestaurantProfileCardReviews() {
     );
   });
 }
+
+export default React.memo(RestaurantProfileCardReviews);

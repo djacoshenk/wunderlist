@@ -1,23 +1,51 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
 import { RestaurantSearchBarContext } from './RestaurantSearchBarContext';
 
 import styles from './RestaurantSearchBar.module.scss';
 
-export default function SearchRestaurantBar() {
+RestaurantSearchBar.propTypes = {
+  searchParams: PropTypes.shape({
+    term: PropTypes.string,
+    location: PropTypes.string,
+  }),
+  handleInputChange: PropTypes.func,
+  handleFormSubmit: PropTypes.func,
+};
+
+let searchId;
+
+function RestaurantSearchBar() {
   const history = useHistory();
-  const { searchParams, setSearchParams } = useContext(
+  const { searchSuggestions, fetchSearchSuggestions } = useContext(
     RestaurantSearchBarContext
   );
+  const [searchParams, setSearchParams] = useState({
+    term: '',
+    location: 'Los Angeles, CA',
+  });
 
   function onInputChange(e) {
-    let { name, value } = e.target;
+    const { name, value } = e.target;
 
-    setSearchParams((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setSearchParams((prevState) => {
+      return { ...prevState, [name]: value };
+    });
+
+    if (name === 'term') {
+      handleSearchDebounce(value);
+    }
+  }
+
+  function handleSearchDebounce(value) {
+    clearTimeout(searchId);
+
+    searchId = setTimeout(() => {
+      fetchSearchSuggestions(value);
+    }, 1000);
   }
 
   function onFormSubmit(e) {
@@ -42,7 +70,17 @@ export default function SearchRestaurantBar() {
             placeholder='pizza, sushi, cocktail bar...'
             value={searchParams.term}
             onChange={onInputChange}
+            list='term-search'
           />
+          {searchParams.term && (
+            <datalist id='term-search'>
+              {searchSuggestions.map((val) => {
+                return (
+                  <option key={uuidv4()} value={val.title} name='term'></option>
+                );
+              })}
+            </datalist>
+          )}
         </label>
         <label htmlFor='location'>
           <div>Near</div>
@@ -53,6 +91,7 @@ export default function SearchRestaurantBar() {
             placeholder='Los Angeles, CA'
             value={searchParams.location}
             onChange={onInputChange}
+            list='location-search'
           />
         </label>
         <button>
@@ -62,3 +101,5 @@ export default function SearchRestaurantBar() {
     </div>
   );
 }
+
+export default React.memo(RestaurantSearchBar);

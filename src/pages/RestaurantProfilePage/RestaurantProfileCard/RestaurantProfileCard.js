@@ -28,7 +28,7 @@ RestaurantProfileCard.propTypes = {
   }),
 };
 
-export default function RestaurantProfileCard() {
+function RestaurantProfileCard() {
   const {
     state: { place },
   } = useContext(RestaurantProfileContext);
@@ -98,3 +98,5 @@ export default function RestaurantProfileCard() {
     </div>
   );
 }
+
+export default React.memo(RestaurantProfileCard);
