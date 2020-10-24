@@ -1,13 +1,8 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import './GoogleMapMarker.scss';
-
-GoogleMapMarker.propTypes = {
-  id: PropTypes.string,
-};
 
 function GoogleMapMarker() {
   const {

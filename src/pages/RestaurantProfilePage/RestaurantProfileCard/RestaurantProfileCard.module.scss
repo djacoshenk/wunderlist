@@ -27,17 +27,15 @@
     flex-direction: row;
     height: 250px;
     width: 100%;
-    overflow-x: hidden;
 
     @media (min-width: 481px) {
+      height: 400px;
       width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 0.2rem;
     }
 
-    @media (min-width: 1201px) {
-      height: 300px;
+    @media (min-width: 769px) {
+      height: 400px;
+      width: 700px;
     }
 
     img {
@@ -77,6 +75,7 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      text-align: center;
     }
 
     .restaurant-prof-address {

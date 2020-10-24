@@ -1,32 +1,24 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import PropTypes from 'prop-types';
 
 import { RestaurantSearchBarContext } from './RestaurantSearchBarContext';
 
 import styles from './RestaurantSearchBar.module.scss';
 
-RestaurantSearchBar.propTypes = {
-  searchParams: PropTypes.shape({
-    term: PropTypes.string,
-    location: PropTypes.string,
-  }),
-  handleInputChange: PropTypes.func,
-  handleFormSubmit: PropTypes.func,
-};
-
 let searchId;
+const defaultSearchParams = {
+  term: '',
+  location: 'Los Angeles, CA',
+};
 
 function RestaurantSearchBar() {
   const history = useHistory();
-  const { searchSuggestions, fetchSearchSuggestions } = useContext(
-    RestaurantSearchBarContext
-  );
-  const [searchParams, setSearchParams] = useState({
-    term: '',
-    location: 'Los Angeles, CA',
-  });
+  const [searchParams, setSearchParams] = useState(defaultSearchParams);
+  const {
+    state: { searchSuggestions },
+    fetchSearchSuggestions,
+  } = useContext(RestaurantSearchBarContext);
 
   function onInputChange(e) {
     const { name, value } = e.target;
@@ -72,7 +64,7 @@ function RestaurantSearchBar() {
             onChange={onInputChange}
             list='term-search'
           />
-          {searchParams.term && (
+          {searchSuggestions.length > 0 && (
             <datalist id='term-search'>
               {searchSuggestions.map((val) => {
                 return (

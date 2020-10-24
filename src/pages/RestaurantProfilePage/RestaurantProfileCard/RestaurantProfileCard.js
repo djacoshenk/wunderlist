@@ -2,10 +2,12 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
+
+import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
 import RestaurantRatingStars from '../../../shared/RestaurantRatingStars/RestaurantRatingStars';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
-import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import styles from './RestaurantProfileCard.module.scss';
 
@@ -44,9 +46,7 @@ function RestaurantProfileCard() {
   return (
     <div className={styles['restaurant-prof-card']}>
       <div className={styles['restaurant-prof-images']}>
-        {place.photos.map((photo, index) => {
-          return <img src={photo} alt='restaurant' key={index} />;
-        })}
+        <RestaurantProfileImageCarousel photos={place.photos} />
       </div>
       <div className={styles['restaurant-prof-main']}>
         <div className={styles['restaurant-prof-title']}>

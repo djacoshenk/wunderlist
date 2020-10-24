@@ -4,8 +4,6 @@ import globe from '../../../assets/global.png';
 import styles from './Header.module.scss';
 
 function Header() {
-  console.log('Rendering Header');
-
   return (
     <div className={styles['header-container']}>
       <img src={globe} alt='blue-green-globe' />
