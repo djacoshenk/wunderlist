@@ -9,15 +9,17 @@ import styles from './RestaurantSearchBar.module.scss';
 let searchId;
 const defaultSearchParams = {
   term: '',
-  location: 'Los Angeles, CA',
+  location: '',
 };
 
 function RestaurantSearchBar() {
   const history = useHistory();
   const [searchParams, setSearchParams] = useState(defaultSearchParams);
   const {
-    state: { searchSuggestions },
-    fetchSearchSuggestions,
+    state: { termSuggestions, locationSuggestions },
+    fetchTermSuggestions,
+    fetchLocationSuggestions,
+    clearSearchSuggestions,
   } = useContext(RestaurantSearchBarContext);
 
   function onInputChange(e) {
@@ -27,16 +29,20 @@ function RestaurantSearchBar() {
       return { ...prevState, [name]: value };
     });
 
-    if (name === 'term') {
-      handleSearchDebounce(value);
-    }
+    handleSearchDebounce(name, value);
   }
 
-  function handleSearchDebounce(value) {
+  function handleSearchDebounce(name, value) {
+    clearSearchSuggestions(name);
+
     clearTimeout(searchId);
 
     searchId = setTimeout(() => {
-      fetchSearchSuggestions(value);
+      if (name === 'term') {
+        fetchTermSuggestions(value);
+      } else if (name === 'location') {
+        fetchLocationSuggestions(value);
+      }
     }, 1000);
   }
 
@@ -60,15 +66,17 @@ function RestaurantSearchBar() {
             id='term'
             name='term'
             placeholder='pizza, sushi, cocktail bar...'
+            list='term-search'
             value={searchParams.term}
             onChange={onInputChange}
-            list='term-search'
           />
-          {searchSuggestions.length > 0 && (
+          {termSuggestions.length > 0 && (
             <datalist id='term-search'>
-              {searchSuggestions.map((val) => {
+              {termSuggestions.map((val) => {
                 return (
-                  <option key={uuidv4()} value={val.title} name='term'></option>
+                  <option key={uuidv4()} name='term'>
+                    {val}
+                  </option>
                 );
               })}
             </datalist>
@@ -81,10 +89,21 @@ function RestaurantSearchBar() {
             id='location'
             name='location'
             placeholder='Los Angeles, CA'
+            list='location-search'
             value={searchParams.location}
             onChange={onInputChange}
-            list='location-search'
           />
+          {locationSuggestions.length > 0 && (
+            <datalist id='location-search'>
+              {locationSuggestions.map((val) => {
+                return (
+                  <option key={uuidv4()} name='term'>
+                    {val.city}, {val.state}
+                  </option>
+                );
+              })}
+            </datalist>
+          )}
         </label>
         <button>
           <i className={'fas fa-search'}></i>

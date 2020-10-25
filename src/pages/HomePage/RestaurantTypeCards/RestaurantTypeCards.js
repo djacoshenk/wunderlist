@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
+
+import { RestaurantSearchBarContext } from '../../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
 
 import burger from '../../../assets/burger.png';
 import sushi from '../../../assets/sushi.png';
@@ -12,6 +14,10 @@ import chili from '../../../assets/chili.png';
 import styles from './RestaurantTypeCards.module.scss';
 
 function RestaurantTypeCards() {
+  const {
+    state: { locationParam },
+  } = useContext(RestaurantSearchBarContext);
+
   const restaurantTypes = [
     {
       name: 'Burgers',
@@ -49,20 +55,38 @@ function RestaurantTypeCards() {
     <div className={styles['restaurant-type-cards-main-container']}>
       <div className={styles['restaurant-type-cards-grid-container']}>
         {restaurantTypes.map((type) => {
-          return (
-            <Link
-              to={{
-                pathname: `/search/${type.name.toLowerCase()}/Los Angeles, CA`,
-              }}
-              className={styles['restaurant-type-card-link']}
-              key={uuidv4()}
-            >
-              <div className={styles['restaurant-type-card']}>
-                <img src={type.icon} alt={type.alt} />
-                <p>{type.name}</p>
-              </div>
-            </Link>
-          );
+          if (locationParam) {
+            return (
+              <Link
+                to={{
+                  pathname: `/search/${type.name.toLowerCase()}/${locationParam}`,
+                }}
+                className={styles['restaurant-type-card-link']}
+                key={uuidv4()}
+              >
+                <div className={styles['restaurant-type-card']}>
+                  <img src={type.icon} alt={type.alt} />
+                  <p>{type.name}</p>
+                </div>
+              </Link>
+            );
+          } else {
+            return (
+              <Link
+                to={{
+                  pathname: `/search/${type.name.toLowerCase()}/${locationParam}`,
+                }}
+                className={styles['restaurant-type-card-link']}
+                key={uuidv4()}
+                onClick={(e) => e.preventDefault()}
+              >
+                <div className={styles['restaurant-type-card']}>
+                  <img src={type.icon} alt={type.alt} />
+                  <p>{type.name}</p>
+                </div>
+              </Link>
+            );
+          }
         })}
       </div>
     </div>
