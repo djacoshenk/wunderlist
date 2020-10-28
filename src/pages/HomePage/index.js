@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { Helmet } from 'react-helmet';
 
-import { RestaurantSearchBarProvider } from '../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
+import Header from './Header/Header';
+import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
 
-import App from './App';
-
-export default function HomePage() {
+export default function App() {
   return (
-    <RestaurantSearchBarProvider>
-      <App />
-    </RestaurantSearchBarProvider>
+    <Fragment>
+      <Helmet>
+        <title>
+          Wunderlist - Find, share, and save your new favorite place
+        </title>
+      </Helmet>
+      <Header />
+      <RestaurantSearchBar />
+      <RestaurantTypeCards />
+    </Fragment>
   );
 }

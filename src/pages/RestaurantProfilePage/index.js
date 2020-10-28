@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { useEffect, Fragment, useContext } from 'react';
+import { Helmet } from 'react-helmet';
+import { useParams } from 'react-router-dom';
 
-import { RestaurantProfileProvider } from './_Context/RestaurantProfileContext';
-import { RestaurantSearchBarProvider } from '../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
-import App from './App';
+import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
-export default function RestaurantProfilePage() {
+import Header from './Header/Header';
+import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
+import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
+
+export default function App() {
+  const { alias } = useParams();
+  const {
+    state: { showMainLoader, place },
+    toggleMainLoader,
+    fetchData,
+  } = useContext(RestaurantProfileContext);
+
+  useEffect(() => {
+    // enable the main loader
+    toggleMainLoader();
+
+    // fetch data and disable the main loader
+    fetchData(alias);
+  }, [alias, toggleMainLoader, fetchData]);
+
   return (
-    <RestaurantProfileProvider>
-      <RestaurantSearchBarProvider>
-        <App />
-      </RestaurantSearchBarProvider>
-    </RestaurantProfileProvider>
+    <Fragment>
+      <Helmet>
+        {place.name ? (
+          <title>{`Wunderlist - ${place.name}`}</title>
+        ) : (
+          <title>
+            Wunderlist - Find, share, and save your new favorite place
+          </title>
+        )}
+      </Helmet>
+      <Header />
+      <RestaurantSearchBar />
+      {showMainLoader ? <RestaurantProfileLoader /> : <RestaurantProfileCard />}
+    </Fragment>
   );
 }
