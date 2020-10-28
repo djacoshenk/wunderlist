@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment, useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
@@ -12,7 +12,10 @@ import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard
 export default function App() {
   const { alias } = useParams();
   const {
-    state: { showMainLoader, place },
+    state: { place },
+  } = useLocation();
+  const {
+    state: { showMainLoader },
     toggleMainLoader,
     fetchData,
   } = useContext(RestaurantProfileContext);
