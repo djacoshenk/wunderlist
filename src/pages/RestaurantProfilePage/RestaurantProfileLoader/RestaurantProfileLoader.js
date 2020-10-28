@@ -10,7 +10,7 @@ function RestaurantProfileLoader() {
 
   return (
     <div className={styles['restaurant-prof-loader']}>
-      <h3>Finding you more on {state.place.toUpperCase()}</h3>
+      {state.place && <h3>Finding you more on {state.place.toUpperCase()}</h3>}
       <RestaurantLoaderBubbles />
     </div>
   );
