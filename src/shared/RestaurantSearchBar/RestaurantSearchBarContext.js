@@ -85,6 +85,8 @@ export function RestaurantSearchBarProvider({ children }) {
   const fetchLocationSuggestions = useCallback(async (text) => {
     try {
       if (text) {
+        dispatch({ type: ACTIONS.STORE_LOCATION_PARAM, payload: text });
+
         const res = await axios.get(
           `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=2&namePrefix=${text}&countryIds=US`,
           {
@@ -94,8 +96,6 @@ export function RestaurantSearchBarProvider({ children }) {
             },
           }
         );
-
-        dispatch({ type: ACTIONS.STORE_LOCATION_PARAM, payload: text });
 
         dispatch({
           type: ACTIONS.FETCH_LOCATION_SUGGESTIONS,
