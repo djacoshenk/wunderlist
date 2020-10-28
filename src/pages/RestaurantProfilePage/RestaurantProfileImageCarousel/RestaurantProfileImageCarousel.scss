@@ -1,0 +1,17 @@
+.swiper-button-next,
+.swiper-button-prev {
+  color: transparent;
+  transition: all 0.3s;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &::after {
+    font-size: 2rem;
+  }
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #fff !important;
+}

@@ -4,6 +4,7 @@ import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/swiper-bundle.css';
+import './RestaurantProfileImageCarousel.scss';
 
 RestaurantProfileImageCarousel.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.string),
