@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment, useContext } from 'react';
 import { Helmet } from 'react-helmet';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
@@ -12,10 +12,7 @@ import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard
 export default function App() {
   const { alias } = useParams();
   const {
-    state: { place },
-  } = useLocation();
-  const {
-    state: { showMainLoader },
+    state: { showMainLoader, place },
     toggleMainLoader,
     fetchData,
   } = useContext(RestaurantProfileContext);
@@ -31,7 +28,13 @@ export default function App() {
   return (
     <Fragment>
       <Helmet>
-        {place.name && <title>{`Wunderlist - ${place.name}`}</title>}
+        {place.name ? (
+          <title>{`Wunderlist - ${place.name}`}</title>
+        ) : (
+          <title>
+            Wunderlist - Find, share, and save your new favorite place
+          </title>
+        )}
       </Helmet>
       <Header />
       <RestaurantSearchBar />
