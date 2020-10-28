@@ -12,7 +12,7 @@ function RestaurantProfileLoader() {
 
   let headerText;
 
-  if (location.state.place) {
+  if (location.state) {
     headerText = (
       <h3>Finding you more on {location.state.place.toUpperCase()}</h3>
     );
