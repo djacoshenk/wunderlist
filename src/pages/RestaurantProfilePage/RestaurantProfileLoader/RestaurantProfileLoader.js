@@ -7,36 +7,27 @@ import RestaurantLoaderBubbles from '../../../shared/RestaurantLoaderBubbles/Res
 import styles from './RestaurantProfileLoader.module.scss';
 
 function RestaurantProfileLoader() {
-  const { state } = useLocation();
-  const {
-    state: { place },
-  } = useContext(RestaurantProfileContext);
+  const location = useLocation();
+  const { state } = useContext(RestaurantProfileContext);
 
-  // if we have the state from the location
-  if (state) {
-    return (
-      <div className={styles['restaurant-prof-loader']}>
-        {state.place && (
-          <h3>Finding you more on {state.place.toUpperCase()}</h3>
-        )}
-        <RestaurantLoaderBubbles />
-      </div>
+  let headerText;
+
+  if (location.state.place) {
+    headerText = (
+      <h3>Finding you more on {location.state.place.toUpperCase()}</h3>
     );
-    // if we don't have the state from the location, use the context
-  } else if (place) {
-    return (
-      <div className={styles['restaurant-prof-loader']}>
-        {place.name && <h3>Finding you more on {place.name.toUpperCase()}</h3>}
-        <RestaurantLoaderBubbles />
-      </div>
-    );
+  } else if (state.place.name) {
+    headerText = <h3>Finding you more on {state.place.name.toUpperCase()}</h3>;
   } else {
-    return (
-      <div className={styles['restaurant-prof-loader']}>
-        <RestaurantLoaderBubbles />
-      </div>
-    );
+    headerText = null;
   }
+
+  return (
+    <div className={styles['restaurant-prof-loader']}>
+      {headerText}
+      <RestaurantLoaderBubbles />
+    </div>
+  );
 }
 
 export default React.memo(RestaurantProfileLoader);
