@@ -5,7 +5,7 @@ import Header from './Header/Header';
 import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
 
-export default function App() {
+export default function HomePage() {
   return (
     <Fragment>
       <Helmet>

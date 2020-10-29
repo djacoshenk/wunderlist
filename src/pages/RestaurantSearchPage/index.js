@@ -8,7 +8,7 @@ import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 import { RestaurantSearchContext } from './_Context/RestaurantSearchContext';
 
-export default function App() {
+export default function RestaurantSearchPage() {
   const params = useParams();
   const {
     state: { showMainLoader },

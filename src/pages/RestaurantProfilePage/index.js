@@ -9,7 +9,7 @@ import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSear
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
-export default function App() {
+export default function RestaurantProfilePage() {
   const { alias } = useParams();
   const {
     state: { showMainLoader, place },
