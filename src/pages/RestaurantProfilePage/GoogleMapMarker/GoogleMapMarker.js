@@ -12,4 +12,4 @@ function GoogleMapMarker() {
   return <i className={'fas fa-map-marker-alt'} id={place.id}></i>;
 }
 
-export default React.memo(GoogleMapMarker);
+export default GoogleMapMarker;

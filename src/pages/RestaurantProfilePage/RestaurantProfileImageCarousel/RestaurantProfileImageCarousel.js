@@ -33,4 +33,4 @@ function RestaurantProfileImageCarousel({ photos }) {
   );
 }
 
-export default RestaurantProfileImageCarousel;
+export default React.memo(RestaurantProfileImageCarousel);

@@ -93,4 +93,4 @@ function RestaurantTypeCards() {
   );
 }
 
-export default React.memo(RestaurantTypeCards);
+export default RestaurantTypeCards;

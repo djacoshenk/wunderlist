@@ -50,4 +50,4 @@ function RestaurantCardList() {
   );
 }
 
-export default React.memo(RestaurantCardList);
+export default RestaurantCardList;

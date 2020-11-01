@@ -36,4 +36,4 @@ function RestaurantProfileCardReviews() {
   });
 }
 
-export default React.memo(RestaurantProfileCardReviews);
+export default RestaurantProfileCardReviews;

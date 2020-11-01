@@ -46,4 +46,4 @@ function GoogleMap() {
   );
 }
 
-export default React.memo(GoogleMap);
+export default GoogleMap;

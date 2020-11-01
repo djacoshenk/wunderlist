@@ -99,4 +99,4 @@ function RestaurantProfileCard() {
   );
 }
 
-export default React.memo(RestaurantProfileCard);
+export default RestaurantProfileCard;
