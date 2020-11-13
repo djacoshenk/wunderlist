@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import HomePage from './pages/HomePage/index';
-import RestaurantSearchPage from './pages/RestaurantSearchPage/index';
-import RestaurantProfilePage from './pages/RestaurantProfilePage/index';
+import HomePage from './pages/HomePage/HomePage';
+import RestaurantSearchPage from './pages/RestaurantSearchPage/RestaurantSearchPage';
+import RestaurantProfilePage from './pages/RestaurantProfilePage/RestaurantProfilePage';
 
 import { RestaurantSearchProvider } from './pages/RestaurantSearchPage/_Context/RestaurantSearchContext';
 import { RestaurantProfileProvider } from './pages/RestaurantProfilePage/_Context/RestaurantProfileContext';
