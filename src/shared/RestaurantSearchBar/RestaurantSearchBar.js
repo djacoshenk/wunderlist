@@ -58,7 +58,11 @@ function RestaurantSearchBar() {
 
   return (
     <div className={styles['search-bar-container']}>
-      <form className={styles['search-bar-form']} onSubmit={onFormSubmit}>
+      <form
+        className={styles['search-bar-form']}
+        aria-label='form'
+        onSubmit={onFormSubmit}
+      >
         <label htmlFor='term'>
           <div>Find</div>
           <input
@@ -105,7 +109,7 @@ function RestaurantSearchBar() {
             </datalist>
           )}
         </label>
-        <button>
+        <button type='submit'>
           <i className={'fas fa-search'}></i>
         </button>
       </form>

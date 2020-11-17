@@ -1,18 +1,15 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 import Header from './Header';
 
-describe('<RestaurantSearchBar />', () => {
-  beforeEach(() => {
-    render(<Header />);
-  });
+test('when the component initially renders', () => {
+  render(<Header />);
 
-  test('when the component initially renders', () => {
-    expect(screen.getByAltText(/blue-green-globe/)).toBeTruthy();
-    expect(screen.getByText(/wunderlist/)).toBeTruthy();
-    expect(
-      screen.getByText(/find, save, and share your new favorite place/)
-    ).toBeTruthy();
-  });
+  expect(screen.getByAltText(/blue-green-globe/)).toBeInTheDocument();
+  expect(screen.getByText(/wunderlist/)).toBeInTheDocument();
+  expect(
+    screen.getByText(/find, save, and share your new favorite place/)
+  ).toBeInTheDocument();
 });
