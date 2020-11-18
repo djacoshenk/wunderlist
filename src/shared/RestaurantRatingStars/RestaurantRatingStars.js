@@ -19,7 +19,7 @@ function RestaurantRatingStars({ rating }) {
       starRating = 'fas fa-star';
     }
 
-    return <i className={starRating} key={n}></i>;
+    return <i className={starRating} aria-hidden='true' key={n}></i>;
   });
 
   return totalRating;
