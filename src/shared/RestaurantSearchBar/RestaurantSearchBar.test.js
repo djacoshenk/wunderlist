@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 
 import RestaurantSearchBar from './RestaurantSearchBar';
 import { RestaurantSearchBarProvider } from './RestaurantSearchBarContext';
-import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
   render(

@@ -1,35 +1,47 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 import { BrowserRouter, Route } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 
 import HomePage from './HomePage';
-import Header from '../HomePage/Header/Header';
-import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
-import RestaurantTypeCards from '../HomePage/RestaurantTypeCards/RestaurantTypeCards';
-import { RestaurantSearchBarProvider } from '../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
+import {
+  RestaurantSearchBarContext,
+  RestaurantSearchBarProvider,
+} from '../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
 
-beforeEach(() => {
+test('link changes when user types', () => {
+  const state = {
+    termSuggestions: [],
+    locationSuggestions: [],
+    locationParam: '',
+    error: null,
+  };
+
+  const fetchTermSuggestions = jest.fn();
+  const clearSearchSuggestions = jest.fn();
+  const fetchLocationSuggestions = jest.fn();
+
+  const value = {
+    state,
+    fetchTermSuggestions,
+    clearSearchSuggestions,
+    fetchLocationSuggestions,
+  };
+
   render(
     <BrowserRouter>
       <Route exact path='/'>
         <RestaurantSearchBarProvider>
-          <HomePage>
-            <Header />
-            <RestaurantSearchBar />
-            <RestaurantTypeCards />
-          </HomePage>
+          <RestaurantSearchBarContext.Provider value={value}>
+            <HomePage />
+          </RestaurantSearchBarContext.Provider>
         </RestaurantSearchBarProvider>
       </Route>
     </BrowserRouter>
   );
-});
 
-test('the card links change with a location input', async () => {
-  const locationInput = screen.getByRole('combobox', { name: /Near/ });
-  const cardLink = screen.getByRole('link', { name: /Burgers/ });
-
-  userEvent.type(locationInput, 'Los Angeles, CA');
+  const locationInput = screen.getByPlaceholderText(/Los Angeles/);
+  userEvent.type(locationInput, 'L');
 });
