@@ -1,0 +1,19 @@
+.banner-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  button {
+    height: 35px;
+    width: 70px;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    color: #fff;
+    background-color: #667eea;
+    border: 0;
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+  }
+}
