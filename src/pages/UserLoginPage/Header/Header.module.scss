@@ -1,0 +1,21 @@
+.header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0rem;
+
+  @media (min-width: 481px) {
+    padding-top: calc((100vh - 189px - 83px - 256px) / 2);
+  }
+
+  h1 {
+    color: #38b2ac;
+  }
+
+  h3 {
+    color: #7f9cf5;
+  }
+}

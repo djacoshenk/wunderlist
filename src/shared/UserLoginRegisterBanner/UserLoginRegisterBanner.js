@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
 export default function UserLoginRegisterBanner() {
   const [userAuthed, setUserAuthed] = useState(false);
+  const history = useHistory();
+
+  function handleUserLogin() {
+    history.push('/login');
+  }
+
+  function handleUserRegister() {
+    history.push('/register');
+  }
 
   return (
     <div className={styles['banner-container']}>
@@ -20,14 +30,14 @@ export default function UserLoginRegisterBanner() {
         </>
       ) : (
         <>
-          <button
-            name='login-btn'
-            type='button'
-            onClick={() => setUserAuthed(true)}
-          >
+          <button name='login-btn' type='button' onClick={handleUserLogin}>
             Login
           </button>
-          <button name='register-btn' type='button'>
+          <button
+            name='register-btn'
+            type='button'
+            onClick={handleUserRegister}
+          >
             Register
           </button>
         </>
