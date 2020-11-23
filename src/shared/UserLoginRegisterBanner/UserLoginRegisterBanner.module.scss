@@ -15,5 +15,9 @@
     border-radius: 5px;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
+
+    &:hover {
+      background-color: darken(#667eea, 5%);
+    }
   }
 }
