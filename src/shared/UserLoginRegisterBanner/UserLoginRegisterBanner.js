@@ -31,14 +31,14 @@ export default function UserLoginRegisterBanner() {
       ) : (
         <>
           <button name='login-btn' type='button' onClick={handleUserLogin}>
-            Login
+            LOGIN
           </button>
           <button
             name='register-btn'
             type='button'
             onClick={handleUserRegister}
           >
-            Register
+            REGISTER
           </button>
         </>
       )}

@@ -12,9 +12,16 @@ const defaultUserLoginErrors = {
   password: '',
 };
 
+const userLoginErrorValues = {
+  username: 'Please provide a valid username.',
+  password: 'Please provide a valid password.',
+};
+
 export default function UserLoginForm() {
   const [userLogin, setUserLogin] = useState(defaultUserLogin);
-  const [userErrors, setUserErrors] = useState(defaultUserLoginErrors);
+  const [userLoginErrors, setUserLoginErrors] = useState(
+    defaultUserLoginErrors
+  );
 
   function onInputChange(e) {
     const { name, value } = e.target;
@@ -27,18 +34,21 @@ export default function UserLoginForm() {
   function onFormSubmit(e) {
     let errors = 0;
 
-    for (const prop in userLogin) {
-      if (prop) {
-        continue;
-      } else {
+    for (const name in userLogin) {
+      if (userLogin[name] === '') {
         errors++;
+
+        setUserLoginErrors((prevState) => ({
+          ...prevState,
+          [name]: userLoginErrorValues[name],
+        }));
       }
     }
 
-    if (errors > 0) {
-      e.preventDefault();
+    if (errors === 0) {
+      setUserLogin((prevState) => ({ ...prevState, ...defaultUserLogin }));
     } else {
-      return;
+      e.preventDefault();
     }
   }
 
@@ -60,8 +70,8 @@ export default function UserLoginForm() {
             onChange={onInputChange}
           />
         </div>
-        <div className={styles['user-login-username-errror']}>
-          <p>{userErrors.username}</p>
+        <div className={styles['user-login-username-error']}>
+          <p>{userLoginErrors.username}</p>
         </div>
         <div className={styles['user-login-password-container']}>
           <i className='fas fa-lock'></i>
@@ -73,10 +83,10 @@ export default function UserLoginForm() {
             onChange={onInputChange}
           />
         </div>
-        <div className={styles['user-login-password-errror']}>
-          <p>{userErrors.password}</p>
+        <div className={styles['user-login-password-error']}>
+          <p>{userLoginErrors.password}</p>
         </div>
-        <button type='submit'>Login</button>
+        <button type='submit'>LOGIN</button>
       </form>
     </div>
   );

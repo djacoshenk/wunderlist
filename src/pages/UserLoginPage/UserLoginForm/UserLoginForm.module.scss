@@ -45,15 +45,6 @@
       }
     }
 
-    .user-login-username-errror {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      height: 2rem;
-      width: 300px;
-      color: red;
-    }
-
     .user-login-password-container {
       display: flex;
       flex-direction: row;
@@ -85,13 +76,18 @@
       }
     }
 
-    .user-login-password-errror {
+    .user-login-username-error,
+    .user-login-password-error {
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
-      height: 2rem;
+      height: 1.5rem;
       width: 300px;
       color: red;
+
+      @media (min-width: 481px) {
+        width: 450px;
+      }
     }
 
     button {

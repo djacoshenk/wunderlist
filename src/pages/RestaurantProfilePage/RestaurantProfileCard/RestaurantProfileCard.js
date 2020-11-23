@@ -87,7 +87,7 @@ function RestaurantProfileCard() {
               }}
               target='_blank'
             >
-              <button>Get Directions</button>
+              <button>DIRECTIONS</button>
             </Link>
           </div>
         </div>

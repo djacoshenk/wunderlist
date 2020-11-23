@@ -22,9 +22,26 @@
       width: 300px;
       border: 1px solid #cbd5e0;
       border-radius: 5px;
-      margin-bottom: 1rem;
       font-size: 1rem;
       font-family: 'Lato', sans-serif;
+
+      @media (min-width: 481px) {
+        width: 450px;
+      }
+    }
+
+    .user-register-first-name-error,
+    .user-register-last-name-error,
+    .user-register-email-error,
+    .user-register-username-error,
+    .user-register-password-error,
+    .user-register-confirm-password-error {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      height: 1.5rem;
+      width: 300px;
+      color: red;
 
       @media (min-width: 481px) {
         width: 450px;
