@@ -32,10 +32,12 @@ export default function UserLoginForm() {
   }
 
   function onFormSubmit(e) {
+    e.preventDefault();
+
     let errors = 0;
 
     for (const name in userLogin) {
-      if (userLogin[name] === '') {
+      if (!userLogin[name]) {
         errors++;
 
         setUserLoginErrors((prevState) => ({
@@ -47,8 +49,6 @@ export default function UserLoginForm() {
 
     if (errors === 0) {
       setUserLogin((prevState) => ({ ...prevState, ...defaultUserLogin }));
-    } else {
-      e.preventDefault();
     }
   }
 

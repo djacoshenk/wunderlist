@@ -36,15 +36,32 @@ export default function UserLoginForm() {
   );
 
   function onFormSubmit(e) {
+    e.preventDefault();
+
     let errors = 0;
 
     for (const name in userRegister) {
-      if (userRegister[name] === '') {
+      if (!userRegister[name]) {
         errors++;
 
         setUserRegisterErrors((prevState) => ({
           ...prevState,
           [name]: userRegisterErrorValues[name],
+        }));
+      } else {
+        setUserRegisterErrors((prevState) => ({
+          ...prevState,
+          ...defaultUserRegisterErrors,
+        }));
+      }
+
+      if (userRegister['password'] !== userRegister['confirm_password']) {
+        errors++;
+
+        setUserRegisterErrors((prevState) => ({
+          ...prevState,
+          password: 'The passwords provided do not match.',
+          confirm_password: 'The passwords provided do not match.',
         }));
       }
     }
@@ -54,8 +71,6 @@ export default function UserLoginForm() {
         ...prevState,
         ...defaultUserRegister,
       }));
-    } else {
-      e.preventDefault();
     }
   }
 
