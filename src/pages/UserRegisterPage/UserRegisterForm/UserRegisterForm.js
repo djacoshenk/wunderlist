@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import styles from './UserRegisterForm.module.scss';
 
@@ -29,7 +30,8 @@ const userRegisterErrorValues = {
   confirm_password: 'Please confirm your password.',
 };
 
-export default function UserLoginForm() {
+export default function UserRegisterForm() {
+  const history = useHistory();
   const [userRegister, setUserRegister] = useState(defaultUserRegister);
   const [userRegisterErrors, setUserRegisterErrors] = useState(
     defaultUserRegisterErrors
@@ -67,10 +69,14 @@ export default function UserLoginForm() {
     }
 
     if (errors === 0) {
+      // clear form fields
       setUserRegister((prevState) => ({
         ...prevState,
         ...defaultUserRegister,
       }));
+
+      // route to the home page
+      history.push('/');
     }
   }
 

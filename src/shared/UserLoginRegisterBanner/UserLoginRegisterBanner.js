@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { UserLoginRegisterBannerContext } from './UserLoginRegisterBannerContext';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
 export default function UserLoginRegisterBanner() {
-  const [userAuthed, setUserAuthed] = useState(false);
+  const { state, setUserLogout } = useContext(UserLoginRegisterBannerContext);
   const history = useHistory();
 
   function handleUserLogin() {
@@ -17,13 +19,13 @@ export default function UserLoginRegisterBanner() {
 
   return (
     <div className={styles['banner-container']}>
-      {userAuthed ? (
+      {state.currentUser ? (
         <>
           <p>Welcome Back</p>
           <button
             name='logout-btn'
             type='button'
-            onClick={() => setUserAuthed(false)}
+            onClick={() => setUserLogout()}
           >
             Logout
           </button>
