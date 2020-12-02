@@ -33,7 +33,9 @@ const userRegisterFormErrorValues = {
 };
 
 export default function UserRegisterForm() {
-  const { setRegisteredUser } = useContext(UserLoginRegisterBannerContext);
+  const { setRegisteredUser, toggleLoader } = useContext(
+    UserLoginRegisterBannerContext
+  );
   const [userRegisterForm, setUserRegisterForm] = useState(
     defaultUserRegisterForm
   );
@@ -41,6 +43,24 @@ export default function UserRegisterForm() {
     defaultUserRegisterFormErrors
   );
   const history = useHistory();
+
+  // user email check
+  let newRegisteredUserEmail = userRegisterForm.email;
+  let currentRegisteredUsersEmails = JSON.parse(
+    localStorage.getItem('registeredUsers')
+  );
+
+  // user username check
+  let newRegisteredUserUsername = userRegisterForm.username;
+  let currentRegisteredUsersUsernames = JSON.parse(
+    localStorage.getItem('registeredUsers')
+  );
+
+  // user password check
+  let newRegisteredUserPassword = userRegisterForm.password;
+  let newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
+  let checkRegisteredUserPasswords =
+    newRegisteredUserPassword !== newRegisteredUserConfirmPassword;
 
   function onFormSubmit(e) {
     e.preventDefault();
@@ -63,30 +83,63 @@ export default function UserRegisterForm() {
           ...defaultUserRegisterFormErrors,
         }));
       }
+    }
 
-      // if the passwords are not the same, then throw an error
-      if (
-        userRegisterForm['password'] !== userRegisterForm['confirm_password']
-      ) {
+    // check if the user email already exists
+    if (currentRegisteredUsersEmails) {
+      let checkEmailRegistration = currentRegisteredUsersEmails.find(
+        (val) => val.email === newRegisteredUserEmail
+      );
+
+      if (checkEmailRegistration) {
         errors++;
 
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          password: 'The passwords provided do not match.',
-          confirm_password: 'The passwords provided do not match.',
+          email: 'A user has already been registered with this email.',
         }));
       }
     }
 
-    // check if the user email already exists
+    // check if the username already exists
+    if (currentRegisteredUsersUsernames) {
+      let checkUsernameRegistration = currentRegisteredUsersUsernames.find(
+        (val) => val.username === newRegisteredUserUsername
+      );
+
+      if (checkUsernameRegistration) {
+        errors++;
+
+        setUserRegisterFormErrors((prevState) => ({
+          ...prevState,
+          username: 'This username has already been taken by another user.',
+        }));
+      }
+    }
+
+    // check if the two passwords are the same
+    if (checkRegisteredUserPasswords) {
+      errors++;
+
+      setUserRegisterFormErrors((prevState) => ({
+        ...prevState,
+        password: 'The passwords provided do not match.',
+        confirm_password: 'The passwords provided do not match.',
+      }));
+    }
 
     // if there are no errors, then register the user
     if (errors === 0) {
+      // toggle loader
+      toggleLoader();
+
       // register the user
       setRegisteredUser(userRegisterForm);
 
       // route to the home page
-      history.push('/');
+      setTimeout(() => {
+        history.push('/');
+      }, 5000);
     }
   }
 

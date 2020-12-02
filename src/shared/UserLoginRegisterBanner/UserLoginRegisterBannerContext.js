@@ -12,6 +12,7 @@ export const ACTIONS = {
   SET_USER_LOGIN: 'SET_USER_LOGIN',
   SET_USER_REGISTER: 'SET_USER_REGISTER',
   SET_USER_LOGOUT: 'SET_USER_LOGOUT',
+  TOGGLE_LOADER: 'TOGGLE_LOADER',
 };
 
 export function reducer(state, action) {
@@ -32,6 +33,8 @@ export function reducer(state, action) {
     };
   } else if (action.type === ACTIONS.SET_USER_LOGOUT) {
     return { ...state, currentUser: [] };
+  } else if (action.type === ACTIONS.TOGGLE_LOADER) {
+    return { ...state, isLoading: !state.isLoading };
   } else {
     return state;
   }
@@ -40,6 +43,7 @@ export function reducer(state, action) {
 const initialState = {
   currentUser: [],
   registeredUsers: [],
+  isLoading: false,
 };
 
 export function UserLoginRegisterBannerProvider({ children }) {
@@ -66,11 +70,19 @@ export function UserLoginRegisterBannerProvider({ children }) {
 
   function setUserLogout() {
     dispatch({ type: ACTIONS.SET_USER_LOGOUT });
-
-    localStorage.removeItem('currentUser');
   }
 
-  const value = { state, setUserLogin, setRegisteredUser, setUserLogout };
+  function toggleLoader() {
+    dispatch({ type: ACTIONS.TOGGLE_LOADER });
+  }
+
+  const value = {
+    state,
+    setUserLogin,
+    setRegisteredUser,
+    setUserLogout,
+    toggleLoader,
+  };
 
   return (
     <UserLoginRegisterBannerContext.Provider value={value}>
