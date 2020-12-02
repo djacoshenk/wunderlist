@@ -16,37 +16,35 @@ export default function App() {
   return (
     <Fragment>
       <BrowserRouter>
-        <Switch>
-          <Route exact path='/'>
-            <UserLoginRegisterBannerProvider>
+        <UserLoginRegisterBannerProvider>
+          <Switch>
+            <Route exact path='/'>
               <RestaurantSearchBarProvider>
                 <HomePage />
               </RestaurantSearchBarProvider>
-            </UserLoginRegisterBannerProvider>
-          </Route>
-          <Route exact path='/login'>
-            <UserLoginPage />
-          </Route>
-          <Route exact path='/register'>
-            <UserLoginRegisterBannerProvider>
+            </Route>
+            <Route exact path='/login'>
+              <UserLoginPage />
+            </Route>
+            <Route exact path='/register'>
               <UserRegisterPage />
-            </UserLoginRegisterBannerProvider>
-          </Route>
-          <Route path='/search/:term/:location'>
-            <RestaurantSearchProvider>
-              <RestaurantSearchBarProvider>
-                <RestaurantSearchPage />
-              </RestaurantSearchBarProvider>
-            </RestaurantSearchProvider>
-          </Route>
-          <Route path='/business/:alias'>
-            <RestaurantProfileProvider>
-              <RestaurantSearchBarProvider>
-                <RestaurantProfilePage />
-              </RestaurantSearchBarProvider>
-            </RestaurantProfileProvider>
-          </Route>
-        </Switch>
+            </Route>
+            <Route path='/search/:term/:location'>
+              <RestaurantSearchProvider>
+                <RestaurantSearchBarProvider>
+                  <RestaurantSearchPage />
+                </RestaurantSearchBarProvider>
+              </RestaurantSearchProvider>
+            </Route>
+            <Route path='/business/:alias'>
+              <RestaurantProfileProvider>
+                <RestaurantSearchBarProvider>
+                  <RestaurantProfilePage />
+                </RestaurantSearchBarProvider>
+              </RestaurantProfileProvider>
+            </Route>
+          </Switch>
+        </UserLoginRegisterBannerProvider>
       </BrowserRouter>
     </Fragment>
   );
