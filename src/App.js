@@ -10,6 +10,7 @@ import RestaurantProfilePage from './pages/RestaurantProfilePage/RestaurantProfi
 import { RestaurantSearchProvider } from './pages/RestaurantSearchPage/_Context/RestaurantSearchContext';
 import { RestaurantProfileProvider } from './pages/RestaurantProfilePage/_Context/RestaurantProfileContext';
 import { RestaurantSearchBarProvider } from './shared/RestaurantSearchBar/RestaurantSearchBarContext';
+import { UserLoginRegisterBannerProvider } from './shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
 
 export default function App() {
   return (
@@ -17,15 +18,19 @@ export default function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path='/'>
-            <RestaurantSearchBarProvider>
-              <HomePage />
-            </RestaurantSearchBarProvider>
+            <UserLoginRegisterBannerProvider>
+              <RestaurantSearchBarProvider>
+                <HomePage />
+              </RestaurantSearchBarProvider>
+            </UserLoginRegisterBannerProvider>
           </Route>
           <Route exact path='/login'>
             <UserLoginPage />
           </Route>
           <Route exact path='/register'>
-            <UserRegisterPage />
+            <UserLoginRegisterBannerProvider>
+              <UserRegisterPage />
+            </UserLoginRegisterBannerProvider>
           </Route>
           <Route path='/search/:term/:location'>
             <RestaurantSearchProvider>

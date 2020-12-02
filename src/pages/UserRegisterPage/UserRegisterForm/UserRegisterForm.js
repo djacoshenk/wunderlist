@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import { UserLoginRegisterBannerContext } from '../../../shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
 
 import styles from './UserRegisterForm.module.scss';
 
-const defaultUserRegister = {
+const defaultUserRegisterForm = {
   first_name: '',
   last_name: '',
   email: '',
@@ -12,7 +14,7 @@ const defaultUserRegister = {
   confirm_password: '',
 };
 
-const defaultUserRegisterErrors = {
+const defaultUserRegisterFormErrors = {
   first_name: '',
   last_name: '',
   email: '',
@@ -21,7 +23,7 @@ const defaultUserRegisterErrors = {
   confirm_password: '',
 };
 
-const userRegisterErrorValues = {
+const userRegisterFormErrorValues = {
   first_name: 'Please provide a first name.',
   last_name: 'Please provide a last name.',
   email: 'Please provide an email.',
@@ -31,36 +33,44 @@ const userRegisterErrorValues = {
 };
 
 export default function UserRegisterForm() {
-  const history = useHistory();
-  const [userRegister, setUserRegister] = useState(defaultUserRegister);
-  const [userRegisterErrors, setUserRegisterErrors] = useState(
-    defaultUserRegisterErrors
+  const { setRegisteredUser } = useContext(UserLoginRegisterBannerContext);
+  const [userRegisterForm, setUserRegisterForm] = useState(
+    defaultUserRegisterForm
   );
+  const [userRegisterFormErrors, setUserRegisterFormErrors] = useState(
+    defaultUserRegisterFormErrors
+  );
+  const history = useHistory();
 
   function onFormSubmit(e) {
     e.preventDefault();
 
     let errors = 0;
 
-    for (const name in userRegister) {
-      if (!userRegister[name]) {
+    for (const name in userRegisterForm) {
+      // if the form fields are empty, then show the error value
+      if (!userRegisterForm[name]) {
         errors++;
 
-        setUserRegisterErrors((prevState) => ({
+        setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          [name]: userRegisterErrorValues[name],
+          [name]: userRegisterFormErrorValues[name],
         }));
+        // if the form fields are not empty, then leave the error values empty
       } else {
-        setUserRegisterErrors((prevState) => ({
+        setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          ...defaultUserRegisterErrors,
+          ...defaultUserRegisterFormErrors,
         }));
       }
 
-      if (userRegister['password'] !== userRegister['confirm_password']) {
+      // if the passwords are not the same, then throw an error
+      if (
+        userRegisterForm['password'] !== userRegisterForm['confirm_password']
+      ) {
         errors++;
 
-        setUserRegisterErrors((prevState) => ({
+        setUserRegisterFormErrors((prevState) => ({
           ...prevState,
           password: 'The passwords provided do not match.',
           confirm_password: 'The passwords provided do not match.',
@@ -68,12 +78,12 @@ export default function UserRegisterForm() {
       }
     }
 
+    // check if the user email already exists
+
+    // if there are no errors, then register the user
     if (errors === 0) {
-      // clear form fields
-      setUserRegister((prevState) => ({
-        ...prevState,
-        ...defaultUserRegister,
-      }));
+      // register the user
+      setRegisteredUser(userRegisterForm);
 
       // route to the home page
       history.push('/');
@@ -83,7 +93,7 @@ export default function UserRegisterForm() {
   function onInputChange(e) {
     const { name, value } = e.target;
 
-    setUserRegister((prevState) => {
+    setUserRegisterForm((prevState) => {
       return { ...prevState, [name]: value };
     });
   }
@@ -100,61 +110,61 @@ export default function UserRegisterForm() {
           type='text'
           name='first_name'
           placeholder='First Name'
-          value={userRegister.first_name}
+          value={userRegisterForm.first_name}
           onChange={onInputChange}
         />
         <div className={styles['user-register-first-name-error']}>
-          <p>{userRegisterErrors.first_name}</p>
+          <p>{userRegisterFormErrors.first_name}</p>
         </div>
         <input
           type='text'
           name='last_name'
           placeholder='Last Name'
-          value={userRegister.last_name}
+          value={userRegisterForm.last_name}
           onChange={onInputChange}
         />
         <div className={styles['user-register-last-name-error']}>
-          <p>{userRegisterErrors.last_name}</p>
+          <p>{userRegisterFormErrors.last_name}</p>
         </div>
         <input
           type='email'
           name='email'
           placeholder='Email'
-          value={userRegister.email}
+          value={userRegisterForm.email}
           onChange={onInputChange}
         />
         <div className={styles['user-register-email-error']}>
-          <p>{userRegisterErrors.email}</p>
+          <p>{userRegisterFormErrors.email}</p>
         </div>
         <input
           type='text'
           name='username'
           placeholder='Username'
-          value={userRegister.username}
+          value={userRegisterForm.username}
           onChange={onInputChange}
         />
         <div className={styles['user-register-username-error']}>
-          <p>{userRegisterErrors.username}</p>
+          <p>{userRegisterFormErrors.username}</p>
         </div>
         <input
           type='password'
           name='password'
           placeholder='Password'
-          value={userRegister.password}
+          value={userRegisterForm.password}
           onChange={onInputChange}
         />
         <div className={styles['user-register-password-error']}>
-          <p>{userRegisterErrors.password}</p>
+          <p>{userRegisterFormErrors.password}</p>
         </div>
         <input
           type='password'
           name='confirm_password'
           placeholder='Confirm Password'
-          value={userRegister.confirm_password}
+          value={userRegisterForm.confirm_password}
           onChange={onInputChange}
         />
         <div className={styles['user-register-confirm-password-error']}>
-          <p>{userRegisterErrors.confirm_password}</p>
+          <p>{userRegisterFormErrors.confirm_password}</p>
         </div>
         <button type='submit'>REGISTER</button>
       </form>
