@@ -21,15 +21,7 @@ export function reducer(state, action) {
   } else if (action.type === ACTIONS.SET_USER_REGISTER) {
     return {
       ...state,
-      registeredUsers: [...state.registeredUsers, action.payload],
-      currentUser: [
-        {
-          userID: action.payload.userID,
-          username: action.payload.username,
-          first_name: action.payload.first_name,
-          last_name: action.payload.last_name,
-        },
-      ],
+      currentUser: [action.payload],
     };
   } else if (action.type === ACTIONS.SET_USER_LOGOUT) {
     return { ...state, currentUser: [] };
@@ -42,7 +34,6 @@ export function reducer(state, action) {
 
 const initialState = {
   currentUser: [],
-  registeredUsers: [],
   isLoading: false,
 };
 
@@ -66,10 +57,17 @@ export function UserLoginRegisterBannerProvider({ children }) {
         ...user,
       },
     });
+
+    localStorage.setItem(
+      'currentUser',
+      JSON.stringify([{ userID: uuid(), ...user }])
+    );
   }
 
   function setUserLogout() {
     dispatch({ type: ACTIONS.SET_USER_LOGOUT });
+
+    localStorage.removeItem('currentUser');
   }
 
   function toggleLoader() {

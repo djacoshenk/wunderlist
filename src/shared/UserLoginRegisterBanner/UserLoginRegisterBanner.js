@@ -9,13 +9,35 @@ export default function UserLoginRegisterBanner() {
   const { state, setUserLogout } = useContext(UserLoginRegisterBannerContext);
   const history = useHistory();
 
+  const currentUserLocalStorage = JSON.parse(
+    localStorage.getItem('currentUser')
+  );
+  const registeredUsersLocalStorage = JSON.parse(
+    localStorage.getItem('registeredUsers')
+  );
+
   useEffect(() => {
-    // set the registered users in storage
-    localStorage.setItem(
-      'registeredUsers',
-      JSON.stringify(state.registeredUsers)
-    );
-  }, [state.registeredUsers]);
+    // check if there is data in state - if there's no data, then we don't want to store it in local storage
+    if (state.currentUser.length > 0) {
+      // check if there is already data in local storage, if so we want to append to the registered users list
+      if (registeredUsersLocalStorage) {
+        const combinedRegisteredUsersData = registeredUsersLocalStorage.concat(
+          state.currentUser
+        );
+
+        localStorage.setItem(
+          'registeredUsers',
+          JSON.stringify(combinedRegisteredUsersData)
+        );
+        // if there's no data in local storage then we want to add the data
+      } else {
+        localStorage.setItem(
+          'registeredUsers',
+          JSON.stringify(state.currentUser)
+        );
+      }
+    }
+  }, [state.currentUser, currentUserLocalStorage, registeredUsersLocalStorage]);
 
   function handleUserLogin() {
     history.push('/login');
@@ -27,9 +49,9 @@ export default function UserLoginRegisterBanner() {
 
   return (
     <div className={styles['banner-container']}>
-      {state.currentUser.length > 0 ? (
+      {currentUserLocalStorage ? (
         <Fragment>
-          <p>{`Welcome Back, ${state.currentUser[0].first_name}`}</p>
+          <p>{`Hello, ${currentUserLocalStorage[0].first_name}`}</p>
           <button
             name='logout-btn'
             type='button'

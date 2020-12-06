@@ -130,16 +130,17 @@ export default function UserRegisterForm() {
 
     // if there are no errors, then register the user
     if (errors === 0) {
-      // toggle loader
+      // toggle loader on
       toggleLoader();
 
       // register the user
       setRegisteredUser(userRegisterForm);
 
-      // route to the home page
+      // turn loader off and route to the home page
       setTimeout(() => {
+        toggleLoader();
         history.push('/');
-      }, 5000);
+      }, 2000);
     }
   }
 
