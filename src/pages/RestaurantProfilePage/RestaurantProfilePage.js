@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { RestaurantProfileContext } from './_Context/RestaurantProfileContext';
 
+import UserLoginRegisterBanner from '../../shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 import Header from './Header/Header';
 import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
@@ -36,6 +37,7 @@ export default function RestaurantProfilePage() {
           </title>
         )}
       </Helmet>
+      <UserLoginRegisterBanner />
       <Header />
       <RestaurantSearchBar />
       {showMainLoader ? <RestaurantProfileLoader /> : <RestaurantProfileCard />}

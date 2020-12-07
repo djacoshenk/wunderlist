@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
+import UserLoginRegisterBanner from '../../shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 import Header from './Header/Header';
 import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
 import MainContent from './MainContent/MainContent';
@@ -29,6 +30,7 @@ export default function RestaurantSearchPage() {
           Wunderlist - The best {params.term.toUpperCase()} in {params.location}
         </title>
       </Helmet>
+      <UserLoginRegisterBanner />
       <Header />
       <RestaurantSearchBar />
       {showMainLoader ? <RestaurantSearchLoader /> : <MainContent />}
