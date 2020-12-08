@@ -144,6 +144,7 @@ export default function UserRegisterForm() {
           ...prevState,
           password:
             'The password must be a minimum of 8 characters and contain at least one letter and one number.',
+          confirm_password: '',
         }));
       }
     }
