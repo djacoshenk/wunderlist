@@ -44,22 +44,25 @@ export default function UserRegisterForm() {
   );
   const history = useHistory();
 
-  // user email check
-  let newRegisteredUserEmail = userRegisterForm.email;
-  let currentRegisteredUsersEmails = JSON.parse(
+  // check if there is a user already registered with the email
+  const newRegisteredUserEmail = userRegisterForm.email;
+  const currentRegisteredUsersEmails = JSON.parse(
     localStorage.getItem('registeredUsers')
   );
 
-  // user username check
-  let newRegisteredUserUsername = userRegisterForm.username;
-  let currentRegisteredUsersUsernames = JSON.parse(
+  // check if there is a user already registered with the username
+  const newRegisteredUserUsername = userRegisterForm.username;
+  const currentRegisteredUsersUsernames = JSON.parse(
     localStorage.getItem('registeredUsers')
   );
 
-  // user password check
-  let newRegisteredUserPassword = userRegisterForm.password;
-  let newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
-  let checkRegisteredUserPasswords =
+  // minimum eight characters and contain at least one letter and one number
+  const passwordRequirements = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+  // check if the provided passwords are the same
+  const newRegisteredUserPassword = userRegisterForm.password;
+  const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
+  const checkRegisteredUserPasswords =
     newRegisteredUserPassword !== newRegisteredUserConfirmPassword;
 
   function onFormSubmit(e) {
@@ -67,8 +70,8 @@ export default function UserRegisterForm() {
 
     let errors = 0;
 
+    // if the form fields are empty, then show the error value
     for (const name in userRegisterForm) {
-      // if the form fields are empty, then show the error value
       if (!userRegisterForm[name]) {
         errors++;
 
@@ -76,11 +79,10 @@ export default function UserRegisterForm() {
           ...prevState,
           [name]: userRegisterFormErrorValues[name],
         }));
-        // if the form fields are not empty, then leave the error values empty
       } else {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          ...defaultUserRegisterFormErrors,
+          [name]: defaultUserRegisterFormErrors[name],
         }));
       }
     }
@@ -128,6 +130,24 @@ export default function UserRegisterForm() {
       }));
     }
 
+    // check if the password matches the password constraints
+    if (newRegisteredUserPassword) {
+      if (newRegisteredUserPassword.match(passwordRequirements)) {
+        setUserRegisterFormErrors((prevState) => ({
+          ...prevState,
+          password: '',
+        }));
+      } else {
+        errors++;
+
+        setUserRegisterFormErrors((prevState) => ({
+          ...prevState,
+          password:
+            'The password must be a minimum of 8 characters and contain at least one letter and one number.',
+        }));
+      }
+    }
+
     // if there are no errors, then register the user
     if (errors === 0) {
       // toggle loader on
@@ -147,9 +167,10 @@ export default function UserRegisterForm() {
   function onInputChange(e) {
     const { name, value } = e.target;
 
-    setUserRegisterForm((prevState) => {
-      return { ...prevState, [name]: value };
-    });
+    setUserRegisterForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   }
 
   return (
