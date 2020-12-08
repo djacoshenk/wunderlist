@@ -22,9 +22,10 @@ export function reducer(state, action) {
     return {
       ...state,
       currentUser: [action.payload],
+      registeredUser: [action.payload],
     };
   } else if (action.type === ACTIONS.SET_USER_LOGOUT) {
-    return { ...state, currentUser: [] };
+    return { ...state, currentUser: [], registeredUser: [] };
   } else if (action.type === ACTIONS.TOGGLE_LOADER) {
     return { ...state, isLoading: !state.isLoading };
   } else {
@@ -34,19 +35,22 @@ export function reducer(state, action) {
 
 const initialState = {
   currentUser: [],
+  registeredUser: [],
   isLoading: false,
 };
 
 export function UserLoginRegisterBannerProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  function setUserLogin(user) {
+  function setCurrentUserLogin(user) {
     dispatch({
       type: ACTIONS.SET_USER_LOGIN,
       payload: {
         ...user,
       },
     });
+
+    localStorage.setItem('currentUser', JSON.stringify([{ ...user }]));
   }
 
   function setRegisteredUser(user) {
@@ -76,7 +80,7 @@ export function UserLoginRegisterBannerProvider({ children }) {
 
   const value = {
     state,
-    setUserLogin,
+    setCurrentUserLogin,
     setRegisteredUser,
     setUserLogout,
     toggleLoader,

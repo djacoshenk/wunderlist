@@ -18,11 +18,11 @@ export default function UserLoginRegisterBanner() {
 
   useEffect(() => {
     // check if there is data in state - if there's no data, then we don't want to store it in local storage
-    if (state.currentUser.length > 0) {
+    if (state.registeredUser.length > 0) {
       // check if there is already data in local storage, if so we want to append to the registered users list
       if (registeredUsersLocalStorage) {
         const combinedRegisteredUsersData = registeredUsersLocalStorage.concat(
-          state.currentUser
+          state.registeredUser
         );
 
         localStorage.setItem(
@@ -33,11 +33,15 @@ export default function UserLoginRegisterBanner() {
       } else {
         localStorage.setItem(
           'registeredUsers',
-          JSON.stringify(state.currentUser)
+          JSON.stringify(state.registeredUser)
         );
       }
     }
-  }, [state.currentUser, currentUserLocalStorage, registeredUsersLocalStorage]);
+  }, [
+    state.registeredUser,
+    currentUserLocalStorage,
+    registeredUsersLocalStorage,
+  ]);
 
   function handleUserLogin() {
     history.push('/login');
