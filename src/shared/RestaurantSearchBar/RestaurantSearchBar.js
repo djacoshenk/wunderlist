@@ -9,7 +9,7 @@ import styles from './RestaurantSearchBar.module.scss';
 let searchId;
 const defaultSearchParams = {
   term: '',
-  location: '',
+  location: 'Los Angeles, CA',
 };
 
 function RestaurantSearchBar() {
