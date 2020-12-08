@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 
-import UserLoginRegisterBanner from '../../shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
+import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 import Header from './Header/Header';
-import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
+import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 import { RestaurantSearchContext } from './_Context/RestaurantSearchContext';

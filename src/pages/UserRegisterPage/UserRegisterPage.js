@@ -5,7 +5,7 @@ import UserRegistrationLoader from './UserRegistrationLoader/UserRegistrationLoa
 import Header from './Header/Header';
 import UserRegisterForm from './UserRegisterForm/UserRegisterForm';
 
-import { UserLoginRegisterBannerContext } from '../../shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
 
 export default function UserRegisterPage() {
   const { state } = useContext(UserLoginRegisterBannerContext);

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { RestaurantSearchContext } from '../_Context/RestaurantSearchContext';
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
-import RestaurantLoaderBubbles from '../../../shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
+import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
 import styles from './RestaurantCardList.module.scss';
 

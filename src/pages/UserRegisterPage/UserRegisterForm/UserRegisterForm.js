@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { UserLoginRegisterBannerContext } from '../../../shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
 
 import styles from './UserRegisterForm.module.scss';
 
@@ -93,10 +93,7 @@ export default function UserRegisterForm() {
     // check if the email provided is in fact an email
     if (newRegisteredUserEmail) {
       if (newRegisteredUserEmail.match(emailRequirements)) {
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-          email: '',
-        }));
+        return;
       } else {
         errors++;
 
@@ -153,10 +150,7 @@ export default function UserRegisterForm() {
     // check if the password matches the password constraints
     if (newRegisteredUserPassword) {
       if (newRegisteredUserPassword.match(passwordRequirements)) {
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-          password: '',
-        }));
+        return;
       } else {
         errors++;
 
@@ -164,7 +158,6 @@ export default function UserRegisterForm() {
           ...prevState,
           password:
             'The password must be a minimum of 8 characters and contain at least one letter and one number.',
-          confirm_password: '',
         }));
       }
     }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import RestaurantRatingStars from '../../../shared/RestaurantRatingStars/RestaurantRatingStars';
+import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 
 import styles from './RestaurantCard.module.scss';
 

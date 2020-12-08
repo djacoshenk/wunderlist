@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RestaurantLoaderBubbles from '../../../shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
+import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
 import styles from './UserRegistrationLoader.module.scss';
 

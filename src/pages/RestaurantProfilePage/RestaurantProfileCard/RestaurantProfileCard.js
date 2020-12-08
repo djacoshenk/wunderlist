@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
-import RestaurantRatingStars from '../../../shared/RestaurantRatingStars/RestaurantRatingStars';
+import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
 

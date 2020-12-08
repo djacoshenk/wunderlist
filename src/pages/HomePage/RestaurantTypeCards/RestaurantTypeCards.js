@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
-import { RestaurantSearchBarContext } from '../../../shared/RestaurantSearchBar/RestaurantSearchBarContext';
+import { RestaurantSearchBarContext } from 'shared/RestaurantSearchBar/RestaurantSearchBarContext';
 
-import burger from '../../../assets/burger.png';
-import sushi from '../../../assets/sushi.png';
-import rice from '../../../assets/rice-bowl.png';
-import taco from '../../../assets/taco.png';
-import pizza from '../../../assets/pizza-slice.png';
-import chili from '../../../assets/chili.png';
+import burger from 'assets/burger.png';
+import sushi from 'assets/sushi.png';
+import rice from 'assets/rice-bowl.png';
+import taco from 'assets/taco.png';
+import pizza from 'assets/pizza-slice.png';
+import chili from 'assets/chili.png';
 
 import styles from './RestaurantTypeCards.module.scss';
 

@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import HomePage from './pages/HomePage/HomePage';
-import UserLoginPage from './pages/UserLoginPage/UserLoginPage';
-import UserRegisterPage from './pages/UserRegisterPage/UserRegisterPage';
-import RestaurantSearchPage from './pages/RestaurantSearchPage/RestaurantSearchPage';
-import RestaurantProfilePage from './pages/RestaurantProfilePage/RestaurantProfilePage';
+import HomePage from 'pages/HomePage/HomePage';
+import UserLoginPage from 'pages/UserLoginPage/UserLoginPage';
+import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
+import RestaurantSearchPage from 'pages/RestaurantSearchPage/RestaurantSearchPage';
+import RestaurantProfilePage from 'pages/RestaurantProfilePage/RestaurantProfilePage';
 
-import { RestaurantSearchProvider } from './pages/RestaurantSearchPage/_Context/RestaurantSearchContext';
-import { RestaurantProfileProvider } from './pages/RestaurantProfilePage/_Context/RestaurantProfileContext';
-import { RestaurantSearchBarProvider } from './shared/RestaurantSearchBar/RestaurantSearchBarContext';
-import { UserLoginRegisterBannerProvider } from './shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import { RestaurantSearchProvider } from 'pages/RestaurantSearchPage/_Context/RestaurantSearchContext';
+import { RestaurantProfileProvider } from 'pages/RestaurantProfilePage/_Context/RestaurantProfileContext';
+import { RestaurantSearchBarProvider } from 'shared/RestaurantSearchBar/RestaurantSearchBarContext';
+import { UserLoginRegisterBannerProvider } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
 
 export default function App() {
   return (

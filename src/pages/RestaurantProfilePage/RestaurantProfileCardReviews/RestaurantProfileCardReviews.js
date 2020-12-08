@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import RestaurantProfileStars from '../../../shared/RestaurantRatingStars/RestaurantRatingStars';
+import RestaurantProfileStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import styles from './RestaurantProfileCardReviews.module.scss';
