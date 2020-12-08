@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+
+import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
 
 import styles from './UserLoginForm.module.scss';
 
-const defaultUserLogin = {
+const defaultUserLoginForm = {
   username: '',
   password: '',
 };
 
-const defaultUserLoginErrors = {
+const defaultUserLoginFormErrors = {
   username: '',
   password: '',
 };
 
-const userLoginErrorValues = {
+const userLoginFormErrorValues = {
   username: 'Please provide a valid username.',
   password: 'Please provide a valid password.',
 };
 
 export default function UserLoginForm() {
-  const [userLogin, setUserLogin] = useState(defaultUserLogin);
-  const [userLoginErrors, setUserLoginErrors] = useState(
-    defaultUserLoginErrors
+  const { setCurrentUserLogin, toggleLoader } = useContext(
+    UserLoginRegisterBannerContext
+  );
+  const [userLoginForm, setUserLoginForm] = useState(defaultUserLoginForm);
+  const [userLoginFormErrors, setUserLoginFormErrors] = useState(
+    defaultUserLoginFormErrors
+  );
+  const history = useHistory();
+
+  const currentUserLoginUsername = userLoginForm.username;
+  const currentUserLoginPassword = userLoginForm.password;
+  const currentRegisteredUsersUsernames = JSON.parse(
+    localStorage.getItem('registeredUsers')
   );
 
   function onInputChange(e) {
     const { name, value } = e.target;
 
-    setUserLogin((prevState) => {
-      return { ...prevState, [name]: value };
-    });
+    setUserLoginForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   }
 
   function onFormSubmit(e) {
@@ -36,19 +50,78 @@ export default function UserLoginForm() {
 
     let errors = 0;
 
-    for (const name in userLogin) {
-      if (!userLogin[name]) {
+    if (currentRegisteredUsersUsernames) {
+      let checkUsernameRegistration = currentRegisteredUsersUsernames.find(
+        (val) => val.username === currentUserLoginUsername
+      );
+      let checkPasswordRegistration = currentRegisteredUsersUsernames.find(
+        (val) => val.password === currentUserLoginPassword
+      );
+
+      if (checkUsernameRegistration) {
+        setUserLoginFormErrors((prevState) => ({
+          ...prevState,
+        }));
+      } else {
         errors++;
 
-        setUserLoginErrors((prevState) => ({
+        setUserLoginFormErrors((prevState) => ({
           ...prevState,
-          [name]: userLoginErrorValues[name],
+          username: 'The provided username does not match a registered user.',
+        }));
+      }
+
+      if (checkPasswordRegistration) {
+        setUserLoginFormErrors((prevState) => ({
+          ...prevState,
+        }));
+      } else {
+        errors++;
+
+        setUserLoginFormErrors((prevState) => ({
+          ...prevState,
+          password: 'Incorrect password. Please try again.',
+        }));
+      }
+    } else {
+      errors++;
+
+      setUserLoginFormErrors((prevState) => ({
+        ...prevState,
+        username: 'The provided username does not match a registered user.',
+        password: 'Incorrect password. Please try again.',
+      }));
+    }
+
+    for (const name in userLoginForm) {
+      if (!userLoginForm[name]) {
+        errors++;
+
+        setUserLoginFormErrors((prevState) => ({
+          ...prevState,
+          [name]: userLoginFormErrorValues[name],
         }));
       }
     }
 
     if (errors === 0) {
-      setUserLogin((prevState) => ({ ...prevState, ...defaultUserLogin }));
+      const registeredUserData = currentRegisteredUsersUsernames.find(
+        (val) =>
+          val.username === currentUserLoginUsername &&
+          val.password === currentUserLoginPassword
+      );
+
+      // toggle loader on
+      toggleLoader();
+
+      // register the user
+      setCurrentUserLogin(registeredUserData);
+
+      // turn loader off and route to the home page
+      setTimeout(() => {
+        toggleLoader();
+        history.push('/');
+      }, 2000);
     }
   }
 
@@ -66,12 +139,12 @@ export default function UserLoginForm() {
             type='text'
             name='username'
             placeholder='Username'
-            value={userLogin.username}
+            value={userLoginForm.username}
             onChange={onInputChange}
           />
         </div>
         <div className={styles['user-login-username-error']}>
-          <p>{userLoginErrors.username}</p>
+          <p>{userLoginFormErrors.username}</p>
         </div>
         <div className={styles['user-login-password-container']}>
           <i className='fas fa-lock'></i>
@@ -79,12 +152,12 @@ export default function UserLoginForm() {
             type='password'
             name='password'
             placeholder='Password'
-            value={userLogin.password}
+            value={userLoginForm.password}
             onChange={onInputChange}
           />
         </div>
         <div className={styles['user-login-password-error']}>
-          <p>{userLoginErrors.password}</p>
+          <p>{userLoginFormErrors.password}</p>
         </div>
         <button type='submit'>LOGIN</button>
       </form>
