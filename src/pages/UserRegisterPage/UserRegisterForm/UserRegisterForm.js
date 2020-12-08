@@ -56,6 +56,9 @@ export default function UserRegisterForm() {
     localStorage.getItem('registeredUsers')
   );
 
+  // regex for email
+  const emailRequirements = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
   // minimum eight characters and contain at least one letter and one number
   const passwordRequirements = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
@@ -83,6 +86,23 @@ export default function UserRegisterForm() {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
           [name]: defaultUserRegisterFormErrors[name],
+        }));
+      }
+    }
+
+    // check if the email provided is in fact an email
+    if (newRegisteredUserEmail) {
+      if (newRegisteredUserEmail.match(emailRequirements)) {
+        setUserRegisterFormErrors((prevState) => ({
+          ...prevState,
+          email: '',
+        }));
+      } else {
+        errors++;
+
+        setUserRegisterFormErrors((prevState) => ({
+          ...prevState,
+          email: 'The email provided is not a valid email.',
         }));
       }
     }
@@ -203,7 +223,7 @@ export default function UserRegisterForm() {
           <p>{userRegisterFormErrors.last_name}</p>
         </div>
         <input
-          type='email'
+          type='text'
           name='email'
           placeholder='Email'
           value={userRegisterForm.email}
