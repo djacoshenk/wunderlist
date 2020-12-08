@@ -5,17 +5,22 @@
   align-items: center;
   width: 100%;
   text-align: center;
-  padding: 2rem 0rem;
-
-  @media (min-width: 481px) {
-    padding-top: calc((100vh - 189px - 83px - 256px) / 2);
-  }
+  padding: 1rem 0rem;
 
   h1 {
     color: #38b2ac;
   }
 
   h3 {
+    display: none;
     color: #7f9cf5;
+  }
+
+  @media (min-width: 481px) {
+    padding-top: calc((100vh - 51px - 137px - 83px - 256px) / 2);
+
+    h3 {
+      display: initial;
+    }
   }
 }
