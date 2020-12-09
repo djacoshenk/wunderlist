@@ -1,13 +1,25 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 
+import UserLogoutLoader from './UserLogoutLoader/UserLogoutLoader';
 import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 import Header from './Header/Header';
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
 
+import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+
 export default function HomePage() {
-  return (
+  const { state } = useContext(UserLoginRegisterBannerContext);
+
+  return state.isLoading ? (
+    <Fragment>
+      <Helmet>
+        <title>Wunderlist - User Logout</title>
+      </Helmet>
+      <UserLogoutLoader />
+    </Fragment>
+  ) : (
     <Fragment>
       <Helmet>
         <title>
