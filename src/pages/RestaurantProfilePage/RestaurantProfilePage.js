@@ -32,9 +32,7 @@ export default function RestaurantProfilePage() {
         {place.name ? (
           <title>{`Wunderlist - ${place.name}`}</title>
         ) : (
-          <title>
-            Wunderlist - Find, share, and save your new favorite place
-          </title>
+          <title>Wunderlist - Find and save your new favorite place</title>
         )}
       </Helmet>
       <UserLoginRegisterBanner />

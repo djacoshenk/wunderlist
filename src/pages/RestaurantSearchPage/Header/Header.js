@@ -8,7 +8,7 @@ function Header() {
     <div className={styles['header-container']}>
       <h1>
         <Link to='/' className={styles['header-link']}>
-          wunderlist
+          Wunderlist
         </Link>
       </h1>
     </div>

@@ -7,8 +7,8 @@ function Header() {
   return (
     <div className={styles['header-container']}>
       <img src={globe} alt='blue-green-globe' />
-      <h1>wunderlist</h1>
-      <h3>find, save, and share your new favorite place</h3>
+      <h1>Wunderlist</h1>
+      <h3>Find and save your new favorite place</h3>
     </div>
   );
 }

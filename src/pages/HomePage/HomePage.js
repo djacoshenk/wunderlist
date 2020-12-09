@@ -22,9 +22,7 @@ export default function HomePage() {
   ) : (
     <Fragment>
       <Helmet>
-        <title>
-          Wunderlist - Find, share, and save your new favorite place
-        </title>
+        <title>Wunderlist - Find and save your new favorite place</title>
       </Helmet>
       <UserLoginRegisterBanner />
       <Header />
