@@ -193,7 +193,7 @@ export default function UserRegisterForm() {
 
   return (
     <div className={styles['user-register-form-container']}>
-      <h3>Register User</h3>
+      <h3>User Registration</h3>
       <form
         className={styles['user-register-form']}
         onSubmit={onFormSubmit}

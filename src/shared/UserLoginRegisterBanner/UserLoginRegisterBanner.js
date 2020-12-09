@@ -6,7 +6,9 @@ import { UserLoginRegisterBannerContext } from './UserLoginRegisterBannerContext
 import styles from './UserLoginRegisterBanner.module.scss';
 
 export default function UserLoginRegisterBanner() {
-  const { state, setUserLogout } = useContext(UserLoginRegisterBannerContext);
+  const { state, setUserLogout, toggleLoader } = useContext(
+    UserLoginRegisterBannerContext
+  );
   const history = useHistory();
 
   const currentUserLocalStorage = JSON.parse(
@@ -51,16 +53,24 @@ export default function UserLoginRegisterBanner() {
     history.push('/register');
   }
 
+  function handleUserLogout() {
+    toggleLoader();
+
+    setUserLogout();
+
+    history.push('/');
+
+    setTimeout(() => {
+      toggleLoader();
+    }, 2000);
+  }
+
   return (
     <div className={styles['banner-container']}>
       {currentUserLocalStorage ? (
         <Fragment>
           <p>{`Hello, ${currentUserLocalStorage[0].first_name}`}</p>
-          <button
-            name='logout-btn'
-            type='button'
-            onClick={() => setUserLogout()}
-          >
+          <button name='logout-btn' type='button' onClick={handleUserLogout}>
             LOGOUT
           </button>
         </Fragment>
