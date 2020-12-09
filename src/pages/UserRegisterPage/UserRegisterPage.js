@@ -1,5 +1,5 @@
-import React from 'react';
-import { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 
 import UserRegistrationLoader from './UserRegistrationLoader/UserRegistrationLoader';
 import Header from './Header/Header';
@@ -12,11 +12,19 @@ export default function UserRegisterPage() {
 
   // if loading, show the registration loader, if not then show the registration form
   return state.isLoading ? (
-    <UserRegistrationLoader />
+    <Fragment>
+      <Helmet>
+        <title>Wunderlist - User Registration</title>
+      </Helmet>
+      <UserRegistrationLoader />
+    </Fragment>
   ) : (
-    <>
+    <Fragment>
+      <Helmet>
+        <title>Wunderlist - User Registration</title>
+      </Helmet>
       <Header />
       <UserRegisterForm />
-    </>
+    </Fragment>
   );
 }

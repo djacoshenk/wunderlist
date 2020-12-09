@@ -1,4 +1,5 @@
 import React, { Fragment, useContext } from 'react';
+import { Helmet } from 'react-helmet';
 
 import UserLoginLoader from './UserLoginLoader/UserLoginLoader';
 import Header from './Header/Header';
@@ -10,9 +11,17 @@ export default function UserLoginPage() {
   const { state } = useContext(UserLoginRegisterBannerContext);
 
   return state.isLoading ? (
-    <UserLoginLoader />
+    <Fragment>
+      <Helmet>
+        <title>Wunderlist - User Login</title>
+      </Helmet>
+      <UserLoginLoader />
+    </Fragment>
   ) : (
     <Fragment>
+      <Helmet>
+        <title>Wunderlist - User Login</title>
+      </Helmet>
       <Header />
       <UserLoginForm />
     </Fragment>
