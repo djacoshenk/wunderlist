@@ -29,9 +29,11 @@ function RestaurantSearchBar() {
       return { ...prevState, [name]: value };
     });
 
+    // use the input value to generate autocomplete search results
     handleSearchDebounce(name, value);
   }
 
+  // for autocomplete search results
   function handleSearchDebounce(name, value) {
     clearSearchSuggestions(name);
 

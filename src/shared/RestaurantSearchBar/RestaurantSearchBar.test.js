@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -21,37 +20,16 @@ beforeEach(() => {
 });
 
 test('when the <RestaurantSearchBar /> component initially renders', () => {
-  const termInput = screen.getByPlaceholderText(/pizza/);
-  const locationInput = screen.getByPlaceholderText(/Los Angeles/);
-
-  expect(screen.getByText(/Find/)).toBeInTheDocument();
-  expect(termInput).toBeInTheDocument();
-  expect(termInput.value).toBeFalsy();
-  expect(screen.getByText(/Near/)).toBeInTheDocument();
-  expect(locationInput).toBeInTheDocument();
-  expect(locationInput.value).toBeFalsy();
+  expect(screen.getByRole('form', { name: /form/i })).toBeInTheDocument();
+  expect(screen.getByRole('combobox', { name: /find/i })).toBeInTheDocument();
+  expect(screen.getByRole('combobox', { name: /near/i })).toBeInTheDocument();
+  expect(screen.getByRole('button')).toBeInTheDocument();
 });
 
-test('when user types into the input field', () => {
-  const termInput = screen.getByPlaceholderText(/pizza/);
-  const locationInput = screen.getByPlaceholderText(/Los Angeles/);
+// test when the user types into the input fields
 
-  userEvent.type(termInput, 'Breakfast & Brunch');
-  expect(termInput.value).toBe('Breakfast & Brunch');
-  userEvent.type(locationInput, 'Los Angeles, CA');
-  expect(locationInput.value).toBe('Los Angeles, CA');
-});
+// test when the user types into the input fields and clicks the button
 
-test('when user type into the input and submits the search bar form', () => {
-  const form = screen.getByRole('form');
-  const button = screen.getByRole('button');
+// test that when clicking the button pushes the history to the correct path
 
-  const termInput = screen.getByPlaceholderText(/pizza/);
-  const locationInput = screen.getByPlaceholderText(/Los Angeles/);
-
-  userEvent.type(termInput, 'Breakfast & Brunch');
-  userEvent.type(locationInput, 'Los Angeles, CA');
-
-  fireEvent.submit(form);
-  userEvent.click(button);
-});
+// test that autocomplete results are returned from the user input

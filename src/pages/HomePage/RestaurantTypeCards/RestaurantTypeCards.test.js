@@ -20,36 +20,30 @@ beforeEach(() => {
 });
 
 test('the component images are rendering', () => {
-  const images = screen.getAllByRole('img');
-
-  expect(images.length).toBe(6);
-
-  expect(screen.getByAltText(/cheeseburger/)).toBeInTheDocument();
-  expect(screen.getByAltText(/sushi/)).toBeInTheDocument();
-  expect(screen.getByAltText(/pizza/)).toBeInTheDocument();
-  expect(screen.getByAltText(/rice/)).toBeInTheDocument();
-  expect(screen.getByAltText(/taco/)).toBeInTheDocument();
-  expect(screen.getByAltText(/chili/)).toBeInTheDocument();
+  expect(screen.getByRole('img', { name: /cheeseburger/i }));
+  expect(screen.getByRole('img', { name: /sushi/i }));
+  expect(screen.getByRole('img', { name: /pizza/i }));
+  expect(screen.getByRole('img', { name: /rice/i }));
+  expect(screen.getByRole('img', { name: /taco/i }));
+  expect(screen.getByRole('img', { name: /chili/i }));
 });
 
 test('the component text is rendering', () => {
-  expect(screen.getByText(/Burgers/)).toBeInTheDocument();
-  expect(screen.getByText(/Japanese/)).toBeInTheDocument();
-  expect(screen.getByText(/Italian/)).toBeInTheDocument();
-  expect(screen.getByText(/Chinese/)).toBeInTheDocument();
-  expect(screen.getByText(/Mexican/)).toBeInTheDocument();
-  expect(screen.getByText(/Thai/)).toBeInTheDocument();
+  expect(screen.getByText(/burgers/i)).toBeInTheDocument();
+  expect(screen.getByText(/japanese/i)).toBeInTheDocument();
+  expect(screen.getByText(/italian/i)).toBeInTheDocument();
+  expect(screen.getByText(/chinese/i)).toBeInTheDocument();
+  expect(screen.getByText(/mexican/i)).toBeInTheDocument();
+  expect(screen.getByText(/thai/i)).toBeInTheDocument();
 });
 
 test('the component links are rendering', () => {
-  const links = screen.getAllByRole('link');
-
-  expect(links.length).toBe(6);
-
-  expect(screen.getByRole('link', { name: /cheeseburger/ }));
-  expect(screen.getByRole('link', { name: /sushi/ }));
-  expect(screen.getByRole('link', { name: /pizza/ }));
-  expect(screen.getByRole('link', { name: /rice/ }));
-  expect(screen.getByRole('link', { name: /taco/ }));
-  expect(screen.getByRole('link', { name: /chili/ }));
+  expect(screen.getByRole('link', { name: /cheeseburger/i }));
+  expect(screen.getByRole('link', { name: /sushi/i }));
+  expect(screen.getByRole('link', { name: /pizza/i }));
+  expect(screen.getByRole('link', { name: /rice/i }));
+  expect(screen.getByRole('link', { name: /taco/i }));
+  expect(screen.getByRole('link', { name: /chili/i }));
 });
+
+// test that by clicking on a link the history will be pushed
