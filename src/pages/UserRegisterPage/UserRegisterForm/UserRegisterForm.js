@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { isEmail, isStrongPassword } from 'validator';
 
 import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
 
@@ -56,12 +57,6 @@ export default function UserRegisterForm() {
     localStorage.getItem('registeredUsers')
   );
 
-  // regex for email
-  const emailRequirements = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-  // minimum eight characters and contain at least one letter and one number
-  const passwordRequirements = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
   // check if the provided passwords are the same
   const newRegisteredUserPassword = userRegisterForm.password;
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
@@ -92,7 +87,7 @@ export default function UserRegisterForm() {
 
     // check if the email provided is in fact an email
     if (newRegisteredUserEmail) {
-      if (newRegisteredUserEmail.match(emailRequirements)) {
+      if (isEmail(newRegisteredUserEmail)) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
         }));
@@ -151,7 +146,14 @@ export default function UserRegisterForm() {
 
     // check if the password matches the password constraints
     if (newRegisteredUserPassword) {
-      if (newRegisteredUserPassword.match(passwordRequirements)) {
+      if (
+        isStrongPassword(newRegisteredUserPassword, {
+          minLength: 8,
+          minNumbers: 1,
+          minLowercase: 1,
+          minUppercase: 1,
+        })
+      ) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
         }));
@@ -161,7 +163,7 @@ export default function UserRegisterForm() {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
           password:
-            'The password must be a minimum of 8 characters and contain at least one letter and one number.',
+            'The password must be a minimum of 8 characters and contain at least one letter, one uppercase letter, and one lowercase letter.',
         }));
       }
     }
