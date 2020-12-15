@@ -1,0 +1,66 @@
+.restaurant-search-bar-term-param-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  label {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    height: 100%;
+    border-radius: 5px;
+    padding: 0 0.5rem;
+
+    @media (min-width: 481px) {
+      width: fit-content;
+      margin: 0;
+      box-shadow: none;
+      border: 0;
+    }
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    input {
+      width: 250px;
+      padding: 0.5rem;
+      background-color: #f7fafc;
+      border: 0;
+      border-radius: 0px 5px 5px 0px;
+      height: 100%;
+      display: block;
+      font-size: 1rem;
+      font-family: 'Lato', sans-serif;
+
+      @media (min-width: 481px) {
+        border-radius: 0;
+        border-right: 1px solid #cbd5e0;
+      }
+    }
+
+    ul {
+      width: 250px;
+      background-color: #fff;
+      padding: 0;
+      list-style: none;
+      position: absolute;
+      top: 35px;
+      left: 0;
+      z-index: 1000;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+
+      li {
+        padding: 0.5rem;
+      }
+    }
+  }
+}

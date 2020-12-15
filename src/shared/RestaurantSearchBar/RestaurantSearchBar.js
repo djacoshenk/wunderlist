@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
+import RestaurantSearchBarTermParam from 'shared/RestaurantSearchBarTermParam/RestaurantSearchBarTermParam';
+import RestaurantSearchBarLocationParam from 'shared/RestaurantSearchBarLocationParam/RestaurantSearchBarLocationParam';
 import { RestaurantSearchBarContext } from './RestaurantSearchBarContext';
 
 import styles from './RestaurantSearchBar.module.scss';
@@ -13,17 +14,16 @@ const defaultSearchParams = {
 };
 
 function RestaurantSearchBar() {
-  const history = useHistory();
   const [searchParams, setSearchParams] = useState(defaultSearchParams);
   const {
-    state: { termSuggestions, locationSuggestions },
     fetchTermSuggestions,
     fetchLocationSuggestions,
     clearSearchSuggestions,
   } = useContext(RestaurantSearchBarContext);
+  const history = useHistory();
 
-  function onInputChange(e) {
-    const { name, value } = e.target;
+  function handleInputChange(text) {
+    const { name, value } = text;
 
     setSearchParams((prevState) => {
       return { ...prevState, [name]: value };
@@ -65,52 +65,8 @@ function RestaurantSearchBar() {
         aria-label='form'
         onSubmit={onFormSubmit}
       >
-        <label htmlFor='term'>
-          <div>Find</div>
-          <input
-            type='text'
-            id='term'
-            name='term'
-            placeholder='pizza, sushi, cocktail bar...'
-            list='term-search'
-            value={searchParams.term}
-            onChange={onInputChange}
-          />
-          {termSuggestions.length > 0 && (
-            <datalist id='term-search'>
-              {termSuggestions.map((val) => {
-                return (
-                  <option key={uuidv4()} name='term'>
-                    {val}
-                  </option>
-                );
-              })}
-            </datalist>
-          )}
-        </label>
-        <label htmlFor='location'>
-          <div>Near</div>
-          <input
-            type='text'
-            id='location'
-            name='location'
-            placeholder='Los Angeles, CA'
-            list='location-search'
-            value={searchParams.location}
-            onChange={onInputChange}
-          />
-          {locationSuggestions.length > 0 && (
-            <datalist id='location-search'>
-              {locationSuggestions.map((val) => {
-                return (
-                  <option key={uuidv4()} name='term'>
-                    {val.city}, {val.state}
-                  </option>
-                );
-              })}
-            </datalist>
-          )}
-        </label>
+        <RestaurantSearchBarTermParam onInputChange={handleInputChange} />
+        <RestaurantSearchBarLocationParam onInputChange={handleInputChange} />
         <button type='submit'>
           <i className={'fas fa-search'}></i>
         </button>

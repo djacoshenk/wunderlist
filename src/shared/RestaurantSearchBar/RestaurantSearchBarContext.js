@@ -47,7 +47,7 @@ export function reducer(state, action) {
 const initialState = {
   termSuggestions: [],
   locationSuggestions: [],
-  locationParam: 'Los Angeles, CA',
+  locationParam: '',
   error: null,
 };
 
