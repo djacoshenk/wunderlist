@@ -57,9 +57,9 @@ export default function RestaurantSearchBarLocationParam({ onInputChange }) {
                     : {}
                 }
                 key={uuidv4()}
-                {...getItemProps({ item })}
+                {...getItemProps({ item, index })}
               >
-                {`${item.city}, ${item.state}`}
+                {item}
               </li>
             ))}
         </ul>

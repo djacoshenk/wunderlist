@@ -25,7 +25,7 @@ export function reducer(state, action) {
     return { ...state, termSuggestions: suggestions };
   } else if (action.type === ACTIONS.FETCH_LOCATION_SUGGESTIONS) {
     const suggestions = action.payload.map((place) => {
-      return { city: place.city, state: place.regionCode };
+      return `${place.city}, ${place.regionCode}`;
     });
 
     return { ...state, locationSuggestions: suggestions };
@@ -83,10 +83,10 @@ export function RestaurantSearchBarProvider({ children }) {
   }, []);
 
   const fetchLocationSuggestions = useCallback(async (text) => {
+    dispatch({ type: ACTIONS.STORE_LOCATION_PARAM, payload: text });
+
     try {
       if (text) {
-        dispatch({ type: ACTIONS.STORE_LOCATION_PARAM, payload: text });
-
         const res = await axios.get(
           `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=2&namePrefix=${text}&countryIds=US`,
           {
