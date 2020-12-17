@@ -13,14 +13,14 @@ export default function UserLoginPage() {
   return state.isLoading ? (
     <Fragment>
       <Helmet>
-        <title>Wunderlist - User Login</title>
+        <title>wunderlist - User Login</title>
       </Helmet>
       <UserLoginLoader />
     </Fragment>
   ) : (
     <Fragment>
       <Helmet>
-        <title>Wunderlist - User Login</title>
+        <title>wunderlist - User Login</title>
       </Helmet>
       <Header />
       <UserLoginForm />

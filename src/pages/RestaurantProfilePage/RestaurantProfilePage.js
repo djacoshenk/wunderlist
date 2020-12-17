@@ -30,9 +30,9 @@ export default function RestaurantProfilePage() {
     <Fragment>
       <Helmet>
         {place.name ? (
-          <title>{`Wunderlist - ${place.name}`}</title>
+          <title>{`wunderlist - ${place.name}`}</title>
         ) : (
-          <title>Wunderlist - Find and save your new favorite place</title>
+          <title>wunderlist - find and save your new favorite place</title>
         )}
       </Helmet>
       <UserLoginRegisterBanner />

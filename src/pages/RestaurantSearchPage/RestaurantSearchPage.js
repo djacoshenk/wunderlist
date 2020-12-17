@@ -27,7 +27,7 @@ export default function RestaurantSearchPage() {
     <Fragment>
       <Helmet>
         <title>
-          Wunderlist - The best {params.term.toUpperCase()} in {params.location}
+          wunderlist - The best {params.term.toUpperCase()} in {params.location}
         </title>
       </Helmet>
       <UserLoginRegisterBanner />

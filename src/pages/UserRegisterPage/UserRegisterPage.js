@@ -14,14 +14,14 @@ export default function UserRegisterPage() {
   return state.isLoading ? (
     <Fragment>
       <Helmet>
-        <title>Wunderlist - User Registration</title>
+        <title>wunderlist - User Registration</title>
       </Helmet>
       <UserRegistrationLoader />
     </Fragment>
   ) : (
     <Fragment>
       <Helmet>
-        <title>Wunderlist - User Registration</title>
+        <title>wunderlist - User Registration</title>
       </Helmet>
       <Header />
       <UserRegisterForm />

@@ -15,14 +15,14 @@ export default function HomePage() {
   return state.isLoading ? (
     <Fragment>
       <Helmet>
-        <title>Wunderlist - User Logout</title>
+        <title>wunderlist - User Logout</title>
       </Helmet>
       <UserLogoutLoader />
     </Fragment>
   ) : (
     <Fragment>
       <Helmet>
-        <title>Wunderlist - Find and save your new favorite place</title>
+        <title>wunderlist - find and save your new favorite place</title>
       </Helmet>
       <UserLoginRegisterBanner />
       <Header />

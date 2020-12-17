@@ -41,7 +41,7 @@ export default function RestaurantSearchBarTermParam({ onInputChange }) {
           type='text'
           id='term'
           name='term'
-          placeholder='Pizza, sushi, cocktail bar...'
+          placeholder='pizza, sushi, cocktail bar...'
           {...getInputProps({ ref: termRef })}
         />
         <ul {...getMenuProps()}>
