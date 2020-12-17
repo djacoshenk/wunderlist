@@ -53,6 +53,21 @@
       }
     }
 
+    .restaurant-search-bar-current-location {
+      position: absolute;
+      top: 0;
+      left: 200px;
+      padding: 0.5rem;
+      border: 0;
+      background-color: transparent;
+      height: 35px;
+      width: 50px;
+
+      i {
+        color: #667eea;
+      }
+    }
+
     ul {
       width: 250px;
       background-color: #fff;

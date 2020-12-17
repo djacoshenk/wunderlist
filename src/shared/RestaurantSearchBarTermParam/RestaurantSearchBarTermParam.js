@@ -10,7 +10,10 @@ RestaurantSearchBarTermParam.propTypes = {
   onInputChange: PropTypes.func,
 };
 
-export default function RestaurantSearchBarTermParam({ onInputChange }) {
+export default function RestaurantSearchBarTermParam({
+  onInputChange,
+  searchParams,
+}) {
   const {
     state: { termSuggestions },
   } = useContext(RestaurantSearchBarContext);
@@ -42,6 +45,7 @@ export default function RestaurantSearchBarTermParam({ onInputChange }) {
           id='term'
           name='term'
           placeholder='pizza, sushi, cocktail bar...'
+          value={searchParams.term}
           {...getInputProps({ ref: termRef })}
         />
         <ul {...getMenuProps()}>

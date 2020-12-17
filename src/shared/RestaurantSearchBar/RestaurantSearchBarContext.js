@@ -13,6 +13,7 @@ export const ACTIONS = {
   FETCH_LOCATION_SUGGESTIONS: 'FETCH_LOCATION_SUGGESTIONS',
   CLEAR_SEARCH_SUGGESTIONS: 'CLEAR_SEARCH_SUGGESTIONS',
   STORE_LOCATION_PARAM: 'STORE_LOCATION_PARAM',
+  FETCH_CURRENT_LOCATION: 'FETCH_CURRENT_LOCATION',
   SET_ERROR: 'SET_ERROR',
 };
 
@@ -37,6 +38,11 @@ export function reducer(state, action) {
     }
   } else if (action.type === ACTIONS.STORE_LOCATION_PARAM) {
     return { ...state, locationParam: action.payload };
+  } else if (action.type === ACTIONS.FETCH_CURRENT_LOCATION) {
+    return {
+      ...state,
+      currentLocation: `${action.payload[0].city}, ${action.payload[0].regionCode}`,
+    };
   } else if (action.type === ACTIONS.SET_ERROR) {
     return { ...state, error: action.payload };
   } else {
@@ -48,6 +54,7 @@ const initialState = {
   termSuggestions: [],
   locationSuggestions: [],
   locationParam: '',
+  currentLocation: '',
   error: null,
 };
 
@@ -109,11 +116,48 @@ export function RestaurantSearchBarProvider({ children }) {
     }
   }, []);
 
+  function fetchUserCurrentLocation() {
+    let currentUserLocation;
+
+    async function success(pos) {
+      let latitude = pos.coords.latitude.toFixed(3);
+      let longitude = pos.coords.longitude.toFixed(3);
+
+      currentUserLocation = `${latitude}${longitude}`;
+
+      try {
+        const res = await axios.get(
+          `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&location=${currentUserLocation}&radius=10`,
+          {
+            headers: {
+              'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
+              'x-rapidapi-key': process.env.REACT_APP_GEODB_CITIES,
+            },
+          }
+        );
+
+        dispatch({
+          type: ACTIONS.FETCH_CURRENT_LOCATION,
+          payload: res.data.data,
+        });
+      } catch (err) {
+        dispatch({ type: ACTIONS.SET_ERROR, payload: err });
+      }
+    }
+
+    function error(err) {
+      dispatch({ type: ACTIONS.SET_ERROR, payload: err });
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
+
   const value = {
     state,
     fetchTermSuggestions,
     clearSearchSuggestions,
     fetchLocationSuggestions,
+    fetchUserCurrentLocation,
   };
 
   return (

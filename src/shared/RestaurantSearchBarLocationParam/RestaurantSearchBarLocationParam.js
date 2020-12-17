@@ -8,11 +8,14 @@ import { RestaurantSearchBarContext } from 'shared/RestaurantSearchBar/Restauran
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
 RestaurantSearchBarLocationParam.propTypes = {
-  searchParams: PropTypes.shape({ location: PropTypes.string }),
   onInputChange: PropTypes.func,
 };
 
-export default function RestaurantSearchBarLocationParam({ onInputChange }) {
+export default function RestaurantSearchBarLocationParam({
+  onInputChange,
+  searchParams,
+  onSetUserCurrentLocation,
+}) {
   const {
     state: { locationSuggestions },
   } = useContext(RestaurantSearchBarContext);
@@ -44,8 +47,16 @@ export default function RestaurantSearchBarLocationParam({ onInputChange }) {
           id='location'
           name='location'
           placeholder='Los Angeles, CA'
+          value={searchParams.location}
           {...getInputProps({ ref: locationRef })}
         />
+        <button
+          className={styles['restaurant-search-bar-current-location']}
+          type='button'
+          onClick={onSetUserCurrentLocation}
+        >
+          <i className='fas fa-location-arrow'></i>
+        </button>
         <ul {...getMenuProps()}>
           {isOpen &&
             locationSuggestions.length > 0 &&

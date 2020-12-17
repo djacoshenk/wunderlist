@@ -10,7 +10,7 @@ import styles from './RestaurantSearchBar.module.scss';
 let searchId;
 const defaultSearchParams = {
   term: '',
-  location: 'Los Angeles, CA',
+  location: '',
 };
 
 function RestaurantSearchBar() {
@@ -19,6 +19,7 @@ function RestaurantSearchBar() {
     fetchTermSuggestions,
     fetchLocationSuggestions,
     clearSearchSuggestions,
+    fetchUserCurrentLocation,
   } = useContext(RestaurantSearchBarContext);
   const history = useHistory();
 
@@ -58,6 +59,10 @@ function RestaurantSearchBar() {
     }
   }
 
+  function handleFetchUserCurrentLocation() {
+    fetchUserCurrentLocation();
+  }
+
   return (
     <div className={styles['search-bar-container']}>
       <form
@@ -65,9 +70,16 @@ function RestaurantSearchBar() {
         aria-label='form'
         onSubmit={onFormSubmit}
       >
-        <RestaurantSearchBarTermParam onInputChange={handleInputChange} />
-        <RestaurantSearchBarLocationParam onInputChange={handleInputChange} />
-        <button type='submit'>
+        <RestaurantSearchBarTermParam
+          onInputChange={handleInputChange}
+          searchParams={searchParams}
+        />
+        <RestaurantSearchBarLocationParam
+          onInputChange={handleInputChange}
+          searchParams={searchParams}
+          onSetUserCurrentLocation={handleFetchUserCurrentLocation}
+        />
+        <button className={styles['search-bar-search-button']} type='submit'>
           <i className={'fas fa-search'}></i>
         </button>
       </form>
