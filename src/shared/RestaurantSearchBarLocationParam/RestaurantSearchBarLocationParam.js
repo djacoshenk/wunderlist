@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,18 +8,18 @@ import { RestaurantSearchBarContext } from 'shared/RestaurantSearchBar/Restauran
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
 RestaurantSearchBarLocationParam.propTypes = {
+  locationSearchParam: PropTypes.string,
   onInputChange: PropTypes.func,
 };
 
 export default function RestaurantSearchBarLocationParam({
+  locationSearchParam,
   onInputChange,
-  searchParams,
-  onSetUserCurrentLocation,
 }) {
   const {
     state: { locationSuggestions },
+    fetchUserCurrentLocation,
   } = useContext(RestaurantSearchBarContext);
-  const locationRef = useRef(null);
 
   const {
     isOpen,
@@ -31,8 +31,9 @@ export default function RestaurantSearchBarLocationParam({
     getItemProps,
   } = useCombobox({
     items: locationSuggestions,
-    onInputValueChange: () => {
-      onInputChange(locationRef.current);
+    inputValue: locationSearchParam,
+    onInputValueChange: ({ inputValue }) => {
+      onInputChange(inputValue);
     },
   });
 
@@ -47,13 +48,12 @@ export default function RestaurantSearchBarLocationParam({
           id='location'
           name='location'
           placeholder='Los Angeles, CA'
-          value={searchParams.location}
-          {...getInputProps({ ref: locationRef })}
+          {...getInputProps()}
         />
         <button
           className={styles['restaurant-search-bar-current-location']}
           type='button'
-          onClick={onSetUserCurrentLocation}
+          onClick={fetchUserCurrentLocation}
         >
           <i className='fas fa-location-arrow'></i>
         </button>

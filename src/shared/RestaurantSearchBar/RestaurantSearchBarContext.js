@@ -30,18 +30,13 @@ export function reducer(state, action) {
     });
 
     return { ...state, locationSuggestions: suggestions };
-  } else if (action.type === ACTIONS.CLEAR_SEARCH_SUGGESTIONS) {
-    if (action.payload === 'term') {
-      return { ...state, termSuggestions: [] };
-    } else if (action.payload === 'location') {
-      return { ...state, locationSuggestions: [] };
-    }
   } else if (action.type === ACTIONS.STORE_LOCATION_PARAM) {
-    return { ...state, locationParam: action.payload };
+    return { ...state, locationParam: action.payload, currentLocation: '' };
   } else if (action.type === ACTIONS.FETCH_CURRENT_LOCATION) {
     return {
       ...state,
       currentLocation: `${action.payload[0].city}, ${action.payload[0].regionCode}`,
+      locationParam: `${action.payload[0].city}, ${action.payload[0].regionCode}`,
     };
   } else if (action.type === ACTIONS.SET_ERROR) {
     return { ...state, error: action.payload };
@@ -85,17 +80,13 @@ export function RestaurantSearchBarProvider({ children }) {
     }
   }, []);
 
-  const clearSearchSuggestions = useCallback((name) => {
-    dispatch({ type: ACTIONS.CLEAR_SEARCH_SUGGESTIONS, payload: name });
-  }, []);
-
   const fetchLocationSuggestions = useCallback(async (text) => {
     dispatch({ type: ACTIONS.STORE_LOCATION_PARAM, payload: text });
 
     try {
       if (text) {
         const res = await axios.get(
-          `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=2&namePrefix=${text}&countryIds=US`,
+          `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=3&namePrefix=${text}&countryIds=US`,
           {
             headers: {
               'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
@@ -116,7 +107,7 @@ export function RestaurantSearchBarProvider({ children }) {
     }
   }, []);
 
-  function fetchUserCurrentLocation() {
+  const fetchUserCurrentLocation = useCallback(() => {
     let currentUserLocation;
 
     async function success(pos) {
@@ -150,12 +141,11 @@ export function RestaurantSearchBarProvider({ children }) {
     }
 
     navigator.geolocation.getCurrentPosition(success, error);
-  }
+  }, []);
 
   const value = {
     state,
     fetchTermSuggestions,
-    clearSearchSuggestions,
     fetchLocationSuggestions,
     fetchUserCurrentLocation,
   };
