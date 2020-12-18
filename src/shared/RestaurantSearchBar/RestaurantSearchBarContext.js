@@ -118,7 +118,7 @@ export function RestaurantSearchBarProvider({ children }) {
 
       try {
         const res = await axios.get(
-          `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&location=${currentUserLocation}&radius=10`,
+          `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=1&location=${currentUserLocation}&radius=5`,
           {
             headers: {
               'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
