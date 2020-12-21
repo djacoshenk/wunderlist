@@ -1,7 +1,11 @@
 # wunderlist
 
-Create short form articles about your favorite spots to eat and drink.
+Find and save your new favorite place
 
-Built with Create React App, SASS Modules, React Router, Context API, GeoDB Cities API, Google Maps API, and Yelp Fusion API.
+Tech Stack: SASS Modules & Create React App
 
-Unit and integration tests are written using Jest and React Testing Library.
+State Management: useContext & useReducer
+
+APIs: Yelp Fusion API, Google Maps API, and GeoDB Cities API
+
+Testing: Jest and React Testing Library
