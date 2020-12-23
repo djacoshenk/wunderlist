@@ -12,7 +12,7 @@ RestaurantSearchBarLocationParam.propTypes = {
   onInputChange: PropTypes.func,
 };
 
-export default function RestaurantSearchBarLocationParam({
+function RestaurantSearchBarLocationParam({
   locationSearchParam,
   onInputChange,
 }) {
@@ -78,3 +78,5 @@ export default function RestaurantSearchBarLocationParam({
     </div>
   );
 }
+
+export default React.memo(RestaurantSearchBarLocationParam);
