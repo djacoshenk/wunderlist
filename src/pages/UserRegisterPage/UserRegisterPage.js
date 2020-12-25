@@ -5,26 +5,27 @@ import UserRegistrationLoader from './UserRegistrationLoader/UserRegistrationLoa
 import Header from './Header/Header';
 import UserRegisterForm from './UserRegisterForm/UserRegisterForm';
 
-import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import { CurrentUserContext } from 'context/CurrentUserContext';
 
 export default function UserRegisterPage() {
-  const { state } = useContext(UserLoginRegisterBannerContext);
+  const { isLoading } = useContext(CurrentUserContext);
 
   // if loading, show the registration loader, if not then show the registration form
-  return state.isLoading ? (
+  return (
     <Fragment>
       <Helmet>
         <title>wunderlist - User Registration</title>
       </Helmet>
-      <UserRegistrationLoader />
-    </Fragment>
-  ) : (
-    <Fragment>
-      <Helmet>
-        <title>wunderlist - User Registration</title>
-      </Helmet>
-      <Header />
-      <UserRegisterForm />
+      {isLoading ? (
+        <Fragment>
+          <UserRegistrationLoader />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <Header />
+          <UserRegisterForm />
+        </Fragment>
+      )}
     </Fragment>
   );
 }

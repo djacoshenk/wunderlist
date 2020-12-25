@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
 import styles from './RestaurantProfileLoader.module.scss';
 
-function RestaurantProfileLoader() {
+RestaurantProfileLoader.propTypes = {
+  name: PropTypes.string,
+};
+
+function RestaurantProfileLoader({ name }) {
   const location = useLocation();
-  const { state } = useContext(RestaurantProfileContext);
 
   let headerText;
 
@@ -16,8 +19,8 @@ function RestaurantProfileLoader() {
     headerText = (
       <h3>Finding you more on {location.state.place.toUpperCase()}</h3>
     );
-  } else if (state.place.name) {
-    headerText = <h3>Finding you more on {state.place.name.toUpperCase()}</h3>;
+  } else if (name) {
+    headerText = <h3>Finding you more on {name.toUpperCase()}</h3>;
   } else {
     headerText = null;
   }

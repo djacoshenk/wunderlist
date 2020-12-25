@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
-
-import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import './GoogleMapMarker.scss';
 
-function GoogleMapMarker() {
-  const {
-    state: { place },
-  } = useContext(RestaurantProfileContext);
+GoogleMapMarker.propTypes = {
+  id: PropTypes.string,
+};
 
-  return <i className={'fas fa-map-marker-alt'} id={place.id}></i>;
+function GoogleMapMarker({ id }) {
+  return <i className={'fas fa-map-marker-alt'} id={id}></i>;
 }
 
 export default GoogleMapMarker;

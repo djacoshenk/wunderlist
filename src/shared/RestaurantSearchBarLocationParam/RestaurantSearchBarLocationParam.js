@@ -1,26 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
 
-import { RestaurantSearchBarContext } from 'shared/RestaurantSearchBar/RestaurantSearchBarContext';
-
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
 RestaurantSearchBarLocationParam.propTypes = {
+  locationSuggestions: PropTypes.arrayOf(PropTypes.string),
   locationSearchParam: PropTypes.string,
   onInputChange: PropTypes.func,
+  fetchUserCurrentLocation: PropTypes.func,
 };
 
 function RestaurantSearchBarLocationParam({
+  locationSuggestions,
   locationSearchParam,
   onInputChange,
+  fetchUserCurrentLocation,
 }) {
-  const {
-    state: { locationSuggestions },
-    fetchUserCurrentLocation,
-  } = useContext(RestaurantSearchBarContext);
-
   const {
     isOpen,
     getLabelProps,

@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import PropTypes from 'prop-types';
 
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
-import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import styles from './GoogleMap.module.scss';
 
@@ -17,11 +16,7 @@ GoogleMap.propTypes = {
   }),
 };
 
-function GoogleMap() {
-  const {
-    state: { place },
-  } = useContext(RestaurantProfileContext);
-
+function GoogleMap({ place }) {
   const center = {
     lat: place.coordinates.latitude,
     lng: place.coordinates.longitude,
@@ -40,6 +35,7 @@ function GoogleMap() {
         <GoogleMapMarker
           lat={place.coordinates.latitude}
           lng={place.coordinates.longitude}
+          id={place.id}
         />
       </GoogleMapReact>
     </div>

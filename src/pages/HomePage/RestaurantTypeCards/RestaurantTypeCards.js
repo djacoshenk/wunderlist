@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
 
-import { RestaurantSearchBarContext } from 'shared/RestaurantSearchBar/RestaurantSearchBarContext';
+import { LocationURLContext } from 'context/LocationURLContext';
 
 import burger from 'assets/burger.png';
 import sushi from 'assets/sushi.png';
@@ -14,9 +14,7 @@ import chili from 'assets/chili.png';
 import styles from './RestaurantTypeCards.module.scss';
 
 function RestaurantTypeCards() {
-  const {
-    state: { locationParam },
-  } = useContext(RestaurantSearchBarContext);
+  const { locationURL } = useContext(LocationURLContext);
 
   const restaurantTypes = [
     {
@@ -55,11 +53,11 @@ function RestaurantTypeCards() {
     <div className={styles['restaurant-type-cards-main-container']}>
       <div className={styles['restaurant-type-cards-grid-container']}>
         {restaurantTypes.map((type) => {
-          if (locationParam) {
+          if (locationURL) {
             return (
               <Link
                 to={{
-                  pathname: `/search/${type.name.toLowerCase()}/${locationParam}`,
+                  pathname: `/search/${type.name.toLowerCase()}/${locationURL}`,
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}
@@ -74,7 +72,7 @@ function RestaurantTypeCards() {
             return (
               <Link
                 to={{
-                  pathname: `/search/${type.name.toLowerCase()}/${locationParam}`,
+                  pathname: `/search/${type.name.toLowerCase()}/${locationURL}`,
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}

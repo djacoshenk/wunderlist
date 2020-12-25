@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import RestaurantProfileStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
-import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import styles from './RestaurantProfileCardReviews.module.scss';
 
@@ -16,11 +15,7 @@ RestaurantProfileCardReviews.propTypes = {
   }),
 };
 
-function RestaurantProfileCardReviews() {
-  const {
-    state: { reviews },
-  } = useContext(RestaurantProfileContext);
-
+function RestaurantProfileCardReviews({ reviews }) {
   return reviews.reviews.map((review, index) => {
     return (
       <div className={styles['restaurant-prof-reviews-card']} key={index}>

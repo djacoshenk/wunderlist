@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 import { isEmail, isStrongPassword } from 'validator';
 
-import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import { CurrentUserContext } from 'context/CurrentUserContext';
 
 import styles from './UserRegisterForm.module.scss';
 
@@ -34,9 +35,7 @@ const userRegisterFormErrorValues = {
 };
 
 export default function UserRegisterForm() {
-  const { setRegisteredUser, toggleLoader } = useContext(
-    UserLoginRegisterBannerContext
-  );
+  const { toggleLoader } = useContext(CurrentUserContext);
   const [userRegisterForm, setUserRegisterForm] = useState(
     defaultUserRegisterForm
   );
@@ -62,6 +61,30 @@ export default function UserRegisterForm() {
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
   const checkRegisteredUserPasswords =
     newRegisteredUserPassword !== newRegisteredUserConfirmPassword;
+
+  const registeredUsersLocalStorage = JSON.parse(
+    localStorage.getItem('registeredUsers')
+  );
+
+  function setRegisteredUser(user) {
+    const registeredUser = [{ userID: uuid(), ...user }];
+
+    if (registeredUsersLocalStorage) {
+      const combinedRegisteredUsersData = registeredUsersLocalStorage.concat(
+        registeredUser
+      );
+
+      localStorage.setItem(
+        'registeredUsers',
+        JSON.stringify(combinedRegisteredUsersData)
+      );
+      // if there's no data in local storage then we want to add the data
+    } else {
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUser));
+    }
+
+    localStorage.setItem('currentUser', JSON.stringify(registeredUser));
+  }
 
   function onFormSubmit(e) {
     e.preventDefault();

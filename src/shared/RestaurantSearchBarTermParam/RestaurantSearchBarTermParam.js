@@ -1,21 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
-
-import { RestaurantSearchBarContext } from 'shared/RestaurantSearchBar/RestaurantSearchBarContext';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
 RestaurantSearchBarTermParam.propTypes = {
+  termSuggestions: PropTypes.arrayOf(PropTypes.string),
   termSearchParam: PropTypes.string,
   onInputChange: PropTypes.func,
 };
 
-function RestaurantSearchBarTermParam({ termSearchParam, onInputChange }) {
-  const {
-    state: { termSuggestions },
-  } = useContext(RestaurantSearchBarContext);
-
+function RestaurantSearchBarTermParam({
+  termSuggestions,
+  termSearchParam,
+  onInputChange,
+}) {
   const {
     isOpen,
     getLabelProps,

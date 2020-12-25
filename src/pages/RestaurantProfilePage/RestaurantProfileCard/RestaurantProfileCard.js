@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import { RestaurantProfileContext } from '../_Context/RestaurantProfileContext';
 
 import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
@@ -30,11 +28,7 @@ RestaurantProfileCard.propTypes = {
   }),
 };
 
-function RestaurantProfileCard() {
-  const {
-    state: { place },
-  } = useContext(RestaurantProfileContext);
-
+function RestaurantProfileCard({ place, reviews }) {
   function formatNameForUrl() {
     return place.name.split(' ').join('+');
   }
@@ -79,7 +73,7 @@ function RestaurantProfileCard() {
       </div>
       <div className={styles['restaurant-prof-map-reviews']}>
         <div className={styles['restaurant-prof-map-directions']}>
-          <GoogleMap />
+          <GoogleMap place={place} />
           <div className={styles['restaurant-prof-directions-btn']}>
             <Link
               to={{
@@ -92,7 +86,7 @@ function RestaurantProfileCard() {
           </div>
         </div>
         <div className={styles['restaurant-prof-reviews-container']}>
-          <RestaurantProfileCardReviews />
+          <RestaurantProfileCardReviews reviews={reviews} />
         </div>
       </div>
     </div>

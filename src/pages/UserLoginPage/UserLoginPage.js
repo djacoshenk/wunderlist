@@ -5,25 +5,26 @@ import UserLoginLoader from './UserLoginLoader/UserLoginLoader';
 import Header from './Header/Header';
 import UserLoginForm from './UserLoginForm/UserLoginForm';
 
-import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import { CurrentUserContext } from 'context/CurrentUserContext';
 
 export default function UserLoginPage() {
-  const { state } = useContext(UserLoginRegisterBannerContext);
+  const { isLoading } = useContext(CurrentUserContext);
 
-  return state.isLoading ? (
+  return (
     <Fragment>
       <Helmet>
         <title>wunderlist - User Login</title>
       </Helmet>
-      <UserLoginLoader />
-    </Fragment>
-  ) : (
-    <Fragment>
-      <Helmet>
-        <title>wunderlist - User Login</title>
-      </Helmet>
-      <Header />
-      <UserLoginForm />
+      {isLoading ? (
+        <Fragment>
+          <UserLoginLoader />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <UserLoginForm />
+          <Header />
+        </Fragment>
+      )}
     </Fragment>
   );
 }

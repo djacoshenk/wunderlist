@@ -1,10 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import GoogleMapReact from 'google-map-react';
+import PropTypes from 'prop-types';
 
-import { RestaurantSearchContext } from '../_Context/RestaurantSearchContext';
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
 import styles from './GoogleMap.module.scss';
+
+GoogleMap.propTypes = {
+  places: PropTypes.array,
+  mapKey: PropTypes.number,
+};
 
 const defaultCenter = {
   lat: 0,
@@ -13,11 +18,7 @@ const defaultCenter = {
 
 const defaultZoom = 13;
 
-function GoogleMap() {
-  const {
-    state: { places, mapKey },
-  } = useContext(RestaurantSearchContext);
-
+function GoogleMap({ places, mapKey }) {
   function getMapBounds(maps) {
     const bounds = new maps.LatLngBounds();
 

@@ -1,14 +1,18 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { RestaurantSearchContext } from '../_Context/RestaurantSearchContext';
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
 import styles from './RestaurantCardList.module.scss';
 
-function RestaurantCardList() {
-  const { state, fetchMorePlaces } = useContext(RestaurantSearchContext);
+RestaurantCardList.propTypes = {
+  places: PropTypes.array,
+  fetchMorePlaces: PropTypes.func,
+};
+
+function RestaurantCardList({ places, fetchMorePlaces }) {
   const params = useParams();
   const obs = new IntersectionObserver(
     (entries) => {
@@ -40,7 +44,7 @@ function RestaurantCardList() {
 
   return (
     <div className={styles['card-list-container']}>
-      {state.places.map((place, index) => {
+      {places.map((place, index) => {
         return <RestaurantCard key={place.id} place={place} index={index} />;
       })}
       <div ref={setLoadRef} className={styles['card-list-bubble-loader']}>

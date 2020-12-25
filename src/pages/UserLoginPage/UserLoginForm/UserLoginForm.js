@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { UserLoginRegisterBannerContext } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import { CurrentUserContext } from 'context/CurrentUserContext';
 
 import styles from './UserLoginForm.module.scss';
 
@@ -21,9 +21,7 @@ const userLoginFormErrorValues = {
 };
 
 export default function UserLoginForm() {
-  const { setCurrentUserLogin, toggleLoader } = useContext(
-    UserLoginRegisterBannerContext
-  );
+  const { setCurrentUser, toggleLoader } = useContext(CurrentUserContext);
   const [userLoginForm, setUserLoginForm] = useState(defaultUserLoginForm);
   const [userLoginFormErrors, setUserLoginFormErrors] = useState(
     defaultUserLoginFormErrors
@@ -35,6 +33,12 @@ export default function UserLoginForm() {
   const currentRegisteredUsersUsernames = JSON.parse(
     localStorage.getItem('registeredUsers')
   );
+
+  function setCurrentUserLogin(user) {
+    setCurrentUser(user);
+
+    localStorage.setItem('currentUser', JSON.stringify([{ ...user }]));
+  }
 
   function onInputChange(e) {
     const { name, value } = e.target;
@@ -105,14 +109,14 @@ export default function UserLoginForm() {
     }
 
     if (errors === 0) {
+      // toggle loader on
+      toggleLoader();
+
       const registeredUserData = currentRegisteredUsersUsernames.find(
         (val) =>
           val.username === currentUserLoginUsername &&
           val.password === currentUserLoginPassword
       );
-
-      // toggle loader on
-      toggleLoader();
 
       // register the user
       setCurrentUserLogin(registeredUserData);
