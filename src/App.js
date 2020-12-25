@@ -7,44 +7,34 @@ import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
 import RestaurantSearchPage from 'pages/RestaurantSearchPage/RestaurantSearchPage';
 import RestaurantProfilePage from 'pages/RestaurantProfilePage/RestaurantProfilePage';
 
-import { RestaurantSearchProvider } from 'pages/RestaurantSearchPage/_Context/RestaurantSearchContext';
-import { RestaurantProfileProvider } from 'pages/RestaurantProfilePage/_Context/RestaurantProfileContext';
-import { RestaurantSearchBarProvider } from 'shared/RestaurantSearchBar/RestaurantSearchBarContext';
-import { UserLoginRegisterBannerProvider } from 'shared/UserLoginRegisterBanner/UserLoginRegisterBannerContext';
+import LocationURLProvider from 'context/LocationURLContext';
+import CurrentUserProvider from 'context/CurrentUserContext';
 
 export default function App() {
   return (
     <Fragment>
       <BrowserRouter>
-        <UserLoginRegisterBannerProvider>
-          <Switch>
-            <Route exact path='/'>
-              <RestaurantSearchBarProvider>
+        <CurrentUserProvider>
+          <LocationURLProvider>
+            <Switch>
+              <Route exact path='/'>
                 <HomePage />
-              </RestaurantSearchBarProvider>
-            </Route>
-            <Route exact path='/login'>
-              <UserLoginPage />
-            </Route>
-            <Route exact path='/register'>
-              <UserRegisterPage />
-            </Route>
-            <Route path='/search/:term/:location'>
-              <RestaurantSearchProvider>
-                <RestaurantSearchBarProvider>
-                  <RestaurantSearchPage />
-                </RestaurantSearchBarProvider>
-              </RestaurantSearchProvider>
-            </Route>
-            <Route path='/business/:alias'>
-              <RestaurantProfileProvider>
-                <RestaurantSearchBarProvider>
-                  <RestaurantProfilePage />
-                </RestaurantSearchBarProvider>
-              </RestaurantProfileProvider>
-            </Route>
-          </Switch>
-        </UserLoginRegisterBannerProvider>
+              </Route>
+              <Route exact path='/login'>
+                <UserLoginPage />
+              </Route>
+              <Route exact path='/register'>
+                <UserRegisterPage />
+              </Route>
+              <Route path='/search/:term/:location'>
+                <RestaurantSearchPage />
+              </Route>
+              <Route path='/business/:alias'>
+                <RestaurantProfilePage />
+              </Route>
+            </Switch>
+          </LocationURLProvider>
+        </CurrentUserProvider>
       </BrowserRouter>
     </Fragment>
   );
