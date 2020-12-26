@@ -12,7 +12,7 @@ RestaurantProfileImageCarousel.propTypes = {
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
-function RestaurantProfileImageCarousel({ photos }) {
+export default function RestaurantProfileImageCarousel({ photos }) {
   return (
     <Swiper
       navigation
@@ -32,5 +32,3 @@ function RestaurantProfileImageCarousel({ photos }) {
     </Swiper>
   );
 }
-
-export default React.memo(RestaurantProfileImageCarousel);

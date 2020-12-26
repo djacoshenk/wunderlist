@@ -7,12 +7,10 @@ GoogleMapMarker.propTypes = {
   text: PropTypes.number,
 };
 
-function GoogleMapMarker({ text }) {
+export default function GoogleMapMarker({ text }) {
   return (
     <i className={'fas fa-map-marker'}>
       <p>{text}</p>
     </i>
   );
 }
-
-export default React.memo(GoogleMapMarker);

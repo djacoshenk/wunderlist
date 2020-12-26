@@ -23,7 +23,7 @@ RestaurantCard.propTypes = {
   index: PropTypes.number,
 };
 
-function RestaurantCard({ place, index }) {
+export default function RestaurantCard({ place, index }) {
   return (
     <Link
       to={{
@@ -71,5 +71,3 @@ function RestaurantCard({ place, index }) {
     </Link>
   );
 }
-
-export default React.memo(RestaurantCard);

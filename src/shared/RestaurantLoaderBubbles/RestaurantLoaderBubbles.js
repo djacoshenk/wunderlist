@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './RestaurantLoaderBubbles.module.scss';
 
-function RestaurantLoaderBubbles() {
+export default function RestaurantLoaderBubbles() {
   return (
     <div className={styles['restaurant-prof-bubble-loader']}>
       <div className={styles['bubble']}></div>
@@ -11,5 +11,3 @@ function RestaurantLoaderBubbles() {
     </div>
   );
 }
-
-export default React.memo(RestaurantLoaderBubbles);

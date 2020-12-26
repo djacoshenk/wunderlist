@@ -10,7 +10,7 @@ RestaurantSearchBarTermParam.propTypes = {
   onInputChange: PropTypes.func,
 };
 
-function RestaurantSearchBarTermParam({
+export default function RestaurantSearchBarTermParam({
   termSuggestions,
   termSearchParam,
   onInputChange,
@@ -65,5 +65,3 @@ function RestaurantSearchBarTermParam({
     </div>
   );
 }
-
-export default React.memo(RestaurantSearchBarTermParam);

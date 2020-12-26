@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './Header.module.scss';
 
-function Header() {
+export default function Header() {
   return (
     <div className={styles['header-container']}>
       <h1>
@@ -14,5 +14,3 @@ function Header() {
     </div>
   );
 }
-
-export default React.memo(Header);

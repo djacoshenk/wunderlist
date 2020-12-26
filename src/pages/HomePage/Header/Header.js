@@ -3,7 +3,7 @@ import React from 'react';
 import globe from 'assets/global.png';
 import styles from './Header.module.scss';
 
-function Header() {
+export default function Header() {
   return (
     <div className={styles['header-container']}>
       <img src={globe} alt='blue-green-globe' />
@@ -12,5 +12,3 @@ function Header() {
     </div>
   );
 }
-
-export default React.memo(Header);

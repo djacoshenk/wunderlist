@@ -5,7 +5,7 @@ import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLo
 
 import styles from './RestaurantSearchLoader.module.scss';
 
-function SearchRestaurantLoader() {
+export default function RestaurantSearchLoader() {
   const { term, location } = useParams();
 
   return (
@@ -19,5 +19,3 @@ function SearchRestaurantLoader() {
     </div>
   );
 }
-
-export default React.memo(SearchRestaurantLoader);

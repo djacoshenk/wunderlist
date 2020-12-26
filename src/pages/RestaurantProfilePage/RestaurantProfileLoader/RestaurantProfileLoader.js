@@ -10,7 +10,7 @@ RestaurantProfileLoader.propTypes = {
   name: PropTypes.string,
 };
 
-function RestaurantProfileLoader({ name }) {
+export default function RestaurantProfileLoader({ name }) {
   const location = useLocation();
 
   let headerText;
@@ -32,5 +32,3 @@ function RestaurantProfileLoader({ name }) {
     </div>
   );
 }
-
-export default React.memo(RestaurantProfileLoader);

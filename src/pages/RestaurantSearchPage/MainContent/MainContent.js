@@ -12,7 +12,7 @@ MainContent.propTypes = {
   fetchMorePlaces: PropTypes.func,
 };
 
-function MainContent({ places, mapKey, fetchMorePlaces }) {
+export default function MainContent({ places, mapKey, fetchMorePlaces }) {
   return (
     <div className={styles['main-content-container']}>
       <GoogleMap places={places} mapKey={mapKey} />
@@ -20,5 +20,3 @@ function MainContent({ places, mapKey, fetchMorePlaces }) {
     </div>
   );
 }
-
-export default React.memo(MainContent);
