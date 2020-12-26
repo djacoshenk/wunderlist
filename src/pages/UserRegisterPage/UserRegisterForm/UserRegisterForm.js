@@ -69,7 +69,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
   const newRegisteredUserPassword = userRegisterForm.password;
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
   const checkRegisteredUserPasswords =
-    newRegisteredUserPassword !== newRegisteredUserConfirmPassword;
+    newRegisteredUserPassword === newRegisteredUserConfirmPassword;
 
   // check if there is registeredUsers data in local storage
   const registeredUsersLocalStorage = JSON.parse(
@@ -171,6 +171,10 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
 
     // check if the two passwords are the same
     if (checkRegisteredUserPasswords) {
+      setUserRegisterFormErrors((prevState) => ({
+        ...prevState,
+      }));
+    } else {
       errors++;
 
       setUserRegisterFormErrors((prevState) => ({
@@ -193,7 +197,6 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
       ) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          password: '',
         }));
       } else {
         errors++;
