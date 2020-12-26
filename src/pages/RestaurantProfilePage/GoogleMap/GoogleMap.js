@@ -16,7 +16,7 @@ GoogleMap.propTypes = {
   }),
 };
 
-function GoogleMap({ place }) {
+export default function GoogleMap({ place }) {
   const center = {
     lat: place.coordinates.latitude,
     lng: place.coordinates.longitude,
@@ -41,5 +41,3 @@ function GoogleMap({ place }) {
     </div>
   );
 }
-
-export default GoogleMap;

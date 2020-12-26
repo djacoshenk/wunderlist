@@ -12,7 +12,7 @@ RestaurantCardList.propTypes = {
   fetchMorePlaces: PropTypes.func,
 };
 
-function RestaurantCardList({ places, fetchMorePlaces }) {
+export default function RestaurantCardList({ places, fetchMorePlaces }) {
   const params = useParams();
   const obs = new IntersectionObserver(
     (entries) => {
@@ -53,5 +53,3 @@ function RestaurantCardList({ places, fetchMorePlaces }) {
     </div>
   );
 }
-
-export default RestaurantCardList;

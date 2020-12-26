@@ -21,7 +21,7 @@ const mapDispatchToProps = {
   setLocationURL,
 };
 
-function RestaurantSearchBar({ setLocationURL }) {
+export function RestaurantSearchBar({ setLocationURL }) {
   const [termSuggestions, setTermSuggestions] = useState([]);
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [currentLocation, setCurrentLocation] = useState('');

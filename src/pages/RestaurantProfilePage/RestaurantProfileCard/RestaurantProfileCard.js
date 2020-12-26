@@ -29,7 +29,7 @@ RestaurantProfileCard.propTypes = {
   reviews: PropTypes.object,
 };
 
-function RestaurantProfileCard({ place, reviews }) {
+export default function RestaurantProfileCard({ place, reviews }) {
   function formatNameForUrl() {
     return place.name.split(' ').join('+');
   }
@@ -93,5 +93,3 @@ function RestaurantProfileCard({ place, reviews }) {
     </div>
   );
 }
-
-export default RestaurantProfileCard;

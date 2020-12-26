@@ -15,7 +15,7 @@ RestaurantProfileCardReviews.propTypes = {
   }),
 };
 
-function RestaurantProfileCardReviews({ reviews }) {
+export default function RestaurantProfileCardReviews({ reviews }) {
   return reviews.reviews.map((review, index) => {
     return (
       <div className={styles['restaurant-prof-reviews-card']} key={index}>
@@ -30,5 +30,3 @@ function RestaurantProfileCardReviews({ reviews }) {
     );
   });
 }
-
-export default RestaurantProfileCardReviews;

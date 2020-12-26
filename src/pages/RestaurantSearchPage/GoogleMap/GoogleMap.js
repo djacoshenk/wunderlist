@@ -18,7 +18,7 @@ const defaultCenter = {
 
 const defaultZoom = 13;
 
-function GoogleMap({ places, mapKey }) {
+export default function GoogleMap({ places, mapKey }) {
   function getMapBounds(maps) {
     const bounds = new maps.LatLngBounds();
 
@@ -62,5 +62,3 @@ function GoogleMap({ places, mapKey }) {
     </div>
   );
 }
-
-export default GoogleMap;
