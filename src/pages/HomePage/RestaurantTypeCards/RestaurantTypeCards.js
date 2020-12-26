@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
-
-import { LocationURLContext } from 'context/LocationURLContext';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import burger from 'assets/burger.png';
 import sushi from 'assets/sushi.png';
@@ -13,9 +13,17 @@ import chili from 'assets/chili.png';
 
 import styles from './RestaurantTypeCards.module.scss';
 
-function RestaurantTypeCards() {
-  const { locationURL } = useContext(LocationURLContext);
+RestaurantTypeCards.propTypes = {
+  locationURL: PropTypes.string,
+};
 
+function mapStateToProps(state) {
+  return {
+    locationURL: state.locationURL.locationURL,
+  };
+}
+
+export function RestaurantTypeCards({ locationURL }) {
   const restaurantTypes = [
     {
       name: 'Burgers',
@@ -91,4 +99,4 @@ function RestaurantTypeCards() {
   );
 }
 
-export default RestaurantTypeCards;
+export default connect(mapStateToProps)(RestaurantTypeCards);

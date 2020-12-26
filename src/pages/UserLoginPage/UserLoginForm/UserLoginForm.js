@@ -1,9 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { CurrentUserContext } from 'context/CurrentUserContext';
+import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginForm.module.scss';
+
+UserLoginForm.propTypes = {
+  setCurrentLoadingStatus: PropTypes.func,
+};
+
+const mapDispatchToProps = {
+  setCurrentLoadingStatus,
+};
 
 const defaultUserLoginForm = {
   username: '',
@@ -20,8 +30,7 @@ const userLoginFormErrorValues = {
   password: 'Please provide a valid password.',
 };
 
-export default function UserLoginForm() {
-  const { setCurrentUser, toggleLoader } = useContext(CurrentUserContext);
+export function UserLoginForm({ setCurrentLoadingStatus }) {
   const [userLoginForm, setUserLoginForm] = useState(defaultUserLoginForm);
   const [userLoginFormErrors, setUserLoginFormErrors] = useState(
     defaultUserLoginFormErrors
@@ -35,8 +44,6 @@ export default function UserLoginForm() {
   );
 
   function setCurrentUserLogin(user) {
-    setCurrentUser(user);
-
     localStorage.setItem('currentUser', JSON.stringify([{ ...user }]));
   }
 
@@ -65,6 +72,7 @@ export default function UserLoginForm() {
       if (checkUsernameRegistration) {
         setUserLoginFormErrors((prevState) => ({
           ...prevState,
+          username: '',
         }));
       } else {
         errors++;
@@ -78,6 +86,7 @@ export default function UserLoginForm() {
       if (checkPasswordRegistration) {
         setUserLoginFormErrors((prevState) => ({
           ...prevState,
+          password: '',
         }));
       } else {
         errors++;
@@ -109,9 +118,6 @@ export default function UserLoginForm() {
     }
 
     if (errors === 0) {
-      // toggle loader on
-      toggleLoader();
-
       const registeredUserData = currentRegisteredUsersUsernames.find(
         (val) =>
           val.username === currentUserLoginUsername &&
@@ -121,10 +127,15 @@ export default function UserLoginForm() {
       // register the user
       setCurrentUserLogin(registeredUserData);
 
+      // set the loading status
+      setCurrentLoadingStatus(true, 'Logging In...');
+
+      // route to the home page
+      history.push('/');
+
       // turn loader off and route to the home page
       setTimeout(() => {
-        toggleLoader();
-        history.push('/');
+        setCurrentLoadingStatus(false, '');
       }, 2000);
     }
   }
@@ -168,3 +179,5 @@ export default function UserLoginForm() {
     </div>
   );
 }
+
+export default connect(null, mapDispatchToProps)(UserLoginForm);

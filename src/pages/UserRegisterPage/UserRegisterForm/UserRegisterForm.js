@@ -1,11 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { isEmail, isStrongPassword } from 'validator';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { CurrentUserContext } from 'context/CurrentUserContext';
+import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
+
+UserRegisterForm.propTypes = {
+  setCurrentLoadingStatus: PropTypes.func,
+};
+
+const mapDispatchToProps = {
+  setCurrentLoadingStatus,
+};
 
 const defaultUserRegisterForm = {
   first_name: '',
@@ -34,8 +44,7 @@ const userRegisterFormErrorValues = {
   confirm_password: 'Please confirm your password.',
 };
 
-export default function UserRegisterForm() {
-  const { toggleLoader } = useContext(CurrentUserContext);
+export function UserRegisterForm({ setCurrentLoadingStatus }) {
   const [userRegisterForm, setUserRegisterForm] = useState(
     defaultUserRegisterForm
   );
@@ -62,6 +71,7 @@ export default function UserRegisterForm() {
   const checkRegisteredUserPasswords =
     newRegisteredUserPassword !== newRegisteredUserConfirmPassword;
 
+  // check if there is registeredUsers data in local storage
   const registeredUsersLocalStorage = JSON.parse(
     localStorage.getItem('registeredUsers')
   );
@@ -69,6 +79,7 @@ export default function UserRegisterForm() {
   function setRegisteredUser(user) {
     const registeredUser = [{ userID: uuid(), ...user }];
 
+    // if there's data in local storage, then append the new data with the existing data
     if (registeredUsersLocalStorage) {
       const combinedRegisteredUsersData = registeredUsersLocalStorage.concat(
         registeredUser
@@ -83,6 +94,7 @@ export default function UserRegisterForm() {
       localStorage.setItem('registeredUsers', JSON.stringify(registeredUser));
     }
 
+    // regardless, we want to set the registered user data in local storage as the current user
     localStorage.setItem('currentUser', JSON.stringify(registeredUser));
   }
 
@@ -113,6 +125,7 @@ export default function UserRegisterForm() {
       if (isEmail(newRegisteredUserEmail)) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
+          email: '',
         }));
       } else {
         errors++;
@@ -172,13 +185,15 @@ export default function UserRegisterForm() {
       if (
         isStrongPassword(newRegisteredUserPassword, {
           minLength: 8,
-          minNumbers: 1,
           minLowercase: 1,
           minUppercase: 1,
+          minNumbers: 1,
+          minSymbols: 0,
         })
       ) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
+          password: '',
         }));
       } else {
         errors++;
@@ -186,23 +201,25 @@ export default function UserRegisterForm() {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
           password:
-            'The password must be a minimum of 8 characters and contain at least one letter, one uppercase letter, and one lowercase letter.',
+            'The password must be a minimum of 8 characters and contain at least one number, one uppercase letter, and one lowercase letter.',
         }));
       }
     }
 
     // if there are no errors, then register the user
     if (errors === 0) {
-      // toggle loader on
-      toggleLoader();
-
       // register the user
       setRegisteredUser(userRegisterForm);
 
-      // turn loader off and route to the home page
+      // route to the home page
+      history.push('/');
+
+      // set the loading status
+      setCurrentLoadingStatus(true, 'Registering New User...');
+
+      // change the loading status
       setTimeout(() => {
-        toggleLoader();
-        history.push('/');
+        setCurrentLoadingStatus(false, '');
       }, 2000);
     }
   }
@@ -289,3 +306,5 @@ export default function UserRegisterForm() {
     </div>
   );
 }
+
+export default connect(null, mapDispatchToProps)(UserRegisterForm);

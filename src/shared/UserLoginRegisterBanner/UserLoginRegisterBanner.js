@@ -1,21 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { CurrentUserContext } from 'context/CurrentUserContext';
+import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
-export default function UserLoginRegisterBanner() {
-  const { setCurrentUser, toggleLoader } = useContext(CurrentUserContext);
+UserLoginRegisterBanner.propTypes = {
+  setCurrentLoadingStatus: PropTypes.func,
+};
 
-  function setUserLogout() {
-    setCurrentUser(null);
+const mapDispatchToProps = {
+  setCurrentLoadingStatus,
+};
 
-    localStorage.removeItem('currentUser');
-  }
-
+export function UserLoginRegisterBanner({ setCurrentLoadingStatus }) {
   const history = useHistory();
 
+  // check if there is a current user saved in local storage
   const currentUserLocalStorage = JSON.parse(
     localStorage.getItem('currentUser')
   );
@@ -29,14 +32,18 @@ export default function UserLoginRegisterBanner() {
   }
 
   function handleUserLogout() {
-    toggleLoader();
+    // remove current user from local storage
+    localStorage.removeItem('currentUser');
 
-    setUserLogout();
+    // set the user loading status
+    setCurrentLoadingStatus(true, 'Logging Out...');
 
+    // route to the home page
     history.push('/');
 
+    // change the user loading status
     setTimeout(() => {
-      toggleLoader();
+      setCurrentLoadingStatus(false, '');
     }, 2000);
   }
 
@@ -66,3 +73,5 @@ export default function UserLoginRegisterBanner() {
     </div>
   );
 }
+
+export default connect(null, mapDispatchToProps)(UserLoginRegisterBanner);

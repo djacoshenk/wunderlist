@@ -26,6 +26,7 @@ RestaurantProfileCard.propTypes = {
       display_address: PropTypes.arrayOf(PropTypes.string),
     }),
   }),
+  reviews: PropTypes.object,
 };
 
 function RestaurantProfileCard({ place, reviews }) {

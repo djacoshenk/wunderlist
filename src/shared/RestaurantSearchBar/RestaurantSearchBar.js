@@ -1,23 +1,32 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import RestaurantSearchBarTermParam from 'shared/RestaurantSearchBarTermParam/RestaurantSearchBarTermParam';
 import RestaurantSearchBarLocationParam from 'shared/RestaurantSearchBarLocationParam/RestaurantSearchBarLocationParam';
 
-import { LocationURLContext } from 'context/LocationURLContext';
+import { setLocationURL } from 'reducers/locationURLReducer';
 
 import styles from './RestaurantSearchBar.module.scss';
 
 let searchId;
 
-function RestaurantSearchBar() {
+RestaurantSearchBar.propTypes = {
+  setLocationURL: PropTypes.func,
+};
+
+const mapDispatchToProps = {
+  setLocationURL,
+};
+
+function RestaurantSearchBar({ setLocationURL }) {
   const [termSuggestions, setTermSuggestions] = useState([]);
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [currentLocation, setCurrentLocation] = useState('');
   const [termSearchParam, setTermSearchParam] = useState('');
   const [locationSearchParam, setLocationSearchParam] = useState('');
-  const { setLocationURL } = useContext(LocationURLContext);
   const history = useHistory();
 
   async function fetchTermSuggestions(text) {
@@ -90,8 +99,10 @@ function RestaurantSearchBar() {
           }
         );
 
-        setCurrentLocation(`${data.data[0].city}, ${data.data[0].regionCode}`);
-        setLocationURL(`${data.data[0].city}, ${data.data[0].regionCode}`);
+        const location = `${data.data[0].city}, ${data.data[0].regionCode}`;
+
+        setCurrentLocation(location);
+        setLocationURL(location);
       } catch (err) {
         throw new Error('COULD NOT FETCH USER CURRENT LOCATION');
       }
@@ -164,4 +175,4 @@ function RestaurantSearchBar() {
   );
 }
 
-export default React.memo(RestaurantSearchBar);
+export default connect(null, mapDispatchToProps)(RestaurantSearchBar);
