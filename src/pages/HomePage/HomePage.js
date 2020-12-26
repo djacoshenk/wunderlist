@@ -16,7 +16,7 @@ HomePage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isLoading: state.currentLoadingStatus.isLoading,
+    isLoading: state.loadingStatus.isLoading,
   };
 }
 

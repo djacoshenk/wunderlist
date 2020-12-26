@@ -19,7 +19,7 @@ RestaurantTypeCards.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    locationURL: state.locationURL.locationURL,
+    locationURL: state.location.locationURL,
   };
 }
 

@@ -11,7 +11,7 @@ UserLogoutLoader.propTypes = {
 };
 
 function mapStateToProps(state) {
-  return { loadingMessage: state.currentLoadingStatus.loadingMessage };
+  return { loadingMessage: state.loadingStatus.loadingMessage };
 }
 
 export function UserLogoutLoader({ loadingMessage }) {
