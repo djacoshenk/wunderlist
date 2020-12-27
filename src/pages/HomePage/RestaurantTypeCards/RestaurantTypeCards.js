@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { setLocationURL } from 'reducers/locationURLReducer';
+
 import burger from 'assets/burger.png';
 import sushi from 'assets/sushi.png';
 import rice from 'assets/rice-bowl.png';
@@ -15,6 +17,7 @@ import styles from './RestaurantTypeCards.module.scss';
 
 RestaurantTypeCards.propTypes = {
   locationURL: PropTypes.string,
+  setLocationURL: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -23,7 +26,11 @@ function mapStateToProps(state) {
   };
 }
 
-export function RestaurantTypeCards({ locationURL }) {
+const mapDispatchToProps = {
+  setLocationURL,
+};
+
+export function RestaurantTypeCards({ locationURL, setLocationURL }) {
   const restaurantTypes = [
     {
       name: 'Burgers',
@@ -69,6 +76,7 @@ export function RestaurantTypeCards({ locationURL }) {
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}
+                onClick={() => setLocationURL('')}
               >
                 <div className={styles['restaurant-type-card']}>
                   <img src={type.icon} alt={type.alt} />
@@ -99,4 +107,7 @@ export function RestaurantTypeCards({ locationURL }) {
   );
 }
 
-export default connect(mapStateToProps)(RestaurantTypeCards);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RestaurantTypeCards);
