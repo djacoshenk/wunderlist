@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
+import axios from 'axios';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
 RestaurantSearchBarTermParam.propTypes = {
-  termSuggestions: PropTypes.arrayOf(PropTypes.string),
   termSearchParam: PropTypes.string,
-  onInputChange: PropTypes.func,
+  setTermSearchParam: PropTypes.func,
 };
 
+let searchId;
+
 export default function RestaurantSearchBarTermParam({
-  termSuggestions,
   termSearchParam,
-  onInputChange,
+  setTermSearchParam,
 }) {
+  const [termSuggestions, setTermSuggestions] = useState([]);
+
   const {
     isOpen,
     getLabelProps,
@@ -30,6 +33,37 @@ export default function RestaurantSearchBarTermParam({
       onInputChange(inputValue);
     },
   });
+
+  async function fetchTermSuggestions(text) {
+    try {
+      if (text) {
+        const { data } = await axios.get(
+          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/autocomplete?text=${text}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
+            },
+          }
+        );
+
+        setTermSuggestions(data.categories.map((cat) => cat.title));
+      } else {
+        return;
+      }
+    } catch (err) {
+      throw new Error('COULD NOT FETCH TERM SUGGESTIONS');
+    }
+  }
+
+  function onInputChange(value) {
+    setTermSearchParam(value);
+
+    clearTimeout(searchId);
+
+    searchId = setTimeout(() => {
+      fetchTermSuggestions(value);
+    }, 1000);
+  }
 
   return (
     <div className={styles['restaurant-search-bar-term-param-container']}>
