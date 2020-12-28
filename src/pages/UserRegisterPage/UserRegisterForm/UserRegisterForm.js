@@ -17,24 +17,6 @@ const mapDispatchToProps = {
   setCurrentLoadingStatus,
 };
 
-const defaultUserRegisterForm = {
-  first_name: '',
-  last_name: '',
-  email: '',
-  username: '',
-  password: '',
-  confirm_password: '',
-};
-
-const defaultUserRegisterFormErrors = {
-  first_name: '',
-  last_name: '',
-  email: '',
-  username: '',
-  password: '',
-  confirm_password: '',
-};
-
 const userRegisterFormErrorValues = {
   first_name: 'Please provide a first name.',
   last_name: 'Please provide a last name.',
@@ -45,12 +27,22 @@ const userRegisterFormErrorValues = {
 };
 
 export function UserRegisterForm({ setCurrentLoadingStatus }) {
-  const [userRegisterForm, setUserRegisterForm] = useState(
-    defaultUserRegisterForm
-  );
-  const [userRegisterFormErrors, setUserRegisterFormErrors] = useState(
-    defaultUserRegisterFormErrors
-  );
+  const [userRegisterForm, setUserRegisterForm] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    username: '',
+    password: '',
+    confirm_password: '',
+  });
+  const [userRegisterFormErrors, setUserRegisterFormErrors] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    username: '',
+    password: '',
+    confirm_password: '',
+  });
   const history = useHistory();
 
   // check if there is a user already registered with the email
@@ -68,8 +60,6 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
   // check if the provided passwords are the same
   const newRegisteredUserPassword = userRegisterForm.password;
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
-  const checkRegisteredUserPasswords =
-    newRegisteredUserPassword === newRegisteredUserConfirmPassword;
 
   // check if there is registeredUsers data in local storage
   const registeredUsersLocalStorage = JSON.parse(
@@ -115,7 +105,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
       } else {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          [name]: defaultUserRegisterFormErrors[name],
+          [name]: '',
         }));
       }
     }
@@ -170,7 +160,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
     }
 
     // check if the two passwords are the same
-    if (checkRegisteredUserPasswords) {
+    if (newRegisteredUserPassword === newRegisteredUserConfirmPassword) {
       setUserRegisterFormErrors((prevState) => ({
         ...prevState,
       }));

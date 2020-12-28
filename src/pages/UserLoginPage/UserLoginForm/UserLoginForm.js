@@ -15,26 +15,20 @@ const mapDispatchToProps = {
   setCurrentLoadingStatus,
 };
 
-const defaultUserLoginForm = {
-  username: '',
-  password: '',
-};
-
-const defaultUserLoginFormErrors = {
-  username: '',
-  password: '',
-};
-
 const userLoginFormErrorValues = {
   username: 'Please provide a valid username.',
   password: 'Please provide a valid password.',
 };
 
 export function UserLoginForm({ setCurrentLoadingStatus }) {
-  const [userLoginForm, setUserLoginForm] = useState(defaultUserLoginForm);
-  const [userLoginFormErrors, setUserLoginFormErrors] = useState(
-    defaultUserLoginFormErrors
-  );
+  const [userLoginForm, setUserLoginForm] = useState({
+    username: '',
+    password: '',
+  });
+  const [userLoginFormErrors, setUserLoginFormErrors] = useState({
+    username: '',
+    password: '',
+  });
   const history = useHistory();
 
   const currentUserLoginUsername = userLoginForm.username;
@@ -106,6 +100,7 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
       }));
     }
 
+    // loop through the input fields, if the field is empty set the login form error value
     for (const name in userLoginForm) {
       if (!userLoginForm[name]) {
         errors++;
@@ -117,6 +112,7 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
       }
     }
 
+    // if there are no errors, then find the user's data in local storage
     if (errors === 0) {
       const registeredUserData = currentRegisteredUsersUsernames.find(
         (val) =>
@@ -124,7 +120,7 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
           val.password === currentUserLoginPassword
       );
 
-      // register the user
+      // set the current user to the existing registered data
       setCurrentUserLogin(registeredUserData);
 
       // set the loading status
