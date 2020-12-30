@@ -54,7 +54,7 @@ export default function GoogleMap({ places, mapKey }) {
               lat={place.coordinates.latitude}
               lng={place.coordinates.longitude}
               key={place.id}
-              text={index + 1}
+              id={index + 1}
             />
           );
         })}
