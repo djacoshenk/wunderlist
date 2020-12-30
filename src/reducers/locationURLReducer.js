@@ -10,7 +10,7 @@ export function setLocationUrl(url) {
 }
 
 const initialState = {
-  locationUrl: 'Los Angeles, CA',
+  locationUrl: '',
 };
 
 export default function locationUrlReducer(state = initialState, action) {
