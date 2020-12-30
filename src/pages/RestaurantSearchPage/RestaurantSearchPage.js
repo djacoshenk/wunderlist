@@ -18,6 +18,8 @@ export default function RestaurantSearchPage() {
   const params = useParams();
 
   useEffect(() => {
+    setIsLoading(true);
+
     async function fetchPlaces({ term, location }) {
       try {
         const { data } = await axios.get(

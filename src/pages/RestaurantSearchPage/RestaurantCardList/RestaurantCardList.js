@@ -45,7 +45,9 @@ export default function RestaurantCardList({ places, fetchMorePlaces }) {
   return (
     <div className={styles['card-list-container']}>
       {places.map((place, index) => {
-        return <RestaurantCard key={place.id} place={place} index={index} />;
+        return (
+          <RestaurantCard key={place.id} place={place} index={index + 1} />
+        );
       })}
       <div ref={setLoadRef} className={styles['card-list-bubble-loader']}>
         <RestaurantLoaderBubbles />

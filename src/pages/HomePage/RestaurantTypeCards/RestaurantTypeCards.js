@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { setLocationURL } from 'reducers/locationURLReducer';
+import { setLocationUrl } from 'reducers/locationUrlReducer';
 
 import burger from 'assets/burger.png';
 import sushi from 'assets/sushi.png';
@@ -16,21 +16,21 @@ import chili from 'assets/chili.png';
 import styles from './RestaurantTypeCards.module.scss';
 
 RestaurantTypeCards.propTypes = {
-  locationURL: PropTypes.string,
-  setLocationURL: PropTypes.func,
+  locationUrl: PropTypes.string,
+  setLocationUrl: PropTypes.func,
 };
 
 function mapStateToProps(state) {
   return {
-    locationURL: state.location.locationURL,
+    locationUrl: state.location.locationUrl,
   };
 }
 
 const mapDispatchToProps = {
-  setLocationURL,
+  setLocationUrl,
 };
 
-export function RestaurantTypeCards({ locationURL, setLocationURL }) {
+export function RestaurantTypeCards({ locationUrl, setLocationUrl }) {
   const restaurantTypes = [
     {
       name: 'Burgers',
@@ -68,15 +68,15 @@ export function RestaurantTypeCards({ locationURL, setLocationURL }) {
     <div className={styles['restaurant-type-cards-main-container']}>
       <div className={styles['restaurant-type-cards-grid-container']}>
         {restaurantTypes.map((type) => {
-          if (locationURL) {
+          if (locationUrl) {
             return (
               <Link
                 to={{
-                  pathname: `/search/${type.name.toLowerCase()}/${locationURL}`,
+                  pathname: `/search/${type.name.toLowerCase()}/${locationUrl}`,
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}
-                onClick={() => setLocationURL('')}
+                onClick={() => setLocationUrl('')}
               >
                 <div className={styles['restaurant-type-card']}>
                   <img src={type.icon} alt={type.alt} />
@@ -88,7 +88,7 @@ export function RestaurantTypeCards({ locationURL, setLocationURL }) {
             return (
               <Link
                 to={{
-                  pathname: `/search/${type.name.toLowerCase()}/${locationURL}`,
+                  pathname: `/search/${type.name.toLowerCase()}/${locationUrl}`,
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}

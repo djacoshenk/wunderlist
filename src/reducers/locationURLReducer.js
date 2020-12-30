@@ -2,7 +2,7 @@ const ACTIONS = {
   SET_LOCATION_URL: 'SET_LOCATION_URL',
 };
 
-export function setLocationURL(url) {
+export function setLocationUrl(url) {
   return {
     type: ACTIONS.SET_LOCATION_URL,
     payload: url,
@@ -10,12 +10,12 @@ export function setLocationURL(url) {
 }
 
 const initialState = {
-  locationURL: '',
+  locationUrl: '',
 };
 
-export default function locationURLReducer(state = initialState, action) {
+export default function locationUrlReducer(state = initialState, action) {
   if (action.type === ACTIONS.SET_LOCATION_URL) {
-    return { ...state, locationURL: action.payload };
+    return { ...state, locationUrl: action.payload };
   } else {
     return state;
   }
