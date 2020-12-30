@@ -4,20 +4,20 @@ import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-import { setLocationURL } from 'reducers/locationURLReducer';
+import { setLocationUrl } from 'reducers/locationUrlReducer';
 import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurrentLocationButton';
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 import { connect } from 'react-redux';
 
 RestaurantSearchBarLocationParam.propTypes = {
-  setLocationURL: PropTypes.func,
+  setLocationUrl: PropTypes.func,
   locationSearchParam: PropTypes.string,
   setLocationSearchParam: PropTypes.func,
 };
 
 const mapDispatchToProps = {
-  setLocationURL,
+  setLocationUrl,
 };
 
 let searchId;
@@ -25,7 +25,7 @@ let searchId;
 export function RestaurantSearchBarLocationParam({
   locationSearchParam,
   setLocationSearchParam,
-  setLocationURL,
+  setLocationUrl,
 }) {
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [currentLocation, setCurrentLocation] = useState('');
@@ -53,7 +53,7 @@ export function RestaurantSearchBarLocationParam({
 
   async function fetchLocationSuggestions(text) {
     setCurrentLocation('');
-    setLocationURL(text);
+    setLocationUrl(text);
 
     try {
       if (text) {
@@ -87,7 +87,7 @@ export function RestaurantSearchBarLocationParam({
 
     searchId = setTimeout(() => {
       fetchLocationSuggestions(value);
-    }, 1000);
+    }, 200);
   }
 
   return (
@@ -105,7 +105,7 @@ export function RestaurantSearchBarLocationParam({
         />
         <UserCurrentLocationButton
           setCurrentLocation={setCurrentLocation}
-          setLocationURL={setLocationURL}
+          setLocationURL={setLocationUrl}
         />
         <ul {...getMenuProps()}>
           {isOpen &&

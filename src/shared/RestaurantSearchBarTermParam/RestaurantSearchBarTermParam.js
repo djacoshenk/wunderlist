@@ -62,7 +62,7 @@ export default function RestaurantSearchBarTermParam({
 
     searchId = setTimeout(() => {
       fetchTermSuggestions(value);
-    }, 1000);
+    }, 200);
   }
 
   return (
