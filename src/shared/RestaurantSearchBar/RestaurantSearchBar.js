@@ -21,14 +21,37 @@ const mapDispatchToProps = {
 export function RestaurantSearchBar({ setLocationUrl }) {
   const [termSearchParam, setTermSearchParam] = useState('');
   const [locationSearchParam, setLocationSearchParam] = useState('');
+  const [errors, setErrors] = useState({
+    term: '',
+    location: '',
+  });
   const history = useHistory();
 
   function onFormSubmit(e) {
     e.preventDefault();
 
-    setLocationUrl('');
+    if (!termSearchParam) {
+      setErrors((prevState) => {
+        return { ...prevState, term: 'Please provide a term' };
+      });
+    } else {
+      setErrors((prevState) => {
+        return { ...prevState, term: '' };
+      });
+    }
+
+    if (!locationSearchParam) {
+      setErrors((prevState) => {
+        return { ...prevState, location: 'Please provide a location' };
+      });
+    } else {
+      setErrors((prevState) => {
+        return { ...prevState, location: '' };
+      });
+    }
 
     if (termSearchParam && locationSearchParam) {
+      setLocationUrl('');
       history.push(`/search/${termSearchParam}/${locationSearchParam}`);
     }
   }
@@ -43,12 +66,13 @@ export function RestaurantSearchBar({ setLocationUrl }) {
         <RestaurantSearchBarTermParam
           termSearchParam={termSearchParam}
           setTermSearchParam={setTermSearchParam}
+          error={errors.term}
         />
         <RestaurantSearchBarLocationParam
           locationSearchParam={locationSearchParam}
           setLocationSearchParam={setLocationSearchParam}
+          error={errors.location}
         />
-
         <button className={styles['search-bar-search-button']} type='submit'>
           <i className={'fas fa-search'}></i>
         </button>
