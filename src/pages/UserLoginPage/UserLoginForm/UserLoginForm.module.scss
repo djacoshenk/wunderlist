@@ -34,7 +34,8 @@
       }
 
       input {
-        height: 2rem;
+        height: 100%;
+        padding: 0.5rem;
         width: calc(300px - 30px);
         border: 0;
         font-size: 1rem;
@@ -67,7 +68,8 @@
       }
 
       input {
-        height: 2rem;
+        height: 100%;
+        padding: 0.5rem;
         width: calc(300px - 30px);
         border: 0;
         font-size: 1rem;
@@ -87,7 +89,7 @@
       align-items: flex-start;
       height: 2.5rem;
       width: 300px;
-      color: red;
+      color: #f87171;
 
       @media (min-width: 481px) {
         width: 450px;
@@ -105,7 +107,8 @@
       border-radius: 5px;
       font-family: 'Lato', sans-serif;
       font-size: 1rem;
-      font-weight: bold;
+      font-weight: 900;
+      margin: 0;
 
       &:hover {
         background-color: darken(#667eea, 5%);

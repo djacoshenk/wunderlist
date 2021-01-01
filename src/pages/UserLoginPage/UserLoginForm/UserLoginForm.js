@@ -16,8 +16,8 @@ const mapDispatchToProps = {
 };
 
 const userLoginFormErrorValues = {
-  username: 'Please provide a valid username.',
-  password: 'Please provide a valid password.',
+  username: 'Please provide a valid username',
+  password: 'Please provide a valid password',
 };
 
 export function UserLoginForm({ setCurrentLoadingStatus }) {
@@ -73,7 +73,7 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
 
         setUserLoginFormErrors((prevState) => ({
           ...prevState,
-          username: 'The provided username does not match a registered user.',
+          username: 'The provided username does not match a registered user',
         }));
       }
 
@@ -87,7 +87,7 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
 
         setUserLoginFormErrors((prevState) => ({
           ...prevState,
-          password: 'Incorrect password. Please try again.',
+          password: 'Incorrect password - Please try again',
         }));
       }
     } else {
@@ -95,8 +95,8 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
 
       setUserLoginFormErrors((prevState) => ({
         ...prevState,
-        username: 'The provided username does not match a registered user.',
-        password: 'Incorrect password. Please try again.',
+        username: 'The provided username does not match a registered user',
+        password: 'Incorrect password - Please try again',
       }));
     }
 
