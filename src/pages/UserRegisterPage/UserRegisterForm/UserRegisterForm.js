@@ -18,12 +18,12 @@ const mapDispatchToProps = {
 };
 
 const userRegisterFormErrorValues = {
-  first_name: 'Please provide a first name.',
-  last_name: 'Please provide a last name.',
-  email: 'Please provide an email.',
-  username: 'Please provide a username.',
-  password: 'Please provide a password.',
-  confirm_password: 'Please confirm your password.',
+  first_name: 'Please provide a first name',
+  last_name: 'Please provide a last name',
+  email: 'Please provide an email',
+  username: 'Please provide a username',
+  password: 'Please provide a password',
+  confirm_password: 'Please confirm your password',
 };
 
 export function UserRegisterForm({ setCurrentLoadingStatus }) {
@@ -122,7 +122,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
 
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          email: 'The email provided is not a valid email.',
+          email: 'The email provided is not a valid email',
         }));
       }
     }
@@ -138,7 +138,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
 
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          email: 'A user has already been registered with this email.',
+          email: 'A user has already been registered with this email',
         }));
       }
     }
@@ -154,7 +154,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
 
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          username: 'This username has already been taken by another user.',
+          username: 'This username has already been taken by another user',
         }));
       }
     }
@@ -169,8 +169,8 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
 
       setUserRegisterFormErrors((prevState) => ({
         ...prevState,
-        password: 'The passwords provided do not match.',
-        confirm_password: 'The passwords provided do not match.',
+        password: 'The passwords provided do not match',
+        confirm_password: 'The passwords provided do not match',
       }));
     }
 
@@ -194,7 +194,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
           password:
-            'The password must be a minimum of 8 characters and contain at least one number, one uppercase letter, and one lowercase letter.',
+            'The password must be a minimum of 8 characters and contain at least one number, one uppercase letter, and one lowercase letter',
         }));
       }
     }
