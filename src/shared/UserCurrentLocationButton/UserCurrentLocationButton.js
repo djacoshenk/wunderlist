@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+
+import { setLocationUrl } from 'reducers/locationUrlReducer';
 
 import styles from './UserCurrentLocationButton.module.scss';
 
@@ -9,10 +12,9 @@ UserCurrentLocationButton.propTypes = {
   setLocationURL: PropTypes.func,
 };
 
-export default function UserCurrentLocationButton({
-  setCurrentLocation,
-  setLocationURL,
-}) {
+export default function UserCurrentLocationButton({ setCurrentLocation }) {
+  const dispatch = useDispatch();
+
   function fetchUserCurrentLocation() {
     let currentUserLocation;
 
@@ -36,7 +38,7 @@ export default function UserCurrentLocationButton({
         const location = `${data.data[0].city}, ${data.data[0].regionCode}`;
 
         setCurrentLocation(location);
-        setLocationURL(location);
+        dispatch(setLocationUrl(location));
       } catch (err) {
         throw new Error('COULD NOT FETCH USER CURRENT LOCATION');
       }

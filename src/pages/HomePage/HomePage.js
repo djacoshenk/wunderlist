@@ -1,26 +1,17 @@
 import React, { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import UserStatusLoader from './UserStatusLoader/UserStatusLoader';
+import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
 import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 import Header from './Header/Header';
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
 
-HomePage.propTypes = {
-  loadingMessage: PropTypes.string,
-  isLoading: PropTypes.bool,
-};
+export default function HomePage() {
+  const { isLoading } = useSelector((state) => state.loadingStatus);
 
-function mapStateToProps(state) {
-  return {
-    isLoading: state.loadingStatus.isLoading,
-  };
-}
-
-export function HomePage({ isLoading }) {
   return (
     <Fragment>
       <Helmet>
@@ -32,6 +23,7 @@ export function HomePage({ isLoading }) {
         </Fragment>
       ) : (
         <Fragment>
+          <HamburgerMenuButton />
           <UserLoginRegisterBanner />
           <Header />
           <RestaurantSearchBar />
@@ -41,5 +33,3 @@ export function HomePage({ isLoading }) {
     </Fragment>
   );
 }
-
-export default connect(mapStateToProps)(HomePage);

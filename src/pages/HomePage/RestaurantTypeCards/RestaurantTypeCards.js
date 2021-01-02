@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 
@@ -15,22 +14,11 @@ import chili from 'assets/chili.png';
 
 import styles from './RestaurantTypeCards.module.scss';
 
-RestaurantTypeCards.propTypes = {
-  locationUrl: PropTypes.string,
-  setLocationUrl: PropTypes.func,
-};
+export default function RestaurantTypeCards() {
+  const { locationUrl } = useSelector((state) => state.location);
+  const dispatch = useDispatch();
+  const [error, setError] = useState('');
 
-function mapStateToProps(state) {
-  return {
-    locationUrl: state.location.locationUrl,
-  };
-}
-
-const mapDispatchToProps = {
-  setLocationUrl,
-};
-
-export function RestaurantTypeCards({ locationUrl, setLocationUrl }) {
   const restaurantTypes = [
     {
       name: 'Burgers',
@@ -76,7 +64,10 @@ export function RestaurantTypeCards({ locationUrl, setLocationUrl }) {
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}
-                onClick={() => setLocationUrl('')}
+                onClick={() => {
+                  setError('');
+                  dispatch(setLocationUrl(''));
+                }}
               >
                 <div className={styles['restaurant-type-card']}>
                   <img src={type.icon} alt={type.alt} />
@@ -92,7 +83,11 @@ export function RestaurantTypeCards({ locationUrl, setLocationUrl }) {
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  setError('Please first provide a location');
+                }}
               >
                 <div className={styles['restaurant-type-card']}>
                   <img src={type.icon} alt={type.alt} />
@@ -103,11 +98,9 @@ export function RestaurantTypeCards({ locationUrl, setLocationUrl }) {
           }
         })}
       </div>
+      <div className={styles['restaurant-type-cards-error-container']}>
+        <p>{error}</p>
+      </div>
     </div>
   );
 }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RestaurantTypeCards);

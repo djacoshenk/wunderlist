@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 
@@ -10,21 +9,14 @@ import RestaurantSearchBarLocationParam from 'shared/RestaurantSearchBarLocation
 
 import styles from './RestaurantSearchBar.module.scss';
 
-RestaurantSearchBar.propTypes = {
-  setLocationUrl: PropTypes.func,
-};
-
-const mapDispatchToProps = {
-  setLocationUrl,
-};
-
-export function RestaurantSearchBar({ setLocationUrl }) {
+export default function RestaurantSearchBar() {
   const [termSearchParam, setTermSearchParam] = useState('');
   const [locationSearchParam, setLocationSearchParam] = useState('');
   const [errors, setErrors] = useState({
     term: '',
     location: '',
   });
+  const dispatch = useDispatch();
   const history = useHistory();
 
   function onFormSubmit(e) {
@@ -51,7 +43,7 @@ export function RestaurantSearchBar({ setLocationUrl }) {
     }
 
     if (termSearchParam && locationSearchParam) {
-      setLocationUrl('');
+      dispatch(setLocationUrl(''));
       history.push(`/search/${termSearchParam}/${locationSearchParam}`);
     }
   }
@@ -80,5 +72,3 @@ export function RestaurantSearchBar({ setLocationUrl }) {
     </div>
   );
 }
-
-export default connect(null, mapDispatchToProps)(RestaurantSearchBar);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 
@@ -23,14 +23,11 @@ RestaurantCard.propTypes = {
     }),
   }),
   index: PropTypes.number,
-  setMapId: PropTypes.func,
 };
 
-const mapDispatchToProps = {
-  setMapId,
-};
+export default function RestaurantCard({ place, index }) {
+  const dispatch = useDispatch;
 
-export function RestaurantCard({ place, index, setMapId }) {
   return (
     <Link
       to={{
@@ -40,9 +37,9 @@ export function RestaurantCard({ place, index, setMapId }) {
         },
       }}
       className={styles['card-container-link']}
-      onMouseEnter={() => setMapId(index)}
-      onMouseLeave={() => setMapId(0)}
-      onClick={() => setMapId(0)}
+      onMouseEnter={() => dispatch(setMapId(index))}
+      onMouseLeave={() => dispatch(setMapId(0))}
+      onClick={() => dispatch(setMapId(0))}
     >
       <div className={styles['card-container']}>
         <div className={styles['image-container']}>
@@ -81,5 +78,3 @@ export function RestaurantCard({ place, index, setMapId }) {
     </Link>
   );
 }
-
-export default connect(null, mapDispatchToProps)(RestaurantCard);

@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginForm.module.scss';
-
-UserLoginForm.propTypes = {
-  setCurrentLoadingStatus: PropTypes.func,
-};
-
-const mapDispatchToProps = {
-  setCurrentLoadingStatus,
-};
 
 const userLoginFormErrorValues = {
   username: 'Please provide a valid username',
   password: 'Please provide a valid password',
 };
 
-export function UserLoginForm({ setCurrentLoadingStatus }) {
+export default function UserLoginForm() {
+  const dispatch = useDispatch();
+
   const [userLoginForm, setUserLoginForm] = useState({
     username: '',
     password: '',
@@ -124,14 +117,14 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
       setCurrentUserLogin(registeredUserData);
 
       // set the loading status
-      setCurrentLoadingStatus(true, 'Logging In...');
+      dispatch(setCurrentLoadingStatus(true, 'Logging In...'));
 
       // route to the home page
       history.push('/');
 
       // turn loader off and route to the home page
       setTimeout(() => {
-        setCurrentLoadingStatus(false, '');
+        dispatch(setCurrentLoadingStatus(false, ''));
       }, 2000);
     }
   }
@@ -175,5 +168,3 @@ export function UserLoginForm({ setCurrentLoadingStatus }) {
     </div>
   );
 }
-
-export default connect(null, mapDispatchToProps)(UserLoginForm);

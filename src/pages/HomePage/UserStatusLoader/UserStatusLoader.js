@@ -1,20 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
 import styles from './UserStatusLoader.module.scss';
 
-UserLogoutLoader.propTypes = {
-  loadingMessage: PropTypes.string,
-};
+export default function UserLogoutLoader() {
+  const { loadingMessage } = useSelector((state) => state.loadingStatus);
 
-function mapStateToProps(state) {
-  return { loadingMessage: state.loadingStatus.loadingMessage };
-}
-
-export function UserLogoutLoader({ loadingMessage }) {
   return (
     <div className={styles['user-status-loader']}>
       <h3>{loadingMessage}</h3>
@@ -24,5 +17,3 @@ export function UserLogoutLoader({ loadingMessage }) {
     </div>
   );
 }
-
-export default connect(mapStateToProps)(UserLogoutLoader);

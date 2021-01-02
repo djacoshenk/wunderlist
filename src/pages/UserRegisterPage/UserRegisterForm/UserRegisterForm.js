@@ -2,20 +2,11 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { isEmail, isStrongPassword } from 'validator';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
-
-UserRegisterForm.propTypes = {
-  setCurrentLoadingStatus: PropTypes.func,
-};
-
-const mapDispatchToProps = {
-  setCurrentLoadingStatus,
-};
 
 const userRegisterFormErrorValues = {
   first_name: 'Please provide a first name',
@@ -26,7 +17,7 @@ const userRegisterFormErrorValues = {
   confirm_password: 'Please confirm your password',
 };
 
-export function UserRegisterForm({ setCurrentLoadingStatus }) {
+export default function UserRegisterForm() {
   const [userRegisterForm, setUserRegisterForm] = useState({
     first_name: '',
     last_name: '',
@@ -43,6 +34,7 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
     password: '',
     confirm_password: '',
   });
+  const dispatch = useDispatch();
   const history = useHistory();
 
   // check if there is a user already registered with the email
@@ -208,11 +200,11 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
       history.push('/');
 
       // set the loading status
-      setCurrentLoadingStatus(true, 'Registering New User...');
+      dispatch(setCurrentLoadingStatus(true, 'Registering New User...'));
 
       // change the loading status
       setTimeout(() => {
-        setCurrentLoadingStatus(false, '');
+        dispatch(setCurrentLoadingStatus(false, ''));
       }, 2000);
     }
   }
@@ -299,5 +291,3 @@ export function UserRegisterForm({ setCurrentLoadingStatus }) {
     </div>
   );
 }
-
-export default connect(null, mapDispatchToProps)(UserRegisterForm);

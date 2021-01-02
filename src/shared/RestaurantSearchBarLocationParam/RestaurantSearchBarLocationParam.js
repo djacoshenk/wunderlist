@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,27 +9,23 @@ import { setLocationUrl } from 'reducers/locationUrlReducer';
 import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurrentLocationButton';
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
-import { connect } from 'react-redux';
 
 RestaurantSearchBarLocationParam.propTypes = {
-  setLocationUrl: PropTypes.func,
   locationSearchParam: PropTypes.string,
   setLocationSearchParam: PropTypes.func,
-};
-
-const mapDispatchToProps = {
-  setLocationUrl,
+  error: PropTypes.string,
 };
 
 let searchId;
 
-export function RestaurantSearchBarLocationParam({
+export default function RestaurantSearchBarLocationParam({
   locationSearchParam,
   setLocationSearchParam,
-  setLocationUrl,
+  error,
 }) {
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [currentLocation, setCurrentLocation] = useState('');
+  const dispatch = useDispatch();
   const {
     isOpen,
     getLabelProps,
@@ -53,7 +50,7 @@ export function RestaurantSearchBarLocationParam({
 
   async function fetchLocationSuggestions(text) {
     setCurrentLocation('');
-    setLocationUrl(text);
+    dispatch(setLocationUrl(text));
 
     try {
       if (text) {
@@ -91,45 +88,48 @@ export function RestaurantSearchBarLocationParam({
   }
 
   return (
-    <div className={styles['restaurant-search-bar-location-param-container']}>
-      <label htmlFor='location' {...getLabelProps()}>
-        Near
-      </label>
-      <div {...getComboboxProps()}>
-        <input
-          type='text'
-          id='location'
-          name='location'
-          placeholder='Los Angeles, CA'
-          {...getInputProps()}
-        />
-        <UserCurrentLocationButton
-          setCurrentLocation={setCurrentLocation}
-          setLocationURL={setLocationUrl}
-        />
-        <ul {...getMenuProps()}>
-          {isOpen &&
-            locationSuggestions.length > 0 &&
-            locationSuggestions.map((item, index) => (
-              <li
-                style={
-                  highlightedIndex === index
-                    ? { backgroundColor: '#e0e7ff' }
-                    : {}
-                }
-                key={uuidv4()}
-                {...getItemProps({ item, index })}
-              >
-                {item}
-              </li>
-            ))}
-        </ul>
+    <div
+      className={styles['restaurant-search-bar-location-param-main-container']}
+    >
+      <div className={styles['restaurant-search-bar-location-param-container']}>
+        <label htmlFor='location' {...getLabelProps()}>
+          Near
+        </label>
+        <div {...getComboboxProps()}>
+          <input
+            type='text'
+            id='location'
+            name='location'
+            placeholder='Los Angeles, CA'
+            {...getInputProps()}
+          />
+          <UserCurrentLocationButton setCurrentLocation={setCurrentLocation} />
+          <ul {...getMenuProps()}>
+            {isOpen &&
+              locationSuggestions.length > 0 &&
+              locationSuggestions.map((item, index) => (
+                <li
+                  style={
+                    highlightedIndex === index
+                      ? { backgroundColor: '#e0e7ff' }
+                      : {}
+                  }
+                  key={uuidv4()}
+                  {...getItemProps({ item, index })}
+                >
+                  {item}
+                </li>
+              ))}
+          </ul>
+        </div>
+      </div>
+      <div
+        className={
+          styles['restaurant-search-bar-location-param-error-container']
+        }
+      >
+        <p>{error}</p>
       </div>
     </div>
   );
 }
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(RestaurantSearchBarLocationParam);
