@@ -1,32 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './GoogleMapMarker.scss';
 
 GoogleMapMarker.propTypes = {
   id: PropTypes.number,
-  mapId: PropTypes.number,
 };
 
-function mapStateToProps(state) {
-  return { mapId: state.mapId.mapId };
-}
-
-const hoveredStyles = {
-  color: '#667eea',
+const mapIdIconStyles = {
+  color: '#333',
   transform: 'translateY(-7px)',
 };
 
-export function GoogleMapMarker({ id, mapId }) {
+const mapIdTextStyles = {
+  color: '#38b2ac',
+};
+
+export default function GoogleMapMarker({ id }) {
+  const { mapId } = useSelector((state) => state.mapId);
+
   return (
     <i
       className={'fas fa-map-marker'}
-      style={mapId === id ? hoveredStyles : null}
+      style={mapId === id ? mapIdIconStyles : null}
     >
-      <p>{id}</p>
+      <p style={mapId === id ? mapIdTextStyles : null}>{id}</p>
     </i>
   );
 }
-
-export default connect(mapStateToProps)(GoogleMapMarker);
