@@ -1,5 +1,6 @@
 .restaurant-type-cards-main-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -8,7 +9,7 @@
     grid-template-columns: repeat(2, 1fr);
     width: 305px;
     grid-gap: 1rem;
-    padding: 2rem 0rem;
+    padding-top: 1rem;
 
     @media (min-width: 481px) {
       grid-template-columns: repeat(3, 1fr);
@@ -41,5 +42,10 @@
         padding-top: 0.5rem;
       }
     }
+  }
+
+  .restaurant-type-cards-error-container {
+    height: 19px;
+    color: #f87171;
   }
 }
