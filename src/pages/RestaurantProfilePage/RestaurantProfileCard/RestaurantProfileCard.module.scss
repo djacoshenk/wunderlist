@@ -5,7 +5,7 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  padding: 1rem 1rem 0rem 1rem;
+  padding: 0rem 1rem;
 
   @media (min-width: 481px) {
     padding: 0rem 1rem;
@@ -22,67 +22,82 @@
     padding-right: 15rem;
   }
 
-  .restaurant-prof-images {
-    display: flex;
-    flex-direction: row;
-    height: 250px;
-    width: 100%;
-
-    @media (min-width: 481px) {
-      height: 400px;
-      width: 100%;
-    }
-
-    @media (min-width: 769px) {
-      height: 300px;
-      width: 600px;
-    }
-
-    img {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-    }
-  }
-
   .restaurant-prof-main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    height: 150px;
+    justify-content: center;
     width: 100%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
 
-    .restaurant-prof-title {
-      text-align: center;
+    @media (min-width: 769px) {
+      background-color: #f3f4f6;
+      flex-direction: row;
+      margin-bottom: 1rem;
+      border: 1px solid #edf2f7;
+      border-top-left-radius: 5px;
+      border-bottom-right-radius: 5px;
     }
 
-    .restaurant-prof-stars-reviews {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
+    .restaurant-prof-images {
+      height: 250px;
+      width: 100%;
 
-      p {
-        margin-left: 0.5rem;
+      @media (min-width: 481px) {
+        height: 300px;
+        width: 500px;
+      }
+
+      @media (min-width: 769px) {
+        height: 350px;
+        width: 550px;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
       }
     }
 
-    .restaurant-prof-price-category {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    .restaurant-prof-address {
+    .restaurant-prof-text {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: space-between;
+      height: 150px;
+      width: 100%;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+
+      .restaurant-prof-title {
+        text-align: center;
+      }
+
+      .restaurant-prof-stars-reviews {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        p {
+          margin-left: 0.5rem;
+        }
+      }
+
+      .restaurant-prof-price-category {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .restaurant-prof-address {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 

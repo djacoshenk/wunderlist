@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 import Header from './Header/Header';
+import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
@@ -78,7 +78,7 @@ export default function RestaurantSearchPage() {
           wunderlist - The best {params.term.toUpperCase()} in {params.location}
         </title>
       </Helmet>
-      <UserLoginRegisterBanner />
+      <HamburgerMenuButton />
       <Header />
       <RestaurantSearchBar />
       {isLoading ? (

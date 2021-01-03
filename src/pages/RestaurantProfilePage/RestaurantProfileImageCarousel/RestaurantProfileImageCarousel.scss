@@ -1,11 +1,11 @@
+.swiper-container {
+  height: 100%;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
-  color: transparent;
+  color: #fff;
   transition: all 0.3s;
-
-  &:hover {
-    color: #fff;
-  }
 
   &::after {
     font-size: 2rem;

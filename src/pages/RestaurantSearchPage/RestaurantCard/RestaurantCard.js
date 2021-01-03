@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import { setMapId } from 'reducers/mapIdReducer';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 
 import styles from './RestaurantCard.module.scss';
-import { setMapId } from 'reducers/mapIdReducer';
 
 RestaurantCard.propTypes = {
   place: PropTypes.shape({
@@ -26,7 +26,7 @@ RestaurantCard.propTypes = {
 };
 
 export default function RestaurantCard({ place, index }) {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   return (
     <Link

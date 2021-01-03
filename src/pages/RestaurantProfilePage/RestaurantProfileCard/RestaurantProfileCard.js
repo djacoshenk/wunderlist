@@ -40,36 +40,38 @@ export default function RestaurantProfileCard({ place, reviews }) {
 
   return (
     <div className={styles['restaurant-prof-card']}>
-      <div className={styles['restaurant-prof-images']}>
-        <RestaurantProfileImageCarousel photos={place.photos} />
-      </div>
       <div className={styles['restaurant-prof-main']}>
-        <div className={styles['restaurant-prof-title']}>
-          <h3>{place.name}</h3>
+        <div className={styles['restaurant-prof-images']}>
+          <RestaurantProfileImageCarousel photos={place.photos} />
         </div>
-        <div className={styles['restaurant-prof-stars-reviews']}>
-          <RestaurantRatingStars rating={place.rating} />
-          <p>{place.review_count} Reviews</p>
-        </div>
-        <div className={styles['restaurant-prof-price-category']}>
-          <p>
-            {place.price != null ? `${place.price} \u2022` : null}{' '}
-            {place.categories
-              .map((tag) => {
-                return tag.title;
-              })
-              .join(', ')}
-          </p>
-        </div>
-        {place.display_phone !== '' ? (
-          <div className={styles['restaurant-prof-phone']}>
-            <p>{place.display_phone}</p>
+        <div className={styles['restaurant-prof-text']}>
+          <div className={styles['restaurant-prof-title']}>
+            <h3>{place.name}</h3>
           </div>
-        ) : null}
-        <div className={styles['restaurant-prof-address']}>
-          {place.location.display_address.map((adrs, index) => {
-            return <p key={index}>{adrs}</p>;
-          })}
+          <div className={styles['restaurant-prof-stars-reviews']}>
+            <RestaurantRatingStars rating={place.rating} />
+            <p>{place.review_count} Reviews</p>
+          </div>
+          <div className={styles['restaurant-prof-price-category']}>
+            <p>
+              {place.price != null ? `${place.price} \u2022` : null}{' '}
+              {place.categories
+                .map((tag) => {
+                  return tag.title;
+                })
+                .join(', ')}
+            </p>
+          </div>
+          {place.display_phone !== '' ? (
+            <div className={styles['restaurant-prof-phone']}>
+              <p>{place.display_phone}</p>
+            </div>
+          ) : null}
+          <div className={styles['restaurant-prof-address']}>
+            {place.location.display_address.map((adrs, index) => {
+              return <p key={index}>{adrs}</p>;
+            })}
+          </div>
         </div>
       </div>
       <div className={styles['restaurant-prof-map-reviews']}>

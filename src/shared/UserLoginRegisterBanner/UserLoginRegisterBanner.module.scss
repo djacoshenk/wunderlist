@@ -1,11 +1,8 @@
 .banner-container {
   display: none;
 
-  @media (min-width: 769px) {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
+  @media (min-width: 1025px) {
+    display: initial;
   }
 
   .logout-btn-container,
@@ -14,12 +11,13 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    padding: 1rem;
 
     button {
       height: 35px;
       width: 100px;
       padding: 0.5rem;
-      margin: 1rem 0rem;
+      margin: 0;
       color: #fff;
       background-color: #667eea;
       border: 0;
@@ -32,12 +30,8 @@
       }
     }
 
-    button[name='login-btn'] {
-      margin-left: 1rem;
-    }
-
     button[name='register-btn'] {
-      margin: 0rem 1rem;
+      margin-left: 1rem;
     }
   }
 }

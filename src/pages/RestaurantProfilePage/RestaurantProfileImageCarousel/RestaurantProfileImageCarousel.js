@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/swiper-bundle.css';
@@ -10,7 +10,7 @@ RestaurantProfileImageCarousel.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.string),
 };
 
-SwiperCore.use([Navigation, Pagination, Autoplay]);
+SwiperCore.use([Navigation, Pagination]);
 
 export default function RestaurantProfileImageCarousel({ photos }) {
   return (
@@ -20,7 +20,6 @@ export default function RestaurantProfileImageCarousel({ photos }) {
       loop={true}
       spaceBetween={0}
       slidesPerView={1}
-      autoplay={{ delay: 3000, disableOnInteraction: false }}
     >
       {photos.map((photo, index) => {
         return (

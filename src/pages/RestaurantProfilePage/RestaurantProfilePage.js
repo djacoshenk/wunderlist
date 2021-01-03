@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import UserLoginRegisterBanner from '../../shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
+import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
 import Header from './Header/Header';
 import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
@@ -60,7 +60,7 @@ export default function RestaurantProfilePage() {
           <title>wunderlist - find and save your new favorite place</title>
         )}
       </Helmet>
-      <UserLoginRegisterBanner />
+      <HamburgerMenuButton />
       <Header />
       <RestaurantSearchBar />
       {isLoading ? (

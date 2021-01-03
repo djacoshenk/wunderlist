@@ -9,6 +9,7 @@
 
   @media (min-width: 481px) {
     grid-template-columns: repeat(auto-fit, 375px);
+    padding-top: 1rem;
   }
 
   @media (min-width: 769px) {

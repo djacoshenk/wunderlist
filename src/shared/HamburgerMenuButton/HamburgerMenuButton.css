@@ -87,14 +87,8 @@ button:hover {
   background: rgba(0, 0, 0, 0.3);
 }
 
-@media (min-width: 481px) {
-  .menu-button-container {
-    height: 62px;
-  }
-}
-
 /* do not show menu button on larger devices */
-@media (min-width: 769px) {
+@media (min-width: 1025px) {
   .menu-button-container {
     display: none;
   }

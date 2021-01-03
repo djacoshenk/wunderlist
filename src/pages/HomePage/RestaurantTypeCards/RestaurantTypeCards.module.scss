@@ -9,7 +9,6 @@
     grid-template-columns: repeat(2, 1fr);
     width: 305px;
     grid-gap: 1rem;
-    padding-top: 1rem;
 
     @media (min-width: 481px) {
       grid-template-columns: repeat(3, 1fr);
