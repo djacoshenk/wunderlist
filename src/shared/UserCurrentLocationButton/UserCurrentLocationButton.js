@@ -8,11 +8,10 @@ import { setLocationUrl } from 'reducers/locationUrlReducer';
 import styles from './UserCurrentLocationButton.module.scss';
 
 UserCurrentLocationButton.propTypes = {
-  setCurrentLocation: PropTypes.func,
-  setLocationURL: PropTypes.func,
+  setLocationSearchParam: PropTypes.func,
 };
 
-export default function UserCurrentLocationButton({ setCurrentLocation }) {
+export default function UserCurrentLocationButton({ setLocationSearchParam }) {
   const dispatch = useDispatch();
 
   function fetchUserCurrentLocation() {
@@ -37,7 +36,13 @@ export default function UserCurrentLocationButton({ setCurrentLocation }) {
 
         const location = `${data.data[0].city}, ${data.data[0].regionCode}`;
 
-        setCurrentLocation(location);
+        // set the current location in storage
+        localStorage.setItem('locationParam', JSON.stringify(location));
+
+        // update the location search param to be the current location
+        setLocationSearchParam(location);
+
+        // change the cards url link to be the current location
         dispatch(setLocationUrl(location));
       } catch (err) {
         throw new Error('COULD NOT FETCH USER CURRENT LOCATION');

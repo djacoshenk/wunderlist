@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
@@ -25,9 +24,7 @@ export default function RestaurantSearchBarLocationParam({
   error,
 }) {
   const [locationSuggestions, setLocationSuggestions] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState('');
   const dispatch = useDispatch();
-  const params = useParams();
   const {
     isOpen,
     getLabelProps,
@@ -45,17 +42,17 @@ export default function RestaurantSearchBarLocationParam({
   });
 
   useEffect(() => {
-    if (currentLocation) {
-      setLocationSearchParam(currentLocation);
-    }
+    const persistedLocationParam = JSON.parse(
+      localStorage.getItem('locationParam')
+    );
 
-    if (params.location) {
-      setLocationSearchParam(params.location);
+    // persist the location param on renders
+    if (persistedLocationParam) {
+      setLocationSearchParam(persistedLocationParam);
     }
-  }, [currentLocation, params.location, setLocationSearchParam]);
+  }, [setLocationSearchParam]);
 
   async function fetchLocationSuggestions(text) {
-    setCurrentLocation('');
     dispatch(setLocationUrl(text));
 
     try {
@@ -109,7 +106,9 @@ export default function RestaurantSearchBarLocationParam({
             placeholder='Los Angeles, CA'
             {...getInputProps()}
           />
-          <UserCurrentLocationButton setCurrentLocation={setCurrentLocation} />
+          <UserCurrentLocationButton
+            setLocationSearchParam={setLocationSearchParam}
+          />
           <ul {...getMenuProps()}>
             {isOpen &&
               locationSuggestions.length > 0 &&

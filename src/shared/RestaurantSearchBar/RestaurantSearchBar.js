@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { setLocationUrl } from 'reducers/locationUrlReducer';
 import RestaurantSearchBarTermParam from 'shared/RestaurantSearchBarTermParam/RestaurantSearchBarTermParam';
 import RestaurantSearchBarLocationParam from 'shared/RestaurantSearchBarLocationParam/RestaurantSearchBarLocationParam';
 
@@ -15,7 +13,6 @@ export default function RestaurantSearchBar() {
     term: '',
     location: '',
   });
-  const dispatch = useDispatch();
   const history = useHistory();
 
   function onFormSubmit(e) {
@@ -42,7 +39,15 @@ export default function RestaurantSearchBar() {
     }
 
     if (termSearchParam && locationSearchParam) {
-      dispatch(setLocationUrl(''));
+      // do not persist the term param on searches
+      setTermSearchParam('');
+
+      // set the location param local storage in order to persist
+      localStorage.setItem(
+        'locationParam',
+        JSON.stringify(locationSearchParam)
+      );
+
       history.push(`/search/${termSearchParam}/${locationSearchParam}`);
     }
   }
