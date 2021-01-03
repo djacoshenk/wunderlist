@@ -1,21 +1,29 @@
 .header-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
   width: 100%;
   text-align: center;
-  padding: 1rem 0rem;
+  padding: 1rem;
 
-  @media (min-width: 481px) {
-    padding-top: calc((50vh - (553px / 2) - 42px));
+  a {
+    height: 30px;
+    width: 30px;
+
+    @media (min-width: 1025px) {
+      height: 35px;
+      width: 35px;
+    }
   }
 
-  h1 {
-    color: #38b2ac;
-  }
+  img {
+    height: 30px;
+    width: 30px;
 
-  h3 {
-    color: #7f9cf5;
+    @media (min-width: 1025px) {
+      height: 35px;
+      width: 35px;
+    }
   }
 }
