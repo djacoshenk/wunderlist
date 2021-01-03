@@ -1,18 +1,22 @@
-.fas.fa-map-marker {
-  font-size: 2rem;
-  color: #38b2ac;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.5s ease-in-out;
-  cursor: grab;
+.map-marker-link {
+  text-decoration: none;
 
-  p {
-    position: absolute;
-    top: 6px;
-    font-size: 12px;
-    color: #fff;
-    font-family: 'Lato', sans-serif;
+  .fas.fa-map-marker {
+    font-size: 2rem;
+    color: #38b2ac;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+
+    p {
+      position: absolute;
+      top: 6px;
+      font-size: 12px;
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+    }
   }
 }
