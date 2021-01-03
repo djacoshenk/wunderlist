@@ -35,7 +35,6 @@ export default function UserLoginRegisterBanner() {
     <div className={styles['banner-container']}>
       {currentUserLocalStorage ? (
         <div className={styles['logout-btn-container']}>
-          <p>{`Hello, ${currentUserLocalStorage[0].first_name}`}</p>
           <button name='logout-btn' type='button' onClick={handleUserLogout}>
             LOGOUT
           </button>
