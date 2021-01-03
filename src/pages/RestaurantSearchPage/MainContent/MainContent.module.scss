@@ -7,7 +7,7 @@
   height: calc(100vh - 62px - 175px);
 
   @media (min-width: 481px) {
-    height: calc(100vh - 62px - 78px);
+    height: calc(100vh - 62px - 62px);
   }
 
   @media (min-width: 769px) {
@@ -18,6 +18,6 @@
   }
 
   @media (min-width: 1025px) {
-    height: calc(100vh - 67px - 78px);
+    height: calc(100vh - 67px - 62px);
   }
 }
