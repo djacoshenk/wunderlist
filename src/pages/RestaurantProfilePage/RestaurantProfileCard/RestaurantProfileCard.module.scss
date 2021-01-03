@@ -34,7 +34,7 @@
       flex-direction: row;
       margin-bottom: 1rem;
       border: 1px solid #edf2f7;
-      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
     }
 
@@ -71,6 +71,8 @@
 
       .restaurant-prof-title {
         text-align: center;
+        text-decoration: underline;
+        font-weight: 900;
       }
 
       .restaurant-prof-stars-reviews {
