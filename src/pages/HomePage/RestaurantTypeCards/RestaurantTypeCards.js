@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 
@@ -52,6 +52,17 @@ export default function RestaurantTypeCards() {
     },
   ];
 
+  useEffect(() => {
+    const persistedLocationParam = JSON.parse(
+      localStorage.getItem('locationParam')
+    );
+
+    // persist the location param on renders
+    if (persistedLocationParam) {
+      dispatch(setLocationUrl(persistedLocationParam));
+    }
+  }, [dispatch]);
+
   return (
     <div className={styles['restaurant-type-cards-main-container']}>
       <div className={styles['restaurant-type-cards-grid-container']}>
@@ -66,7 +77,6 @@ export default function RestaurantTypeCards() {
                 key={uuidv4()}
                 onClick={() => {
                   setError('');
-                  dispatch(setLocationUrl(''));
                 }}
               >
                 <div className={styles['restaurant-type-card']}>
