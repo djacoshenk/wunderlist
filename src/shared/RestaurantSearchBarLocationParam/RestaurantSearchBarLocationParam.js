@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,6 +27,7 @@ export default function RestaurantSearchBarLocationParam({
   const [locationSuggestions, setLocationSuggestions] = useState([]);
   const [currentLocation, setCurrentLocation] = useState('');
   const dispatch = useDispatch();
+  const params = useParams();
   const {
     isOpen,
     getLabelProps,
@@ -46,7 +48,11 @@ export default function RestaurantSearchBarLocationParam({
     if (currentLocation) {
       setLocationSearchParam(currentLocation);
     }
-  }, [currentLocation, setLocationSearchParam]);
+
+    if (params.location) {
+      setLocationSearchParam(params.location);
+    }
+  }, [currentLocation, params.location, setLocationSearchParam]);
 
   async function fetchLocationSuggestions(text) {
     setCurrentLocation('');
