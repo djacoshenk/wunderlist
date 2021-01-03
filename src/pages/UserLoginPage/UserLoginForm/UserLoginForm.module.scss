@@ -6,6 +6,14 @@
   justify-content: center;
   align-items: center;
 
+  @media (min-width: 481px) {
+    padding: calc((100vh - 62px - 227px) / 2) 0rem;
+  }
+
+  @media (min-width: 1025px) {
+    padding: calc((100vh - 67px - 227px) / 2) 0rem;
+  }
+
   .user-login-form {
     display: flex;
     flex-direction: column;
