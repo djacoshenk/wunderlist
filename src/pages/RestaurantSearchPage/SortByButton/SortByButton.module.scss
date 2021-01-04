@@ -1,0 +1,43 @@
+.sort-by-main-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+
+  @media (min-width: 769px) {
+    justify-content: flex-end;
+    padding-right: 1rem;
+  }
+
+  label {
+    padding-right: 0.5rem;
+  }
+
+  .sort-by-btn-list-container {
+    position: relative;
+
+    button {
+      margin: 0;
+      width: 120px;
+      font-size: 16px;
+    }
+
+    ul {
+      width: 120px;
+      background-color: #fff;
+      padding: 0;
+      list-style: none;
+      position: absolute;
+      top: 35px;
+      left: 0;
+      z-index: 1000;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+      li {
+        padding: 0.5rem;
+      }
+    }
+  }
+}
