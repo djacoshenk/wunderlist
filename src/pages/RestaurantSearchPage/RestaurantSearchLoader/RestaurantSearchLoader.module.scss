@@ -1,17 +1,7 @@
-.main-content-loader {
+.main-content-bubble-loader {
+  height: 2rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-
-  h3 {
-    text-align: center;
-  }
-  .main-content-bubble-loader {
-    height: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
 }
