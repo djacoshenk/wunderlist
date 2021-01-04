@@ -9,17 +9,22 @@ import styles from './RestaurantCardList.module.scss';
 
 RestaurantCardList.propTypes = {
   places: PropTypes.array,
+  sortByParam: PropTypes.string,
   fetchMorePlaces: PropTypes.func,
 };
 
-export default function RestaurantCardList({ places, fetchMorePlaces }) {
+export default function RestaurantCardList({
+  places,
+  sortByParam,
+  fetchMorePlaces,
+}) {
   const params = useParams();
   const obs = new IntersectionObserver(
     (entries) => {
       const first = entries[0];
 
       if (first.isIntersecting) {
-        fetchMorePlaces(params);
+        fetchMorePlaces(params, sortByParam);
       }
     },
     { threshold: 0 }

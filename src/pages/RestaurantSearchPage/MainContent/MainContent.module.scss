@@ -4,10 +4,10 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 62px - 175px);
+  height: calc(100vh - 62px - 175px - 51px);
 
   @media (min-width: 481px) {
-    height: calc(100vh - 62px - 62px);
+    height: calc(100vh - 62px - 62px - 51px);
   }
 
   @media (min-width: 769px) {
@@ -18,6 +18,6 @@
   }
 
   @media (min-width: 1025px) {
-    height: calc(100vh - 67px - 62px);
+    height: calc(100vh - 67px - 62px - 51px);
   }
 }

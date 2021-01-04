@@ -36,7 +36,7 @@ export default function UserLoginRegisterBanner() {
       {currentUserLocalStorage ? (
         <div className={styles['logout-btn-container']}>
           <button name='logout-btn' type='button' onClick={handleUserLogout}>
-            LOGOUT
+            Logout
           </button>
         </div>
       ) : (
@@ -46,14 +46,14 @@ export default function UserLoginRegisterBanner() {
             type='button'
             onClick={() => history.push('/login')}
           >
-            LOGIN
+            Login
           </button>
           <button
             name='register-btn'
             type='button'
             onClick={() => history.push('/register')}
           >
-            REGISTER
+            Register
           </button>
         </div>
       )}

@@ -84,7 +84,7 @@ export default function RestaurantProfileCard({ place, reviews }) {
               }}
               target='_blank'
             >
-              <button>DIRECTIONS</button>
+              <button>Directions</button>
             </Link>
           </div>
         </div>

@@ -286,7 +286,7 @@ export default function UserRegisterForm() {
         <div className={styles['user-register-confirm-password-error']}>
           <p>{userRegisterFormErrors.confirm_password}</p>
         </div>
-        <button type='submit'>REGISTER</button>
+        <button type='submit'>Register</button>
       </form>
     </div>
   );
