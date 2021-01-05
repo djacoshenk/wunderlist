@@ -62,12 +62,12 @@ export default function RestaurantSearchBar() {
         <RestaurantSearchBarTermParam
           termSearchParam={termSearchParam}
           setTermSearchParam={setTermSearchParam}
-          error={errors.term}
+          errorTermParam={errors.term}
         />
         <RestaurantSearchBarLocationParam
           locationSearchParam={locationSearchParam}
           setLocationSearchParam={setLocationSearchParam}
-          error={errors.location}
+          errorLocationParam={errors.location}
         />
         <button className={styles['search-bar-search-button']} type='submit'>
           <i className={'fas fa-search'}></i>

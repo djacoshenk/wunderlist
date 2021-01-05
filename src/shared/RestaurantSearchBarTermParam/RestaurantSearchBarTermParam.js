@@ -8,7 +8,7 @@ import styles from './RestaurantSearchBarTermParam.module.scss';
 RestaurantSearchBarTermParam.propTypes = {
   termSearchParam: PropTypes.string,
   setTermSearchParam: PropTypes.func,
-  error: PropTypes.string,
+  errorTermParam: PropTypes.string,
 };
 
 let searchId;
@@ -16,9 +16,11 @@ let searchId;
 export default function RestaurantSearchBarTermParam({
   termSearchParam,
   setTermSearchParam,
-  error,
+  errorTermParam,
 }) {
   const [termSuggestions, setTermSuggestions] = useState([]);
+  // eslint-disable-next-line
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState(null);
 
   const {
     isOpen,
@@ -53,7 +55,7 @@ export default function RestaurantSearchBarTermParam({
         return;
       }
     } catch (err) {
-      throw new Error('COULD NOT FETCH TERM SUGGESTIONS');
+      setAsyncErrorMessage(err);
     }
   }
 
@@ -103,7 +105,7 @@ export default function RestaurantSearchBarTermParam({
       <div
         className={styles['restaurant-search-bar-term-param-error-container']}
       >
-        <p>{error}</p>
+        <p>{errorTermParam}</p>
       </div>
     </div>
   );

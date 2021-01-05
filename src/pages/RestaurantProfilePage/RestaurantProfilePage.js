@@ -13,6 +13,8 @@ export default function RestaurantProfilePage() {
   const [place, setPlace] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState(null);
 
   const { alias } = useParams();
 
@@ -43,7 +45,7 @@ export default function RestaurantProfilePage() {
         setReviews(reviewsRes.data);
         setIsLoading(false);
       } catch (err) {
-        throw new Error('COULD NOT FETCH PLACE AND REVIEW DATA');
+        setAsyncErrorMessage(err);
       }
     }
 

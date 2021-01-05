@@ -17,6 +17,8 @@ export default function RestaurantSearchPage() {
   const [sortByParam, setSortByParam] = useState('best_match');
   const [mapKey, setMapKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line
+  const [asyncErrorMessages, setAsyncErrorMessages] = useState([]);
   const params = useParams();
 
   const fetchPlaces = useCallback(async ({ term, location }) => {
@@ -37,7 +39,9 @@ export default function RestaurantSearchPage() {
       setPlaces(data.businesses);
       setIsLoading(false);
     } catch (err) {
-      throw new Error('COULD NOT FETCH DATA');
+      setAsyncErrorMessages((prevState) => {
+        return [...prevState, { err }];
+      });
     }
   }, []);
 
@@ -64,7 +68,9 @@ export default function RestaurantSearchPage() {
       });
       setMapKey(mapKey + 1);
     } catch (err) {
-      throw new Error('COULD NOT FETCH MORE DATA');
+      setAsyncErrorMessages((prevState) => {
+        return [...prevState, { err }];
+      });
     }
   }
 
@@ -89,7 +95,9 @@ export default function RestaurantSearchPage() {
         setPlaces(data.businesses);
         setIsLoading(false);
       } catch (err) {
-        throw new Error('COULD NOT FETCH DATA');
+        setAsyncErrorMessages((prevState) => {
+          return [...prevState, { err }];
+        });
       }
     },
     []

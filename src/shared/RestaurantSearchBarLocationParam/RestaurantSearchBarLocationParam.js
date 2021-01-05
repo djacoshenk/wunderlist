@@ -13,7 +13,7 @@ import styles from './RestaurantSearchBarLocationParam.module.scss';
 RestaurantSearchBarLocationParam.propTypes = {
   locationSearchParam: PropTypes.string,
   setLocationSearchParam: PropTypes.func,
-  error: PropTypes.string,
+  errorLocationParam: PropTypes.string,
 };
 
 let searchId;
@@ -21,9 +21,11 @@ let searchId;
 export default function RestaurantSearchBarLocationParam({
   locationSearchParam,
   setLocationSearchParam,
-  error,
+  errorLocationParam,
 }) {
   const [locationSuggestions, setLocationSuggestions] = useState([]);
+  // eslint-disable-next-line
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState(null);
   const dispatch = useDispatch();
   const {
     isOpen,
@@ -76,7 +78,7 @@ export default function RestaurantSearchBarLocationParam({
         return;
       }
     } catch (err) {
-      throw new Error('COULD NOT FETCH LOCATION SUGGESTIONS');
+      setAsyncErrorMessage(err);
     }
   }
 
@@ -133,7 +135,7 @@ export default function RestaurantSearchBarLocationParam({
           styles['restaurant-search-bar-location-param-error-container']
         }
       >
-        <p>{error}</p>
+        <p>{errorLocationParam}</p>
       </div>
     </div>
   );
