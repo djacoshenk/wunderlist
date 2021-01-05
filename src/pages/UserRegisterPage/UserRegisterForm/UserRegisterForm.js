@@ -170,10 +170,10 @@ export default function UserRegisterForm() {
     if (newRegisteredUserPassword) {
       if (
         isStrongPassword(newRegisteredUserPassword, {
-          minLength: 8,
-          minLowercase: 1,
-          minUppercase: 1,
-          minNumbers: 1,
+          minLength: 10,
+          minLowercase: 0,
+          minUppercase: 0,
+          minNumbers: 0,
           minSymbols: 0,
         })
       ) {
@@ -185,8 +185,7 @@ export default function UserRegisterForm() {
 
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
-          password:
-            'The password must be a minimum of 8 characters and contain at least one number, one uppercase letter, and one lowercase letter',
+          password: 'The password must be a minimum of 10 characters.',
         }));
       }
     }
@@ -269,7 +268,7 @@ export default function UserRegisterForm() {
         <input
           type='password'
           name='password'
-          placeholder='Password'
+          placeholder='Password (min. 10 characters)'
           value={userRegisterForm.password}
           onChange={onInputChange}
         />
