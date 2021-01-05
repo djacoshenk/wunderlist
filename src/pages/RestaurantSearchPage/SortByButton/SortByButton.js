@@ -45,29 +45,36 @@ export default function SortByButton({ setSortByParam, fetchPlacesSortBy }) {
 
   return (
     <div className={styles['sort-by-main-container']}>
-      <label htmlFor='select' {...getLabelProps()}>
-        Sort By:
-      </label>
-      <div className={styles['sort-by-btn-list-container']}>
-        <button name='select' type='button' {...getToggleButtonProps()}>
-          {selectedItem || 'Best Match'}
-        </button>
-        <ul {...getMenuProps()}>
-          {isOpen &&
-            items.map((item, index) => (
-              <li
-                style={
-                  highlightedIndex === index
-                    ? { backgroundColor: '#e0e7ff' }
-                    : {}
-                }
-                key={uuidv4()}
-                {...getItemProps({ item, index })}
-              >
-                {item}
-              </li>
-            ))}
-        </ul>
+      <div className={styles['search-results-ref-container']}>
+        <p>
+          Results for {params.term} in {params.location}
+        </p>
+      </div>
+      <div className={styles['sort-by-label-btn-container']}>
+        <label htmlFor='select' {...getLabelProps()}>
+          Sort By:
+        </label>
+        <div className={styles['sort-by-btn-list-container']}>
+          <button name='select' type='button' {...getToggleButtonProps()}>
+            {selectedItem || 'Best Match'}
+          </button>
+          <ul {...getMenuProps()}>
+            {isOpen &&
+              items.map((item, index) => (
+                <li
+                  style={
+                    highlightedIndex === index
+                      ? { backgroundColor: '#e0e7ff' }
+                      : {}
+                  }
+                  key={uuidv4()}
+                  {...getItemProps({ item, index })}
+                >
+                  {item}
+                </li>
+              ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
