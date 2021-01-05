@@ -47,7 +47,8 @@ export default function SortByButton({ setSortByParam, fetchPlacesSortBy }) {
     <div className={styles['sort-by-main-container']}>
       <div className={styles['search-results-ref-container']}>
         <p>
-          Results for {params.term} in {params.location}
+          Results for <strong>{params.term}</strong> in{' '}
+          <strong>{params.location}</strong>
         </p>
       </div>
       <div className={styles['sort-by-label-btn-container']}>
