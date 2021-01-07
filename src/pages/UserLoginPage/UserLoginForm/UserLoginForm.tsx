@@ -6,14 +6,22 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginForm.module.scss';
 
+interface RegisteredUser {
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  password: string;
+  confirm_password: string;
+}
+
 const userLoginFormErrorValues = {
   username: 'Please provide a valid username',
   password: 'Please provide a valid password',
 };
 
-export default function UserLoginForm() {
+export default function UserLoginForm(): JSX.Element {
   const dispatch = useDispatch();
-
   const [userLoginForm, setUserLoginForm] = useState({
     username: '',
     password: '',
@@ -26,15 +34,15 @@ export default function UserLoginForm() {
 
   const currentUserLoginUsername = userLoginForm.username;
   const currentUserLoginPassword = userLoginForm.password;
-  const currentRegisteredUsersUsernames = JSON.parse(
+  const registeredUsersLocalStorage: RegisteredUser[] = JSON.parse(
     localStorage.getItem('registeredUsers')
   );
 
-  function setCurrentUserLogin(user) {
+  function setCurrentUserLogin(user: RegisteredUser) {
     localStorage.setItem('currentUser', JSON.stringify([{ ...user }]));
   }
 
-  function onInputChange(e) {
+  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
     setUserLoginForm((prevState) => ({
@@ -43,16 +51,16 @@ export default function UserLoginForm() {
     }));
   }
 
-  function onFormSubmit(e) {
+  function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     let errors = 0;
 
-    if (currentRegisteredUsersUsernames) {
-      let checkUsernameRegistration = currentRegisteredUsersUsernames.find(
+    if (registeredUsersLocalStorage) {
+      const checkUsernameRegistration = registeredUsersLocalStorage.find(
         (val) => val.username === currentUserLoginUsername
       );
-      let checkPasswordRegistration = currentRegisteredUsersUsernames.find(
+      const checkPasswordRegistration = registeredUsersLocalStorage.find(
         (val) => val.password === currentUserLoginPassword
       );
 
@@ -107,7 +115,7 @@ export default function UserLoginForm() {
 
     // if there are no errors, then find the user's data in local storage
     if (errors === 0) {
-      const registeredUserData = currentRegisteredUsersUsernames.find(
+      const registeredUserData = registeredUsersLocalStorage.find(
         (val) =>
           val.username === currentUserLoginUsername &&
           val.password === currentUserLoginPassword
