@@ -26,7 +26,7 @@ const userRegisterFormErrorValues = {
   confirm_password: 'Please confirm your password',
 };
 
-export default function UserRegisterForm() {
+export default function UserRegisterForm(): JSX.Element {
   const [userRegisterForm, setUserRegisterForm] = useState({
     first_name: '',
     last_name: '',

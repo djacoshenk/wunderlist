@@ -43,7 +43,7 @@ interface ParamsState {
   alias: string;
 }
 
-export default function RestaurantProfilePage(): React.ReactNode {
+export default function RestaurantProfilePage(): JSX.Element {
   const [place, setPlace] = useState<Place>();
   const [reviews, setReviews] = useState<Reviews>();
   const [isLoading, setIsLoading] = useState(true);
