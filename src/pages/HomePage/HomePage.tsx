@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
-import { useSelector } from 'react-redux';
+import { useSelector, TypedUseSelectorHook } from 'react-redux';
 
 import UserStatusLoader from './UserStatusLoader/UserStatusLoader';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
@@ -9,8 +9,12 @@ import Header from './Header/Header';
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
 
-export default function HomePage() {
-  const { isLoading } = useSelector((state) => state.loadingStatus);
+import { RootState } from 'store/index';
+
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export default function HomePage(): React.ReactNode {
+  const { isLoading } = useTypedSelector((state) => state.loadingStatus);
 
   return (
     <Fragment>

@@ -3,7 +3,7 @@ import React from 'react';
 import globe from 'assets/global.png';
 import styles from './Header.module.scss';
 
-export default function Header() {
+export default function Header(): JSX.Element {
   return (
     <div className={styles['header-container']}>
       <img src={globe} alt='blue-green-globe' />

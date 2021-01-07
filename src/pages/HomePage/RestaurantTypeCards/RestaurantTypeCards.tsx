@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
+import { RootState } from 'store/index';
 
 import burger from 'assets/burger.png';
 import sushi from 'assets/sushi.png';
@@ -14,8 +15,10 @@ import chili from 'assets/chili.png';
 
 import styles from './RestaurantTypeCards.module.scss';
 
-export default function RestaurantTypeCards() {
-  const { locationUrl } = useSelector((state) => state.location);
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+export default function RestaurantTypeCards(): JSX.Element {
+  const { locationUrl } = useTypedSelector((state) => state.location);
   const dispatch = useDispatch();
   const [error, setError] = useState('');
 
@@ -53,7 +56,7 @@ export default function RestaurantTypeCards() {
   ];
 
   useEffect(() => {
-    const persistedLocationParam = JSON.parse(
+    const persistedLocationParam: string = JSON.parse(
       localStorage.getItem('locationParam')
     );
 
@@ -93,7 +96,9 @@ export default function RestaurantTypeCards() {
                 }}
                 className={styles['restaurant-type-card-link']}
                 key={uuidv4()}
-                onClick={(e) => {
+                onClick={(
+                  e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+                ) => {
                   e.preventDefault();
 
                   setError('Please first provide a location');
