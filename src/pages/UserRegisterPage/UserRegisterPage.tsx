@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import Header from './Header/Header';
 import UserRegisterForm from './UserRegisterForm/UserRegisterForm';
 
-export default function UserRegisterPage() {
+export default function UserRegisterPage(): React.ReactNode {
   return (
     <Fragment>
       <Helmet>

@@ -8,6 +8,15 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
 
+interface RegisteredUser {
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  password: string;
+  confirm_password: string;
+}
+
 const userRegisterFormErrorValues = {
   first_name: 'Please provide a first name',
   last_name: 'Please provide a last name',
@@ -37,28 +46,22 @@ export default function UserRegisterForm() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // check if there is a user already registered with the email
-  const newRegisteredUserEmail = userRegisterForm.email;
-  const currentRegisteredUsersEmails = JSON.parse(
+  // check if there is registeredUsers data in local storage
+  const registeredUsersLocalStorage: RegisteredUser[] = JSON.parse(
     localStorage.getItem('registeredUsers')
   );
 
+  // check if there is a user already registered with the email
+  const newRegisteredUserEmail = userRegisterForm.email;
+
   // check if there is a user already registered with the username
   const newRegisteredUserUsername = userRegisterForm.username;
-  const currentRegisteredUsersUsernames = JSON.parse(
-    localStorage.getItem('registeredUsers')
-  );
 
   // check if the provided passwords are the same
   const newRegisteredUserPassword = userRegisterForm.password;
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
 
-  // check if there is registeredUsers data in local storage
-  const registeredUsersLocalStorage = JSON.parse(
-    localStorage.getItem('registeredUsers')
-  );
-
-  function setRegisteredUser(user) {
+  function setRegisteredUser(user: RegisteredUser) {
     const registeredUser = [{ userID: uuid(), ...user }];
 
     // if there's data in local storage, then append the new data with the existing data
@@ -80,7 +83,7 @@ export default function UserRegisterForm() {
     localStorage.setItem('currentUser', JSON.stringify(registeredUser));
   }
 
-  function onFormSubmit(e) {
+  function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     let errors = 0;
@@ -120,8 +123,8 @@ export default function UserRegisterForm() {
     }
 
     // check if the user email already exists
-    if (currentRegisteredUsersEmails) {
-      let checkEmailRegistration = currentRegisteredUsersEmails.find(
+    if (registeredUsersLocalStorage) {
+      const checkEmailRegistration = registeredUsersLocalStorage.find(
         (val) => val.email === newRegisteredUserEmail
       );
 
@@ -135,9 +138,9 @@ export default function UserRegisterForm() {
       }
     }
 
-    // check if the username already exists
-    if (currentRegisteredUsersUsernames) {
-      let checkUsernameRegistration = currentRegisteredUsersUsernames.find(
+    // check if the username already exists in local storage
+    if (registeredUsersLocalStorage) {
+      const checkUsernameRegistration = registeredUsersLocalStorage.find(
         (val) => val.username === newRegisteredUserUsername
       );
 
@@ -208,7 +211,7 @@ export default function UserRegisterForm() {
     }
   }
 
-  function onInputChange(e) {
+  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
     setUserRegisterForm((prevState) => ({
