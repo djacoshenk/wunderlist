@@ -10,16 +10,21 @@ import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 import SortByButton from './SortByButton/SortByButton';
 
+interface ParamsState {
+  term: string;
+  location: string;
+}
+
 let offset = 10;
 
-export default function RestaurantSearchPage() {
+export default function RestaurantSearchPage(): JSX.Element {
   const [places, setPlaces] = useState([]);
   const [sortByParam, setSortByParam] = useState('best_match');
   const [mapKey, setMapKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   // eslint-disable-next-line
   const [asyncErrorMessages, setAsyncErrorMessages] = useState([]);
-  const params = useParams();
+  const params = useParams<ParamsState>();
 
   const fetchPlaces = useCallback(async ({ term, location }) => {
     try {

@@ -1,15 +1,37 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
-import PropTypes from 'prop-types';
 
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
 import styles from './GoogleMap.module.scss';
 
-GoogleMap.propTypes = {
-  places: PropTypes.array,
-  mapKey: PropTypes.number,
-};
+interface Categories {
+  title: string;
+}
+
+interface Place {
+  id: string;
+  alias: string;
+  image_url: string;
+  name: string;
+  rating: number;
+  review_count: number;
+  price: string;
+  categories: Categories[];
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
+}
+
+interface IProps {
+  places: Place[];
+  mapKey: number;
+}
 
 const defaultCenter = {
   lat: 0,
@@ -18,7 +40,7 @@ const defaultCenter = {
 
 const defaultZoom = 13;
 
-export default function GoogleMap({ places, mapKey }) {
+export default function GoogleMap({ places, mapKey }: IProps): JSX.Element {
   function getMapBounds(maps) {
     const bounds = new maps.LatLngBounds();
 
@@ -49,10 +71,14 @@ export default function GoogleMap({ places, mapKey }) {
         options={{ gestureHandling: 'greedy' }}
       >
         {places.map((place, index) => {
+          const center = {
+            lat: place.coordinates.latitude,
+            lng: place.coordinates.longitude,
+          };
+
           return (
             <GoogleMapMarker
-              lat={place.coordinates.latitude}
-              lng={place.coordinates.longitude}
+              {...center}
               key={place.id}
               id={index + 1}
               place={place}

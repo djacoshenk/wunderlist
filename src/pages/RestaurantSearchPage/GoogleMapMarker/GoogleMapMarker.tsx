@@ -1,16 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { setMapId } from 'reducers/mapIdReducer';
+import { RootState } from 'store/index';
 
 import './GoogleMapMarker.scss';
 
-GoogleMapMarker.propTypes = {
-  id: PropTypes.number,
-  place: PropTypes.object,
-};
+interface Place {
+  alias: string;
+  name: string;
+}
+
+interface IProps {
+  id: number;
+  place: Place;
+}
+
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 const mapIdIconStyles = {
   color: '#333',
@@ -21,8 +28,8 @@ const mapIdTextStyles = {
   color: '#38b2ac',
 };
 
-export default function GoogleMapMarker({ id, place }) {
-  const { mapId } = useSelector((state) => state.mapId);
+export default function GoogleMapMarker({ id, place }: IProps): JSX.Element {
+  const { mapId } = useTypedSelector((state) => state.mapId);
   const dispatch = useDispatch();
 
   return (

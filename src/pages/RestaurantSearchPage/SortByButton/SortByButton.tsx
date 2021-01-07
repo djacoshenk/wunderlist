@@ -1,19 +1,26 @@
 import React, { useEffect } from 'react';
 import { useSelect } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 
 import styles from './SortByButton.module.scss';
 
-SortByButton.propTypes = {
-  setSortByParam: PropTypes.func,
-  fetchPlacesSortBy: PropTypes.func,
-};
+interface ParamsState {
+  term: string;
+  location: string;
+}
 
-export default function SortByButton({ setSortByParam, fetchPlacesSortBy }) {
+interface IProps {
+  setSortByParam: (text: string) => void;
+  fetchPlacesSortBy: (params: ParamsState, text: string) => void;
+}
+
+export default function SortByButton({
+  setSortByParam,
+  fetchPlacesSortBy,
+}: IProps): JSX.Element {
   const items = ['Best Match', 'Rating', 'Review Count', 'Distance'];
-  const params = useParams();
+  const params = useParams<ParamsState>();
 
   const {
     isOpen,

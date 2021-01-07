@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -8,24 +7,34 @@ import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRating
 
 import styles from './RestaurantCard.module.scss';
 
-RestaurantCard.propTypes = {
-  place: PropTypes.shape({
-    alias: PropTypes.string,
-    image_url: PropTypes.string,
-    name: PropTypes.string,
-    rating: PropTypes.number,
-    review_count: PropTypes.number,
-    price: PropTypes.string,
-    categories: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
-    display_phone: PropTypes.string,
-    location: PropTypes.shape({
-      display_address: PropTypes.arrayOf(PropTypes.string),
-    }),
-  }),
-  index: PropTypes.number,
-};
+interface Categories {
+  title: string;
+}
 
-export default function RestaurantCard({ place, index }) {
+interface Place {
+  alias: string;
+  image_url: string;
+  name: string;
+  rating: number;
+  review_count: number;
+  price: string;
+  categories: Categories[];
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
+}
+
+interface IProps {
+  place: Place;
+  index: number;
+}
+
+export default function RestaurantCard({ place, index }: IProps): JSX.Element {
   const dispatch = useDispatch();
 
   return (
