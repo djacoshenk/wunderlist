@@ -6,7 +6,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
-export default function UserLoginRegisterBanner() {
+export default function UserLoginRegisterBanner(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
 

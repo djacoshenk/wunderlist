@@ -15,7 +15,7 @@ export default function RestaurantSearchBar() {
   });
   const history = useHistory();
 
-  function onFormSubmit(e) {
+  function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (!termSearchParam) {

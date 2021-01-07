@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
@@ -10,22 +9,21 @@ import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurr
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
-RestaurantSearchBarLocationParam.propTypes = {
-  locationSearchParam: PropTypes.string,
-  setLocationSearchParam: PropTypes.func,
-  errorLocationParam: PropTypes.string,
-};
+interface IProps {
+  locationSearchParam: string;
+  setLocationSearchParam: (text: string) => void;
+  errorLocationParam: string;
+}
 
-let searchId;
+let searchId: ReturnType<typeof setTimeout>;
 
 export default function RestaurantSearchBarLocationParam({
   locationSearchParam,
   setLocationSearchParam,
   errorLocationParam,
-}) {
-  const [locationSuggestions, setLocationSuggestions] = useState([]);
-  // eslint-disable-next-line
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState(null);
+}: IProps): JSX.Element {
+  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
   const dispatch = useDispatch();
   const {
     isOpen,
@@ -70,7 +68,7 @@ export default function RestaurantSearchBarLocationParam({
         );
 
         setLocationSuggestions(
-          data.data.map((place) => {
+          data.data.map((place: { city: string; regionCode: string }) => {
             return `${place.city}, ${place.regionCode}`;
           })
         );
@@ -78,17 +76,17 @@ export default function RestaurantSearchBarLocationParam({
         return;
       }
     } catch (err) {
-      setAsyncErrorMessage(err);
+      setAsyncErrorMessage(err.message);
     }
   }
 
-  function onInputChange(value) {
-    setLocationSearchParam(value);
+  function onInputChange(text: string) {
+    setLocationSearchParam(text);
 
     clearTimeout(searchId);
 
     searchId = setTimeout(() => {
-      fetchLocationSuggestions(value);
+      fetchLocationSuggestions(text);
     }, 200);
   }
 

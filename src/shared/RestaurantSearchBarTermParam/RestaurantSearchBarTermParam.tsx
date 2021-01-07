@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { useCombobox } from 'downshift';
 import axios from 'axios';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
-RestaurantSearchBarTermParam.propTypes = {
-  termSearchParam: PropTypes.string,
-  setTermSearchParam: PropTypes.func,
-  errorTermParam: PropTypes.string,
-};
+interface IProps {
+  termSearchParam: string;
+  setTermSearchParam: (text: string) => void;
+  errorTermParam: string;
+}
 
-let searchId;
+let searchId: ReturnType<typeof setTimeout>;
 
 export default function RestaurantSearchBarTermParam({
   termSearchParam,
   setTermSearchParam,
   errorTermParam,
-}) {
-  const [termSuggestions, setTermSuggestions] = useState([]);
-  // eslint-disable-next-line
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState(null);
+}: IProps): JSX.Element {
+  const [termSuggestions, setTermSuggestions] = useState<string[]>([]);
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
 
   const {
     isOpen,
@@ -38,7 +36,7 @@ export default function RestaurantSearchBarTermParam({
     },
   });
 
-  async function fetchTermSuggestions(text) {
+  async function fetchTermSuggestions(text: string) {
     try {
       if (text) {
         const { data } = await axios.get(
@@ -50,7 +48,9 @@ export default function RestaurantSearchBarTermParam({
           }
         );
 
-        setTermSuggestions(data.categories.map((cat) => cat.title));
+        setTermSuggestions(
+          data.categories.map((cat: { title: string }) => cat.title)
+        );
       } else {
         return;
       }
@@ -59,13 +59,13 @@ export default function RestaurantSearchBarTermParam({
     }
   }
 
-  function onInputChange(value) {
-    setTermSearchParam(value);
+  function onInputChange(text: string) {
+    setTermSearchParam(text);
 
     clearTimeout(searchId);
 
     searchId = setTimeout(() => {
-      fetchTermSuggestions(value);
+      fetchTermSuggestions(text);
     }, 200);
   }
 

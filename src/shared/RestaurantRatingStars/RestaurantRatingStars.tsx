@@ -1,13 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
 
 import './RestaurantRatingStars.scss';
 
-RestaurantRatingStars.propTypes = {
-  rating: PropTypes.number,
-};
+interface IProps {
+  rating: number;
+}
 
-export default function RestaurantRatingStars({ rating }) {
+export default function RestaurantRatingStars({ rating }: IProps): JSX.Element {
   const STARS = [0, 1, 2, 3, 4];
 
   const totalRating = STARS.map((n) => {
@@ -22,5 +21,5 @@ export default function RestaurantRatingStars({ rating }) {
     return <i className={starRating} aria-hidden='true' key={n}></i>;
   });
 
-  return totalRating;
+  return <Fragment>{totalRating}</Fragment>;
 }

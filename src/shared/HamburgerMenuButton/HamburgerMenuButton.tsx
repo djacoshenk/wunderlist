@@ -7,7 +7,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import './HamburgerMenuButton.css';
 
-export default function HamburgerMenuButton() {
+export default function HamburgerMenuButton(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
 

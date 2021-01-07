@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 
 import styles from './UserCurrentLocationButton.module.scss';
 
-UserCurrentLocationButton.propTypes = {
-  setLocationSearchParam: PropTypes.func,
-};
+interface IProps {
+  setLocationSearchParam: (text: string) => void;
+}
 
-export default function UserCurrentLocationButton({ setLocationSearchParam }) {
+interface CurrentLocation {
+  coords: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+export default function UserCurrentLocationButton({
+  setLocationSearchParam,
+}: IProps): JSX.Element {
   const dispatch = useDispatch();
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
 
   function fetchUserCurrentLocation() {
-    let currentUserLocation;
+    let currentUserLocation: string;
 
-    async function success(pos) {
-      let latitude = pos.coords.latitude.toFixed(3);
-      let longitude = pos.coords.longitude.toFixed(3);
+    async function success(pos: CurrentLocation) {
+      const latitude = pos.coords.latitude.toFixed(3);
+      const longitude = pos.coords.longitude.toFixed(3);
 
       currentUserLocation = `${latitude}${longitude}`;
 
@@ -34,23 +43,23 @@ export default function UserCurrentLocationButton({ setLocationSearchParam }) {
           }
         );
 
-        const location = `${data.data[0].city}, ${data.data[0].regionCode}`;
+        const locationUrl = `${data.data[0].city}, ${data.data[0].regionCode}`;
 
         // set the current location in storage
         localStorage.setItem('locationParam', JSON.stringify(location));
 
         // update the location search param to be the current location
-        setLocationSearchParam(location);
+        setLocationSearchParam(locationUrl);
 
         // change the cards url link to be the current location
-        dispatch(setLocationUrl(location));
+        dispatch(setLocationUrl(locationUrl));
       } catch (err) {
-        throw new Error('COULD NOT FETCH USER CURRENT LOCATION');
+        setAsyncErrorMessage(err.message);
       }
     }
 
-    function error() {
-      throw new Error('COULD NOT FETCH USER CURRENT LOCATION');
+    function error(err) {
+      setAsyncErrorMessage(err.message);
     }
 
     navigator.geolocation.getCurrentPosition(success, error);
