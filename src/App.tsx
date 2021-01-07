@@ -7,7 +7,7 @@ import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
 import RestaurantSearchPage from 'pages/RestaurantSearchPage/RestaurantSearchPage';
 import RestaurantProfilePage from 'pages/RestaurantProfilePage/RestaurantProfilePage';
 
-export default function App() {
+export default function App(): React.ReactNode {
   return (
     <Fragment>
       <BrowserRouter>
