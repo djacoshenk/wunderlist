@@ -1,31 +1,46 @@
 {
   "env": {
     "browser": true,
-    "es2020": true,
+    "es6": true,
     "node": true,
     "jest": true
   },
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
     "plugin:react/recommended",
+    "plugin:jest/recommended",
     "plugin:jsx-a11y/recommended",
-    "prettier",
-    "prettier/react"
+    "prettier/react",
+    "prettier/@typescript-eslint",
+    "prettier"
   ],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
     },
-    "ecmaVersion": 2020,
-    "sourceType": "module"
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
-  "plugins": ["react", "react-hooks", "import", "jsx-a11y"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "jest",
+    "react-hooks",
+    "import",
+    "jsx-a11y"
+  ],
   "rules": {
     "no-console": 1,
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "off"
   },
   "settings": {
     "react": {
