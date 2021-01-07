@@ -5,7 +5,7 @@ import currentLoadingStatusReducer from 'reducers/currentLoadingStatusReducer';
 import locationUrlReducer from 'reducers/locationUrlReducer';
 import mapIdReducer from 'reducers/mapIdReducer';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   loadingStatus: currentLoadingStatusReducer,
   location: locationUrlReducer,
   mapId: mapIdReducer,
@@ -14,3 +14,9 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, composeWithDevTools());
 
 export default store;
+
+export interface RootState {
+  loadingStatus: ReturnType<typeof currentLoadingStatusReducer>;
+  location: ReturnType<typeof locationUrlReducer>;
+  mapId: ReturnType<typeof mapIdReducer>;
+}
