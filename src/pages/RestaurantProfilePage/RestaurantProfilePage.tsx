@@ -9,17 +9,50 @@ import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSear
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
-export default function RestaurantProfilePage() {
-  const [place, setPlace] = useState([]);
-  const [reviews, setReviews] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  // eslint-disable-next-line
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState(null);
+interface Place {
+  photos: string[];
+  name: string;
+  rating: number;
+  review_count: number;
+  price: string;
+  categories: [{ title: string }];
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  id: string;
+}
 
-  const { alias } = useParams();
+interface Review {
+  user: {
+    name: string;
+  };
+  rating: number;
+  text: string;
+}
+
+interface Reviews {
+  reviews: Review[];
+}
+
+interface ParamsState {
+  alias: string;
+}
+
+export default function RestaurantProfilePage(): React.ReactNode {
+  const [place, setPlace] = useState<Place>();
+  const [reviews, setReviews] = useState<Reviews>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
+
+  const { alias } = useParams<ParamsState>();
 
   useEffect(() => {
-    async function fetchData(alias) {
+    async function fetchData(alias: string) {
       try {
         // fetch data on place
         const placeRes = await axios.get(

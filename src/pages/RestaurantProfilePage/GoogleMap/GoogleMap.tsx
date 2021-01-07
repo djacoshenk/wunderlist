@@ -1,22 +1,21 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
-import PropTypes from 'prop-types';
 
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
 import styles from './GoogleMap.module.scss';
 
-GoogleMap.propTypes = {
-  place: PropTypes.shape({
-    id: PropTypes.string,
-    coordinates: PropTypes.shape({
-      latitude: PropTypes.number,
-      longitude: PropTypes.number,
-    }),
-  }),
-};
+interface IProps {
+  place: {
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    };
+    id: string;
+  };
+}
 
-export default function GoogleMap({ place }) {
+export default function GoogleMap({ place }: IProps): JSX.Element {
   const center = {
     lat: place.coordinates.latitude,
     lng: place.coordinates.longitude,
@@ -32,11 +31,7 @@ export default function GoogleMap({ place }) {
         zoom={zoom}
         options={{ gestureHandling: 'greedy' }}
       >
-        <GoogleMapMarker
-          lat={place.coordinates.latitude}
-          lng={place.coordinates.longitude}
-          id={place.id}
-        />
+        <GoogleMapMarker {...center} id={place.id} />
       </GoogleMapReact>
     </div>
   );

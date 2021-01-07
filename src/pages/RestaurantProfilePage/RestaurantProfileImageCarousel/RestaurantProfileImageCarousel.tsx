@@ -1,18 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/swiper-bundle.css';
 import './RestaurantProfileImageCarousel.scss';
 
-RestaurantProfileImageCarousel.propTypes = {
-  photos: PropTypes.arrayOf(PropTypes.string),
-};
-
 SwiperCore.use([Navigation, Pagination]);
 
-export default function RestaurantProfileImageCarousel({ photos }) {
+interface IProps {
+  photos: string[];
+}
+
+export default function RestaurantProfileImageCarousel({
+  photos,
+}: IProps): JSX.Element {
   return (
     <Swiper
       navigation

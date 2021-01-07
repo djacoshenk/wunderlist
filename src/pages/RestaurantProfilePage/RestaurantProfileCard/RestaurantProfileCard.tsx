@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
@@ -9,27 +8,41 @@ import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/Restau
 
 import styles from './RestaurantProfileCard.module.scss';
 
-RestaurantProfileCard.propTypes = {
-  place: PropTypes.shape({
-    photos: PropTypes.arrayOf(PropTypes.string),
-    name: PropTypes.string,
-    rating: PropTypes.number,
-    review_count: PropTypes.number,
-    price: PropTypes.string,
-    categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string,
-      })
-    ),
-    display_phone: PropTypes.string,
-    location: PropTypes.shape({
-      display_address: PropTypes.arrayOf(PropTypes.string),
-    }),
-  }),
-  reviews: PropTypes.object,
-};
+interface Review {
+  user: {
+    name: string;
+  };
+  rating: number;
+  text: string;
+}
 
-export default function RestaurantProfileCard({ place, reviews }) {
+interface IProps {
+  place: {
+    photos: string[];
+    name: string;
+    rating: number;
+    review_count: number;
+    price: string;
+    categories: [{ title: string }];
+    display_phone: string;
+    location: {
+      display_address: string[];
+    };
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    };
+    id: string;
+  };
+  reviews: {
+    reviews: Review[];
+  };
+}
+
+export default function RestaurantProfileCard({
+  place,
+  reviews,
+}: IProps): JSX.Element {
   function formatNameForUrl() {
     return place.name.split(' ').join('+');
   }

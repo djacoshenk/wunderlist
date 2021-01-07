@@ -1,19 +1,22 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 
 import styles from './RestaurantProfileLoader.module.scss';
 
-RestaurantProfileLoader.propTypes = {
-  name: PropTypes.string,
-};
+interface IProps {
+  name: string;
+}
 
-export default function RestaurantProfileLoader({ name }) {
-  const location = useLocation();
+interface LocationState {
+  place: string;
+}
 
-  let headerText;
+export default function RestaurantProfileLoader({ name }: IProps): JSX.Element {
+  const location = useLocation<LocationState>();
+
+  let headerText: JSX.Element | null;
 
   if (location.state) {
     headerText = (
