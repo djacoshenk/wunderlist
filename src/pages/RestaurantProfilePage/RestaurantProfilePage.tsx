@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
@@ -43,6 +43,10 @@ interface ParamsState {
   alias: string;
 }
 
+interface LocationState {
+  place: string;
+}
+
 export default function RestaurantProfilePage(): JSX.Element {
   const [place, setPlace] = useState<Place>();
   const [reviews, setReviews] = useState<Reviews>();
@@ -50,6 +54,7 @@ export default function RestaurantProfilePage(): JSX.Element {
   const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
 
   const { alias } = useParams<ParamsState>();
+  const location = useLocation<LocationState>();
 
   useEffect(() => {
     async function fetchData(alias: string) {
@@ -89,8 +94,8 @@ export default function RestaurantProfilePage(): JSX.Element {
   return (
     <Fragment>
       <Helmet>
-        {place.name ? (
-          <title>{`wunderlist - ${place.name}`}</title>
+        {location.state.place ? (
+          <title>{`wunderlist - ${location.state.place}`}</title>
         ) : (
           <title>wunderlist - find and save your new favorite place</title>
         )}
@@ -99,7 +104,7 @@ export default function RestaurantProfilePage(): JSX.Element {
       <Header />
       <RestaurantSearchBar />
       {isLoading ? (
-        <RestaurantProfileLoader name={place.name} />
+        <RestaurantProfileLoader name={location.state.place} />
       ) : (
         <RestaurantProfileCard place={place} reviews={reviews} />
       )}
