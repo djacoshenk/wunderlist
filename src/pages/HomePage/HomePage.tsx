@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
 import { useSelector, TypedUseSelectorHook } from 'react-redux';
 

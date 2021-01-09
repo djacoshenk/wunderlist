@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useCombobox } from 'downshift';
 import axios from 'axios';
 
@@ -6,7 +6,7 @@ import styles from './RestaurantSearchBarTermParam.module.scss';
 
 interface IProps {
   termSearchParam: string;
-  setTermSearchParam: (text: string) => void;
+  setTermSearchParam: (text: string | undefined) => void;
   errorTermParam: string;
 }
 
@@ -36,7 +36,7 @@ export default function RestaurantSearchBarTermParam({
     },
   });
 
-  async function fetchTermSuggestions(text: string) {
+  async function fetchTermSuggestions(text: string | undefined) {
     try {
       if (text) {
         const { data } = await axios.get(

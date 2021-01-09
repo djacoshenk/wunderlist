@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';

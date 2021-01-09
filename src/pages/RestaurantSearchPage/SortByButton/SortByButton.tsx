@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelect } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';

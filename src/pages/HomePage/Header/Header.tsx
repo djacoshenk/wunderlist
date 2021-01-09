@@ -1,5 +1,3 @@
-import React from 'react';
-
 import globe from 'assets/global.png';
 import styles from './Header.module.scss';
 
