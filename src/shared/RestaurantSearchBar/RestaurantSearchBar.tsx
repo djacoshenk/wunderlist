@@ -7,8 +7,12 @@ import RestaurantSearchBarLocationParam from 'shared/RestaurantSearchBarLocation
 import styles from './RestaurantSearchBar.module.scss';
 
 export default function RestaurantSearchBar(): JSX.Element {
-  const [termSearchParam, setTermSearchParam] = useState('');
-  const [locationSearchParam, setLocationSearchParam] = useState('');
+  const [termSearchParam, setTermSearchParam] = useState<string | undefined>(
+    ''
+  );
+  const [locationSearchParam, setLocationSearchParam] = useState<
+    string | undefined
+  >('');
   const [errors, setErrors] = useState({
     term: '',
     location: '',

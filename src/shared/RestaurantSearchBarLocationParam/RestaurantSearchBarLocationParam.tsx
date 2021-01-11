@@ -9,11 +9,13 @@ import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurr
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
-interface IProps {
-  locationSearchParam: string;
-  setLocationSearchParam: (text: string) => void;
+type LocationParam = string | undefined;
+
+type Props = {
+  locationSearchParam?: string;
+  setLocationSearchParam: (text: LocationParam) => void;
   errorLocationParam: string;
-}
+};
 
 let searchId: ReturnType<typeof setTimeout>;
 
@@ -21,7 +23,7 @@ export default function RestaurantSearchBarLocationParam({
   locationSearchParam,
   setLocationSearchParam,
   errorLocationParam,
-}: IProps): JSX.Element {
+}: Props): JSX.Element {
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
   const dispatch = useDispatch();
@@ -52,7 +54,7 @@ export default function RestaurantSearchBarLocationParam({
     }
   }, [setLocationSearchParam]);
 
-  async function fetchLocationSuggestions(text) {
+  async function fetchLocationSuggestions(text: LocationParam) {
     dispatch(setLocationUrl(text));
 
     try {
@@ -80,7 +82,7 @@ export default function RestaurantSearchBarLocationParam({
     }
   }
 
-  function onInputChange(text: string) {
+  function onInputChange(text: LocationParam) {
     setLocationSearchParam(text);
 
     clearTimeout(searchId);

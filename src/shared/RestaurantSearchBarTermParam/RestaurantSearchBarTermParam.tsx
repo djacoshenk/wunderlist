@@ -4,11 +4,13 @@ import axios from 'axios';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
-interface IProps {
-  termSearchParam: string;
-  setTermSearchParam: (text: string | undefined) => void;
+type TermParam = string | undefined;
+
+type Props = {
+  termSearchParam?: string;
+  setTermSearchParam: (text: TermParam) => void;
   errorTermParam: string;
-}
+};
 
 let searchId: ReturnType<typeof setTimeout>;
 
@@ -16,7 +18,7 @@ export default function RestaurantSearchBarTermParam({
   termSearchParam,
   setTermSearchParam,
   errorTermParam,
-}: IProps): JSX.Element {
+}: Props): JSX.Element {
   const [termSuggestions, setTermSuggestions] = useState<string[]>([]);
   const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
 
@@ -36,7 +38,7 @@ export default function RestaurantSearchBarTermParam({
     },
   });
 
-  async function fetchTermSuggestions(text: string | undefined) {
+  async function fetchTermSuggestions(text: TermParam) {
     try {
       if (text) {
         const { data } = await axios.get(
@@ -59,7 +61,7 @@ export default function RestaurantSearchBarTermParam({
     }
   }
 
-  function onInputChange(text: string) {
+  function onInputChange(text: TermParam) {
     setTermSearchParam(text);
 
     clearTimeout(searchId);
