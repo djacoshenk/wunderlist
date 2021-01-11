@@ -1,17 +1,19 @@
-interface LocationUrlAction {
-  type: typeof ACTIONS.SET_LOCATION_URL;
-  payload: { url: string };
-}
+type LocationParam = string | undefined;
 
-interface LocationUrlState {
-  locationUrl: string;
-}
+type LocationUrlAction = {
+  type: typeof ACTIONS.SET_LOCATION_URL;
+  payload: { url: LocationParam };
+};
+
+type LocationUrlState = {
+  locationUrl: LocationParam;
+};
 
 const ACTIONS = {
   SET_LOCATION_URL: 'SET_LOCATION_URL',
 };
 
-export function setLocationUrl(url: string): LocationUrlAction {
+export function setLocationUrl(url: LocationParam): LocationUrlAction {
   return {
     type: ACTIONS.SET_LOCATION_URL,
     payload: { url },
