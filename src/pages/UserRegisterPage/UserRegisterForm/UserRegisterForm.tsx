@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import { isEmail, isStrongPassword } from 'validator';
+import validator from 'validator';
 import { useDispatch } from 'react-redux';
 
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
 
-interface RegisteredUser {
+type RegisteredUser = {
   first_name: string;
   last_name: string;
   email: string;
   username: string;
   password: string;
   confirm_password: string;
-}
+};
 
 const userRegisterFormErrorValues = {
   first_name: 'Please provide a first name',
@@ -107,7 +107,7 @@ export default function UserRegisterForm(): JSX.Element {
 
     // check if the email provided is in fact an email
     if (newRegisteredUserEmail) {
-      if (isEmail(newRegisteredUserEmail)) {
+      if (validator.isEmail(newRegisteredUserEmail)) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
           email: '',
@@ -172,7 +172,7 @@ export default function UserRegisterForm(): JSX.Element {
     // check if the password matches the password constraints
     if (newRegisteredUserPassword) {
       if (
-        isStrongPassword(newRegisteredUserPassword, {
+        validator.isStrongPassword(newRegisteredUserPassword, {
           minLength: 10,
           minLowercase: 0,
           minUppercase: 0,
