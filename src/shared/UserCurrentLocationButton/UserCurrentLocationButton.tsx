@@ -6,6 +6,10 @@ import { setLocationUrl } from 'reducers/locationUrlReducer';
 
 import styles from './UserCurrentLocationButton.module.scss';
 
+interface Error {
+  message: string;
+}
+
 interface IProps {
   setLocationSearchParam: (text: string) => void;
 }
@@ -46,7 +50,7 @@ export default function UserCurrentLocationButton({
         const locationUrl = `${data.data[0].city}, ${data.data[0].regionCode}`;
 
         // set the current location in storage
-        localStorage.setItem('locationParam', JSON.stringify(location));
+        localStorage.setItem('locationParam', JSON.stringify(locationUrl));
 
         // update the location search param to be the current location
         setLocationSearchParam(locationUrl);
@@ -58,7 +62,7 @@ export default function UserCurrentLocationButton({
       }
     }
 
-    function error(err) {
+    function error(err: Error) {
       setAsyncErrorMessage(err.message);
     }
 
