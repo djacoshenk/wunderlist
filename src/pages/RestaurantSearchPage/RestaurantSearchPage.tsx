@@ -10,10 +10,14 @@ import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 import SortByButton from './SortByButton/SortByButton';
 
-interface ParamsState {
+type ParamsState = {
   term: string;
   location: string;
-}
+};
+
+type AsyncErrorsState = {
+  error: string;
+};
 
 let offset = 10;
 
@@ -22,8 +26,9 @@ export default function RestaurantSearchPage(): JSX.Element {
   const [sortByParam, setSortByParam] = useState('best_match');
   const [mapKey, setMapKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  // eslint-disable-next-line
-  const [asyncErrorMessages, setAsyncErrorMessages] = useState([]);
+  const [asyncErrorMessages, setAsyncErrorMessages] = useState<
+    AsyncErrorsState[]
+  >([]);
   const params = useParams<ParamsState>();
 
   const fetchPlaces = useCallback(async ({ term, location }) => {
@@ -45,12 +50,15 @@ export default function RestaurantSearchPage(): JSX.Element {
       setIsLoading(false);
     } catch (err) {
       setAsyncErrorMessages((prevState) => {
-        return [...prevState, { err }];
+        return [...prevState, { error: err.message }];
       });
     }
   }, []);
 
-  async function fetchMorePlaces({ term, location }, sortByParam) {
+  async function fetchMorePlaces(
+    { term, location }: ParamsState,
+    sortByParam: string
+  ) {
     try {
       const { data } = await axios.get(
         `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
@@ -74,7 +82,7 @@ export default function RestaurantSearchPage(): JSX.Element {
       setMapKey(mapKey + 1);
     } catch (err) {
       setAsyncErrorMessages((prevState) => {
-        return [...prevState, { err }];
+        return [...prevState, { error: err.message }];
       });
     }
   }
@@ -101,7 +109,7 @@ export default function RestaurantSearchPage(): JSX.Element {
         setIsLoading(false);
       } catch (err) {
         setAsyncErrorMessages((prevState) => {
-          return [...prevState, { err }];
+          return [...prevState, { error: err.message }];
         });
       }
     },
