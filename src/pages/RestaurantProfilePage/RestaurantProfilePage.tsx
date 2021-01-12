@@ -9,7 +9,7 @@ import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSear
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
-interface Place {
+type Place = {
   photos: string[];
   name: string;
   rating: number;
@@ -25,27 +25,27 @@ interface Place {
     longitude: number;
   };
   id: string;
-}
+};
 
-interface Review {
+type Review = {
   user: {
     name: string;
   };
   rating: number;
   text: string;
-}
+};
 
-interface Reviews {
+type Reviews = {
   reviews: Review[];
-}
+};
 
-interface ParamsState {
+type ParamsState = {
   alias: string;
-}
+};
 
-interface LocationState {
+type LocationState = {
   place: string;
-}
+};
 
 export default function RestaurantProfilePage(): JSX.Element {
   const [place, setPlace] = useState<Place>();
@@ -83,7 +83,7 @@ export default function RestaurantProfilePage(): JSX.Element {
         setReviews(reviewsRes.data);
         setIsLoading(false);
       } catch (err) {
-        setAsyncErrorMessage(err);
+        setAsyncErrorMessage(err.message);
       }
     }
 
