@@ -8,15 +8,15 @@ import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/Restau
 
 import styles from './RestaurantProfileCard.module.scss';
 
-interface Review {
+type Review = {
   user: {
     name: string;
   };
   rating: number;
   text: string;
-}
+};
 
-interface IProps {
+type Props = {
   place: {
     photos: string[];
     name: string;
@@ -37,12 +37,12 @@ interface IProps {
   reviews: {
     reviews: Review[];
   };
-}
+};
 
 export default function RestaurantProfileCard({
   place,
   reviews,
-}: IProps): JSX.Element {
+}: Props): JSX.Element {
   function formatNameForUrl() {
     return place.name.split(' ').join('+');
   }

@@ -4,23 +4,23 @@ import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRating
 
 import styles from './RestaurantProfileCardReviews.module.scss';
 
-interface Review {
+type Review = {
   user: {
     name: string;
   };
   rating: number;
   text: string;
-}
+};
 
-interface IProps {
+type Props = {
   reviews: {
     reviews: Review[];
   };
-}
+};
 
 export default function RestaurantProfileCardReviews({
   reviews,
-}: IProps): JSX.Element {
+}: Props): JSX.Element {
   return (
     <Fragment>
       {reviews.reviews.map((review, index) => {
