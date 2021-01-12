@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -5,14 +6,28 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
+type CurrentUser = {
+  userID: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  password: string;
+  confirm_password: string;
+};
+
 export default function UserLoginRegisterBanner(): JSX.Element {
+  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState();
   const dispatch = useDispatch();
   const history = useHistory();
 
   // check if there is a current user saved in local storage
-  const currentUserLocalStorage = JSON.parse(
-    localStorage.getItem('currentUser')
-  );
+  const currentUserLocalStorage = localStorage.getItem('currentUser');
+
+  if (currentUserLocalStorage) {
+    const currentUserLocalStorageParse = JSON.parse(currentUserLocalStorage);
+    setCurrentUserLoggedIn(currentUserLocalStorageParse);
+  }
 
   function handleUserLogout() {
     // remove current user from local storage
@@ -32,7 +47,7 @@ export default function UserLoginRegisterBanner(): JSX.Element {
 
   return (
     <div className={styles['banner-container']}>
-      {currentUserLocalStorage ? (
+      {currentUserLoggedIn ? (
         <div className={styles['logout-btn-container']}>
           <button name='logout-btn' type='button' onClick={handleUserLogout}>
             Logout

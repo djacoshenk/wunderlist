@@ -56,13 +56,12 @@ export default function RestaurantTypeCards(): JSX.Element {
   ];
 
   useEffect(() => {
-    const persistedLocationParam = JSON.parse(
-      localStorage.getItem('locationParam')
-    );
+    const persistedLocationParam = localStorage.getItem('locationParam');
 
     // persist the location param on renders
     if (persistedLocationParam) {
-      dispatch(setLocationUrl(persistedLocationParam));
+      const persistedLocationParamParse = JSON.parse(persistedLocationParam);
+      dispatch(setLocationUrl(persistedLocationParamParse));
     }
   }, [dispatch]);
 

@@ -6,27 +6,43 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginForm.module.scss';
 
-interface RegisteredUser {
+type UserLoginFormState = {
+  [name: string]: string;
+  username: string;
+  password: string;
+};
+
+type UserLoginFormErrorsState = {
+  [name: string]: string;
+  username: string;
+  password: string;
+};
+
+type RegisteredUser = {
+  userID: string;
   first_name: string;
   last_name: string;
   email: string;
   username: string;
   password: string;
   confirm_password: string;
-}
+};
 
-const userLoginFormErrorValues = {
+const userLoginFormErrorValues: UserLoginFormErrorsState = {
   username: 'Please provide a valid username',
   password: 'Please provide a valid password',
 };
 
 export default function UserLoginForm(): JSX.Element {
   const dispatch = useDispatch();
-  const [userLoginForm, setUserLoginForm] = useState({
+  const [userLoginForm, setUserLoginForm] = useState<UserLoginFormState>({
     username: '',
     password: '',
   });
-  const [userLoginFormErrors, setUserLoginFormErrors] = useState({
+  const [
+    userLoginFormErrors,
+    setUserLoginFormErrors,
+  ] = useState<UserLoginFormErrorsState>({
     username: '',
     password: '',
   });

@@ -8,7 +8,8 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
 
-type RegisteredUser = {
+type UserRegisterFormState = {
+  [name: string]: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -17,7 +18,7 @@ type RegisteredUser = {
   confirm_password: string;
 };
 
-const userRegisterFormErrorValues = {
+const userRegisterFormErrorValues: UserRegisterFormState = {
   first_name: 'Please provide a first name',
   last_name: 'Please provide a last name',
   email: 'Please provide an email',
@@ -27,7 +28,10 @@ const userRegisterFormErrorValues = {
 };
 
 export default function UserRegisterForm(): JSX.Element {
-  const [userRegisterForm, setUserRegisterForm] = useState({
+  const [
+    userRegisterForm,
+    setUserRegisterForm,
+  ] = useState<UserRegisterFormState>({
     first_name: '',
     last_name: '',
     email: '',
@@ -43,13 +47,20 @@ export default function UserRegisterForm(): JSX.Element {
     password: '',
     confirm_password: '',
   });
+  const [registeredUsers, setRegisteredUsers] = useState<
+    UserRegisterFormState[]
+  >();
   const dispatch = useDispatch();
   const history = useHistory();
 
   // check if there is registeredUsers data in local storage
-  const registeredUsersLocalStorage: RegisteredUser[] = JSON.parse(
-    localStorage.getItem('registeredUsers')
-  );
+  const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
+
+  if (registeredUsersLocalStorage) {
+    const registeredUsersList = JSON.parse(registeredUsersLocalStorage);
+
+    setRegisteredUsers(registeredUsersList);
+  }
 
   // check if there is a user already registered with the email
   const newRegisteredUserEmail = userRegisterForm.email;
@@ -61,19 +72,16 @@ export default function UserRegisterForm(): JSX.Element {
   const newRegisteredUserPassword = userRegisterForm.password;
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
 
-  function setRegisteredUser(user: RegisteredUser) {
-    const registeredUser = [{ userID: uuid(), ...user }];
+  function setRegisteredUser(user: UserRegisterFormState) {
+    const registeredUser = { userID: uuid(), ...user };
 
     // if there's data in local storage, then append the new data with the existing data
     if (registeredUsersLocalStorage) {
-      const combinedRegisteredUsersData = registeredUsersLocalStorage.concat(
-        registeredUser
-      );
+      setRegisteredUsers((prevState) => {
+        return [...prevState, { ...registeredUser }];
+      });
 
-      localStorage.setItem(
-        'registeredUsers',
-        JSON.stringify(combinedRegisteredUsersData)
-      );
+      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
       // if there's no data in local storage then we want to add the data
     } else {
       localStorage.setItem('registeredUsers', JSON.stringify(registeredUser));
