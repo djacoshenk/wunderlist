@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useCombobox } from 'downshift';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import * as Sentry from '@sentry/react';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurrentLocationButton';
@@ -25,7 +26,6 @@ export default function RestaurantSearchBarLocationParam({
   errorLocationParam,
 }: Props): JSX.Element {
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
   const dispatch = useDispatch();
   const {
     isOpen,
@@ -44,13 +44,13 @@ export default function RestaurantSearchBarLocationParam({
   });
 
   useEffect(() => {
-    const persistedLocationParam = JSON.parse(
-      localStorage.getItem('locationParam')
-    );
+    const persistedLocationParam = localStorage.getItem('locationParam');
 
     // persist the location param on renders
     if (persistedLocationParam) {
-      setLocationSearchParam(persistedLocationParam);
+      const persistedLocationParamParse = JSON.parse(persistedLocationParam);
+
+      setLocationSearchParam(persistedLocationParamParse);
     }
   }, [setLocationSearchParam]);
 
@@ -78,7 +78,7 @@ export default function RestaurantSearchBarLocationParam({
         return;
       }
     } catch (err) {
-      setAsyncErrorMessage(err.message);
+      Sentry.captureException(err);
     }
   }
 

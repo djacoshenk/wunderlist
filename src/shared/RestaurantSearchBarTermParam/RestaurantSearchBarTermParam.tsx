@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCombobox } from 'downshift';
 import axios from 'axios';
+import * as Sentry from '@sentry/react';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
@@ -20,7 +21,6 @@ export default function RestaurantSearchBarTermParam({
   errorTermParam,
 }: Props): JSX.Element {
   const [termSuggestions, setTermSuggestions] = useState<string[]>([]);
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
 
   const {
     isOpen,
@@ -57,7 +57,7 @@ export default function RestaurantSearchBarTermParam({
         return;
       }
     } catch (err) {
-      setAsyncErrorMessage(err);
+      Sentry.captureException(err);
     }
   }
 

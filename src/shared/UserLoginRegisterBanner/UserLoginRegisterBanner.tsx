@@ -17,13 +17,14 @@ type CurrentUser = {
 };
 
 export default function UserLoginRegisterBanner(): JSX.Element {
-  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState();
+  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<CurrentUser>();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // check if there is a current user saved in local storage
+  // check if there is a current user saved in local storage - returns a string or null
   const currentUserLocalStorage = localStorage.getItem('currentUser');
 
+  // check if there is a current user saved in local storage - returns a string or null
   if (currentUserLocalStorage) {
     const currentUserLocalStorageParse = JSON.parse(currentUserLocalStorage);
     setCurrentUserLoggedIn(currentUserLocalStorageParse);

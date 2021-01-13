@@ -49,17 +49,20 @@ export default function UserRegisterForm(): JSX.Element {
   });
   const [registeredUsers, setRegisteredUsers] = useState<
     UserRegisterFormState[]
-  >();
+  >([]);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // check if there is registeredUsers data in local storage
+  // check if there is registeredUsers data in local storage - returns a JSON string or null
   const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
 
+  // if a JSON string is returned, parse the string to a JS object
   if (registeredUsersLocalStorage) {
-    const registeredUsersList = JSON.parse(registeredUsersLocalStorage);
+    const registeredUsersLocalStorageParse = JSON.parse(
+      registeredUsersLocalStorage
+    );
 
-    setRegisteredUsers(registeredUsersList);
+    setRegisteredUsers(registeredUsersLocalStorageParse);
   }
 
   // check if there is a user already registered with the email
@@ -132,7 +135,7 @@ export default function UserRegisterForm(): JSX.Element {
 
     // check if the user email already exists
     if (registeredUsersLocalStorage) {
-      const checkEmailRegistration = registeredUsersLocalStorage.find(
+      const checkEmailRegistration = registeredUsers.find(
         (val) => val.email === newRegisteredUserEmail
       );
 
@@ -148,7 +151,7 @@ export default function UserRegisterForm(): JSX.Element {
 
     // check if the username already exists in local storage
     if (registeredUsersLocalStorage) {
-      const checkUsernameRegistration = registeredUsersLocalStorage.find(
+      const checkUsernameRegistration = registeredUsers.find(
         (val) => val.username === newRegisteredUserUsername
       );
 

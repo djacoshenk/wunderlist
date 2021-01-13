@@ -46,13 +46,23 @@ export default function UserLoginForm(): JSX.Element {
     username: '',
     password: '',
   });
+  const [registeredUsers, setRegisteredUsers] = useState<RegisteredUser[]>([]);
   const history = useHistory();
 
   const currentUserLoginUsername = userLoginForm.username;
   const currentUserLoginPassword = userLoginForm.password;
-  const registeredUsersLocalStorage: RegisteredUser[] = JSON.parse(
-    localStorage.getItem('registeredUsers')
-  );
+
+  // check if there is registeredUsers data in local storage - returns a JSON string or null
+  const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
+
+  // if a JSON string is returned, parse the string to a JS object
+  if (registeredUsersLocalStorage) {
+    const registeredUsersLocalStorageParse = JSON.parse(
+      registeredUsersLocalStorage
+    );
+
+    setRegisteredUsers(registeredUsersLocalStorageParse);
+  }
 
   function setCurrentUserLogin(user: RegisteredUser) {
     localStorage.setItem('currentUser', JSON.stringify([{ ...user }]));
@@ -73,10 +83,10 @@ export default function UserLoginForm(): JSX.Element {
     let errors = 0;
 
     if (registeredUsersLocalStorage) {
-      const checkUsernameRegistration = registeredUsersLocalStorage.find(
+      const checkUsernameRegistration = registeredUsers.find(
         (val) => val.username === currentUserLoginUsername
       );
-      const checkPasswordRegistration = registeredUsersLocalStorage.find(
+      const checkPasswordRegistration = registeredUsers.find(
         (val) => val.password === currentUserLoginPassword
       );
 
@@ -131,7 +141,7 @@ export default function UserLoginForm(): JSX.Element {
 
     // if there are no errors, then find the user's data in local storage
     if (errors === 0) {
-      const registeredUserData = registeredUsersLocalStorage.find(
+      const registeredUserData = registeredUsers.find(
         (val) =>
           val.username === currentUserLoginUsername &&
           val.password === currentUserLoginPassword

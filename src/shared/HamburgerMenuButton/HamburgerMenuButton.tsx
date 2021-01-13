@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { slide as Menu } from 'react-burger-menu';
 import { useHistory } from 'react-router-dom';
@@ -7,15 +7,29 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import './HamburgerMenuButton.css';
 
+type CurrentUser = {
+  userID: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  password: string;
+  confirm_password: string;
+};
+
 export default function HamburgerMenuButton(): JSX.Element {
+  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<CurrentUser>();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // check if there is a current user saved in local storage
-  const currentUserLocalStorage = JSON.parse(
-    localStorage.getItem('currentUser')
-  );
+  // check if there is a current user saved in local storage - returns a string or null
+  const currentUserLocalStorage = localStorage.getItem('currentUser');
 
+  // check if there is a current user saved in local storage - returns a string or null
+  if (currentUserLocalStorage) {
+    const currentUserLocalStorageParse = JSON.parse(currentUserLocalStorage);
+    setCurrentUserLoggedIn(currentUserLocalStorageParse);
+  }
   function handleUserLogout() {
     // remove current user from local storage
     localStorage.removeItem('currentUser');
@@ -35,9 +49,9 @@ export default function HamburgerMenuButton(): JSX.Element {
   return (
     <div className='menu-button-container'>
       <Menu right width={200}>
-        {currentUserLocalStorage ? (
+        {currentUserLoggedIn ? (
           <button name='logout-btn' type='button' onClick={handleUserLogout}>
-            LOGOUT
+            Logout
           </button>
         ) : (
           <Fragment>
@@ -46,14 +60,14 @@ export default function HamburgerMenuButton(): JSX.Element {
               type='button'
               onClick={() => history.push('/login')}
             >
-              LOGIN
+              Login
             </button>
             <button
               name='register-btn'
               type='button'
               onClick={() => history.push('/register')}
             >
-              REGISTER
+              Register
             </button>
           </Fragment>
         )}

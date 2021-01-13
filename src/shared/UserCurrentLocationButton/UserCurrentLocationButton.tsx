@@ -1,31 +1,34 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import * as Sentry from '@sentry/react';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 
 import styles from './UserCurrentLocationButton.module.scss';
 
-interface Error {
-  message: string;
-}
-
-interface IProps {
+type Props = {
   setLocationSearchParam: (text: string) => void;
-}
+};
 
-interface CurrentLocation {
+type CurrentLocation = {
   coords: {
     latitude: number;
     longitude: number;
   };
-}
+};
+
+type Error = {
+  code: number;
+  message: string;
+  PERMISSION_DENIED: number;
+  POSITION_UNAVAILABLE: number;
+  TIMEOUT: number;
+};
 
 export default function UserCurrentLocationButton({
   setLocationSearchParam,
-}: IProps): JSX.Element {
+}: Props): JSX.Element {
   const dispatch = useDispatch();
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
 
   function fetchUserCurrentLocation() {
     let currentUserLocation: string;
@@ -58,12 +61,12 @@ export default function UserCurrentLocationButton({
         // change the cards url link to be the current location
         dispatch(setLocationUrl(locationUrl));
       } catch (err) {
-        setAsyncErrorMessage(err.message);
+        Sentry.captureException(err);
       }
     }
 
     function error(err: Error) {
-      setAsyncErrorMessage(err.message);
+      Sentry.captureException(err);
     }
 
     navigator.geolocation.getCurrentPosition(success, error);
