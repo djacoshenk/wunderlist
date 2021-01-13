@@ -67,7 +67,7 @@ export default function RestaurantProfileCard({
           </div>
           <div className={styles['restaurant-prof-price-category']}>
             <p>
-              {place.price != null ? `${place.price} \u2022` : null}{' '}
+              {place.price && `${place.price} \u2022`}{' '}
               {place.categories
                 .map((tag) => {
                   return tag.title;
@@ -75,11 +75,11 @@ export default function RestaurantProfileCard({
                 .join(', ')}
             </p>
           </div>
-          {place.display_phone !== '' ? (
+          {place.display_phone && (
             <div className={styles['restaurant-prof-phone']}>
               <p>{place.display_phone}</p>
             </div>
-          ) : null}
+          )}
           <div className={styles['restaurant-prof-address']}>
             {place.location.display_address.map((adrs, index) => {
               return <p key={index}>{adrs}</p>;

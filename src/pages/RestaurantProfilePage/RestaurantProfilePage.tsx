@@ -1,6 +1,7 @@
 import React, { useEffect, Fragment, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 import axios from 'axios';
 
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
@@ -48,11 +49,9 @@ type LocationState = {
 };
 
 export default function RestaurantProfilePage(): JSX.Element {
-  const [place, setPlace] = useState<Place>();
-  const [reviews, setReviews] = useState<Reviews>();
+  const [place, setPlace] = useState<Place>({} as Place);
+  const [reviews, setReviews] = useState<Reviews>({} as Reviews);
   const [isLoading, setIsLoading] = useState(true);
-  const [asyncErrorMessage, setAsyncErrorMessage] = useState('');
-
   const { alias } = useParams<ParamsState>();
   const location = useLocation<LocationState>();
 
@@ -83,7 +82,8 @@ export default function RestaurantProfilePage(): JSX.Element {
         setReviews(reviewsRes.data);
         setIsLoading(false);
       } catch (err) {
-        setAsyncErrorMessage(err.message);
+        Sentry.captureException(err);
+        setIsLoading(false);
       }
     }
 

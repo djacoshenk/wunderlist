@@ -26,7 +26,9 @@ export default function GoogleMap({ place }: Props): JSX.Element {
   return (
     <div className={styles['google-map-container']}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET }}
+        bootstrapURLKeys={{
+          key: process.env.REACT_APP_GOOGLE_CLIENT_SECRET as string,
+        }}
         center={center}
         zoom={zoom}
         options={{ gestureHandling: 'greedy' }}
