@@ -2,6 +2,7 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import * as Sentry from '@sentry/react';
 
 import Header from './Header/Header';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
@@ -15,10 +16,6 @@ type ParamsState = {
   location: string;
 };
 
-type AsyncErrorsState = {
-  error: string;
-};
-
 let offset = 10;
 
 export default function RestaurantSearchPage(): JSX.Element {
@@ -26,9 +23,6 @@ export default function RestaurantSearchPage(): JSX.Element {
   const [sortByParam, setSortByParam] = useState('best_match');
   const [mapKey, setMapKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [asyncErrorMessages, setAsyncErrorMessages] = useState<
-    AsyncErrorsState[]
-  >([]);
   const params = useParams<ParamsState>();
 
   const fetchPlaces = useCallback(async ({ term, location }) => {
@@ -49,9 +43,8 @@ export default function RestaurantSearchPage(): JSX.Element {
       setPlaces(data.businesses);
       setIsLoading(false);
     } catch (err) {
-      setAsyncErrorMessages((prevState) => {
-        return [...prevState, { error: err.message }];
-      });
+      Sentry.captureException(err);
+      setIsLoading(false);
     }
   }, []);
 
@@ -81,9 +74,8 @@ export default function RestaurantSearchPage(): JSX.Element {
       });
       setMapKey(mapKey + 1);
     } catch (err) {
-      setAsyncErrorMessages((prevState) => {
-        return [...prevState, { error: err.message }];
-      });
+      Sentry.captureException(err);
+      setIsLoading(false);
     }
   }
 
@@ -108,9 +100,8 @@ export default function RestaurantSearchPage(): JSX.Element {
         setPlaces(data.businesses);
         setIsLoading(false);
       } catch (err) {
-        setAsyncErrorMessages((prevState) => {
-          return [...prevState, { error: err.message }];
-        });
+        Sentry.captureException(err);
+        setIsLoading(false);
       }
     },
     []

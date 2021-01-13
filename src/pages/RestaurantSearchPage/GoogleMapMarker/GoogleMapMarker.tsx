@@ -7,15 +7,15 @@ import { RootState } from 'store/index';
 
 import './GoogleMapMarker.scss';
 
-interface Place {
+type Place = {
   alias: string;
   name: string;
-}
+};
 
-interface IProps {
+type Props = {
   id: number;
   place: Place;
-}
+};
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -28,7 +28,7 @@ const mapIdTextStyles = {
   color: '#38b2ac',
 };
 
-export default function GoogleMapMarker({ id, place }: IProps): JSX.Element {
+export default function GoogleMapMarker({ id, place }: Props): JSX.Element {
   const { mapId } = useTypedSelector((state) => state.mapId);
   const dispatch = useDispatch();
 
@@ -45,11 +45,11 @@ export default function GoogleMapMarker({ id, place }: IProps): JSX.Element {
     >
       <i
         className={'fas fa-map-marker'}
-        style={mapId === id ? mapIdIconStyles : null}
+        style={mapId === id ? mapIdIconStyles : undefined}
         onMouseEnter={() => dispatch(setMapId(id))}
         onMouseLeave={() => dispatch(setMapId(0))}
       >
-        <p style={mapId === id ? mapIdTextStyles : null}>{id}</p>
+        <p style={mapId === id ? mapIdTextStyles : undefined}>{id}</p>
       </i>
     </Link>
   );
