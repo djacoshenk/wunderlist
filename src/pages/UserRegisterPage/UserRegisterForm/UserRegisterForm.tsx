@@ -58,11 +58,7 @@ export default function UserRegisterForm(): JSX.Element {
 
   // if a JSON string is returned, parse the string to a JS object
   if (registeredUsersLocalStorage) {
-    const registeredUsersLocalStorageParse = JSON.parse(
-      registeredUsersLocalStorage
-    );
-
-    setRegisteredUsers(registeredUsersLocalStorageParse);
+    setRegisteredUsers(JSON.parse(registeredUsersLocalStorage));
   }
 
   // check if there is a user already registered with the email

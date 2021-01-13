@@ -57,11 +57,7 @@ export default function UserLoginForm(): JSX.Element {
 
   // if a JSON string is returned, parse the string to a JS object
   if (registeredUsersLocalStorage) {
-    const registeredUsersLocalStorageParse = JSON.parse(
-      registeredUsersLocalStorage
-    );
-
-    setRegisteredUsers(registeredUsersLocalStorageParse);
+    setRegisteredUsers(JSON.parse(registeredUsersLocalStorage));
   }
 
   function setCurrentUserLogin(user: RegisteredUser) {
@@ -148,7 +144,9 @@ export default function UserLoginForm(): JSX.Element {
       );
 
       // set the current user to the existing registered data
-      setCurrentUserLogin(registeredUserData);
+      if (registeredUserData) {
+        setCurrentUserLogin(registeredUserData);
+      }
 
       // set the loading status
       dispatch(setCurrentLoadingStatus(true, 'Logging In...'));

@@ -26,8 +26,7 @@ export default function UserLoginRegisterBanner(): JSX.Element {
 
   // check if there is a current user saved in local storage - returns a string or null
   if (currentUserLocalStorage) {
-    const currentUserLocalStorageParse = JSON.parse(currentUserLocalStorage);
-    setCurrentUserLoggedIn(currentUserLocalStorageParse);
+    setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
   }
 
   function handleUserLogout() {
