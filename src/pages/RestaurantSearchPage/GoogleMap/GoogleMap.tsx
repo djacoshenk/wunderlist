@@ -1,9 +1,36 @@
 import React from 'react';
-import GoogleMapReact from 'google-map-react';
+import GoogleMapReact, { Bounds, NESWBounds, Size } from 'google-map-react';
 
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
 import styles from './GoogleMap.module.scss';
+
+type LatLngLiteral = {
+  lat: number;
+  lng: number;
+};
+
+type LatLng = (latOrLatLngLiteral: number | LatLngLiteral) => void;
+
+type GoogleMapState = {
+  map: {
+    fitBounds: (
+      bounds: NESWBounds,
+      size?: Size
+    ) => {
+      center: { lat: number; lng: number };
+      zoom: number;
+      newBounds: Bounds;
+    };
+  };
+  maps: {
+    LatLngBounds: new ([sw, ne]?: LatLng[] | LatLngLiteral[]) => void;
+    LatLng: new (
+      LatLiteral: number | LatLngLiteral,
+      LngLiteral: number | LatLngLiteral
+    ) => LatLng | LatLngLiteral;
+  };
+};
 
 type Categories = {
   title: string;
@@ -41,7 +68,7 @@ const defaultCenter = {
 const defaultZoom = 13;
 
 export default function GoogleMap({ places, mapKey }: Props): JSX.Element {
-  function getMapBounds(maps) {
+  function getMapBounds({ maps }: GoogleMapState) {
     const bounds = new maps.LatLngBounds();
 
     places.forEach((place) => {
@@ -53,7 +80,7 @@ export default function GoogleMap({ places, mapKey }: Props): JSX.Element {
     return bounds;
   }
 
-  function handleMapBounds(map, maps) {
+  function handleMapBounds({ map, maps }: GoogleMapState) {
     const bounds = getMapBounds(maps);
 
     map.fitBounds(bounds);
