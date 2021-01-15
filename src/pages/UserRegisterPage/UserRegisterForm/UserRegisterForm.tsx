@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import validator from 'validator';
@@ -8,7 +8,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
 
-type UserRegisterFormState = {
+interface UserRegisterFormState {
   [name: string]: string;
   first_name: string;
   last_name: string;
@@ -16,7 +16,7 @@ type UserRegisterFormState = {
   username: string;
   password: string;
   confirm_password: string;
-};
+}
 
 const userRegisterFormErrorValues: UserRegisterFormState = {
   first_name: 'Please provide a first name',
@@ -27,7 +27,7 @@ const userRegisterFormErrorValues: UserRegisterFormState = {
   confirm_password: 'Please confirm your password',
 };
 
-export default function UserRegisterForm(): JSX.Element {
+export default function UserRegisterForm() {
   const [
     userRegisterForm,
     setUserRegisterForm,
@@ -39,7 +39,10 @@ export default function UserRegisterForm(): JSX.Element {
     password: '',
     confirm_password: '',
   });
-  const [userRegisterFormErrors, setUserRegisterFormErrors] = useState({
+  const [
+    userRegisterFormErrors,
+    setUserRegisterFormErrors,
+  ] = useState<UserRegisterFormState>({
     first_name: '',
     last_name: '',
     email: '',
@@ -47,7 +50,7 @@ export default function UserRegisterForm(): JSX.Element {
     password: '',
     confirm_password: '',
   });
-  const [registeredUsers, setRegisteredUsers] = useState<
+  const [registeredUsersList, setRegisteredUsersList] = useState<
     UserRegisterFormState[]
   >([]);
   const dispatch = useDispatch();
@@ -57,9 +60,11 @@ export default function UserRegisterForm(): JSX.Element {
   const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
 
   // if a JSON string is returned, parse the string to a JS object
-  if (registeredUsersLocalStorage) {
-    setRegisteredUsers(JSON.parse(registeredUsersLocalStorage));
-  }
+  useEffect(() => {
+    if (registeredUsersLocalStorage) {
+      setRegisteredUsersList(JSON.parse(registeredUsersLocalStorage));
+    }
+  }, [registeredUsersLocalStorage]);
 
   // check if there is a user already registered with the email
   const newRegisteredUserEmail = userRegisterForm.email;
@@ -71,23 +76,20 @@ export default function UserRegisterForm(): JSX.Element {
   const newRegisteredUserPassword = userRegisterForm.password;
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
 
-  function setRegisteredUser(user: UserRegisterFormState) {
-    const registeredUser = { userID: uuid(), ...user };
-
+  function setRegisteredUserInStorage(user: UserRegisterFormState[]) {
     // if there's data in local storage, then append the new data with the existing data
     if (registeredUsersLocalStorage) {
-      setRegisteredUsers((prevState) => {
-        return [...prevState, { ...registeredUser }];
-      });
-
-      localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+      localStorage.setItem(
+        'registeredUsers',
+        JSON.stringify(registeredUsersList)
+      );
       // if there's no data in local storage then we want to add the data
     } else {
-      localStorage.setItem('registeredUsers', JSON.stringify(registeredUser));
+      localStorage.setItem('registeredUsers', JSON.stringify(user));
     }
 
     // regardless, we want to set the registered user data in local storage as the current user
-    localStorage.setItem('currentUser', JSON.stringify(registeredUser));
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
   function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -131,7 +133,7 @@ export default function UserRegisterForm(): JSX.Element {
 
     // check if the user email already exists
     if (registeredUsersLocalStorage) {
-      const checkEmailRegistration = registeredUsers.find(
+      const checkEmailRegistration = registeredUsersList.find(
         (val) => val.email === newRegisteredUserEmail
       );
 
@@ -147,7 +149,7 @@ export default function UserRegisterForm(): JSX.Element {
 
     // check if the username already exists in local storage
     if (registeredUsersLocalStorage) {
-      const checkUsernameRegistration = registeredUsers.find(
+      const checkUsernameRegistration = registeredUsersList.find(
         (val) => val.username === newRegisteredUserUsername
       );
 
@@ -202,8 +204,15 @@ export default function UserRegisterForm(): JSX.Element {
 
     // if there are no errors, then register the user
     if (errors === 0) {
+      const registeredUser = [{ userID: uuid(), ...userRegisterForm }];
+
+      // set the new registered users list in state
+      setRegisteredUsersList((prevState) => {
+        return [...prevState, ...registeredUser];
+      });
+
       // register the user
-      setRegisteredUser(userRegisterForm);
+      setRegisteredUserInStorage(registeredUser);
 
       // route to the home page
       history.push('/');
