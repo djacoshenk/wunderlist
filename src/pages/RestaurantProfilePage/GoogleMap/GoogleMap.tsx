@@ -5,7 +5,7 @@ import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
 import styles from './GoogleMap.module.scss';
 
-type Props = {
+interface IProps {
   place: {
     coordinates: {
       latitude: number;
@@ -13,9 +13,9 @@ type Props = {
     };
     id: string;
   };
-};
+}
 
-export default function GoogleMap({ place }: Props): JSX.Element {
+export default function GoogleMap({ place }: IProps) {
   const center = {
     lat: place.coordinates.latitude,
     lng: place.coordinates.longitude,

@@ -12,15 +12,13 @@ type Review = {
   text: string;
 };
 
-type Props = {
+interface IProps {
   reviews: {
     reviews: Review[];
   };
-};
+}
 
-export default function RestaurantProfileCardReviews({
-  reviews,
-}: Props): JSX.Element {
+export default function RestaurantProfileCardReviews({ reviews }: IProps) {
   return (
     <Fragment>
       {reviews.reviews.map((review, index) => {

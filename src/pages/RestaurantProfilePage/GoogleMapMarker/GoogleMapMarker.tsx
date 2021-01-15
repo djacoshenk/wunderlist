@@ -1,9 +1,9 @@
 import './GoogleMapMarker.scss';
 
-type Props = {
+interface IProps {
   id: string;
-};
+}
 
-export default function GoogleMapMarker({ id }: Props): JSX.Element {
+export default function GoogleMapMarker({ id }: IProps) {
   return <i className={'fas fa-map-marker-alt'} id={id}></i>;
 }

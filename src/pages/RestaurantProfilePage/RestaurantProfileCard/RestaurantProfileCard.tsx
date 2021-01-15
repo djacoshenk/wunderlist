@@ -16,7 +16,7 @@ type Review = {
   text: string;
 };
 
-type Props = {
+interface IProps {
   place: {
     photos: string[];
     name: string;
@@ -37,12 +37,9 @@ type Props = {
   reviews: {
     reviews: Review[];
   };
-};
+}
 
-export default function RestaurantProfileCard({
-  place,
-  reviews,
-}: Props): JSX.Element {
+export default function RestaurantProfileCard({ place, reviews }: IProps) {
   function formatNameForUrl() {
     return place.name.split(' ').join('+');
   }

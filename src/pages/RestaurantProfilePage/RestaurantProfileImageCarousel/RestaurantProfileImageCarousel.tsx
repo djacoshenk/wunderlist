@@ -7,13 +7,11 @@ import './RestaurantProfileImageCarousel.scss';
 
 SwiperCore.use([Navigation, Pagination]);
 
-type Props = {
+interface IProps {
   photos: string[];
-};
+}
 
-export default function RestaurantProfileImageCarousel({
-  photos,
-}: Props): JSX.Element {
+export default function RestaurantProfileImageCarousel({ photos }: IProps) {
   return (
     <Swiper
       navigation

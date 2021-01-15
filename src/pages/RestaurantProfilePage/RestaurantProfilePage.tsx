@@ -10,7 +10,7 @@ import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSear
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
-type Place = {
+interface PlaceState {
   photos: string[];
   name: string;
   rating: number;
@@ -26,31 +26,31 @@ type Place = {
     longitude: number;
   };
   id: string;
-};
+}
 
-type Review = {
+interface Review {
   user: {
     name: string;
   };
   rating: number;
   text: string;
-};
+}
 
-type Reviews = {
+interface ReviewsState {
   reviews: Review[];
-};
+}
 
-type ParamsState = {
+interface ParamsState {
   alias: string;
-};
+}
 
-type LocationState = {
+interface LocationState {
   place: string;
-};
+}
 
-export default function RestaurantProfilePage(): JSX.Element {
-  const [place, setPlace] = useState<Place>({} as Place);
-  const [reviews, setReviews] = useState<Reviews>({} as Reviews);
+export default function RestaurantProfilePage() {
+  const [place, setPlace] = useState<PlaceState>({} as PlaceState);
+  const [reviews, setReviews] = useState<ReviewsState>({} as ReviewsState);
   const [isLoading, setIsLoading] = useState(true);
   const { alias } = useParams<ParamsState>();
   const location = useLocation<LocationState>();
