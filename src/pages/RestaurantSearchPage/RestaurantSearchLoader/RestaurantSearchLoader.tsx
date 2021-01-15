@@ -4,7 +4,7 @@ import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLo
 
 import styles from './RestaurantSearchLoader.module.scss';
 
-export default function RestaurantSearchLoader(): JSX.Element {
+export default function RestaurantSearchLoader() {
   return (
     <div className={styles['main-content-bubble-loader']}>
       <RestaurantLoaderBubbles />

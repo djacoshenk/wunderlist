@@ -11,14 +11,14 @@ import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 import SortByButton from './SortByButton/SortByButton';
 
-type ParamsState = {
+interface ParamsState {
   term: string;
   location: string;
-};
+}
 
 let offset = 10;
 
-export default function RestaurantSearchPage(): JSX.Element {
+export default function RestaurantSearchPage() {
   const [places, setPlaces] = useState([]);
   const [sortByParam, setSortByParam] = useState('best_match');
   const [mapKey, setMapKey] = useState(0);
@@ -72,7 +72,9 @@ export default function RestaurantSearchPage(): JSX.Element {
       setPlaces((prevState) => {
         return prevState.concat(data.businesses);
       });
-      setMapKey(mapKey + 1);
+      setMapKey((prevState) => {
+        return prevState + 1;
+      });
     } catch (err) {
       Sentry.captureException(err);
       setIsLoading(false);

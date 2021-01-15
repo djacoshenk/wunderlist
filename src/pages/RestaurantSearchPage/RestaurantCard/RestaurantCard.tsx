@@ -7,11 +7,11 @@ import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRating
 
 import styles from './RestaurantCard.module.scss';
 
-type Categories = {
+interface Categories {
   title: string;
-};
+}
 
-type Place = {
+interface Place {
   alias: string;
   image_url: string;
   name: string;
@@ -27,14 +27,14 @@ type Place = {
   location: {
     display_address: string[];
   };
-};
+}
 
-type Props = {
+interface IProps {
   place: Place;
   index: number;
-};
+}
 
-export default function RestaurantCard({ place, index }: Props): JSX.Element {
+export default function RestaurantCard({ place, index }: IProps) {
   const dispatch = useDispatch();
 
   return (

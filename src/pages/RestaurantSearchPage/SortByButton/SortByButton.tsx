@@ -5,20 +5,20 @@ import { useParams } from 'react-router-dom';
 
 import styles from './SortByButton.module.scss';
 
-type ParamsState = {
+interface ParamsState {
   term: string;
   location: string;
-};
+}
 
-type Props = {
+interface IProps {
   setSortByParam: (text: string) => void;
   fetchPlacesSortBy: (params: ParamsState, text: string) => void;
-};
+}
 
 export default function SortByButton({
   setSortByParam,
   fetchPlacesSortBy,
-}: Props): JSX.Element {
+}: IProps) {
   const items = ['Best Match', 'Rating', 'Review Count', 'Distance'];
   const params = useParams<ParamsState>();
 

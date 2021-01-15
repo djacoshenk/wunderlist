@@ -7,15 +7,13 @@ import { RootState } from 'store/index';
 
 import './GoogleMapMarker.scss';
 
-type Place = {
-  alias: string;
-  name: string;
-};
-
-type Props = {
+interface IProps {
   id: number;
-  place: Place;
-};
+  place: {
+    alias: string;
+    name: string;
+  };
+}
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -28,7 +26,7 @@ const mapIdTextStyles = {
   color: '#38b2ac',
 };
 
-export default function GoogleMapMarker({ id, place }: Props): JSX.Element {
+export default function GoogleMapMarker({ id, place }: IProps): JSX.Element {
   const { mapId } = useTypedSelector((state) => state.mapId);
   const dispatch = useDispatch();
 
