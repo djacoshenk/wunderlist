@@ -1,13 +1,13 @@
 type LocationParam = string | undefined;
 
-type LocationUrlAction = {
+interface LocationUrlAction {
   type: typeof ACTIONS.SET_LOCATION_URL;
   payload: { url: LocationParam };
-};
+}
 
-type LocationUrlState = {
+interface LocationUrlState {
   locationUrl: LocationParam;
-};
+}
 
 const ACTIONS = {
   SET_LOCATION_URL: 'SET_LOCATION_URL',

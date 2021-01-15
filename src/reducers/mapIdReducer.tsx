@@ -2,7 +2,6 @@ interface MapIdAction {
   type: typeof ACTIONS.SET_MAP_ID;
   payload: { id: number };
 }
-
 interface MapIdState {
   mapId: number;
 }
