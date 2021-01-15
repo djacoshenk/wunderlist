@@ -5,13 +5,13 @@ import * as Sentry from '@sentry/react';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
-type TermParam = string;
+type TermParam = string | undefined;
 
-type Props = {
-  termSearchParam?: string;
+interface IProps {
+  termSearchParam: TermParam;
   setTermSearchParam: (text: TermParam) => void;
   errorTermParam: string;
-};
+}
 
 let searchId: ReturnType<typeof setTimeout>;
 
@@ -19,7 +19,7 @@ export default function RestaurantSearchBarTermParam({
   termSearchParam,
   setTermSearchParam,
   errorTermParam,
-}: Props): JSX.Element {
+}: IProps) {
   const [termSuggestions, setTermSuggestions] = useState<string[]>([]);
 
   const {
@@ -34,7 +34,7 @@ export default function RestaurantSearchBarTermParam({
     items: termSuggestions,
     inputValue: termSearchParam,
     onInputValueChange: ({ inputValue }) => {
-      onInputChange(inputValue as string);
+      onInputChange(inputValue);
     },
   });
 

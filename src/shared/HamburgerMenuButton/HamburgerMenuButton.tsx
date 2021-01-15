@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { slide as Menu } from 'react-burger-menu';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import './HamburgerMenuButton.css';
 
-type CurrentUser = {
+interface CurrentUserState {
   userID: string;
   first_name: string;
   last_name: string;
@@ -15,10 +15,13 @@ type CurrentUser = {
   username: string;
   password: string;
   confirm_password: string;
-};
+}
 
-export default function HamburgerMenuButton(): JSX.Element {
-  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<CurrentUser>();
+export default function HamburgerMenuButton() {
+  const [
+    currentUserLoggedIn,
+    setCurrentUserLoggedIn,
+  ] = useState<CurrentUserState>();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -26,10 +29,12 @@ export default function HamburgerMenuButton(): JSX.Element {
   const currentUserLocalStorage = localStorage.getItem('currentUser');
 
   // check if there is a current user saved in local storage - returns a string or null
-  if (currentUserLocalStorage) {
-    const currentUserLocalStorageParse = JSON.parse(currentUserLocalStorage);
-    setCurrentUserLoggedIn(currentUserLocalStorageParse);
-  }
+  useEffect(() => {
+    if (currentUserLocalStorage) {
+      setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
+    }
+  }, [currentUserLocalStorage]);
+
   function handleUserLogout() {
     // remove current user from local storage
     localStorage.removeItem('currentUser');

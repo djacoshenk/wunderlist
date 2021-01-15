@@ -6,28 +6,28 @@ import { setLocationUrl } from 'reducers/locationUrlReducer';
 
 import styles from './UserCurrentLocationButton.module.scss';
 
-type Props = {
+interface IProps {
   setLocationSearchParam: (text: string) => void;
-};
+}
 
-type CurrentLocation = {
+interface CurrentLocation {
   coords: {
     latitude: number;
     longitude: number;
   };
-};
+}
 
-type Error = {
+interface Error {
   code: number;
   message: string;
   PERMISSION_DENIED: number;
   POSITION_UNAVAILABLE: number;
   TIMEOUT: number;
-};
+}
 
 export default function UserCurrentLocationButton({
   setLocationSearchParam,
-}: Props): JSX.Element {
+}: IProps) {
   const dispatch = useDispatch();
 
   function fetchUserCurrentLocation() {
