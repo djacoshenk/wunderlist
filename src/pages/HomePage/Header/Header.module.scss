@@ -21,7 +21,17 @@
     padding-top: calc((100vh - 275px - 62px - 141px - 67px) / 2);
   }
 
-  h1 {
+  .header-main-logo {
+    height: 30px;
+    width: 30px;
+
+    @media (min-width: 481px) {
+      height: 64px;
+      width: 64px;
+    }
+  }
+
+  .header-main-title {
     color: #38b2ac;
     font-size: 25px;
     margin-left: calc((100vw - 16px - 16px - 30px - 30px - 113.38px) / 2);
@@ -33,23 +43,13 @@
     }
   }
 
-  h3 {
+  .header-sub-title {
     display: none;
 
     @media (min-width: 481px) {
       display: initial;
       color: #7f9cf5;
       margin-bottom: 1rem;
-    }
-  }
-
-  img {
-    height: 30px;
-    width: 30px;
-
-    @media (min-width: 481px) {
-      height: 64px;
-      width: 64px;
     }
   }
 }
