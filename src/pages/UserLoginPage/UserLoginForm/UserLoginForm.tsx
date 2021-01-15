@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -6,19 +6,13 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginForm.module.scss';
 
-type UserLoginFormState = {
+interface UserLoginFormState {
   [name: string]: string;
   username: string;
   password: string;
-};
+}
 
-type UserLoginFormErrorsState = {
-  [name: string]: string;
-  username: string;
-  password: string;
-};
-
-type RegisteredUser = {
+interface RegisteredUserState {
   userID: string;
   first_name: string;
   last_name: string;
@@ -26,14 +20,14 @@ type RegisteredUser = {
   username: string;
   password: string;
   confirm_password: string;
-};
+}
 
-const userLoginFormErrorValues: UserLoginFormErrorsState = {
+const userLoginFormErrorValues: UserLoginFormState = {
   username: 'Please provide a valid username',
   password: 'Please provide a valid password',
 };
 
-export default function UserLoginForm(): JSX.Element {
+export default function UserLoginForm() {
   const dispatch = useDispatch();
   const [userLoginForm, setUserLoginForm] = useState<UserLoginFormState>({
     username: '',
@@ -42,11 +36,13 @@ export default function UserLoginForm(): JSX.Element {
   const [
     userLoginFormErrors,
     setUserLoginFormErrors,
-  ] = useState<UserLoginFormErrorsState>({
+  ] = useState<UserLoginFormState>({
     username: '',
     password: '',
   });
-  const [registeredUsers, setRegisteredUsers] = useState<RegisteredUser[]>([]);
+  const [registeredUsers, setRegisteredUsers] = useState<RegisteredUserState[]>(
+    []
+  );
   const history = useHistory();
 
   const currentUserLoginUsername = userLoginForm.username;
@@ -56,11 +52,13 @@ export default function UserLoginForm(): JSX.Element {
   const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
 
   // if a JSON string is returned, parse the string to a JS object
-  if (registeredUsersLocalStorage) {
-    setRegisteredUsers(JSON.parse(registeredUsersLocalStorage));
-  }
+  useEffect(() => {
+    if (registeredUsersLocalStorage) {
+      setRegisteredUsers(JSON.parse(registeredUsersLocalStorage));
+    }
+  }, [registeredUsersLocalStorage]);
 
-  function setCurrentUserLogin(user: RegisteredUser) {
+  function setCurrentUserLogin(user: RegisteredUserState) {
     localStorage.setItem('currentUser', JSON.stringify([{ ...user }]));
   }
 
