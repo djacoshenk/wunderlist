@@ -17,7 +17,7 @@ import styles from './RestaurantTypeCards.module.scss';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export default function RestaurantTypeCards(): JSX.Element {
+export default function RestaurantTypeCards() {
   const { locationUrl } = useTypedSelector((state) => state.location);
   const dispatch = useDispatch();
   const [error, setError] = useState('');
@@ -65,51 +65,35 @@ export default function RestaurantTypeCards(): JSX.Element {
     }
   }, [dispatch]);
 
+  function handleOnClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+    if (locationUrl) {
+      setError('');
+    } else {
+      e.preventDefault();
+
+      setError('Please first provide a location');
+    }
+  }
+
   return (
     <div className={styles['restaurant-type-cards-main-container']}>
       <div className={styles['restaurant-type-cards-grid-container']}>
         {restaurantTypes.map((type) => {
-          if (locationUrl) {
-            return (
-              <Link
-                to={{
-                  pathname: `/search/${type.name}/${locationUrl}`,
-                }}
-                className={styles['restaurant-type-card-link']}
-                key={uuidv4()}
-                onClick={() => {
-                  setError('');
-                }}
-              >
-                <div className={styles['restaurant-type-card']}>
-                  <img src={type.icon} alt={type.alt} />
-                  <p>{type.name}</p>
-                </div>
-              </Link>
-            );
-          } else {
-            return (
-              <Link
-                to={{
-                  pathname: `/search/${type.name.toLowerCase()}/${locationUrl}`,
-                }}
-                className={styles['restaurant-type-card-link']}
-                key={uuidv4()}
-                onClick={(
-                  e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-                ) => {
-                  e.preventDefault();
-
-                  setError('Please first provide a location');
-                }}
-              >
-                <div className={styles['restaurant-type-card']}>
-                  <img src={type.icon} alt={type.alt} />
-                  <p>{type.name}</p>
-                </div>
-              </Link>
-            );
-          }
+          return (
+            <Link
+              to={{
+                pathname: `/search/${type.name}/${locationUrl}`,
+              }}
+              className={styles['restaurant-type-card-link']}
+              key={uuidv4()}
+              onClick={handleOnClick}
+            >
+              <div className={styles['restaurant-type-card']}>
+                <img src={type.icon} alt={type.alt} />
+                <p>{type.name}</p>
+              </div>
+            </Link>
+          );
         })}
       </div>
       <div className={styles['restaurant-type-cards-error-container']}>

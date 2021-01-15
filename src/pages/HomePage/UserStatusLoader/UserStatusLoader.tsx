@@ -9,7 +9,7 @@ import styles from './UserStatusLoader.module.scss';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export default function UserLogoutLoader(): JSX.Element {
+export default function UserLogoutLoader() {
   const { loadingMessage } = useTypedSelector((state) => state.loadingStatus);
 
   return (

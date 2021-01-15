@@ -13,7 +13,7 @@ import { RootState } from 'store/index';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export default function HomePage(): JSX.Element {
+export default function HomePage() {
   const { isLoading } = useTypedSelector((state) => state.loadingStatus);
 
   return (
