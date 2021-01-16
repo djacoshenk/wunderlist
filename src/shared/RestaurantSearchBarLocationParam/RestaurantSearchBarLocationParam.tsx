@@ -10,7 +10,7 @@ import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurr
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
-type LocationParam = string | undefined;
+type LocationParam = string;
 
 interface IProps {
   locationSearchParam: LocationParam;
@@ -39,7 +39,7 @@ export default function RestaurantSearchBarLocationParam({
     items: locationSuggestions,
     inputValue: locationSearchParam,
     onInputValueChange: ({ inputValue }) => {
-      onInputChange(inputValue);
+      onInputChange(inputValue as LocationParam);
     },
   });
 

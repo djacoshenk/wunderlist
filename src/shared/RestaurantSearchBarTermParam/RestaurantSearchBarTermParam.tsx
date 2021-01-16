@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/react';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
-type TermParam = string | undefined;
+type TermParam = string;
 
 interface IProps {
   termSearchParam: TermParam;
@@ -34,7 +34,7 @@ export default function RestaurantSearchBarTermParam({
     items: termSuggestions,
     inputValue: termSearchParam,
     onInputValueChange: ({ inputValue }) => {
-      onInputChange(inputValue);
+      onInputChange(inputValue as TermParam);
     },
   });
 

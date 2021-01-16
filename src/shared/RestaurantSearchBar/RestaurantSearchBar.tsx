@@ -6,7 +6,7 @@ import RestaurantSearchBarLocationParam from 'shared/RestaurantSearchBarLocation
 
 import styles from './RestaurantSearchBar.module.scss';
 
-type SearchBarParam = string | undefined;
+type SearchBarParam = string;
 
 export default function RestaurantSearchBar() {
   const [termSearchParam, setTermSearchParam] = useState<SearchBarParam>('');
