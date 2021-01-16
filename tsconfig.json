@@ -8,7 +8,6 @@
         }
       }
     ],
-    "typeRoots": ["node_modules/@types/"],
     "target": "es2018",
     "module": "esnext",
     "jsx": "react-jsx",
