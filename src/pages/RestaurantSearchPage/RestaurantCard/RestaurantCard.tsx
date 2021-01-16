@@ -53,7 +53,7 @@ export default function RestaurantCard({ place, index }: IProps) {
       >
         <div className={styles['card-container']}>
           <div className={styles['image-container']}>
-            <img src={place.image_url} alt='' />
+            <img className={styles['card-img']} src={place.image_url} alt='' />
           </div>
           <div className={styles['content-container']}>
             <div className={styles['title-row']}>

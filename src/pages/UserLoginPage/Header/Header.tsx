@@ -8,7 +8,11 @@ export default function Header() {
   return (
     <div className={styles['header-container']}>
       <Link to='/' className={styles['header-link']}>
-        <img src={globe} alt='blue-green-globe' />
+        <img
+          className={styles['header-logo']}
+          src={globe}
+          alt='blue-green-globe'
+        />
       </Link>
     </div>
   );

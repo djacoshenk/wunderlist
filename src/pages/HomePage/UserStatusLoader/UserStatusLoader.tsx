@@ -14,7 +14,7 @@ export default function UserLogoutLoader() {
 
   return (
     <div className={styles['user-status-loader']}>
-      <h3>{loadingMessage}</h3>
+      <h3 className={styles['user-status-loader-message']}>{loadingMessage}</h3>
       <div className={styles['user-status-bubble-loader']}>
         <RestaurantLoaderBubbles />
       </div>

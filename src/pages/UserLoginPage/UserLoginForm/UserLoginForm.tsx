@@ -193,7 +193,9 @@ export default function UserLoginForm() {
         <div className={styles['user-login-password-error']}>
           <p>{userLoginFormErrors.password}</p>
         </div>
-        <button type='submit'>Login</button>
+        <button className={styles['login-btn']} type='submit'>
+          Login
+        </button>
       </form>
     </div>
   );

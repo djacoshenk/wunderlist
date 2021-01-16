@@ -21,7 +21,7 @@ export default function HamburgerMenuButton() {
   const [
     currentUserLoggedIn,
     setCurrentUserLoggedIn,
-  ] = useState<CurrentUserState>();
+  ] = useState<CurrentUserState | null>(null);
   const dispatch = useDispatch();
   const history = useHistory();
 

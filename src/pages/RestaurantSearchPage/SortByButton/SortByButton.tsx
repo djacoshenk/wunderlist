@@ -63,7 +63,12 @@ export default function SortByButton({
           Sort By:
         </label>
         <div className={styles['sort-by-btn-list-container']}>
-          <button name='select' type='button' {...getToggleButtonProps()}>
+          <button
+            className={styles['sort-by-btn']}
+            name='select'
+            type='button'
+            {...getToggleButtonProps()}
+          >
             {selectedItem || 'Best Match'}
           </button>
           <ul {...getMenuProps()}>

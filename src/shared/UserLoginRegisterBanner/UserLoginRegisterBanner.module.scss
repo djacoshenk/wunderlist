@@ -13,7 +13,9 @@
     align-items: center;
     padding: 1rem;
 
-    button {
+    .logout-btn,
+    .login-btn,
+    .register-btn {
       height: 35px;
       width: 100px;
       padding: 0.5rem;
@@ -31,7 +33,7 @@
       }
     }
 
-    button[name='register-btn'] {
+    .register-btn {
       margin-left: 1rem;
     }
   }

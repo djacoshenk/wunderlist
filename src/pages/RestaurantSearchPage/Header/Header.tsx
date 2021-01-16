@@ -10,8 +10,12 @@ import styles from './Header.module.scss';
 export default function Header() {
   return (
     <div className={styles['header-container']}>
-      <Link to='/' className={styles['header-link-img']}>
-        <img src={globe} alt='blue-green-globe' />
+      <Link to='/' className={styles['header-link']}>
+        <img
+          className={styles['header-logo']}
+          src={globe}
+          alt='blue-green-globe'
+        />
       </Link>
       <UserLoginRegisterBanner />
     </div>

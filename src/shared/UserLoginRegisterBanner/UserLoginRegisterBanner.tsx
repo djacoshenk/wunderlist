@@ -6,7 +6,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
-interface CurrentUser {
+interface CurrentUserState {
   userID: string;
   first_name: string;
   last_name: string;
@@ -17,7 +17,10 @@ interface CurrentUser {
 }
 
 export default function UserLoginRegisterBanner() {
-  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<CurrentUser>();
+  const [
+    currentUserLoggedIn,
+    setCurrentUserLoggedIn,
+  ] = useState<CurrentUserState | null>(null);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -28,6 +31,8 @@ export default function UserLoginRegisterBanner() {
   useEffect(() => {
     if (currentUserLocalStorage) {
       setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
+    } else {
+      setCurrentUserLoggedIn(null);
     }
   }, [currentUserLocalStorage]);
 
@@ -51,13 +56,19 @@ export default function UserLoginRegisterBanner() {
     <div className={styles['banner-container']}>
       {currentUserLoggedIn ? (
         <div className={styles['logout-btn-container']}>
-          <button name='logout-btn' type='button' onClick={handleUserLogout}>
+          <button
+            className={styles['logout-btn']}
+            name='logout-btn'
+            type='button'
+            onClick={handleUserLogout}
+          >
             Logout
           </button>
         </div>
       ) : (
         <div className={styles['login-register-btn-container']}>
           <button
+            className={styles['login-btn']}
             name='login-btn'
             type='button'
             onClick={() => history.push('/login')}
@@ -65,6 +76,7 @@ export default function UserLoginRegisterBanner() {
             Login
           </button>
           <button
+            className={styles['register-btn']}
             name='register-btn'
             type='button'
             onClick={() => history.push('/register')}
