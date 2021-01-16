@@ -76,20 +76,25 @@ export default function UserRegisterForm() {
   const newRegisteredUserPassword = userRegisterForm.password;
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
 
-  function setRegisteredUserInStorage(user: UserRegisterFormState[]) {
+  function setRegisteredUserInStorage(user: UserRegisterFormState) {
+    const newRegisteredUser = [{ userID: uuid(), ...user }];
+
     // if there's data in local storage, then append the new data with the existing data
     if (registeredUsersLocalStorage) {
       localStorage.setItem(
         'registeredUsers',
-        JSON.stringify(registeredUsersList)
+        JSON.stringify([...registeredUsersList, ...newRegisteredUser])
       );
       // if there's no data in local storage then we want to add the data
     } else {
-      localStorage.setItem('registeredUsers', JSON.stringify(user));
+      localStorage.setItem(
+        'registeredUsers',
+        JSON.stringify(newRegisteredUser)
+      );
     }
 
     // regardless, we want to set the registered user data in local storage as the current user
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem('currentUser', JSON.stringify(newRegisteredUser));
   }
 
   function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -204,15 +209,8 @@ export default function UserRegisterForm() {
 
     // if there are no errors, then register the user
     if (errors === 0) {
-      const registeredUser = [{ userID: uuid(), ...userRegisterForm }];
-
-      // set the new registered users list in state
-      setRegisteredUsersList((prevState) => {
-        return [...prevState, ...registeredUser];
-      });
-
       // register the user
-      setRegisteredUserInStorage(registeredUser);
+      setRegisteredUserInStorage(userRegisterForm);
 
       // route to the home page
       history.push('/');
@@ -304,7 +302,9 @@ export default function UserRegisterForm() {
         <div className={styles['user-register-confirm-password-error']}>
           <p>{userRegisterFormErrors.confirm_password}</p>
         </div>
-        <button type='submit'>Register</button>
+        <button className={styles['register-btn']} type='submit'>
+          Register
+        </button>
       </form>
     </div>
   );
