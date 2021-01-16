@@ -106,7 +106,6 @@ export default function RestaurantSearchBarLocationParam({
             id='location'
             name='location'
             placeholder='Los Angeles, CA'
-            value={locationSearchParam}
             {...getInputProps()}
           />
           <UserCurrentLocationButton

@@ -83,7 +83,6 @@ export default function RestaurantSearchBarTermParam({
             id='term'
             name='term'
             placeholder='pizza, sushi, cocktail bar...'
-            value={termSearchParam}
             {...getInputProps()}
           />
           <ul {...getMenuProps()}>
