@@ -5,6 +5,10 @@ import * as Sentry from '@sentry/react';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
+interface Categories {
+  title: string;
+}
+
 type TermParam = string | undefined;
 
 interface IProps {
@@ -50,9 +54,7 @@ export default function RestaurantSearchBarTermParam({
           }
         );
 
-        setTermSuggestions(
-          data.categories.map((cat: { title: string }) => cat.title)
-        );
+        setTermSuggestions(data.categories.map((cat: Categories) => cat.title));
       } else {
         return;
       }

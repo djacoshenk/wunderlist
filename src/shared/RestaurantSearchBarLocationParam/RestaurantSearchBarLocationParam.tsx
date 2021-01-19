@@ -10,6 +10,11 @@ import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurr
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
+interface Place {
+  city: string;
+  regionCode: string;
+}
+
 type LocationParam = string | undefined;
 
 interface IProps {
@@ -70,7 +75,7 @@ export default function RestaurantSearchBarLocationParam({
         );
 
         setLocationSuggestions(
-          data.data.map((place: { city: string; regionCode: string }) => {
+          data.data.map((place: Place) => {
             return `${place.city}, ${place.regionCode}`;
           })
         );
