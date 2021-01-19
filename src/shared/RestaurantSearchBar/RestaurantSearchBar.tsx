@@ -43,6 +43,7 @@ export default function RestaurantSearchBar() {
       });
     }
 
+    // prevents empty strings from passing
     if (termSearchParam && locationSearchParam) {
       // do not persist the term param on searches
       setTermSearchParam('');
