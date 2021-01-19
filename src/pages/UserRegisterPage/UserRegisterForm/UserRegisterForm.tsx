@@ -61,7 +61,7 @@ export default function UserRegisterForm() {
 
   // if a JSON string is returned, parse the string to a JS object
   useEffect(() => {
-    if (registeredUsersLocalStorage) {
+    if (typeof registeredUsersLocalStorage === 'string') {
       setRegisteredUsersData(JSON.parse(registeredUsersLocalStorage));
     }
   }, [registeredUsersLocalStorage]);

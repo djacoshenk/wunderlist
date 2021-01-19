@@ -6,7 +6,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
-interface CurrentUserState {
+interface CurrentUserLoggedInState {
   userID: string;
   first_name: string;
   last_name: string;
@@ -20,16 +20,15 @@ export default function UserLoginRegisterBanner() {
   const [
     currentUserLoggedIn,
     setCurrentUserLoggedIn,
-  ] = useState<CurrentUserState | null>(null);
+  ] = useState<CurrentUserLoggedInState | null>(null);
   const dispatch = useDispatch();
   const history = useHistory();
 
   // check if there is a current user saved in local storage - returns a string or null
   const currentUserLocalStorage = localStorage.getItem('currentUser');
 
-  // check if there is a current user saved in local storage - returns a string or null
   useEffect(() => {
-    if (currentUserLocalStorage) {
+    if (typeof currentUserLocalStorage === 'string') {
       setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
     } else {
       setCurrentUserLoggedIn(null);
