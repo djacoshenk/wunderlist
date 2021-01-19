@@ -33,11 +33,13 @@ interface ParamsState {
   location: string;
 }
 
+type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
+
 interface IProps {
   places: Place[];
-  sortByParam: string;
+  sortByParam: SortByParam;
   mapKey: number;
-  fetchMorePlaces: (params: ParamsState, sortByParam: string) => void;
+  fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
 }
 
 export default function MainContent({

@@ -34,10 +34,12 @@ interface ParamsState {
   location: string;
 }
 
+type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
+
 interface IProps {
   places: Place[];
-  sortByParam: string;
-  fetchMorePlaces: (params: ParamsState, sortByParam: string) => void;
+  sortByParam: SortByParam;
+  fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
 }
 
 export default function RestaurantCardList({

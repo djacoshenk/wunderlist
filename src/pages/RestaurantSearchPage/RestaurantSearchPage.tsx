@@ -11,6 +11,7 @@ import MainContent from './MainContent/MainContent';
 import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
 import SortByButton from './SortByButton/SortByButton';
 
+type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
 interface ParamsState {
   term: string;
   location: string;
@@ -20,7 +21,7 @@ let offset = 10;
 
 export default function RestaurantSearchPage() {
   const [places, setPlaces] = useState([]);
-  const [sortByParam, setSortByParam] = useState('best_match');
+  const [sortByParam, setSortByParam] = useState<SortByParam>('best_match');
   const [mapKey, setMapKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams<ParamsState>();

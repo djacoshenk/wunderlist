@@ -10,9 +10,11 @@ interface ParamsState {
   location: string;
 }
 
+type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
+
 interface IProps {
-  setSortByParam: (text: string) => void;
-  fetchPlacesSortBy: (params: ParamsState, text: string) => void;
+  setSortByParam: (sortByParam: SortByParam) => void;
+  fetchPlacesSortBy: (params: ParamsState, sortByParam: SortByParam) => void;
 }
 
 export default function SortByButton({
