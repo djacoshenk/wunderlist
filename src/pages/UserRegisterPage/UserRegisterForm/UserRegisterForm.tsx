@@ -50,7 +50,7 @@ export default function UserRegisterForm() {
     password: '',
     confirm_password: '',
   });
-  const [registeredUsersList, setRegisteredUsersList] = useState<
+  const [registeredUsersData, setRegisteredUsersData] = useState<
     UserRegisterFormState[]
   >([]);
   const dispatch = useDispatch();
@@ -62,7 +62,7 @@ export default function UserRegisterForm() {
   // if a JSON string is returned, parse the string to a JS object
   useEffect(() => {
     if (registeredUsersLocalStorage) {
-      setRegisteredUsersList(JSON.parse(registeredUsersLocalStorage));
+      setRegisteredUsersData(JSON.parse(registeredUsersLocalStorage));
     }
   }, [registeredUsersLocalStorage]);
 
@@ -83,7 +83,7 @@ export default function UserRegisterForm() {
     if (registeredUsersLocalStorage) {
       localStorage.setItem(
         'registeredUsers',
-        JSON.stringify([...registeredUsersList, ...newRegisteredUser])
+        JSON.stringify([...registeredUsersData, ...newRegisteredUser])
       );
       // if there's no data in local storage then we want to add the data
     } else {
@@ -138,7 +138,7 @@ export default function UserRegisterForm() {
 
     // check if the user email already exists
     if (registeredUsersLocalStorage) {
-      const checkEmailRegistration = registeredUsersList.find(
+      const checkEmailRegistration = registeredUsersData.find(
         (val) => val.email === newRegisteredUserEmail
       );
 
@@ -154,7 +154,7 @@ export default function UserRegisterForm() {
 
     // check if the username already exists in local storage
     if (registeredUsersLocalStorage) {
-      const checkUsernameRegistration = registeredUsersList.find(
+      const checkUsernameRegistration = registeredUsersData.find(
         (val) => val.username === newRegisteredUserUsername
       );
 

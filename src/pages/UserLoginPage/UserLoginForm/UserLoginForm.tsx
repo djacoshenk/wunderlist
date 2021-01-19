@@ -40,9 +40,9 @@ export default function UserLoginForm() {
     username: '',
     password: '',
   });
-  const [registeredUsers, setRegisteredUsers] = useState<RegisteredUserState[]>(
-    []
-  );
+  const [registeredUsersData, setRegisteredUsersData] = useState<
+    RegisteredUserState[]
+  >([]);
   const history = useHistory();
 
   const currentUserLoginUsername = userLoginForm.username;
@@ -54,7 +54,7 @@ export default function UserLoginForm() {
   // if a JSON string is returned, parse the string to a JS object
   useEffect(() => {
     if (registeredUsersLocalStorage) {
-      setRegisteredUsers(JSON.parse(registeredUsersLocalStorage));
+      setRegisteredUsersData(JSON.parse(registeredUsersLocalStorage));
     }
   }, [registeredUsersLocalStorage]);
 
@@ -77,10 +77,10 @@ export default function UserLoginForm() {
     let errors = 0;
 
     if (registeredUsersLocalStorage) {
-      const checkUsernameRegistration = registeredUsers.find(
+      const checkUsernameRegistration = registeredUsersData.find(
         (val) => val.username === currentUserLoginUsername
       );
-      const checkPasswordRegistration = registeredUsers.find(
+      const checkPasswordRegistration = registeredUsersData.find(
         (val) => val.password === currentUserLoginPassword
       );
 
@@ -135,7 +135,7 @@ export default function UserLoginForm() {
 
     // if there are no errors, then find the user's data in local storage
     if (errors === 0) {
-      const registeredUserData = registeredUsers.find(
+      const registeredUserData = registeredUsersData.find(
         (val) =>
           val.username === currentUserLoginUsername &&
           val.password === currentUserLoginPassword
