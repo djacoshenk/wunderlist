@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
@@ -40,6 +40,9 @@ interface IProps {
 }
 
 export default function RestaurantProfileCard({ place, reviews }: IProps) {
+  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState(false);
+  const saveBtnRef = useRef<HTMLButtonElement | null>(null);
+
   function formatNameForUrl() {
     return place.name.split(' ').join('+');
   }
@@ -48,13 +51,32 @@ export default function RestaurantProfileCard({ place, reviews }: IProps) {
     return place.location.display_address.join(' ').split(' ').join('+');
   }
 
+  // check if there is a current user logged in
+  const currentUserLocalStorage = localStorage.getItem('currentUser');
+
+  useEffect(() => {
+    if (typeof currentUserLocalStorage === 'string') {
+      setCurrentUserLoggedIn(true);
+    }
+  }, [currentUserLocalStorage]);
+
+  function onBtnClick() {
+    if (saveBtnRef.current?.innerText === 'Save') {
+      saveBtnRef.current.innerHTML =
+        '<i class="fas fa-star" aria-hidden="true"></i><p>Saved</p>';
+    } else if (saveBtnRef.current?.innerText === 'Saved') {
+      saveBtnRef.current.innerHTML =
+        '<i class="far fa-star" aria-hidden="true"></i><p>Save</p>';
+    }
+  }
+
   return (
     <div className={styles['restaurant-prof-card']}>
       <div className={styles['restaurant-prof-main']}>
         <div className={styles['restaurant-prof-images']}>
           <RestaurantProfileImageCarousel photos={place.photos} />
         </div>
-        <div className={styles['restaurant-prof-text']}>
+        <div className={styles['restaurant-prof-text-btn']}>
           <div className={styles['restaurant-prof-title']}>
             <h3>{place.name}</h3>
           </div>
@@ -82,6 +104,18 @@ export default function RestaurantProfileCard({ place, reviews }: IProps) {
               return <p key={index}>{adrs}</p>;
             })}
           </div>
+          {currentUserLoggedIn && (
+            <div className={styles['restaurant-prof-save-btn-container']}>
+              <button
+                className={styles['restaurant-prof-save-btn']}
+                onClick={onBtnClick}
+                ref={saveBtnRef}
+              >
+                <i className='far fa-star'></i>
+                <p>Save</p>
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles['restaurant-prof-map-reviews']}>
