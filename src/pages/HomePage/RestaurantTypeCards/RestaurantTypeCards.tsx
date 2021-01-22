@@ -68,6 +68,9 @@ export default function RestaurantTypeCards() {
   function handleOnClick(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
     if (locationUrl) {
       setError('');
+
+      // set the location url local storage in order to persist
+      localStorage.setItem('locationParam', JSON.stringify(locationUrl));
     } else {
       e.preventDefault();
 
