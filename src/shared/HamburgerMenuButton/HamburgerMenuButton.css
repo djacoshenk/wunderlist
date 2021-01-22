@@ -65,7 +65,83 @@ Note: Beware of modifying this element as it can break the animations - you shou
   margin-bottom: 2rem;
 }
 
-button {
+.user-avatar-main-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-avatar-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 30px;
+  height: 100%;
+}
+
+.user-avatar-username-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.user-avatar-username-link:hover {
+  text-decoration: underline;
+}
+
+.chevron-down-btn {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  height: 19px;
+  background-color: transparent;
+  border: 0;
+}
+
+.chevron-down-btn-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  z-index: 1000;
+  text-align: center;
+}
+
+.logout-btn {
+  height: 35px;
+  width: 100px;
+  padding: 0.5rem;
+  color: #fff;
+  background-color: #667eea;
+  border: 0;
+  border-radius: 5px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 900;
+}
+
+.logout-btn:hover {
+  background-color: darken(#667eea, 5%);
+}
+
+.login-btn,
+.register-btn {
   height: 35px;
   width: 100px;
   padding: 0.5rem;
@@ -78,7 +154,9 @@ button {
   font-weight: 900;
 }
 
-button:hover {
+.logout-btn:hover,
+.login-btn:hover,
+.register-btn:hover {
   background-color: darken(#667eea, 5%);
 }
 
