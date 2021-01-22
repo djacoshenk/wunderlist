@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
@@ -41,7 +41,7 @@ interface IProps {
 
 export default function RestaurantProfileCard({ place, reviews }: IProps) {
   const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState(false);
-  const saveBtnRef = useRef<HTMLButtonElement | null>(null);
+  const [restaurantIsSaved, setRestaurantIsSaved] = useState(false);
 
   function formatNameForUrl() {
     return place.name.split(' ').join('+');
@@ -59,16 +59,6 @@ export default function RestaurantProfileCard({ place, reviews }: IProps) {
       setCurrentUserLoggedIn(true);
     }
   }, [currentUserLocalStorage]);
-
-  function onBtnClick() {
-    if (saveBtnRef.current?.innerText === 'Save') {
-      saveBtnRef.current.innerHTML =
-        '<i class="fas fa-star" aria-hidden="true"></i><p>Saved</p>';
-    } else if (saveBtnRef.current?.innerText === 'Saved') {
-      saveBtnRef.current.innerHTML =
-        '<i class="far fa-star" aria-hidden="true"></i><p>Save</p>';
-    }
-  }
 
   return (
     <div className={styles['restaurant-prof-card']}>
@@ -106,14 +96,23 @@ export default function RestaurantProfileCard({ place, reviews }: IProps) {
           </div>
           {currentUserLoggedIn && (
             <div className={styles['restaurant-prof-save-btn-container']}>
-              <button
-                className={styles['restaurant-prof-save-btn']}
-                onClick={onBtnClick}
-                ref={saveBtnRef}
-              >
-                <i className='far fa-star'></i>
-                <p>Save</p>
-              </button>
+              {restaurantIsSaved ? (
+                <button
+                  className={styles['restaurant-prof-saved-btn']}
+                  onClick={() => setRestaurantIsSaved(false)}
+                >
+                  <i className='fas fa-star'></i>
+                  <p>Saved</p>
+                </button>
+              ) : (
+                <button
+                  className={styles['restaurant-prof-save-btn']}
+                  onClick={() => setRestaurantIsSaved(true)}
+                >
+                  <i className='far fa-star'></i>
+                  <p>Save</p>
+                </button>
+              )}
             </div>
           )}
         </div>
