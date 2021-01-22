@@ -5,7 +5,78 @@
     display: initial;
   }
 
-  .logout-btn-container,
+  .user-avatar-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+
+    .avatar-user-circle-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #667eea;
+      font-size: 30px;
+      height: 100%;
+      margin-right: 0.5rem;
+    }
+
+    .user-avatar-username-link {
+      color: #667eea;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 900;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .chevron-down-btn {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      color: #667eea;
+      font-size: 16px;
+      height: 19px;
+      background-color: transparent;
+      border: 0;
+      margin-left: 0.5rem;
+    }
+
+    .chevron-down-btn-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.05);
+      position: absolute;
+      top: 50px;
+      right: 16px;
+      text-align: center;
+
+      .logout-btn {
+        height: 35px;
+        width: 100px;
+        border: 0;
+        border-radius: 5px;
+        background-color: transparent;
+        font-size: 16px;
+        font-family: 'Lato', sans-serif;
+        z-index: 1000;
+
+        &:hover {
+          background-color: #e0e7ff;
+        }
+      }
+    }
+  }
+
   .login-register-btn-container {
     display: flex;
     flex-direction: row;
@@ -13,7 +84,6 @@
     align-items: center;
     padding: 1rem;
 
-    .logout-btn,
     .login-btn,
     .register-btn {
       height: 35px;

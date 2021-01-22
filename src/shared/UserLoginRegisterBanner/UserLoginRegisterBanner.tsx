@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
-
 interface CurrentUserLoggedInState {
   userID: string;
   first_name: string;
@@ -17,10 +18,10 @@ interface CurrentUserLoggedInState {
 }
 
 export default function UserLoginRegisterBanner() {
-  const [
-    currentUserLoggedIn,
-    setCurrentUserLoggedIn,
-  ] = useState<CurrentUserLoggedInState | null>(null);
+  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<
+    CurrentUserLoggedInState[] | null
+  >(null);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -35,7 +36,7 @@ export default function UserLoginRegisterBanner() {
     }
   }, [currentUserLocalStorage]);
 
-  function handleUserLogout() {
+  function onUserLogout() {
     // remove current user from local storage
     localStorage.removeItem('currentUser');
 
@@ -51,18 +52,51 @@ export default function UserLoginRegisterBanner() {
     }, 2000);
   }
 
+  function onOutsideClick() {
+    setTimeout(() => {
+      setMenuIsOpen(false);
+    }, 0);
+  }
+
   return (
     <div className={styles['banner-container']}>
       {currentUserLoggedIn ? (
-        <div className={styles['logout-btn-container']}>
-          <button
-            className={styles['logout-btn']}
-            name='logout-btn'
-            type='button'
-            onClick={handleUserLogout}
+        <div className={styles['user-avatar-container']}>
+          <div className={styles['avatar-user-circle-container']}>
+            <i className='fas fa-user-circle'></i>
+          </div>
+          <Link
+            to={{
+              pathname: `/user/${currentUserLoggedIn[0].username}`,
+              state: {
+                place: currentUserLoggedIn[0].username,
+              },
+            }}
+            className={styles['user-avatar-username-link']}
           >
-            Logout
+            <p>{currentUserLoggedIn[0].first_name}</p>
+          </Link>
+
+          <button
+            className={styles['chevron-down-btn']}
+            onClick={() => setMenuIsOpen(!menuIsOpen)}
+          >
+            <i className='fas fa-chevron-down'></i>
           </button>
+          {menuIsOpen && (
+            <OutsideClickHandler onOutsideClick={onOutsideClick}>
+              <div className={styles['chevron-down-btn-menu']}>
+                <button
+                  className={styles['logout-btn']}
+                  name='logout-btn'
+                  type='button'
+                  onClick={onUserLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            </OutsideClickHandler>
+          )}
         </div>
       ) : (
         <div className={styles['login-register-btn-container']}>
