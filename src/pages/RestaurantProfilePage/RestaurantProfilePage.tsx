@@ -10,13 +10,15 @@ import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSear
 import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
 import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
 
-interface PlaceState {
+type Categories = { title: string };
+
+type PlaceState = {
   photos: string[];
   name: string;
   rating: number;
   review_count: number;
   price: string;
-  categories: [{ title: string }];
+  categories: Categories[];
   display_phone: string;
   location: {
     display_address: string[];
@@ -26,27 +28,27 @@ interface PlaceState {
     longitude: number;
   };
   id: string;
-}
+};
 
-interface Review {
+type Review = {
   user: {
     name: string;
   };
   rating: number;
   text: string;
-}
+};
 
-interface ReviewsState {
+type ReviewsState = {
   reviews: Review[];
-}
+};
 
-interface ParamsState {
+type ParamsState = {
   alias: string;
-}
+};
 
-interface LocationState {
+type LocationState = {
   place: string;
-}
+};
 
 export default function RestaurantProfilePage() {
   const [place, setPlace] = useState<PlaceState>({} as PlaceState);
