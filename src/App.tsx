@@ -6,6 +6,7 @@ import UserLoginPage from 'pages/UserLoginPage/UserLoginPage';
 import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
 import RestaurantSearchPage from 'pages/RestaurantSearchPage/RestaurantSearchPage';
 import RestaurantProfilePage from 'pages/RestaurantProfilePage/RestaurantProfilePage';
+import UserProfilePage from 'pages/UserProfilePage/UserProfilePage';
 
 export default function App() {
   return (
@@ -26,6 +27,9 @@ export default function App() {
           </Route>
           <Route path='/business/:alias'>
             <RestaurantProfilePage />
+          </Route>
+          <Route path='/user/:username'>
+            <UserProfilePage />
           </Route>
         </Switch>
       </BrowserRouter>
