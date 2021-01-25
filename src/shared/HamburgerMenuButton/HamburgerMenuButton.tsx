@@ -9,7 +9,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import './HamburgerMenuButton.css';
 
-interface CurrentUserLoggedInState {
+type CurrentUserLoggedInState = {
   userID: string;
   first_name: string;
   last_name: string;
@@ -17,7 +17,7 @@ interface CurrentUserLoggedInState {
   username: string;
   password: string;
   confirm_password: string;
-}
+};
 
 export default function HamburgerMenuButton() {
   const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<

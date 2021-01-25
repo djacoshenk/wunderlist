@@ -1,24 +1,12 @@
-interface LoadingStatusAction {
-  type: typeof ACTIONS.SET_LOADING_STATUS;
+type LoadingStatusAction = {
+  type: 'SET_LOADING_STATUS';
   payload: { bool: boolean; message: string };
-}
-
-interface LoadingStatusState {
-  loadingMessage: string;
-  isLoading: boolean;
-}
-
-const ACTIONS = {
-  SET_LOADING_STATUS: 'SET_LOADING_STATUS',
 };
 
 // action creator -> return value should be an action
-export function setCurrentLoadingStatus(
-  bool: boolean,
-  message: string
-): LoadingStatusAction {
+export function setCurrentLoadingStatus(bool: boolean, message: string) {
   return {
-    type: ACTIONS.SET_LOADING_STATUS,
+    type: 'SET_LOADING_STATUS',
     payload: {
       bool,
       message,
@@ -35,8 +23,8 @@ const initialState = {
 export default function currentLoadingStatusReducer(
   state = initialState,
   action: LoadingStatusAction
-): LoadingStatusState {
-  if (action.type === ACTIONS.SET_LOADING_STATUS) {
+) {
+  if (action.type === 'SET_LOADING_STATUS') {
     return {
       ...state,
       loadingMessage: action.payload.message,

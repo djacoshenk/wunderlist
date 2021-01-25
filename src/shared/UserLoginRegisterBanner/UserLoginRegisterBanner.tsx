@@ -7,7 +7,31 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
-interface CurrentUserLoggedInState {
+
+type Categories = {
+  title: string;
+};
+
+type Place = {
+  id: string;
+  alias: string;
+  image_url: string;
+  name: string;
+  rating: number;
+  review_count: number;
+  price: string;
+  categories: Categories[];
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
+};
+
+type CurrentUserLoggedInState = {
   userID: string;
   first_name: string;
   last_name: string;
@@ -15,7 +39,8 @@ interface CurrentUserLoggedInState {
   username: string;
   password: string;
   confirm_password: string;
-}
+  savedPlaces: Place[];
+};
 
 export default function UserLoginRegisterBanner() {
   const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<
@@ -69,7 +94,7 @@ export default function UserLoginRegisterBanner() {
             to={{
               pathname: `/user/${currentUserLoggedIn[0].username}`,
               state: {
-                place: currentUserLoggedIn[0].username,
+                currentUser: currentUserLoggedIn[0],
               },
             }}
             className={styles['user-avatar-username-link']}

@@ -6,11 +6,11 @@ import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLo
 
 import styles from './RestaurantCardList.module.scss';
 
-interface Categories {
+type Categories = {
   title: string;
-}
+};
 
-interface Place {
+type Place = {
   id: string;
   alias: string;
   image_url: string;
@@ -27,26 +27,26 @@ interface Place {
   location: {
     display_address: string[];
   };
-}
+};
 
-interface ParamsState {
+type ParamsState = {
   term: string;
   location: string;
-}
+};
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
 
-interface IProps {
+type Props = {
   places: Place[];
   sortByParam: SortByParam;
   fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
-}
+};
 
 export default function RestaurantCardList({
   places,
   sortByParam,
   fetchMorePlaces,
-}: IProps) {
+}: Props) {
   const params = useParams<ParamsState>();
   const obs = new IntersectionObserver(
     (entries) => {

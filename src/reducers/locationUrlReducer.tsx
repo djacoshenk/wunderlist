@@ -1,21 +1,13 @@
-type LocationParam = string | undefined;
+type LocationUrl = string | undefined;
 
-interface LocationUrlAction {
-  type: typeof ACTIONS.SET_LOCATION_URL;
-  payload: { url: LocationParam };
-}
-
-interface LocationUrlState {
-  locationUrl: LocationParam;
-}
-
-const ACTIONS = {
-  SET_LOCATION_URL: 'SET_LOCATION_URL',
+type LocationUrlAction = {
+  type: 'SET_LOCATION_URL';
+  payload: { url: LocationUrl };
 };
 
-export function setLocationUrl(url: LocationParam): LocationUrlAction {
+export function setLocationUrl(url: LocationUrl) {
   return {
-    type: ACTIONS.SET_LOCATION_URL,
+    type: 'SET_LOCATION_URL',
     payload: { url },
   };
 }
@@ -27,8 +19,8 @@ const initialState = {
 export default function locationUrlReducer(
   state = initialState,
   action: LocationUrlAction
-): LocationUrlState {
-  if (action.type === ACTIONS.SET_LOCATION_URL) {
+) {
+  if (action.type === 'SET_LOCATION_URL') {
     return { ...state, locationUrl: action.payload.url };
   } else {
     return state;

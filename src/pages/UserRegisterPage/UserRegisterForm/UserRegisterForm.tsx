@@ -8,7 +8,7 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
 
-interface UserRegisterFormState {
+type UserRegisterFormState = {
   [name: string]: string;
   first_name: string;
   last_name: string;
@@ -16,7 +16,7 @@ interface UserRegisterFormState {
   username: string;
   password: string;
   confirm_password: string;
-}
+};
 
 const userRegisterFormErrorValues: UserRegisterFormState = {
   first_name: 'Please provide a first name',
@@ -77,7 +77,7 @@ export default function UserRegisterForm() {
   const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
 
   function setRegisteredUserInStorage(user: UserRegisterFormState) {
-    const newRegisteredUser = [{ userID: uuid(), ...user }];
+    const newRegisteredUser = [{ userID: uuid(), ...user, savedPlaces: [] }];
 
     // if there's data in local storage, then append the new data with the existing data
     if (registeredUsersLocalStorage) {

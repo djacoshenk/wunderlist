@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 
 import './RestaurantRatingStars.scss';
 
-interface IProps {
+type Props = {
   rating: number;
-}
+};
 
-export default function RestaurantRatingStars({ rating }: IProps) {
+export default function RestaurantRatingStars({ rating }: Props) {
   const STARS = [0, 1, 2, 3, 4];
 
   const totalRating = STARS.map((n) => {

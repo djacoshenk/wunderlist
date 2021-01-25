@@ -6,13 +6,36 @@ import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginForm.module.scss';
 
-interface UserLoginFormState {
+type UserLoginFormState = {
   [name: string]: string;
   username: string;
   password: string;
-}
+};
 
-interface RegisteredUserState {
+type Categories = {
+  title: string;
+};
+
+type Place = {
+  id: string;
+  alias: string;
+  image_url: string;
+  name: string;
+  rating: number;
+  review_count: number;
+  price: string;
+  categories: Categories[];
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
+};
+
+type RegisteredUserState = {
   userID: string;
   first_name: string;
   last_name: string;
@@ -20,7 +43,8 @@ interface RegisteredUserState {
   username: string;
   password: string;
   confirm_password: string;
-}
+  savedPlaces: Place[];
+};
 
 const userLoginFormErrorValues: UserLoginFormState = {
   username: 'Please provide a valid username',

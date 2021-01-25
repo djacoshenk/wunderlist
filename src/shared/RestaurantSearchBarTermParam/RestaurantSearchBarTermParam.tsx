@@ -5,17 +5,17 @@ import * as Sentry from '@sentry/react';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
-interface Categories {
+type Categories = {
   title: string;
-}
+};
 
 type TermParam = string | undefined;
 
-interface IProps {
+type Props = {
   termSearchParam: TermParam;
   setTermSearchParam: (text: TermParam) => void;
   errorTermParam: string;
-}
+};
 
 let searchId: ReturnType<typeof setTimeout>;
 
@@ -23,7 +23,7 @@ export default function RestaurantSearchBarTermParam({
   termSearchParam,
   setTermSearchParam,
   errorTermParam,
-}: IProps) {
+}: Props) {
   const [termSuggestions, setTermSuggestions] = useState<string[]>([]);
 
   const {

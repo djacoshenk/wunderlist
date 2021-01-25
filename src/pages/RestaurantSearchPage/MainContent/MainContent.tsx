@@ -5,11 +5,11 @@ import RestaurantCardList from '../RestaurantCardList/RestaurantCardList';
 
 import styles from './MainContent.module.scss';
 
-interface Categories {
+type Categories = {
   title: string;
-}
+};
 
-interface Place {
+type Place = {
   id: string;
   alias: string;
   image_url: string;
@@ -26,28 +26,28 @@ interface Place {
   location: {
     display_address: string[];
   };
-}
+};
 
-interface ParamsState {
+type ParamsState = {
   term: string;
   location: string;
-}
+};
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
 
-interface IProps {
+type Props = {
   places: Place[];
   sortByParam: SortByParam;
   mapKey: number;
   fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
-}
+};
 
 export default function MainContent({
   places,
   sortByParam,
   mapKey,
   fetchMorePlaces,
-}: IProps) {
+}: Props) {
   return (
     <div className={styles['main-content-container']}>
       <GoogleMap places={places} mapKey={mapKey} />

@@ -5,11 +5,11 @@ import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
 import styles from './GoogleMap.module.scss';
 
-interface Categories {
+type Categories = {
   title: string;
-}
+};
 
-interface Place {
+type Place = {
   id: string;
   alias: string;
   image_url: string;
@@ -26,12 +26,12 @@ interface Place {
   location: {
     display_address: string[];
   };
-}
+};
 
-interface IProps {
+type Props = {
   places: Place[];
   mapKey: number;
-}
+};
 
 const defaultCenter = {
   lat: 0,
@@ -40,7 +40,7 @@ const defaultCenter = {
 
 const defaultZoom = 13;
 
-export default function GoogleMap({ places, mapKey }: IProps) {
+export default function GoogleMap({ places, mapKey }: Props) {
   function getMapBounds(maps: any) {
     const bounds = new maps.LatLngBounds();
 

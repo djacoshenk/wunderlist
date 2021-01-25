@@ -15,8 +15,8 @@ const store = createStore(rootReducer, composeWithDevTools());
 
 export default store;
 
-export interface RootState {
+export type RootState = {
   loadingStatus: ReturnType<typeof currentLoadingStatusReducer>;
   location: ReturnType<typeof locationUrlReducer>;
   mapId: ReturnType<typeof mapIdReducer>;
-}
+};

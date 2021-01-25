@@ -8,6 +8,8 @@ import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/Restau
 
 import styles from './RestaurantProfileCard.module.scss';
 
+type Categories = { title: string };
+
 type Review = {
   user: {
     name: string;
@@ -16,14 +18,14 @@ type Review = {
   text: string;
 };
 
-interface IProps {
+type Props = {
   place: {
     photos: string[];
     name: string;
     rating: number;
     review_count: number;
     price: string;
-    categories: [{ title: string }];
+    categories: Categories[];
     display_phone: string;
     location: {
       display_address: string[];
@@ -37,10 +39,42 @@ interface IProps {
   reviews: {
     reviews: Review[];
   };
-}
+};
 
-export default function RestaurantProfileCard({ place, reviews }: IProps) {
-  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState(false);
+type Place = {
+  id: string;
+  alias: string;
+  image_url: string;
+  name: string;
+  rating: number;
+  review_count: number;
+  price: string;
+  categories: Categories[];
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
+};
+
+type CurrentUserLoggedInState = {
+  userID: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  username: string;
+  password: string;
+  confirm_password: string;
+  savedPlaces: Place[];
+};
+
+export default function RestaurantProfileCard({ place, reviews }: Props) {
+  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<
+    CurrentUserLoggedInState[] | null
+  >(null);
   const [restaurantIsSaved, setRestaurantIsSaved] = useState(false);
 
   function formatNameForUrl() {
@@ -56,7 +90,9 @@ export default function RestaurantProfileCard({ place, reviews }: IProps) {
 
   useEffect(() => {
     if (typeof currentUserLocalStorage === 'string') {
-      setCurrentUserLoggedIn(true);
+      setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
+    } else {
+      setCurrentUserLoggedIn(null);
     }
   }, [currentUserLocalStorage]);
 

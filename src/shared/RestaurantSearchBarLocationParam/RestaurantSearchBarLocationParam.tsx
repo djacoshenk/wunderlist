@@ -10,18 +10,18 @@ import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurr
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
-interface Place {
+type Place = {
   city: string;
   regionCode: string;
-}
+};
 
 type LocationParam = string | undefined;
 
-interface IProps {
+type Props = {
   locationSearchParam: LocationParam;
   setLocationSearchParam: (text: LocationParam) => void;
   errorLocationParam: string;
-}
+};
 
 let searchId: ReturnType<typeof setTimeout>;
 
@@ -29,7 +29,7 @@ export default function RestaurantSearchBarLocationParam({
   locationSearchParam,
   setLocationSearchParam,
   errorLocationParam,
-}: IProps) {
+}: Props) {
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const dispatch = useDispatch();
   const {

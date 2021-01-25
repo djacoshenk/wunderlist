@@ -1,18 +1,11 @@
-interface MapIdAction {
-  type: typeof ACTIONS.SET_MAP_ID;
+type MapIdAction = {
+  type: 'SET_MAP_ID';
   payload: { id: number };
-}
-interface MapIdState {
-  mapId: number;
-}
-
-const ACTIONS = {
-  SET_MAP_ID: 'SET_MAP_ID',
 };
 
-export function setMapId(id: number): MapIdAction {
+export function setMapId(id: number) {
   return {
-    type: ACTIONS.SET_MAP_ID,
+    type: 'SET_MAP_ID',
     payload: { id },
   };
 }
@@ -24,8 +17,8 @@ const initialState = {
 export default function mapIdReducer(
   state = initialState,
   action: MapIdAction
-): MapIdState {
-  if (action.type === ACTIONS.SET_MAP_ID) {
+) {
+  if (action.type === 'SET_MAP_ID') {
     return { ...state, mapId: action.payload.id };
   } else {
     return state;

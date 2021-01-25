@@ -5,15 +5,15 @@ import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLo
 
 import styles from './RestaurantProfileLoader.module.scss';
 
-interface IProps {
+type Props = {
   name: string;
-}
+};
 
-interface LocationState {
+type LocationState = {
   place: string;
-}
+};
 
-export default function RestaurantProfileLoader({ name }: IProps) {
+export default function RestaurantProfileLoader({ name }: Props) {
   const location = useLocation<LocationState>();
 
   let headerText: JSX.Element | null;
