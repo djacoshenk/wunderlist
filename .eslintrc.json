@@ -44,7 +44,8 @@
     "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/no-use-before-define": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "no-use-before-define": "off"
   },
   "settings": {
     "react": {
