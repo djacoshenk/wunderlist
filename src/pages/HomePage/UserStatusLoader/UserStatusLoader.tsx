@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector, TypedUseSelectorHook } from 'react-redux';
 
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';

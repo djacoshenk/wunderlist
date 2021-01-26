@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -10,10 +10,6 @@ type UserLoginFormState = {
   [name: string]: string;
   username: string;
   password: string;
-};
-
-type Categories = {
-  title: string;
 };
 
 type Place = {
@@ -33,6 +29,10 @@ type Place = {
   location: {
     display_address: string[];
   };
+};
+
+type Categories = {
+  title: string;
 };
 
 type RegisteredUserState = {

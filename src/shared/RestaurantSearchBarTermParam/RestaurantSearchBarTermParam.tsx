@@ -5,16 +5,16 @@ import * as Sentry from '@sentry/react';
 
 import styles from './RestaurantSearchBarTermParam.module.scss';
 
-type Categories = {
-  title: string;
-};
-
-type TermParam = string | undefined;
-
 type Props = {
   termSearchParam: TermParam;
   setTermSearchParam: (text: TermParam) => void;
   errorTermParam: string;
+};
+
+type TermParam = string | undefined;
+
+type Categories = {
+  title: string;
 };
 
 let searchId: ReturnType<typeof setTimeout>;

@@ -1,12 +1,13 @@
-import React from 'react';
-
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantCardList from '../RestaurantCardList/RestaurantCardList';
 
 import styles from './MainContent.module.scss';
 
-type Categories = {
-  title: string;
+type Props = {
+  places: Place[];
+  sortByParam: SortByParam;
+  mapKey: number;
+  fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
 };
 
 type Place = {
@@ -28,18 +29,15 @@ type Place = {
   };
 };
 
-type ParamsState = {
-  term: string;
-  location: string;
+type Categories = {
+  title: string;
 };
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
 
-type Props = {
-  places: Place[];
-  sortByParam: SortByParam;
-  mapKey: number;
-  fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
+type ParamsState = {
+  term: string;
+  location: string;
 };
 
 export default function MainContent({

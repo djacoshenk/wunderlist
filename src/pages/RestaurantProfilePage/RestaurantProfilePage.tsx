@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
 import * as Sentry from '@sentry/react';
@@ -13,21 +13,23 @@ import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard
 type Categories = { title: string };
 
 type PlaceState = {
+  id: string;
+  alias: string;
   photos: string[];
+  image_url: string;
   name: string;
   rating: number;
   review_count: number;
   price: string;
   categories: Categories[];
-  display_phone: string;
-  location: {
-    display_address: string[];
-  };
   coordinates: {
     latitude: number;
     longitude: number;
   };
-  id: string;
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
 };
 
 type Review = {

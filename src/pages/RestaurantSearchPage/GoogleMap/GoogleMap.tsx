@@ -1,12 +1,11 @@
-import React from 'react';
-
 import GoogleMapReact from 'google-map-react';
 import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
 import styles from './GoogleMap.module.scss';
 
-type Categories = {
-  title: string;
+type Props = {
+  places: Place[];
+  mapKey: number;
 };
 
 type Place = {
@@ -28,9 +27,8 @@ type Place = {
   };
 };
 
-type Props = {
-  places: Place[];
-  mapKey: number;
+type Categories = {
+  title: string;
 };
 
 const defaultCenter = {

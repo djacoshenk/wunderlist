@@ -1,8 +1,14 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 
 import styles from './RestaurantProfileCardReviews.module.scss';
+
+type Props = {
+  reviews: {
+    reviews: Review[];
+  };
+};
 
 type Review = {
   user: {
@@ -10,12 +16,6 @@ type Review = {
   };
   rating: number;
   text: string;
-};
-
-type Props = {
-  reviews: {
-    reviews: Review[];
-  };
 };
 
 export default function RestaurantProfileCardReviews({ reviews }: Props) {

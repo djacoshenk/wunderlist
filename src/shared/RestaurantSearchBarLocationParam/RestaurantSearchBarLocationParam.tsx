@@ -10,17 +10,17 @@ import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurr
 
 import styles from './RestaurantSearchBarLocationParam.module.scss';
 
-type Place = {
-  city: string;
-  regionCode: string;
-};
-
-type LocationParam = string | undefined;
-
 type Props = {
   locationSearchParam: LocationParam;
   setLocationSearchParam: (text: LocationParam) => void;
   errorLocationParam: string;
+};
+
+type LocationParam = string | undefined;
+
+type Place = {
+  city: string;
+  regionCode: string;
 };
 
 let searchId: ReturnType<typeof setTimeout>;

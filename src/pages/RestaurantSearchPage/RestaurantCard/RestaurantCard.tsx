@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -7,8 +7,9 @@ import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRating
 
 import styles from './RestaurantCard.module.scss';
 
-type Categories = {
-  title: string;
+type Props = {
+  place: Place;
+  index: number;
 };
 
 type Place = {
@@ -29,9 +30,8 @@ type Place = {
   };
 };
 
-type Props = {
-  place: Place;
-  index: number;
+type Categories = {
+  title: string;
 };
 
 export default function RestaurantCard({ place, index }: Props) {

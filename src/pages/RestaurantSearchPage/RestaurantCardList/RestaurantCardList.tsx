@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import RestaurantCard from '../RestaurantCard/RestaurantCard';
@@ -6,8 +6,10 @@ import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLo
 
 import styles from './RestaurantCardList.module.scss';
 
-type Categories = {
-  title: string;
+type Props = {
+  places: Place[];
+  sortByParam: SortByParam;
+  fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
 };
 
 type Place = {
@@ -29,18 +31,16 @@ type Place = {
   };
 };
 
+type Categories = {
+  title: string;
+};
+
 type ParamsState = {
   term: string;
   location: string;
 };
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
-
-type Props = {
-  places: Place[];
-  sortByParam: SortByParam;
-  fetchMorePlaces: (params: ParamsState, sortByParam: SortByParam) => void;
-};
 
 export default function RestaurantCardList({
   places,
