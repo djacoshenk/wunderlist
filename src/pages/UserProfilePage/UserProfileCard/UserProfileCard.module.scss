@@ -1,0 +1,64 @@
+.user-profile-card-main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+
+  .user-profile-card-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    height: auto;
+    width: auto;
+    border: 1px solid #edf2f7;
+    border-radius: 10px;
+    transition: all 0.5s;
+    background-color: #f3f4f6;
+
+    &:hover {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  .user-profile-card-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    padding-right: 1rem;
+
+    i {
+      font-size: 74px;
+    }
+  }
+
+  .user-profile-card-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    font-size: 24px;
+    font-weight: 900;
+
+    .user-profile-card-name {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-bottom: 1rem;
+    }
+
+    .user-profile-card-saved-places {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      p {
+        padding-left: 0.5rem;
+      }
+    }
+  }
+}

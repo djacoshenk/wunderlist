@@ -1,0 +1,26 @@
+.user-saved-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 1fr);
+  grid-gap: 1rem;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  overflow-y: scroll;
+  padding: 1rem 0rem;
+
+  @media (min-width: 481px) {
+    grid-template-columns: repeat(auto-fit, 375px);
+  }
+
+  @media (min-width: 769px) {
+    grid-template-columns: repeat(auto-fit, 500px);
+  }
+}
+
+.user-saved-cards-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem;
+}
