@@ -62,6 +62,29 @@ export default function UserLoginRegisterBanner() {
   }, [currentUserLocalStorage]);
 
   function onUserLogout() {
+    const currentUserLocalStorage = localStorage.getItem('currentUser');
+    const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
+
+    if (currentUserLocalStorage && registeredUsersLocalStorage) {
+      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
+        currentUserLocalStorage
+      );
+      const currentUserId = currentUserData[0].userID;
+
+      const registeredUserData: CurrentUserLoggedInState[] = JSON.parse(
+        registeredUsersLocalStorage
+      );
+
+      const updatedRegisteredUserData = registeredUserData.map((user) =>
+        user.userID === currentUserId ? currentUserData[0] : user
+      );
+
+      localStorage.setItem(
+        'registeredUsers',
+        JSON.stringify(updatedRegisteredUserData)
+      );
+    }
+
     // remove current user from local storage
     localStorage.removeItem('currentUser');
 
@@ -93,9 +116,7 @@ export default function UserLoginRegisterBanner() {
           <Link
             to={{
               pathname: `/user/${currentUserLoggedIn[0].username}`,
-              state: {
-                currentUser: currentUserLoggedIn[0],
-              },
+              state: currentUserLoggedIn[0],
             }}
             className={styles['user-avatar-username-link']}
           >
