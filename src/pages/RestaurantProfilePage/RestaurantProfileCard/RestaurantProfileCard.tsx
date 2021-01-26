@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
@@ -8,34 +8,8 @@ import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/Restau
 
 import styles from './RestaurantProfileCard.module.scss';
 
-type Categories = { title: string };
-
-type Review = {
-  user: {
-    name: string;
-  };
-  rating: number;
-  text: string;
-};
-
 type Props = {
-  place: {
-    photos: string[];
-    name: string;
-    rating: number;
-    review_count: number;
-    price: string;
-    categories: Categories[];
-    display_phone: string;
-    location: {
-      display_address: string[];
-    };
-    coordinates: {
-      latitude: number;
-      longitude: number;
-    };
-    id: string;
-  };
+  place: Place;
   reviews: {
     reviews: Review[];
   };
@@ -44,6 +18,7 @@ type Props = {
 type Place = {
   id: string;
   alias: string;
+  photos: string[];
   image_url: string;
   name: string;
   rating: number;
@@ -58,6 +33,16 @@ type Place = {
   location: {
     display_address: string[];
   };
+};
+
+type Categories = { title: string };
+
+type Review = {
+  user: {
+    name: string;
+  };
+  rating: number;
+  text: string;
 };
 
 type CurrentUserLoggedInState = {
@@ -90,11 +75,72 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
 
   useEffect(() => {
     if (typeof currentUserLocalStorage === 'string') {
+      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
+        currentUserLocalStorage
+      );
+
+      const currentUserSavedPlaces = currentUserData[0].savedPlaces;
+
+      // loop through the current user's saved places and determine if the current restaurant is already saved
+      // if it's already saved, then set it as being saved
+      for (let i = 0; i < currentUserSavedPlaces.length; i++) {
+        if (currentUserSavedPlaces[i].id === place.id) {
+          setRestaurantIsSaved(true);
+
+          break;
+        }
+      }
+
       setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
     } else {
       setCurrentUserLoggedIn(null);
     }
-  }, [currentUserLocalStorage]);
+  }, [currentUserLocalStorage, place.id]);
+
+  function saveRestaurantOnClick(place: Place) {
+    if (typeof currentUserLocalStorage === 'string') {
+      setRestaurantIsSaved(true);
+
+      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
+        currentUserLocalStorage
+      );
+
+      const currentUserSavedPlaces = currentUserData[0].savedPlaces;
+      const updatedSavedPlaces = [...currentUserSavedPlaces, place];
+      const updatedCurrentUserState = [
+        { ...currentUserData[0], savedPlaces: updatedSavedPlaces },
+      ];
+
+      localStorage.setItem(
+        'currentUser',
+        JSON.stringify(updatedCurrentUserState)
+      );
+    }
+  }
+
+  function unsaveRestaurantOnClick(place: Place) {
+    if (typeof currentUserLocalStorage === 'string') {
+      setRestaurantIsSaved(false);
+
+      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
+        currentUserLocalStorage
+      );
+
+      const currentUserSavedPlaces = currentUserData[0].savedPlaces;
+      const updatedSavedPlaces = currentUserSavedPlaces.filter(
+        (res) => res.id !== place.id
+      );
+
+      const updatedCurrentUserState = [
+        { ...currentUserData[0], savedPlaces: updatedSavedPlaces },
+      ];
+
+      localStorage.setItem(
+        'currentUser',
+        JSON.stringify(updatedCurrentUserState)
+      );
+    }
+  }
 
   return (
     <div className={styles['restaurant-prof-card']}>
@@ -135,7 +181,7 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
               {restaurantIsSaved ? (
                 <button
                   className={styles['restaurant-prof-saved-btn']}
-                  onClick={() => setRestaurantIsSaved(false)}
+                  onClick={() => unsaveRestaurantOnClick(place)}
                 >
                   <i className='fas fa-star'></i>
                   <p>Saved</p>
@@ -143,7 +189,7 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
               ) : (
                 <button
                   className={styles['restaurant-prof-save-btn']}
-                  onClick={() => setRestaurantIsSaved(true)}
+                  onClick={() => saveRestaurantOnClick(place)}
                 >
                   <i className='far fa-star'></i>
                   <p>Save</p>
