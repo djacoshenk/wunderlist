@@ -61,20 +61,10 @@ export default function UserRegisterForm() {
 
   // if a JSON string is returned, parse the string to a JS object
   useEffect(() => {
-    if (typeof registeredUsersLocalStorage === 'string') {
+    if (registeredUsersLocalStorage) {
       setRegisteredUsersData(JSON.parse(registeredUsersLocalStorage));
     }
   }, [registeredUsersLocalStorage]);
-
-  // check if there is a user already registered with the email
-  const newRegisteredUserEmail = userRegisterForm.email;
-
-  // check if there is a user already registered with the username
-  const newRegisteredUserUsername = userRegisterForm.username;
-
-  // check if the provided passwords are the same
-  const newRegisteredUserPassword = userRegisterForm.password;
-  const newRegisteredUserConfirmPassword = userRegisterForm.confirm_password;
 
   function setRegisteredUserInStorage(user: UserRegisterFormState) {
     const newRegisteredUser = [{ userID: uuid(), ...user, savedPlaces: [] }];
@@ -120,8 +110,8 @@ export default function UserRegisterForm() {
     }
 
     // check if the email provided is in fact an email
-    if (newRegisteredUserEmail) {
-      if (validator.isEmail(newRegisteredUserEmail)) {
+    if (userRegisterForm.email) {
+      if (validator.isEmail(userRegisterForm.email)) {
         setUserRegisterFormErrors((prevState) => ({
           ...prevState,
           email: '',
@@ -139,7 +129,7 @@ export default function UserRegisterForm() {
     // check if the user email already exists
     if (registeredUsersLocalStorage) {
       const checkEmailRegistration = registeredUsersData.find(
-        (val) => val.email === newRegisteredUserEmail
+        (val) => val.email === userRegisterForm.email
       );
 
       if (checkEmailRegistration) {
@@ -155,7 +145,7 @@ export default function UserRegisterForm() {
     // check if the username already exists in local storage
     if (registeredUsersLocalStorage) {
       const checkUsernameRegistration = registeredUsersData.find(
-        (val) => val.username === newRegisteredUserUsername
+        (val) => val.username === userRegisterForm.username
       );
 
       if (checkUsernameRegistration) {
@@ -169,7 +159,7 @@ export default function UserRegisterForm() {
     }
 
     // check if the two passwords are the same
-    if (newRegisteredUserPassword === newRegisteredUserConfirmPassword) {
+    if (userRegisterForm.password === userRegisterForm.confirm_password) {
       setUserRegisterFormErrors((prevState) => ({
         ...prevState,
       }));
@@ -184,9 +174,9 @@ export default function UserRegisterForm() {
     }
 
     // check if the password matches the password constraints
-    if (newRegisteredUserPassword) {
+    if (userRegisterForm.password) {
       if (
-        validator.isStrongPassword(newRegisteredUserPassword, {
+        validator.isStrongPassword(userRegisterForm.password, {
           minLength: 10,
           minLowercase: 0,
           minUppercase: 0,
