@@ -60,8 +60,7 @@ export default function RestaurantTypeCards() {
 
     // persist the location param on renders
     if (persistedLocationParam) {
-      const persistedLocationParamParse = JSON.parse(persistedLocationParam);
-      dispatch(setLocationUrl(persistedLocationParamParse));
+      dispatch(setLocationUrl(JSON.parse(persistedLocationParam)));
     }
   }, [dispatch]);
 
