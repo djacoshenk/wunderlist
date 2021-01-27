@@ -69,9 +69,6 @@ export default function UserLoginForm() {
   >([]);
   const history = useHistory();
 
-  const currentUserLoginUsername = userLoginForm.username;
-  const currentUserLoginPassword = userLoginForm.password;
-
   // check if there is registeredUsers data in local storage - returns a JSON string or null
   const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
 
@@ -81,10 +78,6 @@ export default function UserLoginForm() {
       setRegisteredUsersData(JSON.parse(registeredUsersLocalStorage));
     }
   }, [registeredUsersLocalStorage]);
-
-  function setCurrentUserLogin(user: RegisteredUserState) {
-    localStorage.setItem('currentUser', JSON.stringify([{ ...user }]));
-  }
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -102,10 +95,10 @@ export default function UserLoginForm() {
 
     if (registeredUsersLocalStorage) {
       const checkUsernameRegistration = registeredUsersData.find(
-        (val) => val.username === currentUserLoginUsername
+        (val) => val.username === userLoginForm.username
       );
       const checkPasswordRegistration = registeredUsersData.find(
-        (val) => val.password === currentUserLoginPassword
+        (val) => val.password === userLoginForm.password
       );
 
       if (checkUsernameRegistration) {
@@ -161,13 +154,16 @@ export default function UserLoginForm() {
     if (errors === 0) {
       const registeredUserData = registeredUsersData.find(
         (val) =>
-          val.username === currentUserLoginUsername &&
-          val.password === currentUserLoginPassword
+          val.username === userLoginForm.username &&
+          val.password === userLoginForm.password
       );
 
       // set the current user to the existing registered data
       if (registeredUserData) {
-        setCurrentUserLogin(registeredUserData);
+        localStorage.setItem(
+          'currentUser',
+          JSON.stringify([{ ...registeredUserData }])
+        );
       }
 
       // set the loading status
