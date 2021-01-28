@@ -10,9 +10,9 @@ export default function Header() {
         alt='blue-green-globe'
       />
       <h1 className={styles['header-main-title']}>wunderlist</h1>
-      <h3 className={styles['header-sub-title']}>
+      <h2 className={styles['header-sub-title']}>
         find and save your new favorite place
-      </h3>
+      </h2>
     </div>
   );
 }
