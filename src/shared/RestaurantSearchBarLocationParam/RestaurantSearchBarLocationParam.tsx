@@ -60,10 +60,10 @@ export default function RestaurantSearchBarLocationParam({
   }, [setLocationSearchParam]);
 
   async function fetchLocationSuggestions(text: LocationParam) {
-    dispatch(setLocationUrl(text));
+    if (text) {
+      dispatch(setLocationUrl(text));
 
-    try {
-      if (text) {
+      try {
         const { data } = await axios.get(
           `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?limit=3&namePrefix=${text}&countryIds=US`,
           {
@@ -79,11 +79,11 @@ export default function RestaurantSearchBarLocationParam({
             return `${place.city}, ${place.regionCode}`;
           })
         );
-      } else {
-        return;
+      } catch (err) {
+        Sentry.captureException(err);
       }
-    } catch (err) {
-      Sentry.captureException(err);
+    } else {
+      return;
     }
   }
 

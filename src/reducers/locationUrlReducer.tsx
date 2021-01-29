@@ -1,11 +1,9 @@
-type LocationUrl = string | undefined;
-
 type LocationUrlAction = {
   type: 'SET_LOCATION_URL';
-  payload: { url: LocationUrl };
+  payload: { url: string };
 };
 
-export function setLocationUrl(url: LocationUrl) {
+export function setLocationUrl(url: string) {
   return {
     type: 'SET_LOCATION_URL',
     payload: { url },
