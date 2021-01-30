@@ -33,7 +33,10 @@
     "jest",
     "react-hooks",
     "import",
-    "jsx-a11y"
+    "jsx-a11y",
+    "jest-dom",
+    "testing-library",
+    "prettier"
   ],
   "rules": {
     "no-console": 1,
