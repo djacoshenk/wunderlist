@@ -1,4 +1,4 @@
-type LoadingStatusAction = {
+export type LoadingStatusAction = {
   type: 'SET_LOADING_STATUS';
   payload: { bool: boolean; message: string };
 };
