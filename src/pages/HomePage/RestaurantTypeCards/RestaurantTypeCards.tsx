@@ -99,7 +99,11 @@ export default function RestaurantTypeCards() {
         })}
       </div>
       <div className={styles['restaurant-type-cards-error-container']}>
-        <p>{error}</p>
+        {error && (
+          <p aria-label={error} role='alert'>
+            {error}
+          </p>
+        )}
       </div>
     </div>
   );

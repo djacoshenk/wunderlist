@@ -36,15 +36,39 @@ test('user clicks card without a location url and error message appears', () => 
   );
 
   // error message should be null
-  expect(screen.queryByText(/please first provide a location/i)).toBeNull();
+  expect(
+    screen.queryByRole('alert', {
+      name: /please first provide a location/i,
+    })
+  ).toBeNull();
 
   // user clicks card without location url
   userEvent.click(screen.getByRole('link', { name: /burgers/i }));
 
   // error message appears
   expect(
-    screen.getByText(/please first provide a location/i)
+    screen.getByRole('alert', { name: /please first provide a location/i })
   ).toBeInTheDocument();
+});
+
+test('location url is set from local storage', () => {
+  // set the location param in storage
+  localStorage.setItem('locationParam', JSON.stringify('Los Angeles, CA'));
+
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <RestaurantTypeCards />
+      </BrowserRouter>
+    </Provider>
+  );
+
+  // after the user clicks on link, error message should be null
+  userEvent.click(screen.getByRole('link', { name: /burgers/i }));
+
+  expect(
+    screen.queryByRole('alert', { name: /please first provide a location/i })
+  ).toBeNull();
 });
 
 test('component is accessible', async () => {
@@ -55,6 +79,7 @@ test('component is accessible', async () => {
       </BrowserRouter>
     </Provider>
   );
+  const results = await axe(container);
 
-  expect(await axe(container)).toHaveNoViolations();
+  expect(results).toHaveNoViolations();
 });
