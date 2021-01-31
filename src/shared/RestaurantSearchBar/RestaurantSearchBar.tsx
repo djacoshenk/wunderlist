@@ -75,7 +75,11 @@ export default function RestaurantSearchBar() {
           setLocationSearchParam={setLocationSearchParam}
           errorLocationParam={errors.location}
         />
-        <button className={styles['search-bar-search-button']} type='submit'>
+        <button
+          aria-label='search'
+          className={styles['search-bar-search-button']}
+          type='submit'
+        >
           <i className={'fas fa-search'}></i>
         </button>
       </form>

@@ -55,8 +55,6 @@ export default function RestaurantSearchBarTermParam({
         );
 
         setTermSuggestions(data.categories.map((cat: Categories) => cat.title));
-      } else {
-        return;
       }
     } catch (err) {
       Sentry.captureException(err);
@@ -106,10 +104,15 @@ export default function RestaurantSearchBarTermParam({
           </ul>
         </div>
       </div>
+
       <div
         className={styles['restaurant-search-bar-term-param-error-container']}
       >
-        <p>{errorTermParam}</p>
+        {errorTermParam && (
+          <p aria-label={errorTermParam} role='alert'>
+            {errorTermParam}
+          </p>
+        )}
       </div>
     </div>
   );

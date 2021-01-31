@@ -82,8 +82,6 @@ export default function RestaurantSearchBarLocationParam({
       } catch (err) {
         Sentry.captureException(err);
       }
-    } else {
-      return;
     }
   }
 
@@ -140,7 +138,11 @@ export default function RestaurantSearchBarLocationParam({
           styles['restaurant-search-bar-location-param-error-container']
         }
       >
-        <p>{errorLocationParam}</p>
+        {errorLocationParam && (
+          <p aria-label={errorLocationParam} role='alert'>
+            {errorLocationParam}
+          </p>
+        )}
       </div>
     </div>
   );
