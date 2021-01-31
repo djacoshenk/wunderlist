@@ -52,6 +52,7 @@ export default function UserLoginRegisterBanner() {
 
   // check if there is a current user saved in local storage - returns a string or null
   const currentUserLocalStorage = localStorage.getItem('currentUser');
+  const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
 
   useEffect(() => {
     if (typeof currentUserLocalStorage === 'string') {
@@ -62,42 +63,38 @@ export default function UserLoginRegisterBanner() {
   }, [currentUserLocalStorage]);
 
   function onUserLogout() {
-    const currentUserLocalStorage = localStorage.getItem('currentUser');
-    const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
-
     if (currentUserLocalStorage && registeredUsersLocalStorage) {
       const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
         currentUserLocalStorage
       );
-      const currentUserId = currentUserData[0].userID;
 
       const registeredUserData: CurrentUserLoggedInState[] = JSON.parse(
         registeredUsersLocalStorage
       );
 
       const updatedRegisteredUserData = registeredUserData.map((user) =>
-        user.userID === currentUserId ? currentUserData[0] : user
+        user.userID === currentUserData[0].userID ? currentUserData[0] : user
       );
 
       localStorage.setItem(
         'registeredUsers',
         JSON.stringify(updatedRegisteredUserData)
       );
+
+      // remove current user from local storage
+      localStorage.removeItem('currentUser');
+
+      // set the user loading status
+      dispatch(setCurrentLoadingStatus(true, 'Logging Out...'));
+
+      // route to the home page
+      history.push('/');
+
+      // change the user loading status
+      setTimeout(() => {
+        dispatch(setCurrentLoadingStatus(false, ''));
+      }, 2000);
     }
-
-    // remove current user from local storage
-    localStorage.removeItem('currentUser');
-
-    // set the user loading status
-    dispatch(setCurrentLoadingStatus(true, 'Logging Out...'));
-
-    // route to the home page
-    history.push('/');
-
-    // change the user loading status
-    setTimeout(() => {
-      dispatch(setCurrentLoadingStatus(false, ''));
-    }, 2000);
   }
 
   function onOutsideClick() {
@@ -124,6 +121,7 @@ export default function UserLoginRegisterBanner() {
           </Link>
 
           <button
+            aria-label='open menu'
             className={styles['chevron-down-btn']}
             onClick={() => setMenuIsOpen(!menuIsOpen)}
           >
