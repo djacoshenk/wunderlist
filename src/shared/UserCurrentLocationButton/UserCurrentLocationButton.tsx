@@ -74,6 +74,7 @@ export default function UserCurrentLocationButton({
 
   return (
     <button
+      aria-label='current location'
       className={styles['restaurant-search-bar-current-location-btn']}
       type='button'
       onClick={fetchUserCurrentLocation}
