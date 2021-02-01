@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -9,16 +9,10 @@ import RestaurantSearchBar from './RestaurantSearchBar';
 import store from 'store/index';
 import userEvent from '@testing-library/user-event';
 
-beforeEach(() => {
-  localStorage.clear();
+afterEach(() => {
+  cleanup();
 
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <RestaurantSearchBar />
-      </BrowserRouter>
-    </Provider>
-  );
+  localStorage.clear();
 });
 
 jest.mock('axios');
@@ -26,6 +20,14 @@ jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 test('user provides search params and submits form', async () => {
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <RestaurantSearchBar />
+      </BrowserRouter>
+    </Provider>
+  );
+
   // user types into search param fields
   userEvent.type(screen.getByRole('textbox', { name: /find/i }), 'Breakfast');
 
@@ -79,6 +81,14 @@ test('user provides search params and submits form', async () => {
 });
 
 test('user submits form without search params', () => {
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <RestaurantSearchBar />
+      </BrowserRouter>
+    </Provider>
+  );
+
   // error messages are not present
   expect(
     screen.queryByRole('alert', { name: /please provide a term/i })
@@ -100,7 +110,15 @@ test('user submits form without search params', () => {
 });
 
 test('component is accessible', async () => {
-  const results = await axe(document.body);
+  const { container } = render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <RestaurantSearchBar />
+      </BrowserRouter>
+    </Provider>
+  );
+
+  const results = await axe(container);
 
   expect(results).toHaveNoViolations();
 });

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { axe } from 'jest-axe';
@@ -7,6 +7,12 @@ import userEvent from '@testing-library/user-event';
 import UserLoginRegisterBanner from './UserLoginRegisterBanner';
 
 import store from 'store/index';
+
+afterEach(() => {
+  cleanup();
+
+  localStorage.clear();
+});
 
 test('without a current user, login and register buttons render', () => {
   render(
@@ -49,6 +55,7 @@ test('with a current user, logout button renders', () => {
       username: 'djacoshenk',
     },
   ];
+
   localStorage.setItem('currentUser', JSON.stringify(fakeUserData));
 
   render(
