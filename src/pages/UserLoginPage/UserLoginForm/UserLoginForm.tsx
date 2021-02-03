@@ -174,7 +174,7 @@ export default function UserLoginForm() {
 
       // turn loader off and route to the home page
       setTimeout(() => {
-        dispatch(setCurrentLoadingStatus(false, ''));
+        dispatch(setCurrentLoadingStatus(false));
       }, 2000);
     }
   }
