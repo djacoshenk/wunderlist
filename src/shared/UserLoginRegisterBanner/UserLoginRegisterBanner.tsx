@@ -92,7 +92,7 @@ export default function UserLoginRegisterBanner() {
 
       // change the user loading status
       setTimeout(() => {
-        dispatch(setCurrentLoadingStatus(false, ''));
+        dispatch(setCurrentLoadingStatus(false));
       }, 2000);
     }
   }
@@ -121,7 +121,7 @@ export default function UserLoginRegisterBanner() {
           </Link>
 
           <button
-            aria-label='open menu'
+            aria-label='toggle menu'
             className={styles['chevron-down-btn']}
             onClick={() => setMenuIsOpen(!menuIsOpen)}
           >
