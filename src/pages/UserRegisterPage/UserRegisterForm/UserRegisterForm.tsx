@@ -210,7 +210,7 @@ export default function UserRegisterForm() {
 
       // change the loading status
       setTimeout(() => {
-        dispatch(setCurrentLoadingStatus(false, ''));
+        dispatch(setCurrentLoadingStatus(false));
       }, 2000);
     }
   }
