@@ -78,6 +78,7 @@ export default function HamburgerMenuButton() {
                 <p>{currentUserLoggedIn[0].first_name}</p>
               </Link>
               <button
+                aria-label='toggle menu'
                 className='chevron-down-btn'
                 onClick={() => setMenuIsOpen(!menuIsOpen)}
               >
