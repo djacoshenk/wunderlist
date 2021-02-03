@@ -1,10 +1,10 @@
 export type LoadingStatusAction = {
   type: 'SET_LOADING_STATUS';
-  payload: { bool: boolean; message: string };
+  payload: { bool: boolean; message?: string };
 };
 
 // action creator -> return value should be an action
-export function setCurrentLoadingStatus(bool: boolean, message: string) {
+export function setCurrentLoadingStatus(bool: boolean, message?: string) {
   return {
     type: 'SET_LOADING_STATUS',
     payload: {
