@@ -9,15 +9,27 @@ import RestaurantSearchBar from './RestaurantSearchBar';
 import store from 'store/index';
 import userEvent from '@testing-library/user-event';
 
-afterEach(() => {
-  cleanup();
-
-  localStorage.clear();
-});
-
 jest.mock('axios');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+afterEach(() => {
+  cleanup();
+});
+
+test('component is accessible', async () => {
+  const { container } = render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <RestaurantSearchBar />
+      </BrowserRouter>
+    </Provider>
+  );
+
+  const results = await axe(container);
+
+  expect(results).toHaveNoViolations();
+});
 
 test('user provides search params and submits form', async () => {
   render(
@@ -107,18 +119,4 @@ test('user submits form without search params', () => {
   expect(
     screen.getByRole('alert', { name: /please provide a location/i })
   ).toBeInTheDocument();
-});
-
-test('component is accessible', async () => {
-  const { container } = render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <RestaurantSearchBar />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  const results = await axe(container);
-
-  expect(results).toHaveNoViolations();
 });
