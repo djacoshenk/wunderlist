@@ -55,7 +55,7 @@ export default function UserLoginRegisterBanner() {
   const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
 
   useEffect(() => {
-    if (typeof currentUserLocalStorage === 'string') {
+    if (currentUserLocalStorage) {
       setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
     } else {
       setCurrentUserLoggedIn(null);

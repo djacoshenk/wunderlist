@@ -9,10 +9,10 @@ import UserLoginRegisterBanner from './UserLoginRegisterBanner';
 
 import store from 'store/index';
 
+const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+
 afterEach(() => {
   cleanup();
-
-  localStorage.clear();
 });
 
 test('login and register buttons are accessible', async () => {
@@ -36,7 +36,7 @@ test('logout buttons are accessible', async () => {
     },
   ];
 
-  localStorage.setItem('currentUser', JSON.stringify(fakeUserData));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
 
   const { container } = render(
     <Provider store={store}>
@@ -80,7 +80,7 @@ test('with a current user, logout button renders', () => {
     },
   ];
 
-  localStorage.setItem('currentUser', JSON.stringify(fakeUserData));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
 
   render(
     <Provider store={store}>
@@ -113,7 +113,7 @@ test('with a current user, logout button renders', () => {
   userEvent.click(screen.getByRole('button', { name: /toggle menu/i }));
 
   act(() => {
-    jest.advanceTimersByTime(100);
+    jest.advanceTimersByTime(2000);
   });
 
   // logout button should not be rendered
@@ -185,9 +185,10 @@ test('logout button routes to home page', () => {
     },
   ];
 
-  localStorage.setItem('currentUser', JSON.stringify(fakeCurrentUserData));
-  localStorage.setItem(
-    'registeredUsers',
+  mockedLocalStorage.getItem.mockReturnValue(
+    JSON.stringify(fakeCurrentUserData)
+  );
+  mockedLocalStorage.getItem.mockReturnValue(
     JSON.stringify(fakeRegisteredUserData)
   );
 
@@ -213,5 +214,10 @@ test('logout button routes to home page', () => {
   // user clicks on logout button
   userEvent.click(screen.getByRole('button', { name: /logout/i }));
 
-  jest.advanceTimersByTime(2000);
+  act(() => {
+    jest.advanceTimersByTime(2000);
+  });
+
+  // user should be routed to the home page
+  expect(history.location.pathname).toBe('/');
 });
