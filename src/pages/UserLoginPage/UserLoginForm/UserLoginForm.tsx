@@ -93,47 +93,37 @@ export default function UserLoginForm() {
 
     let errors = 0;
 
-    if (registeredUsersLocalStorage) {
-      const checkUsernameRegistration = registeredUsersData.find(
-        (val) => val.username === userLoginForm.username
-      );
-      const checkPasswordRegistration = registeredUsersData.find(
-        (val) => val.password === userLoginForm.password
-      );
+    const checkUsernameRegistration = registeredUsersData.find(
+      (val) => val.username === userLoginForm.username
+    );
+    const checkPasswordRegistration = registeredUsersData.find(
+      (val) => val.password === userLoginForm.password
+    );
 
-      if (checkUsernameRegistration) {
-        setUserLoginFormErrors((prevState) => ({
-          ...prevState,
-          username: '',
-        }));
-      } else {
-        errors++;
-
-        setUserLoginFormErrors((prevState) => ({
-          ...prevState,
-          username: 'The provided username does not match a registered user',
-        }));
-      }
-
-      if (checkPasswordRegistration) {
-        setUserLoginFormErrors((prevState) => ({
-          ...prevState,
-          password: '',
-        }));
-      } else {
-        errors++;
-
-        setUserLoginFormErrors((prevState) => ({
-          ...prevState,
-          password: 'Incorrect password - Please try again',
-        }));
-      }
+    if (checkUsernameRegistration) {
+      setUserLoginFormErrors((prevState) => ({
+        ...prevState,
+        username: '',
+      }));
     } else {
       errors++;
 
       setUserLoginFormErrors((prevState) => ({
         ...prevState,
         username: 'The provided username does not match a registered user',
+      }));
+    }
+
+    if (checkPasswordRegistration) {
+      setUserLoginFormErrors((prevState) => ({
+        ...prevState,
+        password: '',
+      }));
+    } else {
+      errors++;
+
+      setUserLoginFormErrors((prevState) => ({
+        ...prevState,
         password: 'Incorrect password - Please try again',
       }));
     }
@@ -188,9 +178,13 @@ export default function UserLoginForm() {
         aria-label='form'
       >
         <div className={styles['user-login-username-container']}>
-          <i className='fas fa-user'></i>
+          <label htmlFor='username'>
+            <i className='fas fa-user'></i>
+          </label>
           <input
+            aria-label='username'
             type='text'
+            id='username'
             name='username'
             placeholder='Username'
             value={userLoginForm.username}
@@ -198,12 +192,20 @@ export default function UserLoginForm() {
           />
         </div>
         <div className={styles['user-login-username-error']}>
-          <p>{userLoginFormErrors.username}</p>
+          {userLoginFormErrors.username && (
+            <p aria-label='username error' role='alert'>
+              {userLoginFormErrors.username}
+            </p>
+          )}
         </div>
         <div className={styles['user-login-password-container']}>
-          <i className='fas fa-lock'></i>
+          <label htmlFor='password'>
+            <i className='fas fa-lock'></i>
+          </label>
           <input
+            aria-label='password'
             type='password'
+            id='password'
             name='password'
             placeholder='Password'
             value={userLoginForm.password}
@@ -211,7 +213,11 @@ export default function UserLoginForm() {
           />
         </div>
         <div className={styles['user-login-password-error']}>
-          <p>{userLoginFormErrors.password}</p>
+          {userLoginFormErrors.password && (
+            <p aria-label='password error' role='alert'>
+              {userLoginFormErrors.password}
+            </p>
+          )}
         </div>
         <button className={styles['login-btn']} type='submit'>
           Login
