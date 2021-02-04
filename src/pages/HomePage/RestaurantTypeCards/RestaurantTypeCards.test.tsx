@@ -10,10 +10,24 @@ import RestaurantTypeCards from './RestaurantTypeCards';
 
 import store from 'store/index';
 
+const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+
 afterEach(() => {
   cleanup();
+});
 
-  localStorage.clear();
+test('component is accessible', async () => {
+  const { container } = render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <RestaurantTypeCards />
+      </BrowserRouter>
+    </Provider>
+  );
+
+  const results = await axe(container);
+
+  expect(results).toHaveNoViolations();
 });
 
 test('component renders w/ links and images', () => {
@@ -62,7 +76,7 @@ test('user clicks card without a location url and error message appears', () => 
 test('component renders with location url from local storage', () => {
   const history = createMemoryHistory();
 
-  localStorage.setItem('locationParam', JSON.stringify('Los Angeles, CA'));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify('Los Angeles, CA'));
 
   render(
     <Provider store={store}>
@@ -86,18 +100,26 @@ test('component renders with location url from local storage', () => {
 });
 
 test('user types into the search bar and updates the card link with location', async () => {
+  const history = createMemoryHistory();
+
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(''));
+
   render(
     <Provider store={store}>
-      <BrowserRouter>
+      <Router history={history}>
         <RestaurantSearchBar />
         <RestaurantTypeCards />
-      </BrowserRouter>
+      </Router>
     </Provider>
   );
 
   // user types into search bar location param
   userEvent.type(
     screen.getByRole('textbox', { name: /near/i }),
+    'New York, NY'
+  );
+
+  expect(screen.getByRole('textbox', { name: /near/i })).toHaveValue(
     'New York, NY'
   );
 
@@ -108,18 +130,10 @@ test('user types into the search bar and updates the card link with location', a
       '/search/Burgers/New York, NY'
     );
   });
-});
 
-test('component is accessible', async () => {
-  const { container } = render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <RestaurantTypeCards />
-      </BrowserRouter>
-    </Provider>
-  );
+  // user is able to click link
+  userEvent.click(screen.getByRole('link', { name: /burgers/i }));
 
-  const results = await axe(container);
-
-  expect(results).toHaveNoViolations();
+  // user clicks link and is routed to search page
+  expect(history.location.pathname).toBe('/search/Burgers/New York, NY');
 });
