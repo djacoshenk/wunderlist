@@ -9,10 +9,10 @@ import HamburgerMenuButton from './HamburgerMenuButton';
 
 import store from 'store/index';
 
+const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+
 afterEach(() => {
   cleanup();
-
-  localStorage.clear();
 });
 
 test('login and register buttons are accessible', async () => {
@@ -36,7 +36,7 @@ test('logout buttons are accessible', async () => {
     },
   ];
 
-  localStorage.setItem('currentUser', JSON.stringify(fakeUserData));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
 
   const { container } = render(
     <Provider store={store}>
@@ -157,7 +157,7 @@ test('with a current user, logout button renders', () => {
     },
   ];
 
-  localStorage.setItem('currentUser', JSON.stringify(fakeUserData));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
 
   render(
     <Provider store={store}>
@@ -223,7 +223,7 @@ test('logout button routes to home page', () => {
     },
   ];
 
-  localStorage.setItem('currentUser', JSON.stringify(fakeUserData));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
 
   render(
     <Provider store={store}>

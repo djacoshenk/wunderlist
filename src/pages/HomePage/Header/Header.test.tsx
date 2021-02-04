@@ -3,6 +3,13 @@ import { axe } from 'jest-axe';
 
 import Header from './Header';
 
+test('component is accessible', async () => {
+  const { container } = render(<Header />);
+  const results = await axe(container);
+
+  expect(results).toHaveNoViolations();
+});
+
 test('component renders image and headings', () => {
   render(<Header />);
 
@@ -13,11 +20,4 @@ test('component renders image and headings', () => {
   expect(
     screen.getByRole('heading', { name: /favorite/i })
   ).toBeInTheDocument();
-});
-
-test('component is accessible', async () => {
-  const { container } = render(<Header />);
-  const results = await axe(container);
-
-  expect(results).toHaveNoViolations();
 });
