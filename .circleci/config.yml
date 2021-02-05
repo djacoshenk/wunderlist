@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs: 
+  build: 
+    docker:       
+      - image: circleci/node:14.15.3       
+    steps:       
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install_packages
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: lint
+          command: npm run lint
+      - run:
+          name: test
+          command: npm run test
+      - run:
+          name: code_coverage
+          command: npm run test -- --coverage
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: deploy
+          command: curl -X POST -d {} ${NETLIFY_DEPLOY_KEY}
+     
+workflows:
+  build:
+    jobs:
+      - build
