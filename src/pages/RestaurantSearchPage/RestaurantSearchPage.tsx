@@ -17,10 +17,33 @@ interface ParamsState {
   location: string;
 }
 
+type Place = {
+  id: string;
+  alias: string;
+  image_url: string;
+  name: string;
+  rating: number;
+  review_count: number;
+  price: string;
+  categories: Categories[];
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  display_phone: string;
+  location: {
+    display_address: string[];
+  };
+};
+
+type Categories = {
+  title: string;
+};
+
 let offset = 10;
 
 export default function RestaurantSearchPage() {
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState<Place[]>([]);
   const [sortByParam, setSortByParam] = useState<SortByParam>('best_match');
   const [mapKey, setMapKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +68,6 @@ export default function RestaurantSearchPage() {
       setIsLoading(false);
     } catch (err) {
       Sentry.captureException(err);
-      setIsLoading(false);
     }
   }, []);
 
@@ -78,7 +100,6 @@ export default function RestaurantSearchPage() {
       });
     } catch (err) {
       Sentry.captureException(err);
-      setIsLoading(false);
     }
   }
 
@@ -104,7 +125,6 @@ export default function RestaurantSearchPage() {
         setIsLoading(false);
       } catch (err) {
         Sentry.captureException(err);
-        setIsLoading(false);
       }
     },
     []

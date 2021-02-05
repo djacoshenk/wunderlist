@@ -74,7 +74,7 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
   const currentUserLocalStorage = localStorage.getItem('currentUser');
 
   useEffect(() => {
-    if (typeof currentUserLocalStorage === 'string') {
+    if (currentUserLocalStorage) {
       const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
         currentUserLocalStorage
       );
@@ -98,7 +98,7 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
   }, [currentUserLocalStorage, place.id]);
 
   function saveRestaurantOnClick(place: Place) {
-    if (typeof currentUserLocalStorage === 'string') {
+    if (currentUserLocalStorage) {
       setRestaurantIsSaved(true);
 
       const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
@@ -119,7 +119,7 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
   }
 
   function unsaveRestaurantOnClick(place: Place) {
-    if (typeof currentUserLocalStorage === 'string') {
+    if (currentUserLocalStorage) {
       setRestaurantIsSaved(false);
 
       const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
