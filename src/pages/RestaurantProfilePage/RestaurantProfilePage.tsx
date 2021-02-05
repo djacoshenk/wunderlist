@@ -87,7 +87,6 @@ export default function RestaurantProfilePage() {
         setIsLoading(false);
       } catch (err) {
         Sentry.captureException(err);
-        setIsLoading(false);
       }
     }
 
