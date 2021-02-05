@@ -17,16 +17,16 @@ jobs:
             - ./node_modules
       - run:
           name: lint
-          command: npm lint
+          command: npm run lint
       - run:
           name: test
-          command: npm test
+          command: npm run test
       - run:
           name: code_coverage
-          command: npm test -- --coverage
+          command: npm run test -- --coverage
       - run:
           name: build
-          command: npm build
+          command: npm run build
       - run:
           name: deploy
           command: curl -X POST -d {} ${NETLIFY_DEPLOY_KEY}
