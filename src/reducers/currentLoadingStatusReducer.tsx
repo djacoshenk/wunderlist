@@ -1,34 +1,42 @@
 export type LoadingStatusAction = {
   type: 'SET_LOADING_STATUS';
-  payload: { bool: boolean; message?: string };
+  payload: { isLoading: boolean; loadingMessage?: string };
+};
+
+export type LoadingStatusState = {
+  isLoading: boolean;
+  loadingMessage?: string;
 };
 
 // action creator -> return value should be an action
-export function setCurrentLoadingStatus(bool: boolean, message?: string) {
+export function setCurrentLoadingStatus(
+  isLoading: boolean,
+  loadingMessage?: string
+) {
   return {
     type: 'SET_LOADING_STATUS',
     payload: {
-      bool,
-      message,
+      isLoading,
+      loadingMessage,
     },
   };
 }
 
 const initialState = {
-  loadingMessage: '',
   isLoading: false,
+  loadingMessage: '',
 };
 
 // reducer function always return the state structure
 export default function currentLoadingStatusReducer(
-  state = initialState,
+  state: LoadingStatusState = initialState,
   action: LoadingStatusAction
 ) {
   if (action.type === 'SET_LOADING_STATUS') {
     return {
       ...state,
-      loadingMessage: action.payload.message,
-      isLoading: action.payload.bool,
+      isLoading: action.payload.isLoading,
+      loadingMessage: action.payload.loadingMessage,
     };
   } else {
     return state;
