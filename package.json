@@ -38,7 +38,8 @@
     "eject": "react-scripts eject",
     "format": "prettier --write \"src/**/*.tsx\"",
     "lint": "eslint \"src/**/*.tsx\"",
-    "tsc": "tsc --noEmit --watch"
+    "tsc": "tsc --noEmit",
+    "tsc:watch": "tsc --noEmit --watch"
   },
   "browserslist": {
     "production": [
