@@ -233,6 +233,7 @@ export default function UserRegisterForm() {
         aria-label='form'
       >
         <input
+          aria-label='first name'
           type='text'
           name='first_name'
           placeholder='First Name'
@@ -240,9 +241,14 @@ export default function UserRegisterForm() {
           onChange={onInputChange}
         />
         <div className={styles['user-register-first-name-error']}>
-          <p>{userRegisterFormErrors.first_name}</p>
+          {userRegisterFormErrors.first_name && (
+            <p aria-label='first name error' role='alert'>
+              {userRegisterFormErrors.first_name}
+            </p>
+          )}
         </div>
         <input
+          aria-label='last name'
           type='text'
           name='last_name'
           placeholder='Last Name'
@@ -250,9 +256,14 @@ export default function UserRegisterForm() {
           onChange={onInputChange}
         />
         <div className={styles['user-register-last-name-error']}>
-          <p>{userRegisterFormErrors.last_name}</p>
+          {userRegisterFormErrors.last_name && (
+            <p aria-label='last name error' role='alert'>
+              {userRegisterFormErrors.last_name}
+            </p>
+          )}
         </div>
         <input
+          aria-label='email'
           type='text'
           name='email'
           placeholder='Email'
@@ -260,9 +271,14 @@ export default function UserRegisterForm() {
           onChange={onInputChange}
         />
         <div className={styles['user-register-email-error']}>
-          <p>{userRegisterFormErrors.email}</p>
+          {userRegisterFormErrors.email && (
+            <p aria-label='email error' role='alert'>
+              {userRegisterFormErrors.email}
+            </p>
+          )}
         </div>
         <input
+          aria-label='username'
           type='text'
           name='username'
           placeholder='Username'
@@ -270,9 +286,14 @@ export default function UserRegisterForm() {
           onChange={onInputChange}
         />
         <div className={styles['user-register-username-error']}>
-          <p>{userRegisterFormErrors.username}</p>
+          {userRegisterFormErrors.username && (
+            <p aria-label='username error' role='alert'>
+              {userRegisterFormErrors.username}
+            </p>
+          )}
         </div>
         <input
+          aria-label='password'
           type='password'
           name='password'
           placeholder='Password (min. 10 characters)'
@@ -280,9 +301,14 @@ export default function UserRegisterForm() {
           onChange={onInputChange}
         />
         <div className={styles['user-register-password-error']}>
-          <p>{userRegisterFormErrors.password}</p>
+          {userRegisterFormErrors.password && (
+            <p aria-label='password error' role='alert'>
+              {userRegisterFormErrors.password}
+            </p>
+          )}
         </div>
         <input
+          aria-label='confirm password'
           type='password'
           name='confirm_password'
           placeholder='Confirm Password'
@@ -290,7 +316,11 @@ export default function UserRegisterForm() {
           onChange={onInputChange}
         />
         <div className={styles['user-register-confirm-password-error']}>
-          <p>{userRegisterFormErrors.confirm_password}</p>
+          {userRegisterFormErrors.confirm_password && (
+            <p aria-label='confirm password error' role='alert'>
+              {userRegisterFormErrors.confirm_password}
+            </p>
+          )}
         </div>
         <button className={styles['register-btn']} type='submit'>
           Register
