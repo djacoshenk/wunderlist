@@ -1,14 +1,13 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, act } from '@testing-library/react';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
+import userEvent from '@testing-library/user-event';
 
 import UserLoginForm from './UserLoginForm';
 
 import store from 'store/index';
-import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
 
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
 
@@ -64,11 +63,16 @@ test('user is not registered and submits form', () => {
   );
 
   // textboxes should be rendered
-  expect(screen.getByPlaceholderText(/username/i)).toBeInTheDocument();
+  expect(
+    screen.getByRole('textbox', { name: /username/i })
+  ).toBeInTheDocument();
   expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
 
   // unregistered user fills in fields
-  userEvent.type(screen.getByPlaceholderText(/username/i), 'djacoshenk');
+  userEvent.type(
+    screen.getByRole('textbox', { name: /username/i }),
+    'djacoshenk'
+  );
   userEvent.type(screen.getByPlaceholderText(/password/i), 'password123!');
 
   // unregistered user submits form
