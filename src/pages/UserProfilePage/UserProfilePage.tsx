@@ -43,9 +43,9 @@ type CurrentUser = {
 };
 
 export default function UserProfilePage() {
-  const location = useLocation<CurrentUser>();
   const [userProfileIsLoading, setUserProfileIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<CurrentUser[]>([]);
+  const location = useLocation<CurrentUser>();
 
   function formatLastNameInitial(lastName: string) {
     return lastName.substring(0, 1);
