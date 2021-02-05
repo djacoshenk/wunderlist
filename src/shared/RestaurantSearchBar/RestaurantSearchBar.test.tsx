@@ -42,7 +42,6 @@ test('user provides search params and submits form', async () => {
 
   // user types into search param fields
   userEvent.type(screen.getByRole('textbox', { name: /find/i }), 'Breakfast');
-
   expect(screen.getByRole('textbox', { name: /find/i })).toHaveValue(
     'Breakfast'
   );
@@ -59,11 +58,11 @@ test('user provides search params and submits form', async () => {
 
   expect(await screen.findByText('Diners')).toBeInTheDocument();
 
+  // user fills in the location param field
   userEvent.type(
     screen.getByRole('textbox', { name: /near/i }),
     'Los Angeles, CA'
   );
-
   expect(screen.getByRole('textbox', { name: /near/i })).toHaveValue(
     'Los Angeles, CA'
   );
