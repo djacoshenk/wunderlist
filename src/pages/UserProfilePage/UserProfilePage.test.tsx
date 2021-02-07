@@ -1,14 +1,10 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
-import { BrowserRouter, Router, useLocation } from 'react-router-dom';
-import { axe } from 'jest-axe';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createMemoryHistory } from 'history';
-import userEvent from '@testing-library/user-event';
 
 import UserProfilePage from './UserProfilePage';
 
 import store from 'store/index';
-import { doc } from 'prettier';
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
