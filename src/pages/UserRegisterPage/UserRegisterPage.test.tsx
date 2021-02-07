@@ -1,25 +1,21 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
-
-import UserRegisterForm from './UserRegisterForm';
-
-import store from 'store/index';
 import userEvent from '@testing-library/user-event';
 
-const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+import UserRegisterPage from './UserRegisterPage';
 
-afterEach(() => {
-  cleanup();
-});
+import store from 'store/index';
+
+const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
 
 test('component is accessible', async () => {
   const { container } = render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserRegisterForm />
+        <UserRegisterPage />
       </BrowserRouter>
     </Provider>
   );
@@ -27,6 +23,20 @@ test('component is accessible', async () => {
   const results = await axe(container);
 
   expect(results).toHaveNoViolations();
+});
+
+test('component renders with title', async () => {
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <UserRegisterPage />
+      </BrowserRouter>
+    </Provider>
+  );
+
+  await waitFor(() => {
+    expect(document.title).toBe('wunderlist - User Registration');
+  });
 });
 
 test('user submits form without filling out fields', () => {
@@ -38,7 +48,7 @@ test('user submits form without filling out fields', () => {
   render(
     <Provider store={store}>
       <Router history={history}>
-        <UserRegisterForm />
+        <UserRegisterPage />
       </Router>
     </Provider>
   );
@@ -93,7 +103,7 @@ test('user types into form fields and submits form', () => {
   render(
     <Provider store={store}>
       <Router history={history}>
-        <UserRegisterForm />
+        <UserRegisterPage />
       </Router>
     </Provider>
   );
@@ -200,7 +210,7 @@ test('user submits form with invalid email', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserRegisterForm />
+        <UserRegisterPage />
       </BrowserRouter>
     </Provider>
   );
@@ -231,7 +241,7 @@ test('user submits a password less than 10 characters in length', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserRegisterForm />
+        <UserRegisterPage />
       </BrowserRouter>
     </Provider>
   );
@@ -263,7 +273,7 @@ test('user submits form with non-matching passwords', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserRegisterForm />
+        <UserRegisterPage />
       </BrowserRouter>
     </Provider>
   );
@@ -310,7 +320,7 @@ test('user submits form with already registered email and username', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserRegisterForm />
+        <UserRegisterPage />
       </BrowserRouter>
     </Provider>
   );
@@ -335,4 +345,25 @@ test('user submits form with already registered email and username', () => {
   expect(
     screen.getByRole('alert', { name: /username error/i })
   ).toBeInTheDocument();
+});
+
+test('user clicks on header to go back to the home page', () => {
+  const history = createMemoryHistory();
+
+  history.push('/register');
+
+  render(
+    <Provider store={store}>
+      <Router history={history}>
+        <UserRegisterPage />
+      </Router>
+    </Provider>
+  );
+
+  // expect header link to be rendered
+  expect(screen.getByRole('link', { name: /globe/i })).toBeInTheDocument();
+
+  userEvent.click(screen.getByRole('link', { name: /globe/i }));
+
+  expect(history.location.pathname).toBe('/');
 });

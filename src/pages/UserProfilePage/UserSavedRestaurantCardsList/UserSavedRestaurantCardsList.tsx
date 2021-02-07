@@ -45,7 +45,7 @@ type Props = {
 export default function UserSavedRestaurantCardsList({ currentUser }: Props) {
   return (
     <Fragment>
-      {currentUser === [] ? (
+      {currentUser[0].savedPlaces.length === 0 ? (
         <div className={styles['user-saved-cards-message']}>
           <p>You have not saved any places.</p>
         </div>

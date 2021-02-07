@@ -43,8 +43,8 @@ export default function RestaurantSearchBarTermParam({
   });
 
   async function fetchTermSuggestions(text: TermParam) {
-    try {
-      if (text) {
+    if (text) {
+      try {
         const { data } = await axios.get(
           `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/autocomplete?text=${text}`,
           {
@@ -55,9 +55,9 @@ export default function RestaurantSearchBarTermParam({
         );
 
         setTermSuggestions(data.categories.map((cat: Categories) => cat.title));
+      } catch (err) {
+        Sentry.captureException(err);
       }
-    } catch (err) {
-      Sentry.captureException(err);
     }
   }
 
