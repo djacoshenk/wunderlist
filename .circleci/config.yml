@@ -30,11 +30,8 @@ jobs:
       - run:
           name: code-coverage
           command: npm run test -- --coverage      
-      - run:
-          name: deploy
-          command: curl -X POST -d {} ${NETLIFY_DEPLOY_KEY}
 
 workflows:
-  build-test-deploy:
+  build-test:
     jobs:
       - build
