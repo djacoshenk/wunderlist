@@ -18,7 +18,14 @@ export default function RestaurantRatingStars({ rating }: Props) {
       starRating = 'fas fa-star';
     }
 
-    return <i className={starRating} aria-hidden='true' key={n}></i>;
+    return (
+      <i
+        aria-hidden='true'
+        className={starRating}
+        data-testid='restaurant-rating-star'
+        key={n}
+      ></i>
+    );
   });
 
   return <Fragment>{totalRating}</Fragment>;
