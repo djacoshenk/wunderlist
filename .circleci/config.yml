@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs: 
-  build-test-deploy: 
+  build-test: 
     docker:       
       - image: circleci/node:14.15.3       
     steps:       
@@ -34,4 +34,4 @@ jobs:
 workflows:
   build-test:
     jobs:
-      - build-test-deploy
+      - build-test
