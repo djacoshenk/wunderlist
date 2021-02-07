@@ -55,7 +55,7 @@ export default function UserProfilePage() {
   const currentUserLocalStorage = localStorage.getItem('currentUser');
 
   useEffect(() => {
-    if (typeof currentUserLocalStorage === 'string') {
+    if (currentUserLocalStorage) {
       setCurrentUser(JSON.parse(currentUserLocalStorage));
 
       setTimeout(() => {
