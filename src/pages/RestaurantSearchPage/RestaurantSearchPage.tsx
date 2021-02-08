@@ -8,7 +8,7 @@ import Header from './Header/Header';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 import MainContent from './MainContent/MainContent';
-import RestaurantSearchLoader from './RestaurantSearchLoader/RestaurantSearchLoader';
+import RestaurntLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
 import SortByButton from './SortByButton/SortByButton';
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
@@ -151,7 +151,7 @@ export default function RestaurantSearchPage() {
         fetchPlacesSortBy={fetchPlacesSortBy}
       />
       {isLoading ? (
-        <RestaurantSearchLoader />
+        <RestaurntLoaderBubbles />
       ) : (
         <MainContent
           places={places}

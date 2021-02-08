@@ -1,75 +1,61 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { axe } from 'jest-axe';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
-import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
-import RestaurantTypeCards from './RestaurantTypeCards';
+import HomePage from './HomePage';
 
+import currentLoadingStatusReducer from 'reducers/currentLoadingStatusReducer';
 import store from 'store/index';
 
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
 
-afterEach(() => {
-  cleanup();
-});
+test('component renders with loading message', () => {
+  const initialState = {
+    loadingStatus: { loadingMessage: 'Logging In...', isLoading: true },
+  };
+  const rootReducer = combineReducers({
+    loadingStatus: currentLoadingStatusReducer,
+  });
+  const reduxStore = createStore(rootReducer, initialState);
 
-test('component is accessible', async () => {
-  const { container } = render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <RestaurantTypeCards />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  const results = await axe(container);
-
-  expect(results).toHaveNoViolations();
-});
-
-test('component renders w/ links and images', () => {
   render(
-    <Provider store={store}>
+    <Provider store={reduxStore}>
       <BrowserRouter>
-        <RestaurantTypeCards />
+        <HomePage />
       </BrowserRouter>
     </Provider>
   );
 
-  // link is rendered
-  expect(screen.getByRole('link', { name: /burgers/i })).toBeInTheDocument();
-
-  // image is rendered
   expect(
-    screen.getByRole('img', { name: /cheeseburger/i })
+    screen.getByRole('heading', { name: /logging in/i })
   ).toBeInTheDocument();
 });
 
-test('user clicks card without a location url and error message appears', () => {
+test('component renders cards and images without loading message', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <RestaurantTypeCards />
+        <HomePage />
       </BrowserRouter>
     </Provider>
   );
 
-  // error message should be null
+  // header images and text should render
+  expect(screen.getByRole('img', { name: /globe/i })).toBeInTheDocument();
   expect(
-    screen.queryByRole('alert', {
-      name: /please first provide a location/i,
-    })
-  ).toBeNull();
-
-  // user clicks card without location url
-  userEvent.click(screen.getByRole('link', { name: /burgers/i }));
-
-  // error message appears
+    screen.getByRole('heading', { name: /wunderlist/i })
+  ).toBeInTheDocument();
   expect(
-    screen.getByRole('alert', { name: /please first provide a location/i })
+    screen.getByRole('heading', { name: /favorite/i })
+  ).toBeInTheDocument();
+
+  // card links and images render
+  expect(screen.getByRole('link', { name: /burgers/i })).toBeInTheDocument();
+  expect(
+    screen.getByRole('img', { name: /cheeseburger/i })
   ).toBeInTheDocument();
 });
 
@@ -81,7 +67,7 @@ test('component renders with location url from local storage', () => {
   render(
     <Provider store={store}>
       <Router history={history}>
-        <RestaurantTypeCards />
+        <HomePage />
       </Router>
     </Provider>
   );
@@ -107,8 +93,7 @@ test('user types into the search bar and updates the card link with location', a
   render(
     <Provider store={store}>
       <Router history={history}>
-        <RestaurantSearchBar />
-        <RestaurantTypeCards />
+        <HomePage />
       </Router>
     </Provider>
   );

@@ -19,7 +19,6 @@ type Place = {
   id: string;
   alias: string;
   photos: string[];
-  image_url: string;
   name: string;
   rating: number;
   review_count: number;

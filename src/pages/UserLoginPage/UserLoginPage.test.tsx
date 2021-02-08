@@ -1,25 +1,21 @@
-import { render, screen, cleanup, act } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 
-import UserLoginForm from './UserLoginForm';
+import UserLoginPage from './UserLoginPage';
 
 import store from 'store/index';
 
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
 
-afterEach(() => {
-  cleanup();
-});
-
 test('component is accessible', async () => {
   const { container } = render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserLoginForm />
+        <UserLoginPage />
       </BrowserRouter>
     </Provider>
   );
@@ -29,11 +25,25 @@ test('component is accessible', async () => {
   expect(results).toHaveNoViolations();
 });
 
+test('component renders with title', async () => {
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <UserLoginPage />
+      </BrowserRouter>
+    </Provider>
+  );
+
+  await waitFor(() => {
+    expect(document.title).toBe('wunderlist - User Login');
+  });
+});
+
 test('user submits form without filling out fields', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserLoginForm />
+        <UserLoginPage />
       </BrowserRouter>
     </Provider>
   );
@@ -57,7 +67,7 @@ test('user is not registered and submits form', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserLoginForm />
+        <UserLoginPage />
       </BrowserRouter>
     </Provider>
   );
@@ -102,7 +112,7 @@ test('user is registered and submits form with wrong password', () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
-        <UserLoginForm />
+        <UserLoginPage />
       </BrowserRouter>
     </Provider>
   );
@@ -148,7 +158,7 @@ test('user is registered and submits form with correct inputs', () => {
   render(
     <Provider store={store}>
       <Router history={history}>
-        <UserLoginForm />
+        <UserLoginPage />
       </Router>
     </Provider>
   );
@@ -173,4 +183,25 @@ test('user is registered and submits form with correct inputs', () => {
   act(() => {
     jest.advanceTimersByTime(2000);
   });
+});
+
+test('user clicks on header to go back to the home page', () => {
+  const history = createMemoryHistory();
+
+  history.push('/login');
+
+  render(
+    <Provider store={store}>
+      <Router history={history}>
+        <UserLoginPage />
+      </Router>
+    </Provider>
+  );
+
+  // expect header link to be rendered
+  expect(screen.getByRole('link', { name: /globe/i })).toBeInTheDocument();
+
+  userEvent.click(screen.getByRole('link', { name: /globe/i }));
+
+  expect(history.location.pathname).toBe('/');
 });
