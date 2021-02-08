@@ -1,4 +1,4 @@
-import { cleanup, render, screen, act } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { axe } from 'jest-axe';
@@ -10,10 +10,6 @@ import UserLoginRegisterBanner from './UserLoginRegisterBanner';
 import store from 'store/index';
 
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
-
-afterEach(() => {
-  cleanup();
-});
 
 test('login and register buttons are accessible', async () => {
   const { container } = render(
