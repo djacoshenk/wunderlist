@@ -1,0 +1,7 @@
+{
+  "data": [
+    { "city": "Los Angeles", "regionCode": "CA" },
+    { "city": "Los Angeles", "regionCode": "TX" },
+    { "city": "Los Angeles County", "regionCode": "CA" }
+  ]
+}
