@@ -27,7 +27,7 @@ test('component renders with loader bubbles', () => {
     </Provider>
   );
 
-  expect(screen.getAllByTestId(/loader-bubble/i)).toHaveLength(3);
+  expect(screen.getAllByTestId(/^(loader-bubble)$/i)).toHaveLength(3);
 });
 
 test('component renders user profile without saved places', async () => {
