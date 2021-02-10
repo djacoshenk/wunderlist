@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "id": 172136,
+      "wikiDataId": "Q104994",
+      "type": "ADM2",
+      "city": "Los Angeles County",
+      "name": "Los Angeles County",
+      "country": "United States of America",
+      "countryCode": "US",
+      "region": "California",
+      "regionCode": "CA",
+      "latitude": 34.05,
+      "longitude": -118.25,
+      "distance": 1.06
+    }
+  ],
+  "links": [
+    {
+      "rel": "first",
+      "href": "/v1/geo/cities?offset=0&limit=1&radius=5&location=34.039-118.263"
+    },
+    {
+      "rel": "next",
+      "href": "/v1/geo/cities?offset=1&limit=1&radius=5&location=34.039-118.263"
+    },
+    {
+      "rel": "last",
+      "href": "/v1/geo/cities?offset=8&limit=1&radius=5&location=34.039-118.263"
+    }
+  ],
+  "metadata": {
+    "currentOffset": 0,
+    "totalCount": 9
+  }
+}
