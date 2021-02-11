@@ -1,0 +1,45 @@
+{
+  "reviews": [
+    {
+      "id": "Jx5ucxE56XxYfmkixv5Vfg",
+      "url": "https://www.yelp.com/biz/met-her-at-a-bar-los-angeles-2?adjust_creative=gwHql-YWG6ArCsm3pHgndg&hrid=Jx5ucxE56XxYfmkixv5Vfg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "text": "\"What was that place called?\n 'Met my Husband' or something? \n They had BOMB chicken and waffles.\"\n\nAn actual conversation between my mom and I that led us...",
+      "rating": 5,
+      "time_created": "2021-01-22 22:12:03",
+      "user": {
+        "id": "mqa6ull0eHim_V4aozawbg",
+        "profile_url": "https://www.yelp.com/user_details?userid=mqa6ull0eHim_V4aozawbg",
+        "image_url": "https://s3-media4.fl.yelpcdn.com/photo/5FePa65dPQTOMngyXhoOag/o.jpg",
+        "name": "Yoojin S."
+      }
+    },
+    {
+      "id": "65gKB2HO5UtZ_4WFkbBNjA",
+      "url": "https://www.yelp.com/biz/met-her-at-a-bar-los-angeles-2?adjust_creative=gwHql-YWG6ArCsm3pHgndg&hrid=65gKB2HO5UtZ_4WFkbBNjA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "text": "I ordered two things that I am not really a big fan of when I went to this brunch location - chicken and waffle and French toast. \n\nI never find chicken and...",
+      "rating": 5,
+      "time_created": "2021-01-06 14:56:12",
+      "user": {
+        "id": "HJZYOVHgthf5Hvh5ES4KhA",
+        "profile_url": "https://www.yelp.com/user_details?userid=HJZYOVHgthf5Hvh5ES4KhA",
+        "image_url": "https://s3-media1.fl.yelpcdn.com/photo/1jjyS-wGi_-Rno217ATfYg/o.jpg",
+        "name": "Nishika T."
+      }
+    },
+    {
+      "id": "Cu7j8erW9NRz_yPu9soIyg",
+      "url": "https://www.yelp.com/biz/met-her-at-a-bar-los-angeles-2?adjust_creative=gwHql-YWG6ArCsm3pHgndg&hrid=Cu7j8erW9NRz_yPu9soIyg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_reviews&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "text": "Okay, this place is a bit pricey...but so is every other restaurant on La Brea. \n\nMy caramel vegan waffle was really really good. The coconut for a bit...",
+      "rating": 5,
+      "time_created": "2020-10-18 16:35:25",
+      "user": {
+        "id": "g66wVluftgkteiZa_Bn5aQ",
+        "profile_url": "https://www.yelp.com/user_details?userid=g66wVluftgkteiZa_Bn5aQ",
+        "image_url": "https://s3-media2.fl.yelpcdn.com/photo/KXmBhcI9YOoMl2zGOegwDQ/o.jpg",
+        "name": "Alejandra P."
+      }
+    }
+  ],
+  "total": 1567,
+  "possible_languages": ["en", "it"]
+}

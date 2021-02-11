@@ -6,6 +6,6 @@
     "username": "djacoshenk",
     "password": "password123",
     "confirm_password": "password123",
-    "savedPlaces": "[]"
+    "savedPlaces": []
   }
 ]
