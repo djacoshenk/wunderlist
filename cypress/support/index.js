@@ -1,1 +1,5 @@
+/// <reference path="../support/index.d.ts" />
+
 import '@testing-library/cypress/add-commands';
+import '@cypress/code-coverage/support';
+import './commands';
