@@ -1,11 +1,8 @@
 version: 2.1
 
-<<<<<<< HEAD
 orbs:
   cypress: cypress-io/cypress@1
 
-=======
->>>>>>> 18f1bb2 (write component tests (#50))
 jobs:
   build-test:
     docker:
@@ -36,7 +33,6 @@ jobs:
       - run:
           name: code-coverage
           command: npm run test -- --coverage
-<<<<<<< HEAD
   build-e2e:
     docker:
       - image: cypress/base:14
@@ -57,14 +53,9 @@ jobs:
       - run:
           name: e2e
           command: npm run test:e2e:run
-=======
->>>>>>> 18f1bb2 (write component tests (#50))
 
 workflows:
   build-test:
     jobs:
       - build-test
-<<<<<<< HEAD
       - build-e2e
-=======
->>>>>>> 18f1bb2 (write component tests (#50))
