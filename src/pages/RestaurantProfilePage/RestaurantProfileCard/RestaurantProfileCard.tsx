@@ -105,7 +105,9 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
       );
 
       const currentUserSavedPlaces = currentUserData[0].savedPlaces;
+
       const updatedSavedPlaces = [...currentUserSavedPlaces, place];
+
       const updatedCurrentUserState = [
         { ...currentUserData[0], savedPlaces: updatedSavedPlaces },
       ];

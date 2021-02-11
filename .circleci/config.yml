@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  cypress: cypress-io/cypress@1
+
 jobs:
   build-test:
     docker:
@@ -30,8 +33,29 @@ jobs:
       - run:
           name: code-coverage
           command: npm run test -- --coverage
+  build-e2e:
+    docker:
+      - image: cypress/base:14
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: install-packages
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: e2e
+          command: npm run test:e2e:run
 
 workflows:
   build-test:
     jobs:
       - build-test
+      - build-e2e
