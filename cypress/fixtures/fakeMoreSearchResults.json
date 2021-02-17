@@ -1,193 +1,88 @@
 {
   "businesses": [
     {
-      "id": "SjLsV7OlhmNzt4h68QW20g",
-      "alias": "egg-tuck-west-hollywood",
-      "name": "EGG TUCK",
-      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/9Jgi3l4NAtpLVx06Xvd5Qg/o.jpg",
+      "id": "SLxKy00itrk-ta8r8zCzTA",
+      "alias": "easy-street-burgers-los-angeles",
+      "name": "Easy Street Burgers",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/L7F0GSi_uN8txW-8AEDSCQ/o.jpg",
       "is_closed": false,
-      "url": "https://www.yelp.com/biz/egg-tuck-west-hollywood?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 228,
+      "url": "https://www.yelp.com/biz/easy-street-burgers-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 132,
       "categories": [
         {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
-        },
-        {
-          "alias": "coffee",
-          "title": "Coffee & Tea"
-        },
-        {
-          "alias": "sandwiches",
-          "title": "Sandwiches"
+          "alias": "burgers",
+          "title": "Burgers"
         }
       ],
       "rating": 4.5,
       "coordinates": {
-        "latitude": 34.0983875,
-        "longitude": -118.34533683
+        "latitude": 34.088796,
+        "longitude": -118.308573
       },
-      "transactions": ["delivery", "pickup"],
-      "location": {
-        "address1": "7131 W Sunset Blvd",
-        "address2": "unit B",
-        "address3": "",
-        "city": "West Hollywood",
-        "zip_code": "90046",
-        "country": "US",
-        "state": "CA",
-        "display_address": [
-          "7131 W Sunset Blvd",
-          "unit B",
-          "West Hollywood, CA 90046"
-        ]
-      },
-      "phone": "+13233805762",
-      "display_phone": "(323) 380-5762",
-      "distance": 4658.2927482543755
-    },
-    {
-      "id": "b4SH4SbQUJfXxh6hNkF0wg",
-      "alias": "eggslut-los-angeles-7",
-      "name": "Eggslut",
-      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/bm-Ie-tqfmgx1Tewdw4zYQ/o.jpg",
-      "is_closed": false,
-      "url": "https://www.yelp.com/biz/eggslut-los-angeles-7?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 5823,
-      "categories": [
-        {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
-        },
-        {
-          "alias": "sandwiches",
-          "title": "Sandwiches"
-        }
-      ],
-      "rating": 4.0,
-      "coordinates": {
-        "latitude": 34.0505289,
-        "longitude": -118.2486189
-      },
-      "transactions": ["delivery"],
+      "transactions": ["pickup", "delivery"],
       "price": "$",
       "location": {
-        "address1": "317 S Broadway",
+        "address1": "1000 N Western Ave",
         "address2": "",
-        "address3": "Grand Central Market",
+        "address3": null,
         "city": "Los Angeles",
-        "zip_code": "90013",
+        "zip_code": "90029",
         "country": "US",
         "state": "CA",
-        "display_address": [
-          "317 S Broadway",
-          "Grand Central Market",
-          "Los Angeles, CA 90013"
-        ]
+        "display_address": ["1000 N Western Ave", "Los Angeles, CA 90029"]
       },
-      "phone": "+12136250292",
-      "display_phone": "(213) 625-0292",
-      "distance": 6740.418682821416
+      "phone": "+18189663009",
+      "display_phone": "(818) 966-3009",
+      "distance": 3247.065962603458
     },
     {
-      "id": "NlT-6hFP0_6hPo36AW2lIA",
-      "alias": "poppy-rose-los-angeles",
-      "name": "Poppy + Rose",
-      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/gI4IYdGZw1P5upL-4-Z0Tg/o.jpg",
+      "id": "esdnaTuF0U9JGU447A0yvQ",
+      "alias": "goldburger-los-angeles",
+      "name": "Goldburger",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/CYB8wYotfmQwjGdxRFVd2g/o.jpg",
       "is_closed": false,
-      "url": "https://www.yelp.com/biz/poppy-rose-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 2441,
+      "url": "https://www.yelp.com/biz/goldburger-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 136,
       "categories": [
         {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
+          "alias": "burgers",
+          "title": "Burgers"
         },
         {
-          "alias": "newamerican",
-          "title": "American (New)"
-        },
-        {
-          "alias": "comfortfood",
-          "title": "Comfort Food"
+          "alias": "desserts",
+          "title": "Desserts"
         }
       ],
-      "rating": 4.0,
+      "rating": 4.5,
       "coordinates": {
-        "latitude": 34.04067,
-        "longitude": -118.2500946
+        "latitude": 34.1194678,
+        "longitude": -118.1958786
       },
-      "transactions": ["delivery", "pickup"],
+      "transactions": [],
       "price": "$$",
       "location": {
-        "address1": "765 Wall St",
+        "address1": "5623 York Blvd",
         "address2": "",
-        "address3": "",
+        "address3": null,
         "city": "Los Angeles",
-        "zip_code": "90014",
+        "zip_code": "90042",
         "country": "US",
         "state": "CA",
-        "display_address": ["765 Wall St", "Los Angeles, CA 90014"]
+        "display_address": ["5623 York Blvd", "Los Angeles, CA 90042"]
       },
-      "phone": "+12139957799",
-      "display_phone": "(213) 995-7799",
-      "distance": 6967.299351921165
+      "phone": "",
+      "display_phone": "",
+      "distance": 13228.137906182159
     },
     {
-      "id": "cAwkHVjhAJpsZOayXgUIHw",
-      "alias": "three-borders-brunch-and-grill-los-angeles-3",
-      "name": "Three Borders Brunch & Grill",
-      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/h1vw0oeuMQxwoFiet-5LpA/o.jpg",
+      "id": "XfUlxPDVEsKbXqf5kJp1nA",
+      "alias": "uncool-burgers-los-angeles-2",
+      "name": "Uncool Burgers",
+      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/mbOKtwEbwbCoaDDgLzZx1g/o.jpg",
       "is_closed": false,
-      "url": "https://www.yelp.com/biz/three-borders-brunch-and-grill-los-angeles-3?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 378,
+      "url": "https://www.yelp.com/biz/uncool-burgers-los-angeles-2?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 275,
       "categories": [
-        {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
-        },
-        {
-          "alias": "newamerican",
-          "title": "American (New)"
-        },
-        {
-          "alias": "latin",
-          "title": "Latin American"
-        }
-      ],
-      "rating": 5.0,
-      "coordinates": {
-        "latitude": 34.0574402282966,
-        "longitude": -118.345157057047
-      },
-      "transactions": ["delivery", "pickup"],
-      "price": "$$",
-      "location": {
-        "address1": "5269 W Olympic Blvd",
-        "address2": "",
-        "address3": "",
-        "city": "Los Angeles",
-        "zip_code": "90036",
-        "country": "US",
-        "state": "CA",
-        "display_address": ["5269 W Olympic Blvd", "Los Angeles, CA 90036"]
-      },
-      "phone": "+13234409294",
-      "display_phone": "(323) 440-9294",
-      "distance": 2238.3540853621384
-    },
-    {
-      "id": "sfGM1J-gEWaS1QUTJ_4BzQ",
-      "alias": "bolt-los-angeles-2",
-      "name": "Bolt",
-      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/cKELzF-ZUX0bDLnkeSq0Ig/o.jpg",
-      "is_closed": false,
-      "url": "https://www.yelp.com/biz/bolt-los-angeles-2?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 406,
-      "categories": [
-        {
-          "alias": "coffee",
-          "title": "Coffee & Tea"
-        },
         {
           "alias": "breakfast_brunch",
           "title": "Breakfast & Brunch"
@@ -199,240 +94,306 @@
       ],
       "rating": 4.5,
       "coordinates": {
-        "latitude": 34.1015475337119,
-        "longitude": -118.313183784485
+        "latitude": 34.07418,
+        "longitude": -118.32383
       },
-      "transactions": ["delivery", "pickup"],
-      "price": "$$",
+      "transactions": ["pickup", "delivery"],
       "location": {
-        "address1": "5648 Hollywood Blvd",
+        "address1": "139 1/2 N Larchmont Blvd",
         "address2": "",
         "address3": null,
         "city": "Los Angeles",
-        "zip_code": "90028",
+        "zip_code": "90004",
         "country": "US",
         "state": "CA",
-        "display_address": ["5648 Hollywood Blvd", "Los Angeles, CA 90028"]
+        "display_address": ["139 1/2 N Larchmont Blvd", "Los Angeles, CA 90004"]
       },
-      "phone": "+13234842658",
-      "display_phone": "(323) 484-2658",
-      "distance": 4506.7937565101
+      "phone": "+13234177900",
+      "display_phone": "(323) 417-7900",
+      "distance": 1386.3703931208227
     },
     {
-      "id": "UJg9U_6djc7Wc089s1hFCg",
-      "alias": "honey-bees-house-of-breakfast-los-angeles",
-      "name": "Honey Bee's House of Breakfast",
-      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/R7NwVRjxbedGpkSUG3AviA/o.jpg",
+      "id": "Q3pwRtT8v8oTCKFEYJgCbg",
+      "alias": "cassells-hamburgers-los-angeles-2",
+      "name": "Cassell's Hamburgers",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/bFM8O7BGe8eqcp8F8cMkOQ/o.jpg",
       "is_closed": false,
-      "url": "https://www.yelp.com/biz/honey-bees-house-of-breakfast-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 807,
+      "url": "https://www.yelp.com/biz/cassells-hamburgers-los-angeles-2?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 1625,
       "categories": [
+        {
+          "alias": "tradamerican",
+          "title": "American (Traditional)"
+        },
+        {
+          "alias": "burgers",
+          "title": "Burgers"
+        },
         {
           "alias": "breakfast_brunch",
           "title": "Breakfast & Brunch"
-        },
-        {
-          "alias": "newamerican",
-          "title": "American (New)"
-        },
-        {
-          "alias": "salvadoran",
-          "title": "Salvadoran"
         }
       ],
       "rating": 4.0,
       "coordinates": {
-        "latitude": 34.0326985382412,
-        "longitude": -118.343422987691
+        "latitude": 34.06333,
+        "longitude": -118.30072
       },
-      "transactions": ["delivery"],
-      "price": "$",
-      "location": {
-        "address1": "4715 W Adams Blvd",
-        "address2": "",
-        "address3": "",
-        "city": "Los Angeles",
-        "zip_code": "90016",
-        "country": "US",
-        "state": "CA",
-        "display_address": ["4715 W Adams Blvd", "Los Angeles, CA 90016"]
-      },
-      "phone": "+13237317203",
-      "display_phone": "(323) 731-7203",
-      "distance": 3800.613067739214
-    },
-    {
-      "id": "QuWGzZBMrlvPUCH-mrqZmw",
-      "alias": "best-damn-breakfast-burrito-beverly-hills",
-      "name": "Best Damn Breakfast Burrito",
-      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/bbDDVdHzis_Hc6-xUQsvQg/o.jpg",
-      "is_closed": false,
-      "url": "https://www.yelp.com/biz/best-damn-breakfast-burrito-beverly-hills?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 37,
-      "categories": [
-        {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
-        },
-        {
-          "alias": "mexican",
-          "title": "Mexican"
-        }
-      ],
-      "rating": 4.0,
-      "coordinates": {
-        "latitude": 34.065483,
-        "longitude": -118.412099
-      },
-      "transactions": ["delivery", "pickup"],
-      "location": {
-        "address1": "9911 S Santa Monica Bkvd",
-        "address2": null,
-        "address3": "",
-        "city": "Beverly Hills",
-        "zip_code": "90212",
-        "country": "US",
-        "state": "CA",
-        "display_address": [
-          "9911 S Santa Monica Bkvd",
-          "Beverly Hills, CA 90212"
-        ]
-      },
-      "phone": "+13107720795",
-      "display_phone": "(310) 772-0795",
-      "distance": 8367.79074389307
-    },
-    {
-      "id": "t4L7_yQQF2HwKH7h7brpaQ",
-      "alias": "eat-north-hollywood-3",
-      "name": "EAT",
-      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/7_1lW-pOIDWcAXTYaBotsQ/o.jpg",
-      "is_closed": false,
-      "url": "https://www.yelp.com/biz/eat-north-hollywood-3?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 2314,
-      "categories": [
-        {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
-        },
-        {
-          "alias": "sandwiches",
-          "title": "Sandwiches"
-        },
-        {
-          "alias": "cafes",
-          "title": "Cafes"
-        }
-      ],
-      "rating": 4.0,
-      "coordinates": {
-        "latitude": 34.164641,
-        "longitude": -118.372784
-      },
-      "transactions": ["delivery"],
+      "transactions": ["pickup", "delivery"],
       "price": "$$",
       "location": {
-        "address1": "11108 Magnolia Blvd",
-        "address2": "",
+        "address1": "3600 W 6th St",
+        "address2": null,
         "address3": "",
-        "city": "North Hollywood",
-        "zip_code": "91601",
+        "city": "Los Angeles",
+        "zip_code": "90020",
         "country": "US",
         "state": "CA",
-        "display_address": ["11108 Magnolia Blvd", "North Hollywood, CA 91601"]
+        "display_address": ["3600 W 6th St", "Los Angeles, CA 90020"]
       },
-      "phone": "+18187604787",
-      "display_phone": "(818) 760-4787",
-      "distance": 12400.16646443296
+      "phone": "+12133875502",
+      "display_phone": "(213) 387-5502",
+      "distance": 1928.6983368720612
     },
     {
-      "id": "TuINHKNanVu4XG7ETQavZQ",
-      "alias": "and-waffles-north-hollywood",
-      "name": "& Waffles",
-      "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/OpiatJzbaq_7ONMnE3MB5w/o.jpg",
+      "id": "sYn3SNQP-j2t2XSwjlCbRg",
+      "alias": "montys-good-burger-los-angeles",
+      "name": "Monty's Good Burger",
+      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/BrIS_Xw9o9ldylxHXl4JWQ/o.jpg",
       "is_closed": false,
-      "url": "https://www.yelp.com/biz/and-waffles-north-hollywood?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 1367,
+      "url": "https://www.yelp.com/biz/montys-good-burger-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 2115,
       "categories": [
         {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
+          "alias": "burgers",
+          "title": "Burgers"
         },
         {
-          "alias": "waffles",
-          "title": "Waffles"
+          "alias": "vegan",
+          "title": "Vegan"
         },
         {
-          "alias": "sandwiches",
-          "title": "Sandwiches"
+          "alias": "hotdogs",
+          "title": "Fast Food"
         }
       ],
       "rating": 4.5,
       "coordinates": {
-        "latitude": 34.14526,
-        "longitude": -118.36314
+        "latitude": 34.06469,
+        "longitude": -118.30876
       },
-      "transactions": ["delivery", "pickup"],
+      "transactions": ["delivery"],
       "price": "$$",
       "location": {
-        "address1": "4141 Lankershim Blvd",
-        "address2": null,
-        "address3": "",
-        "city": "North Hollywood",
-        "zip_code": "91602",
+        "address1": "516 S Western Ave",
+        "address2": "",
+        "address3": null,
+        "city": "Los Angeles",
+        "zip_code": "90020",
         "country": "US",
         "state": "CA",
-        "display_address": ["4141 Lankershim Blvd", "North Hollywood, CA 91602"]
+        "display_address": ["516 S Western Ave", "Los Angeles, CA 90020"]
       },
-      "phone": "+18188537833",
-      "display_phone": "(818) 853-7833",
-      "distance": 10054.658557281917
+      "phone": "+12139150257",
+      "display_phone": "(213) 915-0257",
+      "distance": 1206.4348071176648
     },
     {
-      "id": "eoOJbi94rj9277dG7WIv0A",
-      "alias": "home-restaurant-los-feliz-los-angeles",
-      "name": "Home Restaurant - Los Feliz",
-      "image_url": "https://s3-media1.fl.yelpcdn.com/bphoto/Xagv94-Br8Vx9U6CWnYcNA/o.jpg",
+      "id": "rMPUk3S0KppytGvrsqmQ8g",
+      "alias": "the-fix-burger-los-angeles",
+      "name": "The Fix Burger",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/V4XaE2Ms6Na9BlZb07ymIg/o.jpg",
       "is_closed": false,
-      "url": "https://www.yelp.com/biz/home-restaurant-los-feliz-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
-      "review_count": 3021,
+      "url": "https://www.yelp.com/biz/the-fix-burger-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 712,
       "categories": [
         {
-          "alias": "breakfast_brunch",
-          "title": "Breakfast & Brunch"
-        },
-        {
-          "alias": "coffee",
-          "title": "Coffee & Tea"
-        },
-        {
-          "alias": "newamerican",
-          "title": "American (New)"
+          "alias": "burgers",
+          "title": "Burgers"
         }
       ],
-      "rating": 4.0,
+      "rating": 4.5,
       "coordinates": {
-        "latitude": 34.10296,
-        "longitude": -118.28719
+        "latitude": 34.1048199,
+        "longitude": -118.27272
       },
-      "transactions": ["delivery", "pickup"],
+      "transactions": ["pickup", "delivery"],
       "price": "$$",
       "location": {
-        "address1": "1760 Hillhurst Ave",
+        "address1": "2520 Hyperion Ave",
         "address2": "",
         "address3": "",
         "city": "Los Angeles",
         "zip_code": "90027",
         "country": "US",
         "state": "CA",
-        "display_address": ["1760 Hillhurst Ave", "Los Angeles, CA 90027"]
+        "display_address": ["2520 Hyperion Ave", "Los Angeles, CA 90027"]
       },
-      "phone": "+13236690211",
-      "display_phone": "(323) 669-0211",
-      "distance": 5586.891759573554
+      "phone": "+13236618494",
+      "display_phone": "(323) 661-8494",
+      "distance": 6561.684295413282
+    },
+    {
+      "id": "glBduWUBLI4AEVAym4W6Ug",
+      "alias": "burgers-99-los-angeles",
+      "name": "Burgers 99",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/LoI_gSLfp_aEb9ULFUhHsQ/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/burgers-99-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 86,
+      "categories": [
+        {
+          "alias": "burgers",
+          "title": "Burgers"
+        }
+      ],
+      "rating": 4.0,
+      "coordinates": {
+        "latitude": 34.0725824,
+        "longitude": -118.344233
+      },
+      "transactions": ["delivery"],
+      "price": "$$",
+      "location": {
+        "address1": "131 S La Brea Ave",
+        "address2": null,
+        "address3": null,
+        "city": "Los Angeles",
+        "zip_code": "90036",
+        "country": "US",
+        "state": "CA",
+        "display_address": ["131 S La Brea Ave", "Los Angeles, CA 90036"]
+      },
+      "phone": "+13232973380",
+      "display_phone": "(323) 297-3380",
+      "distance": 2434.14311675899
+    },
+    {
+      "id": "Nm1iV8Aaat4EF_0hPevXhg",
+      "alias": "burgershop-los-angeles-2",
+      "name": "BurgerShop",
+      "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/nIdLEE4qN1mq8wImiJxdPA/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/burgershop-los-angeles-2?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 79,
+      "categories": [
+        {
+          "alias": "burgers",
+          "title": "Burgers"
+        },
+        {
+          "alias": "hotdogs",
+          "title": "Fast Food"
+        },
+        {
+          "alias": "tradamerican",
+          "title": "American (Traditional)"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 34.04384,
+        "longitude": -118.25268
+      },
+      "transactions": ["delivery"],
+      "location": {
+        "address1": "724 S Spring St",
+        "address2": null,
+        "address3": "",
+        "city": "Los Angeles",
+        "zip_code": "90014",
+        "country": "US",
+        "state": "CA",
+        "display_address": ["724 S Spring St", "Los Angeles, CA 90014"]
+      },
+      "phone": "+12132676993",
+      "display_phone": "(213) 267-6993",
+      "distance": 6638.311713679442
+    },
+    {
+      "id": "g1RqknBKd1r1ajHW8xhAkQ",
+      "alias": "hollywood-burger-los-angeles",
+      "name": "Hollywood Burger",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/Rh0RGoUrG4FrfWF2MXvt5A/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/hollywood-burger-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 672,
+      "categories": [
+        {
+          "alias": "breakfast_brunch",
+          "title": "Breakfast & Brunch"
+        },
+        {
+          "alias": "burgers",
+          "title": "Burgers"
+        }
+      ],
+      "rating": 4.5,
+      "coordinates": {
+        "latitude": 34.1009554,
+        "longitude": -118.325842369941
+      },
+      "transactions": ["pickup", "delivery"],
+      "price": "$",
+      "location": {
+        "address1": "6250 Hollywood Blvd",
+        "address2": "Ste 100",
+        "address3": "",
+        "city": "Los Angeles",
+        "zip_code": "90028",
+        "country": "US",
+        "state": "CA",
+        "display_address": [
+          "6250 Hollywood Blvd",
+          "Ste 100",
+          "Los Angeles, CA 90028"
+        ]
+      },
+      "phone": "+13233785668",
+      "display_phone": "(323) 378-5668",
+      "distance": 4396.523189327626
+    },
+    {
+      "id": "SqWYLEwZxJY7Et8w24lzjw",
+      "alias": "crispy-school-los-angeles",
+      "name": "Crispy School",
+      "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/qkjlp04wp9qLcw8Lr9r0sw/o.jpg",
+      "is_closed": false,
+      "url": "https://www.yelp.com/biz/crispy-school-los-angeles?adjust_creative=gwHql-YWG6ArCsm3pHgndg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=gwHql-YWG6ArCsm3pHgndg",
+      "review_count": 355,
+      "categories": [
+        {
+          "alias": "burgers",
+          "title": "Burgers"
+        },
+        {
+          "alias": "newamerican",
+          "title": "American (New)"
+        }
+      ],
+      "rating": 5.0,
+      "coordinates": {
+        "latitude": 34.06410333,
+        "longitude": -118.283964
+      },
+      "transactions": ["pickup", "delivery"],
+      "price": "$$",
+      "location": {
+        "address1": "526 S Occidental Blvd",
+        "address2": "",
+        "address3": null,
+        "city": "Los Angeles",
+        "zip_code": "90057",
+        "country": "US",
+        "state": "CA",
+        "display_address": ["526 S Occidental Blvd", "Los Angeles, CA 90057"]
+      },
+      "phone": "+12132771927",
+      "display_phone": "(213) 277-1927",
+      "distance": 3462.007622498361
     }
   ],
-  "total": 15200,
+  "total": 9300,
   "region": {
     "center": {
       "longitude": -118.32138061523438,
