@@ -4,11 +4,6 @@ Cypress.Commands.add('userLogin', () => {
     password: 'password123',
   };
 
-  cy.fixture('fakeCurrentUserData').then((user) => {
-    window.localStorage.setItem('registeredUsers', JSON.stringify(user));
-  });
-
-  cy.visit('/');
   cy.findByRole('button', { name: /login/i }).click();
   cy.findByRole('textbox', { name: /username/i }).type(fakeUser.username);
   cy.findByLabelText('password').type(fakeUser.password);

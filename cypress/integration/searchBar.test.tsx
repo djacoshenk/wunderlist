@@ -18,7 +18,14 @@ describe('search bar', () => {
       { fixture: 'fakeSearchResults.json' }
     ).as('searchResults');
 
+    cy.intercept(
+      'GET',
+      'https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=Burgers&location=Los%20Angeles,%20CA&sort_by=best_match&limit=10',
+      { fixture: 'fakeMoreSearchResults.json' }
+    ).as('moreSearchResults');
+
     cy.visit('/');
+
     cy.findByRole('textbox', { name: /find/i }).type('Breakfast');
 
     cy.wait('@termParamResults');
@@ -30,5 +37,11 @@ describe('search bar', () => {
     cy.findByRole('button', { name: /search/i }).click();
 
     cy.wait('@searchResults');
+
+    cy.findByRole('textbox', { name: /find/i }).type('Burgers');
+
+    cy.findByRole('button', { name: /search/i }).click();
+
+    cy.wait('@moreSearchResults');
   });
 });
