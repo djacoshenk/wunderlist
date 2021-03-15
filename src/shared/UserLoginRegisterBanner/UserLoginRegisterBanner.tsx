@@ -3,98 +3,60 @@ import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import OutsideClickHandler from 'react-outside-click-handler';
+import * as Sentry from '@sentry/react';
 
+import { auth } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginRegisterBanner.module.scss';
 
-type Categories = {
-  title: string;
-};
-
-type Place = {
-  id: string;
-  alias: string;
-  image_url: string;
-  name: string;
-  rating: number;
-  review_count: number;
-  price: string;
-  categories: Categories[];
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
-  display_phone: string;
-  location: {
-    display_address: string[];
-  };
-};
-
-type CurrentUserLoggedInState = {
-  userID: string;
-  first_name: string;
-  last_name: string;
+type CurrentUser = {
+  uid: string;
   email: string;
-  username: string;
-  password: string;
-  confirm_password: string;
-  savedPlaces: Place[];
+  firstName: string;
+  lastName: string;
 };
+
+type CurrentUserLoggedIn = CurrentUser | firebase.firestore.DocumentData;
 
 export default function UserLoginRegisterBanner() {
-  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<
-    CurrentUserLoggedInState[] | null
-  >(null);
+  const [
+    currentUserLoggedIn,
+    setCurrentUserLoggedIn,
+  ] = useState<CurrentUserLoggedIn | null>(null);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // check if there is a current user saved in local storage - returns a string or null
-  const currentUserLocalStorage = localStorage.getItem('currentUser');
-  const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
-
   useEffect(() => {
+    // fetch current user from local storage
+    const currentUserLocalStorage = localStorage.getItem('currentUser');
+
+    // if the local storage has data, retrieve it and set it into component state
     if (currentUserLocalStorage) {
       setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
-    } else {
-      setCurrentUserLoggedIn(null);
     }
-  }, [currentUserLocalStorage]);
+  }, []);
 
-  function onUserLogout() {
-    if (currentUserLocalStorage && registeredUsersLocalStorage) {
-      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
-        currentUserLocalStorage
-      );
+  async function onUserLogout() {
+    try {
+      await auth.signOut();
 
-      const registeredUserData: CurrentUserLoggedInState[] = JSON.parse(
-        registeredUsersLocalStorage
-      );
-
-      const updatedRegisteredUserData = registeredUserData.map((user) =>
-        user.userID === currentUserData[0].userID ? currentUserData[0] : user
-      );
-
-      localStorage.setItem(
-        'registeredUsers',
-        JSON.stringify(updatedRegisteredUserData)
-      );
-
-      // remove current user from local storage
       localStorage.removeItem('currentUser');
-
-      // set the user loading status
-      dispatch(setCurrentLoadingStatus(true, 'Logging Out...'));
-
-      // route to the home page
-      history.push('/');
-
-      // change the user loading status
-      setTimeout(() => {
-        dispatch(setCurrentLoadingStatus(false));
-      }, 2000);
+    } catch (err) {
+      Sentry.captureException(err);
     }
+
+    // set the user loading status
+    dispatch(setCurrentLoadingStatus(true, 'Logging Out...'));
+
+    // route to the home page
+    history.push('/');
+
+    // change the user loading status
+    setTimeout(() => {
+      dispatch(setCurrentLoadingStatus(false));
+    }, 2000);
   }
 
   function onOutsideClick() {
@@ -112,14 +74,13 @@ export default function UserLoginRegisterBanner() {
           </div>
           <Link
             to={{
-              pathname: `/user/${currentUserLoggedIn[0].username}`,
-              state: currentUserLoggedIn[0],
+              pathname: `/user/${currentUserLoggedIn.uid}`,
+              state: currentUserLoggedIn,
             }}
             className={styles['user-avatar-username-link']}
           >
-            <p>{currentUserLoggedIn[0].first_name}</p>
+            <p>{currentUserLoggedIn.firstName}</p>
           </Link>
-
           <button
             aria-label='toggle menu'
             className={styles['chevron-down-btn']}
