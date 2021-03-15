@@ -28,7 +28,7 @@ export default function App() {
           <Route path='/business/:alias'>
             <RestaurantProfilePage />
           </Route>
-          <Route path='/user/:username'>
+          <Route path='/user/:uid'>
             <UserProfilePage />
           </Route>
         </Switch>
