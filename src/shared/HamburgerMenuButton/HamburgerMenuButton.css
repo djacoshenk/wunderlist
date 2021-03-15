@@ -167,7 +167,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 /* do not show menu button on larger devices */
-@media (min-width: 1025px) {
+@media (min-width: 769px) {
   .menu-button-container {
     display: none;
   }
