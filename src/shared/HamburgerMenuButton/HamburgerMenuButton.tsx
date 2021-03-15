@@ -1,45 +1,65 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { slide as Menu } from 'react-burger-menu';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import OutsideClickHandler from 'react-outside-click-handler';
+import * as Sentry from '@sentry/react';
 
+import { auth, firestore } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import './HamburgerMenuButton.css';
 
-type CurrentUserLoggedInState = {
-  userID: string;
-  first_name: string;
-  last_name: string;
+type CurrentUser = {
+  uid: string;
   email: string;
-  username: string;
-  password: string;
-  confirm_password: string;
+  firstName: string;
+  lastName: string;
+  savedPlaces: any[];
 };
 
+type CurrentUserLoggedInState = CurrentUser | firebase.firestore.DocumentData;
+
 export default function HamburgerMenuButton() {
-  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<
-    CurrentUserLoggedInState[] | null
-  >(null);
+  const [
+    currentUserLoggedIn,
+    setCurrentUserLoggedIn,
+  ] = useState<CurrentUserLoggedInState | null>(null);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // check if there is a current user saved in local storage - returns a string or null
-  const currentUserLocalStorage = localStorage.getItem('currentUser');
-
-  // check if there is a current user saved in local storage
   useEffect(() => {
-    if (typeof currentUserLocalStorage === 'string') {
-      setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
-    }
-  }, [currentUserLocalStorage]);
+    try {
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          const snapshot = await firestore
+            .collection('users')
+            .doc(user.uid)
+            .get();
 
-  function onUserLogout() {
+          const data = snapshot.data();
+
+          if (data) {
+            setCurrentUserLoggedIn(data);
+          }
+        }
+      });
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+  }, []);
+
+  async function onUserLogout() {
     // remove current user from local storage
-    localStorage.removeItem('currentUser');
+    try {
+      await auth.signOut();
+
+      localStorage.removeItem('currentUser');
+    } catch (err) {
+      Sentry.captureException(err);
+    }
 
     // set the user loading status
     dispatch(setCurrentLoadingStatus(true, 'Logging Out...'));
@@ -68,14 +88,14 @@ export default function HamburgerMenuButton() {
               <i className='fas fa-user-circle'></i>
               <Link
                 to={{
-                  pathname: `/user/${currentUserLoggedIn[0].username}`,
+                  pathname: `/user/${currentUserLoggedIn.uid}`,
                   state: {
-                    place: currentUserLoggedIn[0].username,
+                    place: currentUserLoggedIn,
                   },
                 }}
                 className='user-avatar-username-link'
               >
-                <p>{currentUserLoggedIn[0].first_name}</p>
+                <p>{currentUserLoggedIn.firstName}</p>
               </Link>
               <button
                 aria-label='toggle menu'
