@@ -7,11 +7,11 @@
   align-items: center;
 
   @media (min-width: 481px) {
-    padding: calc((100vh - 62px - 535px) / 2) 0rem;
+    padding: calc((100vh - 62px - 458px) / 2) 0rem;
   }
 
   @media (min-width: 1025px) {
-    padding: calc((100vh - 67px - 535px) / 2) 0rem;
+    padding: calc((100vh - 67px - 458px) / 2) 0rem;
   }
 
   h3 {
@@ -43,7 +43,6 @@
     .user-register-first-name-error,
     .user-register-last-name-error,
     .user-register-email-error,
-    .user-register-username-error,
     .user-register-password-error,
     .user-register-confirm-password-error {
       display: flex;
