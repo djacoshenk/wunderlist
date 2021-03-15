@@ -21,7 +21,7 @@
     align-items: center;
     width: 100%;
 
-    .user-login-username-container {
+    .user-login-email-container {
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -90,7 +90,7 @@
       }
     }
 
-    .user-login-username-error,
+    .user-login-email-error,
     .user-login-password-error {
       display: flex;
       justify-content: flex-start;

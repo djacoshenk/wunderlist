@@ -1,83 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import * as Sentry from '@sentry/react';
 
+import { auth, firestore } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserLoginForm.module.scss';
 
 type UserLoginFormState = {
   [name: string]: string;
-  username: string;
-  password: string;
-};
-
-type Place = {
-  id: string;
-  alias: string;
-  image_url: string;
-  name: string;
-  rating: number;
-  review_count: number;
-  price: string;
-  categories: Categories[];
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
-  display_phone: string;
-  location: {
-    display_address: string[];
-  };
-};
-
-type Categories = {
-  title: string;
-};
-
-type RegisteredUserState = {
-  userID: string;
-  first_name: string;
-  last_name: string;
   email: string;
-  username: string;
   password: string;
-  confirm_password: string;
-  savedPlaces: Place[];
 };
 
 const userLoginFormErrorValues: UserLoginFormState = {
-  username: 'Please provide a valid username',
+  email: 'Please provide a valid email',
   password: 'Please provide a valid password',
 };
 
 export default function UserLoginForm() {
-  const dispatch = useDispatch();
   const [userLoginForm, setUserLoginForm] = useState<UserLoginFormState>({
-    username: '',
+    email: '',
     password: '',
   });
   const [
     userLoginFormErrors,
     setUserLoginFormErrors,
   ] = useState<UserLoginFormState>({
-    username: '',
+    email: '',
     password: '',
   });
-  const [registeredUsersData, setRegisteredUsersData] = useState<
-    RegisteredUserState[]
-  >([]);
+  const dispatch = useDispatch();
   const history = useHistory();
-
-  // check if there is registeredUsers data in local storage - returns a JSON string or null
-  const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
-
-  // if a JSON string is returned, parse the string to a JS object
-  useEffect(() => {
-    if (registeredUsersLocalStorage) {
-      setRegisteredUsersData(JSON.parse(registeredUsersLocalStorage));
-    }
-  }, [registeredUsersLocalStorage]);
 
   function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -88,73 +43,64 @@ export default function UserLoginForm() {
     }));
   }
 
-  function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     let errors = 0;
 
-    const checkUsernameRegistration = registeredUsersData.find(
-      (val) => val.username === userLoginForm.username
-    );
-    const checkPasswordRegistration = registeredUsersData.find(
-      (val) => val.password === userLoginForm.password
-    );
-
-    if (checkUsernameRegistration) {
-      setUserLoginFormErrors((prevState) => ({
-        ...prevState,
-        username: '',
-      }));
-    } else {
-      errors++;
-
-      setUserLoginFormErrors((prevState) => ({
-        ...prevState,
-        username: 'The provided username does not match a registered user',
-      }));
-    }
-
-    if (checkPasswordRegistration) {
-      setUserLoginFormErrors((prevState) => ({
-        ...prevState,
-        password: '',
-      }));
-    } else {
-      errors++;
-
-      setUserLoginFormErrors((prevState) => ({
-        ...prevState,
-        password: 'Incorrect password - Please try again',
-      }));
-    }
-
-    // loop through the input fields, if the field is empty set the login form error value
-    for (const name in userLoginForm) {
-      if (!userLoginForm[name]) {
-        errors++;
-
-        setUserLoginFormErrors((prevState) => ({
-          ...prevState,
-          [name]: userLoginFormErrorValues[name],
-        }));
-      }
-    }
-
-    // if there are no errors, then find the user's data in local storage
-    if (errors === 0) {
-      const registeredUserData = registeredUsersData.find(
-        (val) =>
-          val.username === userLoginForm.username &&
-          val.password === userLoginForm.password
+    try {
+      // if the email and password are both valid, then try to sign in and return the user info
+      const { user } = await auth.signInWithEmailAndPassword(
+        userLoginForm.email,
+        userLoginForm.password
       );
 
-      // set the current user to the existing registered data
-      if (registeredUserData) {
-        localStorage.setItem(
-          'currentUser',
-          JSON.stringify([{ ...registeredUserData }])
-        );
+      // if a user is signed in successfully, grab the user info from the database and store in local storage
+      if (user) {
+        auth.onAuthStateChanged(async (user) => {
+          if (user) {
+            const snapshot = await firestore
+              .collection('users')
+              .doc(user.uid)
+              .get();
+
+            const data = snapshot.data();
+
+            if (data) {
+              localStorage.setItem('currentUser', JSON.stringify(data));
+            }
+          }
+        });
       }
+    } catch (error) {
+      errors++;
+
+      if (error.code === 'auth/invalid-email') {
+        setUserLoginFormErrors({
+          email: userLoginFormErrorValues.email,
+          password: '',
+        });
+      } else if (error.code === 'auth/wrong-password') {
+        setUserLoginFormErrors({
+          email: '',
+          password: 'Incorrect password. Please try again.',
+        });
+      } else if (error.code === 'auth/user-not-found') {
+        setUserLoginFormErrors({
+          email: 'An account does not exist with the provided email',
+          password: '',
+        });
+      }
+
+      Sentry.captureException(error);
+    }
+
+    // if a user is able to sign in successfully, then reset the form errors, route to the Home Page and show the loader
+    if (errors === 0) {
+      setUserLoginFormErrors({
+        email: '',
+        password: '',
+      });
 
       // set the loading status
       dispatch(setCurrentLoadingStatus(true, 'Logging In...'));
@@ -165,7 +111,7 @@ export default function UserLoginForm() {
       // turn loader off and route to the home page
       setTimeout(() => {
         dispatch(setCurrentLoadingStatus(false));
-      }, 2000);
+      }, 4000);
     }
   }
 
@@ -177,24 +123,24 @@ export default function UserLoginForm() {
         onSubmit={onFormSubmit}
         aria-label='form'
       >
-        <div className={styles['user-login-username-container']}>
-          <label htmlFor='username'>
+        <div className={styles['user-login-email-container']}>
+          <label htmlFor='email'>
             <i className='fas fa-user'></i>
           </label>
           <input
-            aria-label='username'
+            aria-label='email'
             type='text'
-            id='username'
-            name='username'
-            placeholder='Username'
-            value={userLoginForm.username}
+            id='email'
+            name='email'
+            placeholder='Email'
+            value={userLoginForm.email}
             onChange={onInputChange}
           />
         </div>
-        <div className={styles['user-login-username-error']}>
-          {userLoginFormErrors.username && (
-            <p aria-label='username error' role='alert'>
-              {userLoginFormErrors.username}
+        <div className={styles['user-login-email-error']}>
+          {userLoginFormErrors.email && (
+            <p aria-label='email error' role='alert'>
+              {userLoginFormErrors.email}
             </p>
           )}
         </div>
