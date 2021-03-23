@@ -156,11 +156,11 @@ export default function UserRegisterForm() {
         confirmPassword: '',
       });
 
-      // route to the home page
-      history.push('/');
-
       // set the loading status
       dispatch(setCurrentLoadingStatus(true, 'Registering New User...'));
+
+      // route to the home page
+      history.push('/');
 
       // change the loading status
       setTimeout(() => {
