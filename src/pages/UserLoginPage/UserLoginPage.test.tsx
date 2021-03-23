@@ -1,15 +1,18 @@
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
+import { auth } from 'setupFirebase';
 
 import UserLoginPage from './UserLoginPage';
 
 import store from 'store/index';
 
-const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+jest.mock('setupFirebase');
+
+const mockedAuth = auth as jest.Mocked<typeof auth>;
 
 test('component is accessible', async () => {
   const { container } = render(
@@ -39,7 +42,7 @@ test('component renders with title', async () => {
   });
 });
 
-test('user submits form without filling out fields', () => {
+test('user submits form without filling out fields', async () => {
   render(
     <Provider store={store}>
       <BrowserRouter>
@@ -48,22 +51,27 @@ test('user submits form without filling out fields', () => {
     </Provider>
   );
 
-  // login button should be rendered
-  expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
+  mockedAuth.signInWithEmailAndPassword.mockRejectedValue({
+    code: 'auth/invalid-email',
+  });
 
   // user clicks on login button
   userEvent.click(screen.getByRole('button', { name: /login/i }));
 
-  // error messages should appear
-  expect(
-    screen.getByRole('alert', { name: /username error/i })
-  ).toBeInTheDocument();
-  expect(
-    screen.getByRole('alert', { name: /password error/i })
-  ).toBeInTheDocument();
+  // error message should appear
+  await waitFor(() => {
+    expect(
+      screen.getByRole('alert', { name: /email error/i })
+    ).toBeInTheDocument();
+  });
 });
 
-test('user is not registered and submits form', () => {
+test('user is not registered and submits form', async () => {
+  const fakeUserData = {
+    email: 'daniel.jacoshenk@gmail.com',
+    password: 'password',
+  };
+
   render(
     <Provider store={store}>
       <BrowserRouter>
@@ -72,42 +80,36 @@ test('user is not registered and submits form', () => {
     </Provider>
   );
 
-  // textboxes should be rendered
-  expect(
-    screen.getByRole('textbox', { name: /username/i })
-  ).toBeInTheDocument();
-  expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
+  mockedAuth.signInWithEmailAndPassword.mockRejectedValue({
+    code: 'auth/user-not-found',
+  });
 
   // unregistered user fills in fields
   userEvent.type(
-    screen.getByRole('textbox', { name: /username/i }),
-    'djacoshenk'
+    screen.getByRole('textbox', { name: /email/i }),
+    fakeUserData.email
   );
-  userEvent.type(screen.getByPlaceholderText(/password/i), 'password123!');
+  userEvent.type(
+    screen.getByPlaceholderText(/password/i),
+    fakeUserData.password
+  );
 
   // unregistered user submits form
   userEvent.click(screen.getByRole('button', { name: /login/i }));
 
-  // error messages should appear
-  expect(
-    screen.getByRole('alert', { name: /username error/i })
-  ).toBeInTheDocument();
-  expect(
-    screen.getByRole('alert', { name: /password error/i })
-  ).toBeInTheDocument();
+  // error message should appear
+  await waitFor(() => {
+    expect(
+      screen.getByRole('alert', { name: /email error/i })
+    ).toBeInTheDocument();
+  });
 });
 
-test('user is registered and submits form with wrong password', () => {
-  const fakeRegisteredUser = [
-    {
-      username: 'djacoshenk',
-      password: 'password123!',
-    },
-  ];
-
-  mockedLocalStorage.getItem.mockReturnValue(
-    JSON.stringify(fakeRegisteredUser)
-  );
+test('user is registered and submits form with wrong password', async () => {
+  const fakeUserData = {
+    email: 'daniel.jacoshenk@gmail.com',
+    password: 'password',
+  };
 
   render(
     <Provider store={store}>
@@ -117,43 +119,42 @@ test('user is registered and submits form with wrong password', () => {
     </Provider>
   );
 
-  // textboxes should be rendered
-  expect(screen.getByPlaceholderText(/username/i)).toBeInTheDocument();
-  expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
+  mockedAuth.signInWithEmailAndPassword.mockRejectedValue({
+    code: 'auth/wrong-password',
+  });
 
   // unregistered user fills in fields
-  userEvent.type(screen.getByPlaceholderText(/username/i), 'djacoshenk');
-  userEvent.type(screen.getByPlaceholderText(/password/i), 'password');
+  userEvent.type(screen.getByPlaceholderText(/email/i), fakeUserData.email);
+  userEvent.type(
+    screen.getByPlaceholderText(/password/i),
+    fakeUserData.password
+  );
 
   // unregistered user submits form
   userEvent.click(screen.getByRole('button', { name: /login/i }));
 
   // username error not should appear
-  expect(screen.queryByRole('alert', { name: /username error/i })).toBeNull();
+  expect(screen.queryByRole('alert', { name: /email error/i })).toBeNull();
 
   // password error should appear
-  expect(
-    screen.getByRole('alert', { name: /password error/i })
-  ).toBeInTheDocument();
+  await waitFor(() => {
+    expect(
+      screen.getByRole('alert', { name: /password error/i })
+    ).toBeInTheDocument();
+  });
 });
 
-test('user is registered and submits form with correct inputs', () => {
+test('user is registered and submits form with correct inputs', async () => {
   jest.useFakeTimers();
 
   const history = createMemoryHistory();
 
   history.push('/login');
 
-  const fakeRegisteredUser = [
-    {
-      username: 'djacoshenk',
-      password: 'password123!',
-    },
-  ];
-
-  mockedLocalStorage.getItem.mockReturnValue(
-    JSON.stringify(fakeRegisteredUser)
-  );
+  const fakeRegisteredUser = {
+    email: 'daniel.jacoshenk@gmail.com',
+    password: 'password123!',
+  };
 
   render(
     <Provider store={store}>
@@ -163,25 +164,37 @@ test('user is registered and submits form with correct inputs', () => {
     </Provider>
   );
 
-  // textboxes should be rendered
-  expect(screen.getByPlaceholderText(/username/i)).toBeInTheDocument();
-  expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
-
-  // unregistered user fills in fields
-  userEvent.type(screen.getByPlaceholderText(/username/i), 'djacoshenk');
-  userEvent.type(screen.getByPlaceholderText(/password/i), 'password123!');
-
   // current page should be login page
   expect(history.location.pathname).toBe('/login');
+
+  mockedAuth.signInWithEmailAndPassword.mockResolvedValue({
+    user: {
+      uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+    },
+  } as any);
+
+  mockedAuth.onAuthStateChanged.mockImplementation(() => {
+    return {} as any;
+  });
+
+  // unregistered user fills in fields
+  userEvent.type(
+    screen.getByPlaceholderText(/email/i),
+    fakeRegisteredUser.email
+  );
+  userEvent.type(
+    screen.getByPlaceholderText(/password/i),
+    fakeRegisteredUser.password
+  );
 
   // unregistered user submits form
   userEvent.click(screen.getByRole('button', { name: /login/i }));
 
-  // user is routed to the home page
-  expect(history.location.pathname).toBe('/');
+  jest.advanceTimersByTime(4000);
 
-  act(() => {
-    jest.advanceTimersByTime(2000);
+  // user is routed to the home page
+  await waitFor(() => {
+    expect(history.location.pathname).toBe('/');
   });
 });
 
