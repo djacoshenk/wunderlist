@@ -3,7 +3,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAs4Aq9TxAOcH57ZNH6Cl80eLRZAWzefTM',
+  apiKey: process.env.REACT_APP_FIREBASE,
   authDomain: 'wunderlistme.firebaseapp.com',
   projectId: 'wunderlistme',
 };
