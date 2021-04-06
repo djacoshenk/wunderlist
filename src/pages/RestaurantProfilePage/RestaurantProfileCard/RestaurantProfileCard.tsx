@@ -7,6 +7,8 @@ import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRating
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
 
+import * as Sentry from '@sentry/react';
+
 import styles from './RestaurantProfileCard.module.scss';
 
 type Props = {
@@ -70,30 +72,37 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
   }
 
   const verifyRestaurantIsSaved = useCallback(async () => {
-    // if there is a current user, we want to verify if the current restaurant has been saved by them
-    if (auth.currentUser) {
-      const { uid } = auth.currentUser;
+    try {
+      // if there is a current user, we want to verify if the current restaurant has been saved by them
+      if (auth.currentUser) {
+        const { uid } = auth.currentUser;
 
-      // check if they've saved places under their user id
-      const snapshot = await firestore.collection('savedPlaces').doc(uid).get();
+        // check if they've saved places under their user id
+        const snapshot = await firestore
+          .collection('savedPlaces')
+          .doc(uid)
+          .get();
 
-      // if they have saved places
-      if (snapshot.exists) {
-        const data = snapshot.data();
+        // if they have saved places
+        if (snapshot.exists) {
+          const data = snapshot.data();
 
-        // if the snapshot exists and there is data, then find the restaurant in the savedPlaces array
-        if (data) {
-          const savedPlace = data.savedPlaces.find((res: Place) => {
-            return res.id === place.id ? res : null;
-          });
+          // if the snapshot exists and there is data, then find the restaurant in the savedPlaces array
+          if (data) {
+            const savedPlace = data.savedPlaces.find((res: Place) => {
+              return res.id === place.id ? res : null;
+            });
 
-          // if the current restaurant is saved, then toggle restaurantIsSaved to true
-          const isSaved = data.savedPlaces.includes(savedPlace);
+            // if the current restaurant is saved, then toggle restaurantIsSaved to true
+            const isSaved = data.savedPlaces.includes(savedPlace);
 
-          // toggle restaurantIsSaved
-          setRestaurantIsSaved(isSaved);
+            // toggle restaurantIsSaved
+            setRestaurantIsSaved(isSaved);
+          }
         }
       }
+    } catch (error) {
+      Sentry.captureException(error);
     }
   }, [place.id]);
 
@@ -110,63 +119,77 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
   }, [verifyRestaurantIsSaved]);
 
   async function saveRestaurantOnClick(place: Place) {
-    // if there is a current user, we want to save the restaurant to the database under their user id
-    if (auth.currentUser) {
-      const { uid } = auth.currentUser;
+    try {
+      // if there is a current user, we want to save the restaurant to the database under their user id
+      if (auth.currentUser) {
+        const { uid } = auth.currentUser;
 
-      const snapshot = await firestore.collection('savedPlaces').doc(uid).get();
-
-      // if there are no saved places in the database then set one
-      if (!snapshot.exists) {
-        await firestore
+        const snapshot = await firestore
           .collection('savedPlaces')
           .doc(uid)
-          .set({ savedPlaces: [place] });
-        // if there are saved places in the database then add to the array
-      } else {
-        await firestore
-          .collection('savedPlaces')
-          .doc(uid)
-          .update({
-            savedPlaces: firebase.firestore.FieldValue.arrayUnion(place),
-          });
-      }
+          .get();
 
-      // restaurant is saved, so true
-      setRestaurantIsSaved(true);
-    }
-  }
-
-  async function unsaveRestaurantOnClick(place: Place) {
-    // if there is a current user, then we want to remove the saved restaurant from the database under their user id
-    if (auth.currentUser) {
-      const { uid } = auth.currentUser;
-
-      const snapshot = await firestore.collection('savedPlaces').doc(uid).get();
-
-      // if the snapshot exists, remove the place from saved places
-      if (snapshot.exists) {
-        const data = snapshot.data();
-
-        // if data exists in the snapshot, then find the restaurant in the savedPlaces array
-        if (data) {
-          const savedPlace = data.savedPlaces.find((res: Place) => {
-            return res.id === place.id ? res : null;
-          });
-
+        // if there are no saved places in the database then set one
+        if (!snapshot.exists) {
+          await firestore
+            .collection('savedPlaces')
+            .doc(uid)
+            .set({ savedPlaces: [place] });
+          // if there are saved places in the database then add to the array
+        } else {
           await firestore
             .collection('savedPlaces')
             .doc(uid)
             .update({
-              savedPlaces: firebase.firestore.FieldValue.arrayRemove(
-                savedPlace
-              ),
+              savedPlaces: firebase.firestore.FieldValue.arrayUnion(place),
+            });
+        }
+
+        // restaurant is saved, so true
+        setRestaurantIsSaved(true);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+  }
+
+  async function unsaveRestaurantOnClick(place: Place) {
+    try {
+      // if there is a current user, then we want to remove the saved restaurant from the database under their user id
+      if (auth.currentUser) {
+        const { uid } = auth.currentUser;
+
+        const snapshot = await firestore
+          .collection('savedPlaces')
+          .doc(uid)
+          .get();
+
+        // if the snapshot exists, remove the place from saved places
+        if (snapshot.exists) {
+          const data = snapshot.data();
+
+          // if data exists in the snapshot, then find the restaurant in the savedPlaces array
+          if (data) {
+            const savedPlace = data.savedPlaces.find((res: Place) => {
+              return res.id === place.id ? res : null;
             });
 
-          // restaurant is unsaved, so false
-          setRestaurantIsSaved(false);
+            await firestore
+              .collection('savedPlaces')
+              .doc(uid)
+              .update({
+                savedPlaces: firebase.firestore.FieldValue.arrayRemove(
+                  savedPlace
+                ),
+              });
+
+            // restaurant is unsaved, so false
+            setRestaurantIsSaved(false);
+          }
         }
       }
+    } catch (error) {
+      Sentry.captureException(error);
     }
   }
 
