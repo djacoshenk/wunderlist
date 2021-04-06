@@ -98,7 +98,7 @@ export default function UserRegisterForm() {
         if (user) {
           const { firstName, lastName, email } = userRegisterForm;
 
-          firestore.collection('users').doc(user.uid).set({
+          await firestore.collection('users').doc(user.uid).set({
             uid: user.uid,
             firstName,
             lastName,
