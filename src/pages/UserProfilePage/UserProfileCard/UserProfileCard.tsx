@@ -1,4 +1,5 @@
 import { Fragment } from 'react';
+import firebase from 'setupFirebase';
 
 import styles from './UserProfileCard.module.scss';
 
@@ -26,24 +27,24 @@ type Place = {
 };
 
 type CurrentUser = {
-  userID: string;
-  first_name: string;
-  last_name: string;
+  uid: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  username: string;
-  password: string;
-  confirm_password: string;
-  savedPlaces: Place[];
 };
 
 type Props = {
-  currentUser: CurrentUser[];
+  currentUserProfile: CurrentUser | firebase.firestore.DocumentData | null;
+  savedPlaces: firebase.firestore.DocumentData | Place[] | null;
 };
 
-export default function UserProfileCard({ currentUser }: Props) {
+export default function UserProfileCard({
+  currentUserProfile,
+  savedPlaces,
+}: Props) {
   return (
     <Fragment>
-      {
+      {currentUserProfile && (
         <div className={styles['user-profile-card-main-container']}>
           <div className={styles['user-profile-card-container']}>
             <div className={styles['user-profile-card-avatar']}>
@@ -51,16 +52,16 @@ export default function UserProfileCard({ currentUser }: Props) {
             </div>
             <div className={styles['user-profile-card-user-info']}>
               <div className={styles['user-profile-card-name']}>
-                <p>{`${currentUser[0].first_name} ${currentUser[0].last_name}`}</p>
+                <p>{`${currentUserProfile.firstName} ${currentUserProfile.lastName}`}</p>
               </div>
               <div className={styles['user-profile-card-saved-places']}>
                 <i className='fas fa-star'></i>
-                <p>{currentUser[0].savedPlaces.length}</p>
+                <p>{savedPlaces ? savedPlaces.length : 0}</p>
               </div>
             </div>
           </div>
         </div>
-      }
+      )}
     </Fragment>
   );
 }

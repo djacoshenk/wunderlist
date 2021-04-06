@@ -12,7 +12,7 @@ import './styles.scss';
 
 Sentry.init({
   dsn:
-    'https://59b62345d84547a3a52adecf3c9c46ee@o504051.ingest.sentry.io/5590107',
+    'https://25658a20be6744259d5641f5c79d499b@o504051.ingest.sentry.io/5590107',
   autoSessionTracking: true,
   integrations: [new Integrations.BrowserTracing()],
 

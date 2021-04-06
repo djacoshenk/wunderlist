@@ -1,7 +1,9 @@
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 
+import firebase, { firestore } from 'setupFirebase';
 import Header from './Header/Header';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
@@ -32,46 +34,82 @@ type Place = {
 };
 
 type CurrentUser = {
-  userID: string;
-  first_name: string;
-  last_name: string;
+  uid: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  username: string;
-  password: string;
-  confirm_password: string;
-  savedPlaces: Place[];
+};
+
+type CurrentUserProfile = CurrentUser | firebase.firestore.DocumentData;
+
+type SavedPlaces = firebase.firestore.DocumentData | Place[];
+
+type LocationState = CurrentUser;
+
+type ParamsState = {
+  uid: string;
 };
 
 export default function UserProfilePage() {
   const [userProfileIsLoading, setUserProfileIsLoading] = useState(true);
-  const [currentUser, setCurrentUser] = useState<CurrentUser[]>([]);
-  const location = useLocation<CurrentUser>();
+  const [
+    currentUserProfile,
+    setCurrentUserProfile,
+  ] = useState<CurrentUserProfile | null>(null);
+  const [savedPlaces, setSavedPlaces] = useState<SavedPlaces | null>(null);
+  const location = useLocation<LocationState>();
+  const params = useParams<ParamsState>();
 
   function formatLastNameInitial(lastName: string) {
     return lastName.substring(0, 1);
   }
 
-  // check if there is a current user saved in local storage - returns a string or null
-  const currentUserLocalStorage = localStorage.getItem('currentUser');
+  const fetchUserProfileData = useCallback(async () => {
+    try {
+      // grab the user id from the params
+      const { uid } = params;
+
+      // use the user id to fetch the user and savedPlaces data
+      const userSnapshot = await firestore.collection('users').doc(uid).get();
+      const savedPlacesSnapshot = await firestore
+        .collection('savedPlaces')
+        .doc(uid)
+        .get();
+
+      if (userSnapshot.exists) {
+        const userData = userSnapshot.data();
+
+        if (userData) {
+          setCurrentUserProfile(userData);
+        }
+      }
+
+      if (savedPlacesSnapshot.exists) {
+        const savedPlacesData = savedPlacesSnapshot.data();
+
+        if (savedPlacesData) {
+          setSavedPlaces(savedPlacesData.savedPlaces);
+        }
+      }
+
+      setUserProfileIsLoading(false);
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+  }, [params]);
 
   useEffect(() => {
-    if (currentUserLocalStorage) {
-      setCurrentUser(JSON.parse(currentUserLocalStorage));
-
-      setTimeout(() => {
-        setUserProfileIsLoading(false);
-      }, 1000);
-    }
-  }, [currentUserLocalStorage]);
+    fetchUserProfileData();
+  }, [fetchUserProfileData]);
 
   return (
     <Fragment>
       <Helmet>
         {location.state ? (
           <title>{`wunderlist - ${
-            location.state.first_name
+            location.state.firstName
           } ${formatLastNameInitial(
-            location.state.last_name
+            location.state.lastName
           )}.'s Profile`}</title>
         ) : (
           <title>wunderlist - find and save your new favorite place</title>
@@ -83,8 +121,11 @@ export default function UserProfilePage() {
         <RestaurantLoaderBubbles />
       ) : (
         <Fragment>
-          <UserProfileCard currentUser={currentUser} />
-          <UserSavedRestaurantCardsList currentUser={currentUser} />
+          <UserProfileCard
+            currentUserProfile={currentUserProfile}
+            savedPlaces={savedPlaces}
+          />
+          <UserSavedRestaurantCardsList savedPlaces={savedPlaces} />
         </Fragment>
       )}
     </Fragment>

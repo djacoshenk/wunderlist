@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -12,10 +12,6 @@ import userEvent from '@testing-library/user-event';
 jest.mock('axios');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-afterEach(() => {
-  cleanup();
-});
 
 test('component is accessible', async () => {
   const { container } = render(
@@ -99,14 +95,6 @@ test('user submits form without search params', () => {
       </BrowserRouter>
     </Provider>
   );
-
-  // error messages are not present
-  expect(
-    screen.queryByRole('alert', { name: /please provide a term/i })
-  ).toBeNull();
-  expect(
-    screen.queryByRole('alert', { name: /please provide a location/i })
-  ).toBeNull();
 
   // user clicks on search button
   userEvent.click(screen.getByRole('button', { name: /search/i }));

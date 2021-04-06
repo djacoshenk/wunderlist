@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import UserSavedRestaurantCards from 'pages/UserProfilePage/UserSavedRestaurantCards/UserSavedRestaurantCards';
 
 import styles from './UserSavedRestaurantCardsList.module.scss';
+import firebase from 'setupFirebase';
 
 type Categories = {
   title: string;
@@ -27,37 +28,32 @@ type Place = {
   };
 };
 
-type CurrentUser = {
-  userID: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  username: string;
-  password: string;
-  confirm_password: string;
-  savedPlaces: Place[];
-};
-
 type Props = {
-  currentUser: CurrentUser[];
+  savedPlaces: firebase.firestore.DocumentData | Place[] | null;
 };
 
-export default function UserSavedRestaurantCardsList({ currentUser }: Props) {
+export default function UserSavedRestaurantCardsList({ savedPlaces }: Props) {
   return (
     <Fragment>
-      {currentUser[0].savedPlaces.length === 0 ? (
+      {savedPlaces ? (
+        savedPlaces.length === 0 ? (
+          <div className={styles['user-saved-cards-message']}>
+            <p>You have not saved any places.</p>
+          </div>
+        ) : (
+          <div className={styles['user-saved-cards-container']}>
+            {savedPlaces.map((place: Place, index: number) => (
+              <UserSavedRestaurantCards
+                key={place.id}
+                place={place}
+                index={index + 1}
+              />
+            ))}
+          </div>
+        )
+      ) : (
         <div className={styles['user-saved-cards-message']}>
           <p>You have not saved any places.</p>
-        </div>
-      ) : (
-        <div className={styles['user-saved-cards-container']}>
-          {currentUser[0].savedPlaces.map((place, index) => (
-            <UserSavedRestaurantCards
-              key={place.id}
-              place={place}
-              index={index + 1}
-            />
-          ))}
         </div>
       )}
     </Fragment>

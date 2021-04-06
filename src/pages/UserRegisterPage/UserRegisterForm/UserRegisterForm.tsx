@@ -1,30 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
-import validator from 'validator';
+import * as Sentry from '@sentry/react';
 import { useDispatch } from 'react-redux';
 
+import { firestore, auth } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 
 import styles from './UserRegisterForm.module.scss';
 
 type UserRegisterFormState = {
   [name: string]: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  username: string;
   password: string;
-  confirm_password: string;
+  confirmPassword: string;
 };
 
 const userRegisterFormErrorValues: UserRegisterFormState = {
-  first_name: 'Please provide a first name',
-  last_name: 'Please provide a last name',
+  firstName: 'Please provide a first name',
+  lastName: 'Please provide a last name',
   email: 'Please provide an email',
-  username: 'Please provide a username',
   password: 'Please provide a password',
-  confirm_password: 'Please confirm your password',
+  confirmPassword: 'Please confirm your password',
 };
 
 export default function UserRegisterForm() {
@@ -32,62 +30,26 @@ export default function UserRegisterForm() {
     userRegisterForm,
     setUserRegisterForm,
   ] = useState<UserRegisterFormState>({
-    first_name: '',
-    last_name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    username: '',
     password: '',
-    confirm_password: '',
+    confirmPassword: '',
   });
   const [
     userRegisterFormErrors,
     setUserRegisterFormErrors,
   ] = useState<UserRegisterFormState>({
-    first_name: '',
-    last_name: '',
+    firstName: '',
+    lastName: '',
     email: '',
-    username: '',
     password: '',
-    confirm_password: '',
+    confirmPassword: '',
   });
-  const [registeredUsersData, setRegisteredUsersData] = useState<
-    UserRegisterFormState[]
-  >([]);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // check if there is registeredUsers data in local storage - returns a JSON string or null
-  const registeredUsersLocalStorage = localStorage.getItem('registeredUsers');
-
-  // if a JSON string is returned, parse the string to a JS object
-  useEffect(() => {
-    if (registeredUsersLocalStorage) {
-      setRegisteredUsersData(JSON.parse(registeredUsersLocalStorage));
-    }
-  }, [registeredUsersLocalStorage]);
-
-  function setRegisteredUserInStorage(user: UserRegisterFormState) {
-    const newRegisteredUser = [{ userID: uuid(), ...user, savedPlaces: [] }];
-
-    // if there's data in local storage, then append the new data with the existing data
-    if (registeredUsersLocalStorage) {
-      localStorage.setItem(
-        'registeredUsers',
-        JSON.stringify([...registeredUsersData, ...newRegisteredUser])
-      );
-      // if there's no data in local storage then we want to add the data
-    } else {
-      localStorage.setItem(
-        'registeredUsers',
-        JSON.stringify(newRegisteredUser)
-      );
-    }
-
-    // regardless, we want to set the registered user data in local storage as the current user
-    localStorage.setItem('currentUser', JSON.stringify(newRegisteredUser));
-  }
-
-  function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     let errors = 0;
@@ -109,57 +71,8 @@ export default function UserRegisterForm() {
       }
     }
 
-    // check if the email provided is in fact an email
-    if (userRegisterForm.email) {
-      if (validator.isEmail(userRegisterForm.email)) {
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-          email: '',
-        }));
-      } else {
-        errors++;
-
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-          email: 'The email provided is not a valid email',
-        }));
-      }
-    }
-
-    // check if the user email already exists
-    if (registeredUsersLocalStorage) {
-      const checkEmailRegistration = registeredUsersData.find(
-        (val) => val.email === userRegisterForm.email
-      );
-
-      if (checkEmailRegistration) {
-        errors++;
-
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-          email: 'A user has already been registered with this email',
-        }));
-      }
-    }
-
-    // check if the username already exists in local storage
-    if (registeredUsersLocalStorage) {
-      const checkUsernameRegistration = registeredUsersData.find(
-        (val) => val.username === userRegisterForm.username
-      );
-
-      if (checkUsernameRegistration) {
-        errors++;
-
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-          username: 'This username has already been taken by another user',
-        }));
-      }
-    }
-
     // check if the two passwords are the same
-    if (userRegisterForm.password === userRegisterForm.confirm_password) {
+    if (userRegisterForm.password === userRegisterForm.confirmPassword) {
       setUserRegisterFormErrors((prevState) => ({
         ...prevState,
       }));
@@ -169,49 +82,90 @@ export default function UserRegisterForm() {
       setUserRegisterFormErrors((prevState) => ({
         ...prevState,
         password: 'The passwords provided do not match',
-        confirm_password: 'The passwords provided do not match',
+        confirmPassword: 'The passwords provided do not match',
       }));
     }
 
-    // check if the password matches the password constraints
-    if (userRegisterForm.password) {
-      if (
-        validator.isStrongPassword(userRegisterForm.password, {
-          minLength: 10,
-          minLowercase: 0,
-          minUppercase: 0,
-          minNumbers: 0,
-          minSymbols: 0,
-        })
-      ) {
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-        }));
-      } else {
+    if (errors === 0 && userRegisterForm.email && userRegisterForm.password) {
+      try {
+        // if there are no errors and the email and password are both valid, then try to create a user and return the user data
+        const { user } = await auth.createUserWithEmailAndPassword(
+          userRegisterForm.email,
+          userRegisterForm.password
+        );
+
+        // if a user is created, grab the user data and set the user info in the database
+        if (user) {
+          const { firstName, lastName, email } = userRegisterForm;
+
+          await firestore.collection('users').doc(user.uid).set({
+            uid: user.uid,
+            firstName,
+            lastName,
+            email,
+          });
+
+          // if the user is stored and authenticated, get the user data and save it to local storage
+          auth.onAuthStateChanged(async (user) => {
+            if (user) {
+              const snapshot = await firestore
+                .collection('users')
+                .doc(user.uid)
+                .get();
+
+              const data = snapshot.data();
+
+              if (data) {
+                localStorage.setItem('currentUser', JSON.stringify(data));
+              }
+            }
+          });
+        }
+      } catch (error) {
         errors++;
 
-        setUserRegisterFormErrors((prevState) => ({
-          ...prevState,
-          password: 'The password must be a minimum of 10 characters.',
-        }));
+        if (error.code === 'auth/email-already-in-use') {
+          setUserRegisterFormErrors((prevState) => ({
+            ...prevState,
+            email: 'A user already exists with this email',
+          }));
+        } else if (error.code === 'auth/invalid-email') {
+          setUserRegisterFormErrors((prevState) => ({
+            ...prevState,
+            email: 'Please provide a valid email',
+          }));
+        } else if (error.code === 'auth/weak-password') {
+          setUserRegisterFormErrors((prevState) => ({
+            ...prevState,
+            password: 'The password must be a minimum of 6 characters',
+            confirmPassword: 'The password must be a minimum of 6 characters',
+          }));
+        }
+
+        Sentry.captureException(error);
       }
     }
 
-    // if there are no errors, then register the user
+    // if there are no errors, then register the user and reset the form errors
     if (errors === 0) {
-      // register the user
-      setRegisteredUserInStorage(userRegisterForm);
-
-      // route to the home page
-      history.push('/');
+      setUserRegisterFormErrors({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      });
 
       // set the loading status
       dispatch(setCurrentLoadingStatus(true, 'Registering New User...'));
 
+      // route to the home page
+      history.push('/');
+
       // change the loading status
       setTimeout(() => {
         dispatch(setCurrentLoadingStatus(false));
-      }, 2000);
+      }, 3000);
     }
   }
 
@@ -235,30 +189,30 @@ export default function UserRegisterForm() {
         <input
           aria-label='first name'
           type='text'
-          name='first_name'
+          name='firstName'
           placeholder='First Name'
-          value={userRegisterForm.first_name}
+          value={userRegisterForm.firstName}
           onChange={onInputChange}
         />
         <div className={styles['user-register-first-name-error']}>
-          {userRegisterFormErrors.first_name && (
+          {userRegisterFormErrors.firstName && (
             <p aria-label='first name error' role='alert'>
-              {userRegisterFormErrors.first_name}
+              {userRegisterFormErrors.firstName}
             </p>
           )}
         </div>
         <input
           aria-label='last name'
           type='text'
-          name='last_name'
+          name='lastName'
           placeholder='Last Name'
-          value={userRegisterForm.last_name}
+          value={userRegisterForm.lastName}
           onChange={onInputChange}
         />
         <div className={styles['user-register-last-name-error']}>
-          {userRegisterFormErrors.last_name && (
+          {userRegisterFormErrors.lastName && (
             <p aria-label='last name error' role='alert'>
-              {userRegisterFormErrors.last_name}
+              {userRegisterFormErrors.lastName}
             </p>
           )}
         </div>
@@ -278,25 +232,10 @@ export default function UserRegisterForm() {
           )}
         </div>
         <input
-          aria-label='username'
-          type='text'
-          name='username'
-          placeholder='Username'
-          value={userRegisterForm.username}
-          onChange={onInputChange}
-        />
-        <div className={styles['user-register-username-error']}>
-          {userRegisterFormErrors.username && (
-            <p aria-label='username error' role='alert'>
-              {userRegisterFormErrors.username}
-            </p>
-          )}
-        </div>
-        <input
           aria-label='password'
           type='password'
           name='password'
-          placeholder='Password (min. 10 characters)'
+          placeholder='Password (min. 6 characters)'
           value={userRegisterForm.password}
           onChange={onInputChange}
         />
@@ -310,15 +249,15 @@ export default function UserRegisterForm() {
         <input
           aria-label='confirm password'
           type='password'
-          name='confirm_password'
+          name='confirmPassword'
           placeholder='Confirm Password'
-          value={userRegisterForm.confirm_password}
+          value={userRegisterForm.confirmPassword}
           onChange={onInputChange}
         />
         <div className={styles['user-register-confirm-password-error']}>
-          {userRegisterFormErrors.confirm_password && (
+          {userRegisterFormErrors.confirmPassword && (
             <p aria-label='confirm password error' role='alert'>
-              {userRegisterFormErrors.confirm_password}
+              {userRegisterFormErrors.confirmPassword}
             </p>
           )}
         </div>

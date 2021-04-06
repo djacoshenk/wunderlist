@@ -84,7 +84,10 @@ export default function RestaurantProfilePage() {
 
         setPlace(placeRes.data);
         setReviews(reviewsRes.data);
-        setIsLoading(false);
+
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 4000);
       } catch (err) {
         Sentry.captureException(err);
       }

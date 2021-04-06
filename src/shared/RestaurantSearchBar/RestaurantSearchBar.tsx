@@ -45,9 +45,6 @@ export default function RestaurantSearchBar() {
 
     // prevents empty strings from passing
     if (termSearchParam && locationSearchParam) {
-      // do not persist the term param on searches
-      setTermSearchParam('');
-
       // set the location param local storage in order to persist
       localStorage.setItem(
         'locationParam',
@@ -62,7 +59,7 @@ export default function RestaurantSearchBar() {
     <div className={styles['search-bar-container']}>
       <form
         className={styles['search-bar-form']}
-        aria-label='form'
+        aria-label='search bar'
         onSubmit={onFormSubmit}
       >
         <RestaurantSearchBarTermParam

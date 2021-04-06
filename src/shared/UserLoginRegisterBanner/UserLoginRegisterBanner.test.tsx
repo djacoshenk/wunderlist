@@ -25,14 +25,14 @@ test('login and register buttons are accessible', async () => {
 });
 
 test('logout buttons are accessible', async () => {
-  const fakeUserData = [
-    {
-      first_name: 'Danny',
-      username: 'djacoshenk',
-    },
-  ];
+  const fakeCurrentUser = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  };
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeCurrentUser));
 
   const { container } = render(
     <Provider store={store}>
@@ -69,14 +69,14 @@ test('without a current user, login and register buttons render', () => {
 test('with a current user, logout button renders', () => {
   jest.useFakeTimers();
 
-  const fakeUserData = [
-    {
-      first_name: 'Danny',
-      username: 'djacoshenk',
-    },
-  ];
+  const fakeCurrentUser = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  };
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeCurrentUser));
 
   render(
     <Provider store={store}>
@@ -88,7 +88,7 @@ test('with a current user, logout button renders', () => {
 
   // name should be rendered as link
   expect(
-    screen.getByRole('link', { name: fakeUserData[0].first_name })
+    screen.getByRole('link', { name: fakeCurrentUser.firstName })
   ).toBeInTheDocument();
 
   // chevron button should be rendered
@@ -127,9 +127,6 @@ test('login button routes to login page', () => {
     </Provider>
   );
 
-  // login button should be rendered
-  expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument();
-
   // user clicks on login button
   userEvent.click(screen.getByRole('button', { name: /login/i }));
 
@@ -148,9 +145,6 @@ test('register button routes to register page', () => {
     </Provider>
   );
 
-  // register button should be rendered
-  expect(screen.getByRole('button', { name: /register/i })).toBeInTheDocument();
-
   // user clicks on register button
   userEvent.click(screen.getByRole('button', { name: /register/i }));
 
@@ -163,30 +157,14 @@ test('logout button routes to home page', () => {
 
   const history = createMemoryHistory();
 
-  const fakeCurrentUserData = [
-    {
-      first_name: 'Danny',
-      username: 'djacoshenk',
-    },
-  ];
+  const fakeCurrentUser = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  };
 
-  const fakeRegisteredUserData = [
-    {
-      first_name: 'Danny',
-      username: 'djacoshenk',
-    },
-    {
-      first_name: 'JP',
-      username: 'jpsio',
-    },
-  ];
-
-  mockedLocalStorage.getItem.mockReturnValue(
-    JSON.stringify(fakeCurrentUserData)
-  );
-  mockedLocalStorage.getItem.mockReturnValue(
-    JSON.stringify(fakeRegisteredUserData)
-  );
+  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeCurrentUser));
 
   render(
     <Provider store={store}>
@@ -196,16 +174,8 @@ test('logout button routes to home page', () => {
     </Provider>
   );
 
-  // chevron button should be rendered
-  expect(
-    screen.getByRole('button', { name: /toggle menu/i })
-  ).toBeInTheDocument();
-
   // clicking on the chevron button should open the menu and show logout button
   userEvent.click(screen.getByRole('button', { name: /toggle menu/i }));
-
-  // logout button should be rendered
-  expect(screen.getByRole('button', { name: /logout/i })).toBeInTheDocument();
 
   // user clicks on logout button
   userEvent.click(screen.getByRole('button', { name: /logout/i }));

@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import firebase, { auth, firestore } from 'setupFirebase';
 import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 import GoogleMap from '../GoogleMap/GoogleMap';
 import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
+
+import * as Sentry from '@sentry/react';
 
 import styles from './RestaurantProfileCard.module.scss';
 
@@ -44,21 +47,20 @@ type Review = {
   text: string;
 };
 
-type CurrentUserLoggedInState = {
-  userID: string;
-  first_name: string;
-  last_name: string;
+type CurrentUser = {
+  uid: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  username: string;
-  password: string;
-  confirm_password: string;
-  savedPlaces: Place[];
 };
 
+type CurrentUserLoggedIn = CurrentUser | firebase.firestore.DocumentData;
+
 export default function RestaurantProfileCard({ place, reviews }: Props) {
-  const [currentUserLoggedIn, setCurrentUserLoggedIn] = useState<
-    CurrentUserLoggedInState[] | null
-  >(null);
+  const [
+    currentUserLoggedIn,
+    setCurrentUserLoggedIn,
+  ] = useState<CurrentUserLoggedIn | null>(null);
   const [restaurantIsSaved, setRestaurantIsSaved] = useState(false);
 
   function formatNameForUrl() {
@@ -69,77 +71,125 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
     return place.location.display_address.join(' ').split(' ').join('+');
   }
 
-  // check if there is a current user logged in
-  const currentUserLocalStorage = localStorage.getItem('currentUser');
+  const verifyRestaurantIsSaved = useCallback(async () => {
+    try {
+      // if there is a current user, we want to verify if the current restaurant has been saved by them
+      if (auth.currentUser) {
+        const { uid } = auth.currentUser;
 
-  useEffect(() => {
-    if (currentUserLocalStorage) {
-      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
-        currentUserLocalStorage
-      );
+        // check if they've saved places under their user id
+        const snapshot = await firestore
+          .collection('savedPlaces')
+          .doc(uid)
+          .get();
 
-      const currentUserSavedPlaces = currentUserData[0].savedPlaces;
+        // if they have saved places
+        if (snapshot.exists) {
+          const data = snapshot.data();
 
-      // loop through the current user's saved places and determine if the current restaurant is already saved
-      // if it's already saved, then set it as being saved
-      for (let i = 0; i < currentUserSavedPlaces.length; i++) {
-        if (currentUserSavedPlaces[i].id === place.id) {
-          setRestaurantIsSaved(true);
+          // if the snapshot exists and there is data, then find the restaurant in the savedPlaces array
+          if (data) {
+            const savedPlace = data.savedPlaces.find((res: Place) => {
+              return res.id === place.id ? res : null;
+            });
 
-          break;
+            // if the current restaurant is saved, then toggle restaurantIsSaved to true
+            const isSaved = data.savedPlaces.includes(savedPlace);
+
+            // toggle restaurantIsSaved
+            setRestaurantIsSaved(isSaved);
+          }
         }
       }
-
-      setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
-    } else {
-      setCurrentUserLoggedIn(null);
+    } catch (error) {
+      Sentry.captureException(error);
     }
-  }, [currentUserLocalStorage, place.id]);
+  }, [place.id]);
 
-  function saveRestaurantOnClick(place: Place) {
+  useEffect(() => {
+    // fetch current user from local storage
+    const currentUserLocalStorage = localStorage.getItem('currentUser');
+
+    // if the local storage has data, retrieve it and set it into component state
     if (currentUserLocalStorage) {
-      setRestaurantIsSaved(true);
+      setCurrentUserLoggedIn(JSON.parse(currentUserLocalStorage));
+    }
 
-      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
-        currentUserLocalStorage
-      );
+    verifyRestaurantIsSaved();
+  }, [verifyRestaurantIsSaved]);
 
-      const currentUserSavedPlaces = currentUserData[0].savedPlaces;
+  async function saveRestaurantOnClick(place: Place) {
+    try {
+      // if there is a current user, we want to save the restaurant to the database under their user id
+      if (auth.currentUser) {
+        const { uid } = auth.currentUser;
 
-      const updatedSavedPlaces = [...currentUserSavedPlaces, place];
+        const snapshot = await firestore
+          .collection('savedPlaces')
+          .doc(uid)
+          .get();
 
-      const updatedCurrentUserState = [
-        { ...currentUserData[0], savedPlaces: updatedSavedPlaces },
-      ];
+        // if there are no saved places in the database then set one
+        if (!snapshot.exists) {
+          await firestore
+            .collection('savedPlaces')
+            .doc(uid)
+            .set({ savedPlaces: [place] });
+          // if there are saved places in the database then add to the array
+        } else {
+          await firestore
+            .collection('savedPlaces')
+            .doc(uid)
+            .update({
+              savedPlaces: firebase.firestore.FieldValue.arrayUnion(place),
+            });
+        }
 
-      localStorage.setItem(
-        'currentUser',
-        JSON.stringify(updatedCurrentUserState)
-      );
+        // restaurant is saved, so true
+        setRestaurantIsSaved(true);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
     }
   }
 
-  function unsaveRestaurantOnClick(place: Place) {
-    if (currentUserLocalStorage) {
-      setRestaurantIsSaved(false);
+  async function unsaveRestaurantOnClick(place: Place) {
+    try {
+      // if there is a current user, then we want to remove the saved restaurant from the database under their user id
+      if (auth.currentUser) {
+        const { uid } = auth.currentUser;
 
-      const currentUserData: CurrentUserLoggedInState[] = JSON.parse(
-        currentUserLocalStorage
-      );
+        const snapshot = await firestore
+          .collection('savedPlaces')
+          .doc(uid)
+          .get();
 
-      const currentUserSavedPlaces = currentUserData[0].savedPlaces;
-      const updatedSavedPlaces = currentUserSavedPlaces.filter(
-        (res) => res.id !== place.id
-      );
+        // if the snapshot exists, remove the place from saved places
+        if (snapshot.exists) {
+          const data = snapshot.data();
 
-      const updatedCurrentUserState = [
-        { ...currentUserData[0], savedPlaces: updatedSavedPlaces },
-      ];
+          // if data exists in the snapshot, then find the restaurant in the savedPlaces array
+          if (data) {
+            const savedPlace = data.savedPlaces.find((res: Place) => {
+              return res.id === place.id ? res : null;
+            });
 
-      localStorage.setItem(
-        'currentUser',
-        JSON.stringify(updatedCurrentUserState)
-      );
+            await firestore
+              .collection('savedPlaces')
+              .doc(uid)
+              .update({
+                savedPlaces: firebase.firestore.FieldValue.arrayRemove(
+                  savedPlace
+                ),
+              });
+
+            // restaurant is unsaved, so false
+            setRestaurantIsSaved(false);
+          }
+        }
+      }
+    } catch (error) {
+      Sentry.captureException(error);
     }
   }
 
