@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
