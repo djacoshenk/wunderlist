@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 
 import firebase, { firestore } from 'setupFirebase';
 import Header from './Header/Header';
@@ -64,39 +65,41 @@ export default function UserProfilePage() {
   }
 
   const fetchUserProfileData = useCallback(async () => {
-    // grab the user id from the params
-    const { uid } = params;
+    try {
+      // grab the user id from the params
+      const { uid } = params;
 
-    // use the user id to fetch the user and savedPlaces data
-    const userSnapshot = await firestore.collection('users').doc(uid).get();
-    const savedPlacesSnapshot = await firestore
-      .collection('savedPlaces')
-      .doc(uid)
-      .get();
+      // use the user id to fetch the user and savedPlaces data
+      const userSnapshot = await firestore.collection('users').doc(uid).get();
+      const savedPlacesSnapshot = await firestore
+        .collection('savedPlaces')
+        .doc(uid)
+        .get();
 
-    if (userSnapshot.exists) {
-      const userData = userSnapshot.data();
+      if (userSnapshot.exists) {
+        const userData = userSnapshot.data();
 
-      if (userData) {
-        setCurrentUserProfile(userData);
+        if (userData) {
+          setCurrentUserProfile(userData);
+        }
       }
-    }
 
-    if (savedPlacesSnapshot.exists) {
-      const savedPlacesData = savedPlacesSnapshot.data();
+      if (savedPlacesSnapshot.exists) {
+        const savedPlacesData = savedPlacesSnapshot.data();
 
-      if (savedPlacesData) {
-        setSavedPlaces(savedPlacesData.savedPlaces);
+        if (savedPlacesData) {
+          setSavedPlaces(savedPlacesData.savedPlaces);
+        }
       }
+
+      setUserProfileIsLoading(false);
+    } catch (error) {
+      Sentry.captureException(error);
     }
   }, [params]);
 
   useEffect(() => {
     fetchUserProfileData();
-
-    setTimeout(() => {
-      setUserProfileIsLoading(false);
-    }, 4000);
   }, [fetchUserProfileData]);
 
   return (
