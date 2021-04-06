@@ -84,6 +84,7 @@ export default function RestaurantProfilePage() {
 
         setPlace(placeRes.data);
         setReviews(reviewsRes.data);
+
         setTimeout(() => {
           setIsLoading(false);
         }, 4000);
