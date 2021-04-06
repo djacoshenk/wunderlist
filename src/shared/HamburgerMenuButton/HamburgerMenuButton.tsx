@@ -33,17 +33,21 @@ export default function HamburgerMenuButton() {
   useEffect(() => {
     try {
       auth.onAuthStateChanged(async (user) => {
-        if (user) {
-          const snapshot = await firestore
-            .collection('users')
-            .doc(user.uid)
-            .get();
+        try {
+          if (user) {
+            const snapshot = await firestore
+              .collection('users')
+              .doc(user.uid)
+              .get();
 
-          const data = snapshot.data();
+            const data = snapshot.data();
 
-          if (data) {
-            setCurrentUserLoggedIn(data);
+            if (data) {
+              setCurrentUserLoggedIn(data);
+            }
           }
+        } catch (error) {
+          Sentry.captureException(error);
         }
       });
     } catch (error) {
@@ -89,9 +93,7 @@ export default function HamburgerMenuButton() {
               <Link
                 to={{
                   pathname: `/user/${currentUserLoggedIn.uid}`,
-                  state: {
-                    place: currentUserLoggedIn,
-                  },
+                  state: currentUserLoggedIn,
                 }}
                 className='user-avatar-username-link'
               >
