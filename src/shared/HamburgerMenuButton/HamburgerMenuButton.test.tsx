@@ -1,19 +1,19 @@
-import { cleanup, render, screen, act } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { axe } from 'jest-axe';
+import { auth, firestore } from 'setupFirebase';
 
 import HamburgerMenuButton from './HamburgerMenuButton';
 
 import store from 'store/index';
 
-const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+jest.mock('setupFirebase');
 
-afterEach(() => {
-  cleanup();
-});
+const mockedAuth = auth as jest.Mocked<typeof auth>;
+const mockedFirestore = firestore as jest.Mocked<typeof firestore>;
 
 test('login and register buttons are accessible', async () => {
   const { container } = render(
@@ -29,15 +29,6 @@ test('login and register buttons are accessible', async () => {
 });
 
 test('logout buttons are accessible', async () => {
-  const fakeUserData = [
-    {
-      first_name: 'Danny',
-      username: 'djacoshenk',
-    },
-  ];
-
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
-
   const { container } = render(
     <Provider store={store}>
       <BrowserRouter>
@@ -59,11 +50,6 @@ test('without a current user, the login and register buttons render', () => {
       </BrowserRouter>
     </Provider>
   );
-
-  // open menu button should be rendered
-  expect(
-    screen.getByRole('button', { name: /open menu/i })
-  ).toBeInTheDocument();
 
   // user clicks on hamburger button to show login and register buttons
   userEvent.click(screen.getByRole('button', { name: /open menu/i }));
@@ -100,11 +86,6 @@ test('login button routes to login page', () => {
     </Provider>
   );
 
-  // open menu button should be rendered
-  expect(
-    screen.getByRole('button', { name: /open menu/i })
-  ).toBeInTheDocument();
-
   // user clicks on hamburger button to show login button
   userEvent.click(screen.getByRole('button', { name: /open menu/i }));
 
@@ -129,11 +110,6 @@ test('register button routes to register page', () => {
     </Provider>
   );
 
-  // open menu button should be rendered
-  expect(
-    screen.getByRole('button', { name: /open menu/i })
-  ).toBeInTheDocument();
-
   // user clicks on hamburger button to show register button
   userEvent.click(screen.getByRole('button', { name: /open menu/i }));
 
@@ -147,17 +123,35 @@ test('register button routes to register page', () => {
   expect(history.location.pathname).toBe('/register');
 });
 
-test('with a current user, logout button renders', () => {
+test('with a current user, logout button renders', async () => {
   jest.useFakeTimers();
 
-  const fakeUserData = [
-    {
-      first_name: 'Danny',
-      username: 'djacoshenk',
-    },
-  ];
+  const fakeCurrentUser: any = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  };
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
+  mockedAuth.onAuthStateChanged.mockImplementationOnce((fn: any): any => {
+    fn(fakeCurrentUser);
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              data: () => {
+                return fakeCurrentUser;
+              },
+            };
+          },
+        };
+      },
+    } as any;
+  });
 
   render(
     <Provider store={store}>
@@ -176,9 +170,11 @@ test('with a current user, logout button renders', () => {
   userEvent.click(screen.getByRole('button', { name: /open menu/i }));
 
   // name should be rendered as link
-  expect(
-    screen.getByRole('link', { name: fakeUserData[0].first_name })
-  ).toBeInTheDocument();
+  await waitFor(() => {
+    expect(
+      screen.getByRole('link', { name: fakeCurrentUser.firstName })
+    ).toBeInTheDocument();
+  });
 
   // chevron button should be rendered
   expect(
@@ -211,19 +207,37 @@ test('with a current user, logout button renders', () => {
   expect(screen.queryByRole('button', { name: /logout/i })).toBeNull();
 });
 
-test('logout button routes to home page', () => {
+test('logout button routes to home page', async () => {
   jest.useFakeTimers();
 
   const history = createMemoryHistory();
 
-  const fakeUserData = [
-    {
-      first_name: 'Danny',
-      username: 'djacoshenk',
-    },
-  ];
+  const fakeCurrentUser = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  };
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
+  mockedAuth.onAuthStateChanged.mockImplementationOnce((fn: any): any => {
+    fn(fakeCurrentUser);
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              data: () => {
+                return fakeCurrentUser;
+              },
+            };
+          },
+        };
+      },
+    } as any;
+  });
 
   render(
     <Provider store={store}>
@@ -241,6 +255,13 @@ test('logout button routes to home page', () => {
   // user clicks on hamburger button to show logout button
   userEvent.click(screen.getByRole('button', { name: /open menu/i }));
 
+  // name should be rendered as link
+  await waitFor(() => {
+    expect(
+      screen.getByRole('link', { name: fakeCurrentUser.firstName })
+    ).toBeInTheDocument();
+  });
+
   // chevron button should be rendered
   expect(
     screen.getByRole('button', { name: /open menu/i })
@@ -256,4 +277,8 @@ test('logout button routes to home page', () => {
   userEvent.click(screen.getByRole('button', { name: /logout/i }));
 
   jest.advanceTimersByTime(2000);
+
+  await waitFor(() => {
+    expect(history.location.pathname).toBe('/');
+  });
 });

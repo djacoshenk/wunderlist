@@ -3,42 +3,24 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import axios from 'axios';
+import { auth, firestore } from 'setupFirebase';
 
 import RestaurantProfilePage from './RestaurantProfilePage';
 
 import store from 'store/index';
-
-type Place = {
-  id: string;
-  alias: string;
-  photos: string[];
-  name: string;
-  rating: number;
-  review_count: number;
-  price: string;
-  categories: Categories[];
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
-  display_phone: string;
-  location: {
-    display_address: string[];
-  };
-};
-
-type Categories = { title: string };
+import { act } from 'react-dom/test-utils';
 
 jest.mock('axios');
-
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-
+jest.mock('setupFirebase');
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
   useParams: () => ({ alias: 'montys-good-burger-los-angeles' }),
   useLocation: () => ({ state: { place: `Monty's Good Burger` } }),
 }));
 
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+const mockedAuth = auth as jest.Mocked<typeof auth>;
+const mockedFirestore = firestore as jest.Mocked<typeof firestore>;
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
 
 test('component renders with document title and loader', async () => {
@@ -65,6 +47,8 @@ test('component renders with document title and loader', async () => {
 });
 
 test('component renders profile card without a current user', async () => {
+  jest.useFakeTimers();
+
   const fakeRestaurantData = {
     data: {
       id: 'sYn3SNQP-j2t2XSwjlCbRg',
@@ -132,8 +116,14 @@ test('component renders profile card without a current user', async () => {
     },
   };
 
-  mockedAxios.get.mockResolvedValueOnce(fakeRestaurantData);
-  mockedAxios.get.mockResolvedValueOnce(fakeReviewsData);
+  const mockedRestaurantData: any = mockedAxios.get.mockResolvedValueOnce(
+    fakeRestaurantData
+  );
+  const mockedReviewsData: any = mockedAxios.get.mockResolvedValue(
+    fakeReviewsData
+  );
+
+  mockedAuth.currentUser = null;
 
   render(
     <Provider store={store}>
@@ -142,6 +132,18 @@ test('component renders profile card without a current user', async () => {
       </BrowserRouter>
     </Provider>
   );
+
+  await act(async () => {
+    await mockedRestaurantData();
+  });
+
+  await act(async () => {
+    await mockedReviewsData();
+  });
+
+  act(() => {
+    jest.advanceTimersByTime(4000);
+  });
 
   await waitFor(() => {
     expect(
@@ -193,6 +195,8 @@ test('component renders profile card without a current user', async () => {
 });
 
 test('with a current user, the component renders the save button', async () => {
+  jest.useFakeTimers();
+
   const fakeRestaurantData = {
     data: {
       id: 'sYn3SNQP-j2t2XSwjlCbRg',
@@ -260,20 +264,20 @@ test('with a current user, the component renders the save button', async () => {
     },
   };
 
-  const fakeCurrentUserData = [
-    {
-      first_name: 'Danny',
-      last_name: 'Jacoshenk',
-      email: 'hello@dannyjaco.me',
-      username: 'djacoshenk',
-      password: 'password123',
-      confirm_password: 'password123',
-      savedPlaces: [] as Place[],
-    },
-  ];
+  const fakeCurrentUserData: any = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+    savedPlaces: [],
+  };
 
-  mockedAxios.get.mockResolvedValueOnce(fakeRestaurantData);
-  mockedAxios.get.mockResolvedValueOnce(fakeReviewsData);
+  const mockedRestaurantData: any = mockedAxios.get.mockResolvedValueOnce(
+    fakeRestaurantData
+  );
+  const mockedReviewsData: any = mockedAxios.get.mockResolvedValue(
+    fakeReviewsData
+  );
 
   render(
     <Provider store={store}>
@@ -286,6 +290,88 @@ test('with a current user, the component renders the save button', async () => {
   mockedLocalStorage.getItem.mockReturnValue(
     JSON.stringify(fakeCurrentUserData)
   );
+
+  auth.currentUser = fakeCurrentUserData;
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: false,
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: false,
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          set: jest.fn(),
+        };
+      },
+    } as any;
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: true,
+              data: () => {
+                return {
+                  ...fakeCurrentUserData,
+                  savedPlaces: [fakeRestaurantData.data],
+                };
+              },
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          update: jest.fn(),
+        };
+      },
+    } as any;
+  });
+
+  await act(async () => {
+    await mockedRestaurantData();
+  });
+
+  await act(async () => {
+    await mockedReviewsData();
+  });
+
+  act(() => {
+    jest.advanceTimersByTime(4000);
+  });
 
   // save button should render
   await waitFor(() => {
@@ -296,15 +382,21 @@ test('with a current user, the component renders the save button', async () => {
   userEvent.click(screen.getByRole('button', { name: /save/i }));
 
   // saved button should render
-  expect(screen.getByRole('button', { name: /saved/i })).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByRole('button', { name: /saved/i })).toBeInTheDocument();
+  });
 
   // user unsaves restaurant from saved places
   userEvent.click(screen.getByRole('button', { name: /saved/i }));
 
-  expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+  });
 });
 
 test('with a current user and saved place, the component renders the saved button', async () => {
+  jest.useFakeTimers();
+
   const fakeRestaurantData = {
     data: {
       id: 'sYn3SNQP-j2t2XSwjlCbRg',
@@ -372,20 +464,20 @@ test('with a current user and saved place, the component renders the saved butto
     },
   };
 
-  const fakeCurrentUserData = [
-    {
-      first_name: 'Danny',
-      last_name: 'Jacoshenk',
-      email: 'hello@dannyjaco.me',
-      username: 'djacoshenk',
-      password: 'password123',
-      confirm_password: 'password123',
-      savedPlaces: [fakeRestaurantData.data],
-    },
-  ];
+  const fakeCurrentUserData: any = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+    savedPlaces: [fakeRestaurantData.data],
+  };
 
-  mockedAxios.get.mockResolvedValueOnce(fakeRestaurantData);
-  mockedAxios.get.mockResolvedValueOnce(fakeReviewsData);
+  const mockedRestaurantData: any = mockedAxios.get.mockResolvedValueOnce(
+    fakeRestaurantData
+  );
+  const mockedReviewsData: any = mockedAxios.get.mockResolvedValue(
+    fakeReviewsData
+  );
 
   render(
     <Provider store={store}>
@@ -399,19 +491,39 @@ test('with a current user and saved place, the component renders the saved butto
     JSON.stringify(fakeCurrentUserData)
   );
 
+  auth.currentUser = fakeCurrentUserData;
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: true,
+              data: () => {
+                return fakeCurrentUserData;
+              },
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  await act(async () => {
+    await mockedRestaurantData();
+  });
+
+  await act(async () => {
+    await mockedReviewsData();
+  });
+
+  act(() => {
+    jest.advanceTimersByTime(4000);
+  });
+
   // save button should render
   await waitFor(() => {
     expect(screen.getByRole('button', { name: /saved/i })).toBeInTheDocument();
   });
-
-  // user saves restaurant to saved places
-  userEvent.click(screen.getByRole('button', { name: /saved/i }));
-
-  // saved button should render
-  expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
-
-  // user unsaves restaurant from saved places
-  userEvent.click(screen.getByRole('button', { name: /save/i }));
-
-  expect(screen.getByRole('button', { name: /saved/i })).toBeInTheDocument();
 });

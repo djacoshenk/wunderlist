@@ -173,10 +173,6 @@ test('user is registered and submits form with correct inputs', async () => {
     },
   } as any);
 
-  mockedAuth.onAuthStateChanged.mockImplementation(() => {
-    return {} as any;
-  });
-
   // unregistered user fills in fields
   userEvent.type(
     screen.getByPlaceholderText(/email/i),

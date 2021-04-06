@@ -121,10 +121,6 @@ test('user types into form fields and submits form', async () => {
     } as any;
   });
 
-  mockedAuth.onAuthStateChanged.mockImplementation(() => {
-    return {} as any;
-  });
-
   // current page should be register page
   expect(history.location.pathname).toBe('/register');
 

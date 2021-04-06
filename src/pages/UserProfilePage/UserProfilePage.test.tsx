@@ -5,18 +5,23 @@ import { Provider } from 'react-redux';
 import UserProfilePage from './UserProfilePage';
 
 import store from 'store/index';
+import { firestore } from 'setupFirebase';
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
   useLocation: () => ({
     state: {
-      first_name: 'Danny',
-      last_name: 'Jacoshenk',
+      firstName: 'Danny',
+      lastName: 'Jacoshenk',
     },
   }),
+  useParams: () => ({
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  }),
 }));
+jest.mock('setupFirebase');
 
-const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+const mockedFirestore = firestore as jest.Mocked<typeof firestore>;
 
 test('component renders with loader bubbles', () => {
   render(
@@ -33,16 +38,47 @@ test('component renders with loader bubbles', () => {
 test('component renders user profile without saved places', async () => {
   jest.useFakeTimers();
 
-  const fakeUserData = [
-    {
-      first_name: 'Danny',
-      last_name: 'Jacoshenk',
-      username: 'djacoshenk',
-      savedPlaces: [],
-    },
-  ];
+  const fakeCurrentUser: any = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  };
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: true,
+              data: () => {
+                return fakeCurrentUser;
+              },
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: false,
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  act(() => {
+    jest.advanceTimersByTime(4000);
+  });
 
   render(
     <Provider store={store}>
@@ -51,10 +87,6 @@ test('component renders user profile without saved places', async () => {
       </BrowserRouter>
     </Provider>
   );
-
-  act(() => {
-    jest.advanceTimersByTime(1000);
-  });
 
   // document title should be updated with user info
   await waitFor(() => {
@@ -62,60 +94,100 @@ test('component renders user profile without saved places', async () => {
   });
 
   // expect user full name to render
-  expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
+  });
 
   // expect saved places quantity to render
   expect(screen.getByText('0')).toBeInTheDocument();
 
-  // expect saved cards message to render
+  // saved cards message should render
   expect(
     screen.getByText(/you have not saved any places/i)
   ).toBeInTheDocument();
 });
 
-test('component renders with a saved place', () => {
+test('component renders with a saved place', async () => {
   jest.useFakeTimers();
 
-  const fakeSavedPlace = {
-    id: 'sYn3SNQP-j2t2XSwjlCbRg',
-    alias: 'montys-good-burger-los-angeles',
-    name: "Monty's Good Burger",
-    image_url:
-      'https://s3-media1.fl.yelpcdn.com/bphoto/BrIS_Xw9o9ldylxHXl4JWQ/o.jpg',
-    review_count: 2110,
-    categories: [
-      {
-        title: 'Burgers',
-      },
-      {
-        title: 'Vegan',
-      },
-      {
-        title: 'Fast Food',
-      },
-    ],
-    rating: 4.5,
-    coordinates: {
-      latitude: 34.06469,
-      longitude: -118.30876,
-    },
-    price: '$$',
-    location: {
-      display_address: ['516 S Western Ave', 'Los Angeles, CA 90020'],
-    },
-    display_phone: '(213) 915-0257',
-  };
-
-  const fakeUserData = [
+  const fakeSavedPlace: any = [
     {
-      first_name: 'Danny',
-      last_name: 'Jacoshenk',
-      username: 'djacoshenk',
-      savedPlaces: [fakeSavedPlace],
+      id: 'sYn3SNQP-j2t2XSwjlCbRg',
+      alias: 'montys-good-burger-los-angeles',
+      name: "Monty's Good Burger",
+      image_url:
+        'https://s3-media1.fl.yelpcdn.com/bphoto/BrIS_Xw9o9ldylxHXl4JWQ/o.jpg',
+      review_count: 2110,
+      categories: [
+        {
+          title: 'Burgers',
+        },
+        {
+          title: 'Vegan',
+        },
+        {
+          title: 'Fast Food',
+        },
+      ],
+      rating: 4.5,
+      coordinates: {
+        latitude: 34.06469,
+        longitude: -118.30876,
+      },
+      price: '$$',
+      location: {
+        display_address: ['516 S Western Ave', 'Los Angeles, CA 90020'],
+      },
+      display_phone: '(213) 915-0257',
     },
   ];
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(fakeUserData));
+  const fakeCurrentUser: any = {
+    email: 'daniel.jacoshenk@gmail.com',
+    firstName: 'Danny',
+    lastName: 'Jacoshenk',
+    uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+  };
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: true,
+              data: () => {
+                return fakeCurrentUser;
+              },
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  mockedFirestore.collection.mockImplementationOnce(() => {
+    return {
+      doc: () => {
+        return {
+          get: () => {
+            return {
+              exists: true,
+              data: () => {
+                return {
+                  savedPlaces: fakeSavedPlace,
+                };
+              },
+            };
+          },
+        };
+      },
+    } as any;
+  });
+
+  act(() => {
+    jest.advanceTimersByTime(4000);
+  });
 
   render(
     <Provider store={store}>
@@ -125,12 +197,10 @@ test('component renders with a saved place', () => {
     </Provider>
   );
 
-  act(() => {
-    jest.advanceTimersByTime(1000);
-  });
-
   // expect user full name to render
-  expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
+  });
 
   // expect saved places quantity to render
   expect(screen.getByText('1')).toBeInTheDocument();
