@@ -1,12 +1,10 @@
 describe('user logout', () => {
   it('should log out user', () => {
-    cy.fixture('fakeCurrentUserData').then((user) => {
-      window.localStorage.setItem('registeredUsers', JSON.stringify(user));
-    });
-
     cy.visit('/');
 
     cy.userLogin();
+
+    cy.wait(4000);
 
     cy.findByRole('button', { name: /toggle menu/i }).click();
 
