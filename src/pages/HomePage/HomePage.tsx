@@ -8,6 +8,7 @@ import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginReg
 import Header from './Header/Header';
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
+import Footer from './Footer/Footer';
 
 import { RootState } from 'store/index';
 
@@ -32,6 +33,7 @@ export default function HomePage() {
           <Header />
           <RestaurantSearchBar />
           <RestaurantTypeCards />
+          <Footer />
         </Fragment>
       )}
     </Fragment>
