@@ -31,7 +31,7 @@ export default function GoogleMapMarker({ id, place }: Props): JSX.Element {
 
   return (
     <Link
-      className={'map-marker-link'}
+      className={`map-marker-link-${id}`}
       to={{
         pathname: `/business/${place.alias}`,
         state: {
