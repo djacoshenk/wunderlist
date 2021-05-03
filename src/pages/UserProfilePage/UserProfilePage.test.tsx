@@ -1,11 +1,10 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
-import UserProfilePage from './UserProfilePage';
-
-import store from 'store/index';
 import { firestore } from 'setupFirebase';
+import UserProfilePage from 'pages/UserProfilePage/UserProfilePage';
+import store from 'store/store';
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),

@@ -1,15 +1,13 @@
 import { useEffect, useState, useCallback } from 'react';
+import * as Sentry from '@sentry/react';
 import { Link } from 'react-router-dom';
 
 import firebase, { auth, firestore } from 'setupFirebase';
-import RestaurantProfileImageCarousel from '../RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
+import GoogleMap from 'pages/RestaurantProfilePage/GoogleMap/GoogleMap';
+import RestaurantProfileCardReviews from 'pages/RestaurantProfilePage/RestaurantProfileCardReviews/RestaurantProfileCardReviews';
+import RestaurantProfileImageCarousel from 'pages/RestaurantProfilePage/RestaurantProfileImageCarousel/RestaurantProfileImageCarousel';
+import styles from 'pages/RestaurantProfilePage/RestaurantProfileCard/RestaurantProfileCard.module.scss';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
-import GoogleMap from '../GoogleMap/GoogleMap';
-import RestaurantProfileCardReviews from '../RestaurantProfileCardReviews/RestaurantProfileCardReviews';
-
-import * as Sentry from '@sentry/react';
-
-import styles from './RestaurantProfileCard.module.scss';
 
 type Props = {
   place: Place;

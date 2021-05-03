@@ -1,4 +1,4 @@
-import styles from './RestaurantLoaderBubbles.module.scss';
+import styles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles.module.scss';
 
 export default function RestaurantLoaderBubbles() {
   return (

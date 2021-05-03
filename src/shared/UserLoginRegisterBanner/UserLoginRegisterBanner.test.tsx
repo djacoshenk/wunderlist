@@ -1,13 +1,12 @@
 import { render, screen, act } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Router } from 'react-router-dom';
-import { axe } from 'jest-axe';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
+import { axe } from 'jest-axe';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Router } from 'react-router-dom';
 
-import UserLoginRegisterBanner from './UserLoginRegisterBanner';
-
-import store from 'store/index';
+import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
+import store from 'store/store';
 
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
 

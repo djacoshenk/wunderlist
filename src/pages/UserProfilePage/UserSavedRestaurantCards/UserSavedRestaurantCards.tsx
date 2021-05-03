@@ -1,9 +1,8 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+import styles from 'pages/UserProfilePage/UserSavedRestaurantCards/UserSavedRestaurantCards.module.scss';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
-
-import styles from './UserSavedRestaurantCards.module.scss';
 
 type Categories = {
   title: string;

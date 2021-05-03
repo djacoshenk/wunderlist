@@ -1,10 +1,9 @@
 import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import 'pages/RestaurantSearchPage/GoogleMapMarker/GoogleMapMarker.scss';
 import { setMapId } from 'reducers/mapIdReducer';
-import { RootState } from 'store/index';
-
-import './GoogleMapMarker.scss';
+import { RootState } from 'store/store';
 
 type Props = {
   id: number;

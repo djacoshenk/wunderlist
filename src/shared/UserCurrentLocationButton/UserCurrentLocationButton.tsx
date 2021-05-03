@@ -1,10 +1,9 @@
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import * as Sentry from '@sentry/react';
+import axios from 'axios';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
-
-import styles from './UserCurrentLocationButton.module.scss';
+import styles from 'shared/UserCurrentLocationButton/UserCurrentLocationButton.module.scss';
 
 type Props = {
   setLocationSearchParam: (text: string) => void;

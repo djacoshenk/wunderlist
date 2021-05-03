@@ -1,10 +1,8 @@
 import { useSelector, TypedUseSelectorHook } from 'react-redux';
 
+import styles from 'pages/HomePage/UserStatusLoader/UserStatusLoader.module.scss';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
-
-import { RootState } from 'store/index';
-
-import styles from './UserStatusLoader.module.scss';
+import { RootState } from 'store/store';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

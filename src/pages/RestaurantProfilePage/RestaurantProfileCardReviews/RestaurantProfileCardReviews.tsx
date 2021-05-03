@@ -1,8 +1,7 @@
 import { Fragment } from 'react';
 
+import styles from 'pages/RestaurantProfilePage/RestaurantProfileCardReviews/RestaurantProfileCardReviews.module.scss';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
-
-import styles from './RestaurantProfileCardReviews.module.scss';
 
 type Props = {
   reviews: {

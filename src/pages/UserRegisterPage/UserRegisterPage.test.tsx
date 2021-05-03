@@ -1,14 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter, Router } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
-import { createMemoryHistory } from 'history';
-import userEvent from '@testing-library/user-event';
+import { BrowserRouter, Router } from 'react-router-dom';
+
 import { auth, firestore } from 'setupFirebase';
-
-import UserRegisterPage from './UserRegisterPage';
-
-import store from 'store/index';
+import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
+import store from 'store/store';
 
 jest.mock('setupFirebase');
 

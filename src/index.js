@@ -1,14 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import App from './App';
-
-import store from 'store/index';
-
 import './styles.scss';
+import store from 'store/store';
 
 Sentry.init({
   dsn:

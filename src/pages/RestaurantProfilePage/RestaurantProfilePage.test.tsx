@@ -1,22 +1,21 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import axios from 'axios';
+import { act } from 'react-dom/test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import axios from 'axios';
+
 import { auth, firestore } from 'setupFirebase';
-
-import RestaurantProfilePage from './RestaurantProfilePage';
-
-import store from 'store/index';
-import { act } from 'react-dom/test-utils';
+import RestaurantProfilePage from 'pages/RestaurantProfilePage/RestaurantProfilePage';
+import store from 'store/store';
 
 jest.mock('axios');
-jest.mock('setupFirebase');
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),
   useParams: () => ({ alias: 'montys-good-burger-los-angeles' }),
   useLocation: () => ({ state: { place: `Monty's Good Burger` } }),
 }));
+jest.mock('setupFirebase');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 const mockedAuth = auth as jest.Mocked<typeof auth>;

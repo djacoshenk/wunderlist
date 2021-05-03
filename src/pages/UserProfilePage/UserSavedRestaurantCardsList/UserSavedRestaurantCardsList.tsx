@@ -1,9 +1,8 @@
 import { Fragment } from 'react';
 
-import UserSavedRestaurantCards from 'pages/UserProfilePage/UserSavedRestaurantCards/UserSavedRestaurantCards';
-
-import styles from './UserSavedRestaurantCardsList.module.scss';
 import firebase from 'setupFirebase';
+import UserSavedRestaurantCards from 'pages/UserProfilePage/UserSavedRestaurantCards/UserSavedRestaurantCards';
+import styles from 'pages/UserProfilePage/UserSavedRestaurantCardsList/UserSavedRestaurantCardsList.module.scss';
 
 type Categories = {
   title: string;

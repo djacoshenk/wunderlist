@@ -1,16 +1,15 @@
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
-import { useSelector, TypedUseSelectorHook } from 'react-redux';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
-import UserStatusLoader from './UserStatusLoader/UserStatusLoader';
+import Footer from 'pages/HomePage/Footer/Footer';
+import Header from 'pages/HomePage/Header/Header';
+import RestaurantTypeCards from 'pages/HomePage/RestaurantTypeCards/RestaurantTypeCards';
+import UserStatusLoader from 'pages/HomePage/UserStatusLoader/UserStatusLoader';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
-import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
-import Header from './Header/Header';
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
-import RestaurantTypeCards from './RestaurantTypeCards/RestaurantTypeCards';
-import Footer from './Footer/Footer';
-
-import { RootState } from 'store/index';
+import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
+import { RootState } from 'store/store';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

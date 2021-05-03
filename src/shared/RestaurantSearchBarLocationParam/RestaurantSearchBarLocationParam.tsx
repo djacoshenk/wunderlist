@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useCombobox } from 'downshift';
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
 import * as Sentry from '@sentry/react';
+import axios from 'axios';
+import { useCombobox } from 'downshift';
+import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
+import styles from 'shared/RestaurantSearchBarLocationParam/RestaurantSearchBarLocationParam.module.scss';
 import UserCurrentLocationButton from 'shared/UserCurrentLocationButton/UserCurrentLocationButton';
-
-import styles from './RestaurantSearchBarLocationParam.module.scss';
 
 type Props = {
   locationSearchParam: LocationParam;

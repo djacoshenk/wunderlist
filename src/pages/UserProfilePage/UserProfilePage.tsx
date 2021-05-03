@@ -1,14 +1,14 @@
 import { Fragment, useState, useEffect, useCallback } from 'react';
+import * as Sentry from '@sentry/react';
 import { Helmet } from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
-import * as Sentry from '@sentry/react';
 
 import firebase, { firestore } from 'setupFirebase';
-import Header from './Header/Header';
+import Header from 'pages/UserProfilePage/Header/Header';
+import UserProfileCard from 'pages/UserProfilePage/UserProfileCard/UserProfileCard';
+import UserSavedRestaurantCardsList from 'pages/UserProfilePage/UserSavedRestaurantCardsList/UserSavedRestaurantCardsList';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
-import UserProfileCard from './UserProfileCard/UserProfileCard';
-import UserSavedRestaurantCardsList from './UserSavedRestaurantCardsList/UserSavedRestaurantCardsList';
 
 type Categories = {
   title: string;

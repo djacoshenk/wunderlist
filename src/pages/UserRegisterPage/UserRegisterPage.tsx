@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
 
-import Header from './Header/Header';
-import UserRegisterForm from './UserRegisterForm/UserRegisterForm';
+import Header from 'pages/UserRegisterPage/Header/Header';
+import UserRegisterForm from 'pages/UserRegisterPage/UserRegisterForm/UserRegisterForm';
 
 export default function UserRegisterPage() {
   return (

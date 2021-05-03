@@ -1,8 +1,7 @@
 import { useLocation } from 'react-router-dom';
 
+import styles from 'pages/RestaurantProfilePage/RestaurantProfileLoader/RestaurantProfileLoader.module.scss';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
-
-import styles from './RestaurantProfileLoader.module.scss';
 
 type Props = {
   name: string;

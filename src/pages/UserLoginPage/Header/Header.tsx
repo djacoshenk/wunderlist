@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import globe from 'assets/global.png';
-import styles from './Header.module.scss';
+import styles from 'pages/UserLoginPage/Header/Header.module.scss';
 
 export default function Header() {
   return (

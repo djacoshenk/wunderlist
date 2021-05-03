@@ -1,14 +1,13 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
+import { createStore, combineReducers } from 'redux';
 import { createMemoryHistory } from 'history';
 
-import HomePage from './HomePage';
-
+import HomePage from 'pages/HomePage/HomePage';
 import currentLoadingStatusReducer from 'reducers/currentLoadingStatusReducer';
-import store from 'store/index';
+import store from 'store/store';
 
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
 

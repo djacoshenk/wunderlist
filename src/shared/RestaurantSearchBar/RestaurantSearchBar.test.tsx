@@ -1,13 +1,12 @@
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import axios from 'axios';
 import { axe } from 'jest-axe';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import axios from 'axios';
 
-import RestaurantSearchBar from './RestaurantSearchBar';
-
-import store from 'store/index';
-import userEvent from '@testing-library/user-event';
+import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
+import store from 'store/store';
 
 jest.mock('axios');
 

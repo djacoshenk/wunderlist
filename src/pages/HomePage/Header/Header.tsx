@@ -1,5 +1,5 @@
 import globe from 'assets/global.png';
-import styles from './Header.module.scss';
+import styles from 'pages/HomePage/Header/Header.module.scss';
 
 export default function Header() {
   return (

@@ -1,7 +1,6 @@
-import GoogleMap from '../GoogleMap/GoogleMap';
-import RestaurantCardList from '../RestaurantCardList/RestaurantCardList';
-
-import styles from './MainContent.module.scss';
+import GoogleMap from 'pages/RestaurantSearchPage/GoogleMap/GoogleMap';
+import styles from 'pages/RestaurantSearchPage/MainContent/MainContent.module.scss';
+import RestaurantCardList from 'pages/RestaurantSearchPage/RestaurantCardList/RestaurantCardList';
 
 type Props = {
   places: Place[];

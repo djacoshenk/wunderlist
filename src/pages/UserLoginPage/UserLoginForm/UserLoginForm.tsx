@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import * as Sentry from '@sentry/react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { auth, firestore } from 'setupFirebase';
+import styles from 'pages/UserLoginPage/UserLoginForm/UserLoginForm.module.scss';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
-
-import styles from './UserLoginForm.module.scss';
 
 type UserLoginFormState = {
   [name: string]: string;

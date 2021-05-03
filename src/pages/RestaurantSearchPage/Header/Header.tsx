@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
-
 import globe from 'assets/global.png';
-
-import styles from './Header.module.scss';
+import styles from 'pages/RestaurantSearchPage/Header/Header.module.scss';
+import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 
 export default function Header() {
   return (

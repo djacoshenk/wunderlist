@@ -1,15 +1,13 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { slide as Menu } from 'react-burger-menu';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import OutsideClickHandler from 'react-outside-click-handler';
 import * as Sentry from '@sentry/react';
+import { slide as Menu } from 'react-burger-menu';
+import OutsideClickHandler from 'react-outside-click-handler';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 
 import { auth, firestore } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
-
-import './HamburgerMenuButton.css';
+import 'shared/HamburgerMenuButton/HamburgerMenuButton.css';
 
 type CurrentUser = {
   uid: string;

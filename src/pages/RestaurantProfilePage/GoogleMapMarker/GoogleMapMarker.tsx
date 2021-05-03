@@ -1,4 +1,4 @@
-import './GoogleMapMarker.scss';
+import 'pages/RestaurantProfilePage/GoogleMapMarker/GoogleMapMarker.scss';
 
 type Props = {
   id: string;

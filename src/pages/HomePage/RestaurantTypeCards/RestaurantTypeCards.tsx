@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
-
-import { setLocationUrl } from 'reducers/locationUrlReducer';
-import { RootState } from 'store/index';
+import { v4 as uuidv4 } from 'uuid';
 
 import burger from 'assets/burger.png';
-import sushi from 'assets/sushi.png';
-import rice from 'assets/rice-bowl.png';
-import taco from 'assets/taco.png';
-import pizza from 'assets/pizza-slice.png';
 import chili from 'assets/chili.png';
-
-import styles from './RestaurantTypeCards.module.scss';
+import pizza from 'assets/pizza-slice.png';
+import rice from 'assets/rice-bowl.png';
+import sushi from 'assets/sushi.png';
+import taco from 'assets/taco.png';
+import styles from 'pages/HomePage/RestaurantTypeCards/RestaurantTypeCards.module.scss';
+import { setLocationUrl } from 'reducers/locationUrlReducer';
+import { RootState } from 'store/store';
 
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 

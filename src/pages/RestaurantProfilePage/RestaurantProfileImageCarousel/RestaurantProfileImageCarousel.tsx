@@ -1,8 +1,8 @@
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import 'swiper/swiper-bundle.css';
-import './RestaurantProfileImageCarousel.scss';
+
+import 'pages/RestaurantProfilePage/RestaurantProfileImageCarousel/RestaurantProfileImageCarousel.scss';
 
 SwiperCore.use([Navigation, Pagination]);
 

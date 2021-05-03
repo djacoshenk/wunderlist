@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import OutsideClickHandler from 'react-outside-click-handler';
 import * as Sentry from '@sentry/react';
+import OutsideClickHandler from 'react-outside-click-handler';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 
 import { auth } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
-
-import styles from './UserLoginRegisterBanner.module.scss';
+import styles from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner.module.scss';
 
 type CurrentUser = {
   uid: string;

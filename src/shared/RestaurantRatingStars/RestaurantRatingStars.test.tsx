@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import RestaurantRatingStars from './RestaurantRatingStars';
+import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 
 test('component renders with props', () => {
   const fakeProps = {

@@ -1,11 +1,10 @@
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { setMapId } from 'reducers/mapIdReducer';
+import styles from 'pages/RestaurantSearchPage/RestaurantCard/RestaurantCard.module.scss';
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
-
-import styles from './RestaurantCard.module.scss';
 
 type Props = {
   place: Place;

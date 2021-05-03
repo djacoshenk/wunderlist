@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useSelect } from 'downshift';
-import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
-import styles from './SortByButton.module.scss';
+import styles from 'pages/RestaurantSearchPage/SortByButton/SortByButton.module.scss';
 
 type Props = {
   setSortByParam: (sortByParam: SortByParam) => void;

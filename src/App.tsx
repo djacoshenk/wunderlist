@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import HomePage from 'pages/HomePage/HomePage';
-import UserLoginPage from 'pages/UserLoginPage/UserLoginPage';
-import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
-import RestaurantSearchPage from 'pages/RestaurantSearchPage/RestaurantSearchPage';
 import RestaurantProfilePage from 'pages/RestaurantProfilePage/RestaurantProfilePage';
+import RestaurantSearchPage from 'pages/RestaurantSearchPage/RestaurantSearchPage';
+import UserLoginPage from 'pages/UserLoginPage/UserLoginPage';
 import UserProfilePage from 'pages/UserProfilePage/UserProfilePage';
+import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
 
 export default function App() {
   return (

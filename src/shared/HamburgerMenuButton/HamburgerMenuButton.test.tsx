@@ -1,14 +1,13 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { axe } from 'jest-axe';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Router } from 'react-router-dom';
 import { auth, firestore } from 'setupFirebase';
 
-import HamburgerMenuButton from './HamburgerMenuButton';
-
-import store from 'store/index';
+import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
+import store from 'store/store';
 
 jest.mock('setupFirebase');
 

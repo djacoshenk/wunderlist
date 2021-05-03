@@ -1,14 +1,14 @@
-import { useEffect, Fragment, useState } from 'react';
-import { Helmet } from 'react-helmet';
-import { useLocation, useParams } from 'react-router-dom';
+import { Fragment, useEffect, useState } from 'react';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
+import { useLocation, useParams } from 'react-router-dom';
 
+import Header from 'pages/RestaurantProfilePage/Header/Header';
+import RestaurantProfileCard from 'pages/RestaurantProfilePage/RestaurantProfileCard/RestaurantProfileCard';
+import RestaurantProfileLoader from 'pages/RestaurantProfilePage/RestaurantProfileLoader/RestaurantProfileLoader';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
-import Header from './Header/Header';
-import RestaurantSearchBar from '../../shared/RestaurantSearchBar/RestaurantSearchBar';
-import RestaurantProfileLoader from './RestaurantProfileLoader/RestaurantProfileLoader';
-import RestaurantProfileCard from './RestaurantProfileCard/RestaurantProfileCard';
+import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 
 type Categories = { title: string };
 

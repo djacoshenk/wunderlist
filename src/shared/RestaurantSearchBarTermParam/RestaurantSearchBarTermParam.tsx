@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useCombobox } from 'downshift';
-import axios from 'axios';
 import * as Sentry from '@sentry/react';
+import axios from 'axios';
+import { useCombobox } from 'downshift';
 
-import styles from './RestaurantSearchBarTermParam.module.scss';
+import styles from 'shared/RestaurantSearchBarTermParam/RestaurantSearchBarTermParam.module.scss';
 
 type Props = {
   termSearchParam: TermParam;

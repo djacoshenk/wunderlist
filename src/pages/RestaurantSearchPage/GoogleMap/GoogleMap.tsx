@@ -1,7 +1,7 @@
 import GoogleMapReact from 'google-map-react';
-import GoogleMapMarker from '../GoogleMapMarker/GoogleMapMarker';
 
-import styles from './GoogleMap.module.scss';
+import styles from 'pages/RestaurantSearchPage/GoogleMap/GoogleMap.module.scss';
+import GoogleMapMarker from 'pages/RestaurantSearchPage/GoogleMapMarker/GoogleMapMarker';
 
 type Props = {
   places: Place[];

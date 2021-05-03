@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import RestaurantCard from '../RestaurantCard/RestaurantCard';
+import RestaurantCard from 'pages/RestaurantSearchPage/RestaurantCard/RestaurantCard';
+import styles from 'pages/RestaurantSearchPage/RestaurantCardList/RestaurantCardList.module.scss';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
-
-import styles from './RestaurantCardList.module.scss';
 
 type Props = {
   places: Place[];

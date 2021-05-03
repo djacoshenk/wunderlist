@@ -1,10 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
-import RestaurantSearchPage from './RestaurantSearchPage';
-
-import store from 'store/index';
+import RestaurantSearchPage from 'pages/RestaurantSearchPage/RestaurantSearchPage';
+import store from 'store/store';
 
 jest.mock('react-router-dom', () => ({
   ...(jest.requireActual('react-router-dom') as any),

@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 
-import './RestaurantRatingStars.scss';
+import 'shared/RestaurantRatingStars/RestaurantRatingStars.scss';
 
 type Props = {
   rating: number;

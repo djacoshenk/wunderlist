@@ -1,15 +1,15 @@
 import { Fragment, useCallback, useEffect, useState } from 'react';
+import * as Sentry from '@sentry/react';
+import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import * as Sentry from '@sentry/react';
 
-import Header from './Header/Header';
+import Header from 'pages/RestaurantSearchPage/Header/Header';
+import MainContent from 'pages/RestaurantSearchPage/MainContent/MainContent';
+import SortByButton from 'pages/RestaurantSearchPage/SortByButton/SortByButton';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
-import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
-import MainContent from './MainContent/MainContent';
 import RestaurntLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
-import SortByButton from './SortByButton/SortByButton';
+import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
 interface ParamsState {
