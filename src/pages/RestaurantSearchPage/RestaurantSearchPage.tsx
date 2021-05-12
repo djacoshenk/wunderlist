@@ -12,10 +12,11 @@ import RestaurntLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoa
 import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar';
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
-interface ParamsState {
+
+type ParamsState = {
   term: string;
   location: string;
-}
+};
 
 type Place = {
   id: string;
@@ -48,28 +49,6 @@ export default function RestaurantSearchPage() {
   const [mapKey, setMapKey] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams<ParamsState>();
-
-  const fetchPlaces = useCallback(async ({ term, location }) => {
-    try {
-      const { data } = await axios.get(
-        `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
-          },
-          params: {
-            sort_by: 'best_match',
-            limit: 10,
-          },
-        }
-      );
-
-      setPlaces(data.businesses);
-      setIsLoading(false);
-    } catch (err) {
-      Sentry.captureException(err);
-    }
-  }, []);
 
   async function fetchMorePlaces(
     { term, location }: ParamsState,
@@ -131,10 +110,37 @@ export default function RestaurantSearchPage() {
   );
 
   useEffect(() => {
-    setIsLoading(true);
+    const cancelTokenSource = axios.CancelToken.source();
+
+    async function fetchPlaces({ term, location }: ParamsState) {
+      setIsLoading(true);
+
+      try {
+        const { data } = await axios.get(
+          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
+            },
+            params: {
+              sort_by: 'best_match',
+              limit: 10,
+            },
+            cancelToken: cancelTokenSource.token,
+          }
+        );
+
+        setPlaces(data.businesses);
+        setIsLoading(false);
+      } catch (err) {
+        Sentry.captureException(err);
+      }
+    }
 
     fetchPlaces(params);
-  }, [setIsLoading, params, fetchPlaces]);
+
+    return () => cancelTokenSource.cancel();
+  }, [params]);
 
   return (
     <Fragment>
