@@ -30,7 +30,7 @@ export default function GoogleMapMarker({ id, place }: Props): JSX.Element {
 
   return (
     <Link
-      className={`map-marker-link-${id}`}
+      className={`map-marker-link ${id}`}
       to={{
         pathname: `/business/${place.alias}`,
         state: {
@@ -40,7 +40,7 @@ export default function GoogleMapMarker({ id, place }: Props): JSX.Element {
       onClick={() => dispatch(setMapId(0))}
     >
       <i
-        className={'fas fa-map-marker'}
+        className='fas fa-map-marker'
         style={mapId === id ? mapIdIconStyles : undefined}
         onMouseEnter={() => dispatch(setMapId(id))}
         onMouseLeave={() => dispatch(setMapId(0))}
