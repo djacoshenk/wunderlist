@@ -1,6 +1,6 @@
-import { useDispatch } from 'react-redux';
 import * as Sentry from '@sentry/react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 import styles from 'shared/UserCurrentLocationButton/UserCurrentLocationButton.module.scss';

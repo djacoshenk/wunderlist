@@ -3,9 +3,9 @@ import * as Sentry from '@sentry/react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { firestore, auth } from 'setupFirebase';
 import styles from 'pages/UserRegisterPage/UserRegisterForm/UserRegisterForm.module.scss';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
+import { firestore, auth } from 'setupFirebase';
 
 type UserRegisterFormState = {
   [name: string]: string;

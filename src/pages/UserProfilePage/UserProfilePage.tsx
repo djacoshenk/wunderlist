@@ -3,12 +3,12 @@ import * as Sentry from '@sentry/react';
 import { Helmet } from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
 
-import firebase, { firestore } from 'setupFirebase';
 import Header from 'pages/UserProfilePage/Header/Header';
 import UserProfileCard from 'pages/UserProfilePage/UserProfileCard/UserProfileCard';
 import UserSavedRestaurantCardsList from 'pages/UserProfilePage/UserSavedRestaurantCardsList/UserSavedRestaurantCardsList';
 import HamburgerMenuButton from 'shared/HamburgerMenuButton/HamburgerMenuButton';
 import RestaurantLoaderBubbles from 'shared/RestaurantLoaderBubbles/RestaurantLoaderBubbles';
+import firebase, { firestore } from 'setupFirebase';
 
 type Categories = {
   title: string;

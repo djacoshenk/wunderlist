@@ -4,9 +4,9 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { auth } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 import styles from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner.module.scss';
+import { auth } from 'setupFirebase';
 
 type CurrentUser = {
   uid: string;

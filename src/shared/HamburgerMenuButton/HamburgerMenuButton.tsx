@@ -5,9 +5,9 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { auth, firestore } from 'setupFirebase';
 import { setCurrentLoadingStatus } from 'reducers/currentLoadingStatusReducer';
 import 'shared/HamburgerMenuButton/HamburgerMenuButton.css';
+import { auth, firestore } from 'setupFirebase';
 
 type CurrentUser = {
   uid: string;

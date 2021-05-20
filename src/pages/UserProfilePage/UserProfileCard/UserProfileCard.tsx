@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
-import firebase from 'setupFirebase';
 import styles from 'pages/UserProfilePage/UserProfileCard/UserProfileCard.module.scss';
+import firebase from 'setupFirebase';
 
 type Categories = {
   title: string;

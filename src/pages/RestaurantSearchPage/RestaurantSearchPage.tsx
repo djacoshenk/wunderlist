@@ -83,7 +83,7 @@ export default function RestaurantSearchPage() {
   }
 
   const fetchPlacesSortBy = useCallback(
-    async ({ term, location }, sortByParam) => {
+    async ({ term, location }: ParamsState, sortByParam: string) => {
       setIsLoading(true);
 
       try {
@@ -110,6 +110,9 @@ export default function RestaurantSearchPage() {
   );
 
   useEffect(() => {
+    const cancelToken = axios.CancelToken;
+    const cancelTokenSource = cancelToken.source();
+
     async function fetchPlaces({ term, location }: ParamsState) {
       setIsLoading(true);
 
@@ -124,6 +127,7 @@ export default function RestaurantSearchPage() {
               sort_by: 'best_match',
               limit: 10,
             },
+            cancelToken: cancelTokenSource.token,
           }
         );
 
@@ -135,6 +139,8 @@ export default function RestaurantSearchPage() {
     }
 
     fetchPlaces(params);
+
+    return () => cancelTokenSource.cancel();
   }, [params]);
 
   return (
