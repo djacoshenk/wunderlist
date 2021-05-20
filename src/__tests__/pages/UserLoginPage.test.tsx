@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { axe } from 'jest-axe';
+import { when, resetAllWhenMocks } from 'jest-when';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 
@@ -12,6 +13,10 @@ import store from 'store/store';
 jest.mock('setupFirebase');
 
 const mockedAuth = auth as jest.Mocked<typeof auth>;
+
+beforeEach(() => {
+  resetAllWhenMocks();
+});
 
 test('component is accessible', async () => {
   const { container } = render(
@@ -42,6 +47,12 @@ test('component renders with title', async () => {
 });
 
 test('user submits form without filling out fields', async () => {
+  when(mockedAuth.signInWithEmailAndPassword)
+    .calledWith('', '')
+    .mockRejectedValue({
+      code: 'auth/invalid-email',
+    });
+
   render(
     <Provider store={store}>
       <BrowserRouter>
@@ -49,10 +60,6 @@ test('user submits form without filling out fields', async () => {
       </BrowserRouter>
     </Provider>
   );
-
-  mockedAuth.signInWithEmailAndPassword.mockRejectedValue({
-    code: 'auth/invalid-email',
-  });
 
   // user clicks on login button
   userEvent.click(screen.getByRole('button', { name: /login/i }));
@@ -71,6 +78,12 @@ test('user is not registered and submits form', async () => {
     password: 'password',
   };
 
+  when(mockedAuth.signInWithEmailAndPassword)
+    .calledWith(fakeUserData.email, fakeUserData.password)
+    .mockRejectedValue({
+      code: 'auth/user-not-found',
+    });
+
   render(
     <Provider store={store}>
       <BrowserRouter>
@@ -78,10 +91,6 @@ test('user is not registered and submits form', async () => {
       </BrowserRouter>
     </Provider>
   );
-
-  mockedAuth.signInWithEmailAndPassword.mockRejectedValue({
-    code: 'auth/user-not-found',
-  });
 
   // unregistered user fills in fields
   userEvent.type(
@@ -110,6 +119,12 @@ test('user is registered and submits form with wrong password', async () => {
     password: 'password',
   };
 
+  when(mockedAuth.signInWithEmailAndPassword)
+    .calledWith(fakeUserData.email, fakeUserData.password)
+    .mockRejectedValue({
+      code: 'auth/wrong-password',
+    });
+
   render(
     <Provider store={store}>
       <BrowserRouter>
@@ -117,10 +132,6 @@ test('user is registered and submits form with wrong password', async () => {
       </BrowserRouter>
     </Provider>
   );
-
-  mockedAuth.signInWithEmailAndPassword.mockRejectedValue({
-    code: 'auth/wrong-password',
-  });
 
   // unregistered user fills in fields
   userEvent.type(screen.getByPlaceholderText(/email/i), fakeUserData.email);
@@ -155,6 +166,14 @@ test('user is registered and submits form with correct inputs', async () => {
     password: 'password123!',
   };
 
+  when(mockedAuth.signInWithEmailAndPassword)
+    .calledWith(fakeRegisteredUser.email, fakeRegisteredUser.password)
+    .mockResolvedValue({
+      user: {
+        uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+      },
+    } as any);
+
   render(
     <Provider store={store}>
       <Router history={history}>
@@ -165,12 +184,6 @@ test('user is registered and submits form with correct inputs', async () => {
 
   // current page should be login page
   expect(history.location.pathname).toBe('/login');
-
-  mockedAuth.signInWithEmailAndPassword.mockResolvedValue({
-    user: {
-      uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
-    },
-  } as any);
 
   // unregistered user fills in fields
   userEvent.type(

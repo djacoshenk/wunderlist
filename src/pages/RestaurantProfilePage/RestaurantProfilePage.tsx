@@ -60,8 +60,6 @@ export default function RestaurantProfilePage() {
   const location = useLocation<LocationState>();
 
   useEffect(() => {
-    const cancelTokenSource = axios.CancelToken.source();
-
     async function fetchData(alias: string) {
       try {
         // fetch data on place
@@ -71,7 +69,6 @@ export default function RestaurantProfilePage() {
             headers: {
               Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
             },
-            cancelToken: cancelTokenSource.token,
           }
         );
 
@@ -98,8 +95,6 @@ export default function RestaurantProfilePage() {
 
     // fetch data and disable the main loader
     fetchData(alias);
-
-    return () => cancelTokenSource.cancel();
   }, [alias]);
 
   return (

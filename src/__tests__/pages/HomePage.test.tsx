@@ -1,15 +1,20 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
+import { when, resetAllWhenMocks } from 'jest-when';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 import { createStore, combineReducers } from 'redux';
-import { createMemoryHistory } from 'history';
 
 import HomePage from 'pages/HomePage/HomePage';
 import currentLoadingStatusReducer from 'reducers/currentLoadingStatusReducer';
 import store from 'store/store';
 
 const mockedLocalStorage = localStorage as jest.Mocked<typeof localStorage>;
+
+beforeEach(() => {
+  resetAllWhenMocks();
+});
 
 test('component renders with loading message', () => {
   const initialState = {
@@ -61,7 +66,9 @@ test('component renders cards and images without loading message', () => {
 test('component renders with location url from local storage', () => {
   const history = createMemoryHistory();
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify('Los Angeles, CA'));
+  when(mockedLocalStorage.getItem)
+    .calledWith('locationParam')
+    .mockReturnValue(JSON.stringify('Los Angeles, CA'));
 
   render(
     <Provider store={store}>
@@ -87,7 +94,9 @@ test('component renders with location url from local storage', () => {
 test('user types into the search bar and updates the card link with location', async () => {
   const history = createMemoryHistory();
 
-  mockedLocalStorage.getItem.mockReturnValue(JSON.stringify(''));
+  when(mockedLocalStorage.getItem)
+    .calledWith('locationParam')
+    .mockReturnValue(JSON.stringify(''));
 
   render(
     <Provider store={store}>

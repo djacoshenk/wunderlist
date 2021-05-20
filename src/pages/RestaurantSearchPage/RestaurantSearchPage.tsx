@@ -110,8 +110,6 @@ export default function RestaurantSearchPage() {
   );
 
   useEffect(() => {
-    const cancelTokenSource = axios.CancelToken.source();
-
     async function fetchPlaces({ term, location }: ParamsState) {
       setIsLoading(true);
 
@@ -126,7 +124,6 @@ export default function RestaurantSearchPage() {
               sort_by: 'best_match',
               limit: 10,
             },
-            cancelToken: cancelTokenSource.token,
           }
         );
 
@@ -138,8 +135,6 @@ export default function RestaurantSearchPage() {
     }
 
     fetchPlaces(params);
-
-    return () => cancelTokenSource.cancel();
   }, [params]);
 
   return (

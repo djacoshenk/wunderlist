@@ -2,17 +2,22 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { axe } from 'jest-axe';
+import { when, resetAllWhenMocks } from 'jest-when';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Router } from 'react-router-dom';
 
-import { auth, firestore } from 'setupFirebase';
 import UserRegisterPage from 'pages/UserRegisterPage/UserRegisterPage';
 import store from 'store/store';
+import { auth, firestore } from 'setupFirebase';
 
 jest.mock('setupFirebase');
 
 const mockedAuth = auth as jest.Mocked<typeof auth>;
 const mockedFirestore = firestore as jest.Mocked<typeof firestore>;
+
+beforeEach(() => {
+  resetAllWhenMocks();
+});
 
 test('component is accessible', async () => {
   const { container } = render(
@@ -88,13 +93,33 @@ test('user types into form fields and submits form', async () => {
   // set current page to register page
   history.push('/register');
 
-  const fakeUserData = {
+  const fakeUserLoginData = {
     firstName: 'Danny',
     lastName: 'Jacoshenk',
     email: 'hello@dannyjaco.me',
     password: 'password',
     confirmPassword: 'password',
   };
+
+  when(mockedAuth.createUserWithEmailAndPassword)
+    .calledWith(fakeUserLoginData.email, fakeUserLoginData.password)
+    .mockResolvedValue({
+      user: {
+        uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+      },
+    } as any);
+
+  when(mockedFirestore.collection)
+    .calledWith('users')
+    .mockImplementation(() => {
+      return {
+        doc: () => {
+          return {
+            set: jest.fn(),
+          };
+        },
+      } as any;
+    });
 
   render(
     <Provider store={store}>
@@ -104,68 +129,52 @@ test('user types into form fields and submits form', async () => {
     </Provider>
   );
 
-  mockedAuth.createUserWithEmailAndPassword.mockResolvedValue({
-    user: {
-      uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
-    },
-  } as any);
-
-  mockedFirestore.collection.mockImplementation(() => {
-    return {
-      doc: () => {
-        return {
-          set: jest.fn(),
-        };
-      },
-    } as any;
-  });
-
   // current page should be register page
   expect(history.location.pathname).toBe('/register');
 
   // user types into first name field
   userEvent.type(
     screen.getByRole('textbox', { name: /first name/i }),
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
   expect(screen.getByRole('textbox', { name: /first name/i })).toHaveValue(
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
 
   // user types into last name field
   userEvent.type(
     screen.getByRole('textbox', { name: /last name/i }),
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
   expect(screen.getByRole('textbox', { name: /last name/i })).toHaveValue(
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
 
   // user types into email field
   userEvent.type(
     screen.getByRole('textbox', { name: /email/i }),
-    fakeUserData.email
+    fakeUserLoginData.email
   );
   expect(screen.getByRole('textbox', { name: /email/i })).toHaveValue(
-    fakeUserData.email
+    fakeUserLoginData.email
   );
 
   // user types into password field
   userEvent.type(
     screen.getByPlaceholderText('Password (min. 6 characters)'),
-    fakeUserData.password
+    fakeUserLoginData.password
   );
   expect(
     screen.getByPlaceholderText('Password (min. 6 characters)')
-  ).toHaveValue(fakeUserData.password);
+  ).toHaveValue(fakeUserLoginData.password);
 
   // user types into confirm password field
   userEvent.type(
     screen.getByPlaceholderText('Confirm Password'),
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
   expect(screen.getByPlaceholderText('Confirm Password')).toHaveValue(
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
 
   // user submits form
@@ -191,13 +200,19 @@ test('user types into form fields and submits form', async () => {
 });
 
 test('user submits form with invalid email', async () => {
-  const fakeUserData = {
+  const fakeUserLoginData = {
     firstName: 'Danny',
     lastName: 'Jacoshenk',
     email: 'hello',
     password: 'password',
     confirmPassword: 'password',
   };
+
+  when(mockedAuth.createUserWithEmailAndPassword)
+    .calledWith(fakeUserLoginData.email, fakeUserLoginData.password)
+    .mockRejectedValue({
+      code: 'auth/invalid-email',
+    });
 
   render(
     <Provider store={store}>
@@ -207,53 +222,49 @@ test('user submits form with invalid email', async () => {
     </Provider>
   );
 
-  mockedAuth.createUserWithEmailAndPassword.mockRejectedValue({
-    code: 'auth/invalid-email',
-  });
-
   // user types into first name field
   userEvent.type(
     screen.getByRole('textbox', { name: /first name/i }),
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
   expect(screen.getByRole('textbox', { name: /first name/i })).toHaveValue(
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
 
   // user types into last name field
   userEvent.type(
     screen.getByRole('textbox', { name: /last name/i }),
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
   expect(screen.getByRole('textbox', { name: /last name/i })).toHaveValue(
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
 
   // user types into email field
   userEvent.type(
     screen.getByRole('textbox', { name: /email/i }),
-    fakeUserData.email
+    fakeUserLoginData.email
   );
   expect(screen.getByRole('textbox', { name: /email/i })).toHaveValue(
-    fakeUserData.email
+    fakeUserLoginData.email
   );
 
   // user types into password field
   userEvent.type(
     screen.getByPlaceholderText('Password (min. 6 characters)'),
-    fakeUserData.password
+    fakeUserLoginData.password
   );
   expect(
     screen.getByPlaceholderText('Password (min. 6 characters)')
-  ).toHaveValue(fakeUserData.password);
+  ).toHaveValue(fakeUserLoginData.password);
 
   // user types into confirm password field
   userEvent.type(
     screen.getByPlaceholderText('Confirm Password'),
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
   expect(screen.getByPlaceholderText('Confirm Password')).toHaveValue(
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
 
   // user submits form
@@ -268,13 +279,19 @@ test('user submits form with invalid email', async () => {
 });
 
 test('user submits form with previously registered email', async () => {
-  const fakeUserData = {
+  const fakeUserLoginData = {
     firstName: 'Danny',
     lastName: 'Jacoshenk',
     email: 'daniel.jacoshenk@gmail',
     password: 'password',
     confirmPassword: 'password',
   };
+
+  when(mockedAuth.createUserWithEmailAndPassword)
+    .calledWith(fakeUserLoginData.email, fakeUserLoginData.password)
+    .mockRejectedValue({
+      code: 'auth/email-already-in-use',
+    });
 
   render(
     <Provider store={store}>
@@ -284,53 +301,49 @@ test('user submits form with previously registered email', async () => {
     </Provider>
   );
 
-  mockedAuth.createUserWithEmailAndPassword.mockRejectedValue({
-    code: 'auth/email-already-in-use',
-  });
-
   // user types into first name field
   userEvent.type(
     screen.getByRole('textbox', { name: /first name/i }),
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
   expect(screen.getByRole('textbox', { name: /first name/i })).toHaveValue(
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
 
   // user types into last name field
   userEvent.type(
     screen.getByRole('textbox', { name: /last name/i }),
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
   expect(screen.getByRole('textbox', { name: /last name/i })).toHaveValue(
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
 
   // user types into email field
   userEvent.type(
     screen.getByRole('textbox', { name: /email/i }),
-    fakeUserData.email
+    fakeUserLoginData.email
   );
   expect(screen.getByRole('textbox', { name: /email/i })).toHaveValue(
-    fakeUserData.email
+    fakeUserLoginData.email
   );
 
   // user types into password field
   userEvent.type(
     screen.getByPlaceholderText('Password (min. 6 characters)'),
-    fakeUserData.password
+    fakeUserLoginData.password
   );
   expect(
     screen.getByPlaceholderText('Password (min. 6 characters)')
-  ).toHaveValue(fakeUserData.password);
+  ).toHaveValue(fakeUserLoginData.password);
 
   // user types into confirm password field
   userEvent.type(
     screen.getByPlaceholderText('Confirm Password'),
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
   expect(screen.getByPlaceholderText('Confirm Password')).toHaveValue(
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
 
   // user submits form
@@ -345,13 +358,19 @@ test('user submits form with previously registered email', async () => {
 });
 
 test('user submits a password less than 6 characters in length', async () => {
-  const fakeUserData = {
+  const fakeUserLoginData = {
     firstName: 'Danny',
     lastName: 'Jacoshenk',
     email: 'hello@dannyjaco.me',
     password: 'pass',
     confirmPassword: 'pass',
   };
+
+  when(mockedAuth.createUserWithEmailAndPassword)
+    .calledWith(fakeUserLoginData.email, fakeUserLoginData.password)
+    .mockRejectedValue({
+      code: 'auth/weak-password',
+    });
 
   render(
     <Provider store={store}>
@@ -361,53 +380,49 @@ test('user submits a password less than 6 characters in length', async () => {
     </Provider>
   );
 
-  mockedAuth.createUserWithEmailAndPassword.mockRejectedValue({
-    code: 'auth/weak-password',
-  });
-
   // user types into first name field
   userEvent.type(
     screen.getByRole('textbox', { name: /first name/i }),
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
   expect(screen.getByRole('textbox', { name: /first name/i })).toHaveValue(
-    fakeUserData.firstName
+    fakeUserLoginData.firstName
   );
 
   // user types into last name field
   userEvent.type(
     screen.getByRole('textbox', { name: /last name/i }),
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
   expect(screen.getByRole('textbox', { name: /last name/i })).toHaveValue(
-    fakeUserData.lastName
+    fakeUserLoginData.lastName
   );
 
   // user types into email field
   userEvent.type(
     screen.getByRole('textbox', { name: /email/i }),
-    fakeUserData.email
+    fakeUserLoginData.email
   );
   expect(screen.getByRole('textbox', { name: /email/i })).toHaveValue(
-    fakeUserData.email
+    fakeUserLoginData.email
   );
 
   // user types into password field
   userEvent.type(
     screen.getByPlaceholderText('Password (min. 6 characters)'),
-    fakeUserData.password
+    fakeUserLoginData.password
   );
   expect(
     screen.getByPlaceholderText('Password (min. 6 characters)')
-  ).toHaveValue(fakeUserData.password);
+  ).toHaveValue(fakeUserLoginData.password);
 
   // user types into confirm password field
   userEvent.type(
     screen.getByPlaceholderText('Confirm Password'),
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
   expect(screen.getByPlaceholderText('Confirm Password')).toHaveValue(
-    fakeUserData.confirmPassword
+    fakeUserLoginData.confirmPassword
   );
 
   // user submits form
@@ -422,7 +437,7 @@ test('user submits a password less than 6 characters in length', async () => {
 });
 
 test('user submits form with non-matching passwords', () => {
-  const fakeUserData = {
+  const fakeUserLoginData = {
     password: 'password123!',
     confirm_password: 'password1234!',
   };
@@ -438,11 +453,11 @@ test('user submits form with non-matching passwords', () => {
   // user types invalid email into form
   userEvent.type(
     screen.getByPlaceholderText('Password (min. 6 characters)'),
-    fakeUserData.password
+    fakeUserLoginData.password
   );
   userEvent.type(
     screen.getByPlaceholderText('Confirm Password'),
-    fakeUserData.confirm_password
+    fakeUserLoginData.confirm_password
   );
 
   // user submits form
