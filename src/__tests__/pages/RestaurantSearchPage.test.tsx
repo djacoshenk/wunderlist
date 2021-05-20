@@ -10,24 +10,26 @@ jest.mock('react-router-dom', () => ({
   useParams: () => ({ term: 'Burgers', location: 'Los Angeles, CA' }),
 }));
 
-test('component renders with updated document title and loader', async () => {
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <RestaurantSearchPage />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  await waitFor(() => {
-    expect(document.title).toBe(
-      'wunderlist - The best BURGERS in Los Angeles, CA'
+describe('initial render', () => {
+  test('if document title and loader render', async () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <RestaurantSearchPage />
+        </BrowserRouter>
+      </Provider>
     );
+
+    await waitFor(() => {
+      expect(document.title).toBe(
+        'wunderlist - The best BURGERS in Los Angeles, CA'
+      );
+    });
+
+    expect(screen.getByText(/burgers/i)).toBeInTheDocument();
+    expect(screen.getByText(/los angeles, ca/i)).toBeInTheDocument();
+
+    // expect loader bubbles to render
+    expect(screen.getAllByTestId('loader-bubble')).toHaveLength(3);
   });
-
-  expect(screen.getByText(/burgers/i)).toBeInTheDocument();
-  expect(screen.getByText(/los angeles, ca/i)).toBeInTheDocument();
-
-  // expect loader bubbles to render
-  expect(screen.getAllByTestId('loader-bubble')).toHaveLength(3);
 });

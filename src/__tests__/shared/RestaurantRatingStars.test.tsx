@@ -3,27 +3,31 @@ import { axe } from 'jest-axe';
 
 import RestaurantRatingStars from 'shared/RestaurantRatingStars/RestaurantRatingStars';
 
-test('component renders with props', () => {
-  const fakeProps = {
-    rating: 3.5,
-  };
+describe('a11y violations', () => {
+  test('if component has a11y violations', async () => {
+    const fakeProps = {
+      rating: 3.5,
+    };
 
-  render(<RestaurantRatingStars rating={fakeProps.rating} />);
+    const { container } = render(
+      <RestaurantRatingStars rating={fakeProps.rating} />
+    );
 
-  // five stars should be rendered
-  expect(screen.getAllByTestId('restaurant-rating-star')).toHaveLength(5);
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
+  });
 });
 
-test('component is accessible', async () => {
-  const fakeProps = {
-    rating: 3.5,
-  };
+describe('initial render', () => {
+  test('if component renders with props', () => {
+    const fakeProps = {
+      rating: 3.5,
+    };
 
-  const { container } = render(
-    <RestaurantRatingStars rating={fakeProps.rating} />
-  );
+    render(<RestaurantRatingStars rating={fakeProps.rating} />);
 
-  const results = await axe(container);
-
-  expect(results).toHaveNoViolations();
+    // five stars should be rendered
+    expect(screen.getAllByTestId('restaurant-rating-star')).toHaveLength(5);
+  });
 });

@@ -29,148 +29,152 @@ beforeEach(() => {
   resetAllWhenMocks();
 });
 
-test('component renders with loader bubbles', () => {
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserProfilePage />
-      </BrowserRouter>
-    </Provider>
-  );
+describe('initial render', () => {
+  test('if loader bubbles render', () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserProfilePage />
+        </BrowserRouter>
+      </Provider>
+    );
 
-  expect(screen.getAllByTestId(/^(loader-bubble)$/i)).toHaveLength(3);
+    expect(screen.getAllByTestId(/^(loader-bubble)$/i)).toHaveLength(3);
+  });
 });
 
-test('component renders user profile without saved places', async () => {
-  jest.useFakeTimers();
+describe('user views profile page', () => {
+  test('if user does not have any saved places', async () => {
+    jest.useFakeTimers();
 
-  when(mockedFirestore.collection)
-    .calledWith('users')
-    .mockImplementationOnce(() => {
-      return {
-        doc: () => {
-          return {
-            get: () => {
-              return {
-                exists: true,
-                data: () => {
-                  return fakeCurrentUserDataNoSavedPlaces;
-                },
-              };
-            },
-          };
-        },
-      } as any;
+    when(mockedFirestore.collection)
+      .calledWith('users')
+      .mockImplementationOnce(() => {
+        return {
+          doc: () => {
+            return {
+              get: () => {
+                return {
+                  exists: true,
+                  data: () => {
+                    return fakeCurrentUserDataNoSavedPlaces;
+                  },
+                };
+              },
+            };
+          },
+        } as any;
+      });
+
+    when(mockedFirestore.collection)
+      .calledWith('savedPlaces')
+      .mockImplementationOnce(() => {
+        return {
+          doc: () => {
+            return {
+              get: () => {
+                return {
+                  exists: false,
+                };
+              },
+            };
+          },
+        } as any;
+      });
+
+    jest.advanceTimersByTime(4000);
+
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserProfilePage />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    // document title should be updated with user info
+    await waitFor(() => {
+      expect(document.title).toBe(`wunderlist - Danny J.'s Profile`);
     });
 
-  when(mockedFirestore.collection)
-    .calledWith('savedPlaces')
-    .mockImplementationOnce(() => {
-      return {
-        doc: () => {
-          return {
-            get: () => {
-              return {
-                exists: false,
-              };
-            },
-          };
-        },
-      } as any;
+    // expect user full name to render
+    await waitFor(() => {
+      expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
     });
 
-  jest.advanceTimersByTime(4000);
+    // expect saved places quantity to render
+    expect(screen.getByText('0')).toBeInTheDocument();
 
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserProfilePage />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  // document title should be updated with user info
-  await waitFor(() => {
-    expect(document.title).toBe(`wunderlist - Danny J.'s Profile`);
+    // saved cards message should render
+    expect(
+      screen.getByText(/you have not saved any places/i)
+    ).toBeInTheDocument();
   });
 
-  // expect user full name to render
-  await waitFor(() => {
-    expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
-  });
+  test('if user has a saved place', async () => {
+    jest.useFakeTimers();
 
-  // expect saved places quantity to render
-  expect(screen.getByText('0')).toBeInTheDocument();
+    when(mockedFirestore.collection)
+      .calledWith('users')
+      .mockImplementationOnce(() => {
+        return {
+          doc: () => {
+            return {
+              get: () => {
+                return {
+                  exists: true,
+                  data: () => {
+                    return fakeCurrentUserDataNoSavedPlaces;
+                  },
+                };
+              },
+            };
+          },
+        } as any;
+      });
 
-  // saved cards message should render
-  expect(
-    screen.getByText(/you have not saved any places/i)
-  ).toBeInTheDocument();
-});
+    when(mockedFirestore.collection)
+      .calledWith('savedPlaces')
+      .mockImplementationOnce(() => {
+        return {
+          doc: () => {
+            return {
+              get: () => {
+                return {
+                  exists: true,
+                  data: () => {
+                    return {
+                      savedPlaces: [fakeRestaurantData.data],
+                    };
+                  },
+                };
+              },
+            };
+          },
+        } as any;
+      });
 
-test('component renders with a saved place', async () => {
-  jest.useFakeTimers();
+    jest.advanceTimersByTime(4000);
 
-  when(mockedFirestore.collection)
-    .calledWith('users')
-    .mockImplementationOnce(() => {
-      return {
-        doc: () => {
-          return {
-            get: () => {
-              return {
-                exists: true,
-                data: () => {
-                  return fakeCurrentUserDataNoSavedPlaces;
-                },
-              };
-            },
-          };
-        },
-      } as any;
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserProfilePage />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    // expect user full name to render
+    await waitFor(() => {
+      expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
     });
 
-  when(mockedFirestore.collection)
-    .calledWith('savedPlaces')
-    .mockImplementationOnce(() => {
-      return {
-        doc: () => {
-          return {
-            get: () => {
-              return {
-                exists: true,
-                data: () => {
-                  return {
-                    savedPlaces: [fakeRestaurantData.data],
-                  };
-                },
-              };
-            },
-          };
-        },
-      } as any;
-    });
+    // expect saved places quantity to render
+    expect(screen.getByText('1')).toBeInTheDocument();
 
-  jest.advanceTimersByTime(4000);
-
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserProfilePage />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  // expect user full name to render
-  await waitFor(() => {
-    expect(screen.getByText(/^(Danny Jacoshenk)$/)).toBeInTheDocument();
+    // expect saved place to render
+    expect(
+      screen.getByRole('link', { name: /monty's good burger/i })
+    ).toBeInTheDocument();
   });
-
-  // expect saved places quantity to render
-  expect(screen.getByText('1')).toBeInTheDocument();
-
-  // expect saved place to render
-  expect(
-    screen.getByRole('link', { name: /monty's good burger/i })
-  ).toBeInTheDocument();
 });

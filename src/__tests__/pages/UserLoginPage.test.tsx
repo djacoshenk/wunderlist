@@ -18,211 +18,219 @@ beforeEach(() => {
   resetAllWhenMocks();
 });
 
-test('component is accessible', async () => {
-  const { container } = render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserLoginPage />
-      </BrowserRouter>
-    </Provider>
-  );
+describe('a11y violations', () => {
+  test('if component has a11y violations', async () => {
+    const { container } = render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserLoginPage />
+        </BrowserRouter>
+      </Provider>
+    );
 
-  const results = await axe(container);
+    const results = await axe(container);
 
-  expect(results).toHaveNoViolations();
-});
-
-test('component renders with title', async () => {
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserLoginPage />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  await waitFor(() => {
-    expect(document.title).toBe('wunderlist - User Login');
+    expect(results).toHaveNoViolations();
   });
 });
 
-test('user submits form without filling out fields', async () => {
-  when(mockedAuth.signInWithEmailAndPassword)
-    .calledWith('', '')
-    .mockRejectedValue({
-      code: 'auth/invalid-email',
+describe('initial render', () => {
+  test('component renders with title', async () => {
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserLoginPage />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    await waitFor(() => {
+      expect(document.title).toBe('wunderlist - User Login');
     });
-
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserLoginPage />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  // user clicks on login button
-  userEvent.click(screen.getByRole('button', { name: /login/i }));
-
-  // error message should appear
-  await waitFor(() => {
-    expect(
-      screen.getByRole('alert', { name: /email error/i })
-    ).toBeInTheDocument();
   });
 });
 
-test('user is not registered and submits form', async () => {
-  const fakeUserData = {
-    email: 'daniel.jacoshenk@gmail.com',
-    password: 'password',
-  };
+describe('user attempts to login', () => {
+  test('if user does not fill out form fields', async () => {
+    when(mockedAuth.signInWithEmailAndPassword)
+      .calledWith('', '')
+      .mockRejectedValue({
+        code: 'auth/invalid-email',
+      });
 
-  when(mockedAuth.signInWithEmailAndPassword)
-    .calledWith(fakeUserData.email, fakeUserData.password)
-    .mockRejectedValue({
-      code: 'auth/user-not-found',
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserLoginPage />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    // user clicks on login button
+    userEvent.click(screen.getByRole('button', { name: /login/i }));
+
+    // error message should appear
+    await waitFor(() => {
+      expect(
+        screen.getByRole('alert', { name: /email error/i })
+      ).toBeInTheDocument();
     });
-
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserLoginPage />
-      </BrowserRouter>
-    </Provider>
-  );
-
-  // unregistered user fills in fields
-  userEvent.type(
-    screen.getByRole('textbox', { name: /email/i }),
-    fakeUserData.email
-  );
-  userEvent.type(
-    screen.getByPlaceholderText(/password/i),
-    fakeUserData.password
-  );
-
-  // unregistered user submits form
-  userEvent.click(screen.getByRole('button', { name: /login/i }));
-
-  // error message should appear
-  await waitFor(() => {
-    expect(
-      screen.getByRole('alert', { name: /email error/i })
-    ).toBeInTheDocument();
   });
-});
 
-test('user is registered and submits form with wrong password', async () => {
-  const fakeUserData = {
-    email: 'daniel.jacoshenk@gmail.com',
-    password: 'password',
-  };
+  test('if user is not registered', async () => {
+    const fakeUserData = {
+      email: 'daniel.jacoshenk@gmail.com',
+      password: 'password',
+    };
 
-  when(mockedAuth.signInWithEmailAndPassword)
-    .calledWith(fakeUserData.email, fakeUserData.password)
-    .mockRejectedValue({
-      code: 'auth/wrong-password',
+    when(mockedAuth.signInWithEmailAndPassword)
+      .calledWith(fakeUserData.email, fakeUserData.password)
+      .mockRejectedValue({
+        code: 'auth/user-not-found',
+      });
+
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserLoginPage />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    // unregistered user fills in fields
+    userEvent.type(
+      screen.getByRole('textbox', { name: /email/i }),
+      fakeUserData.email
+    );
+    userEvent.type(
+      screen.getByPlaceholderText(/password/i),
+      fakeUserData.password
+    );
+
+    // unregistered user submits form
+    userEvent.click(screen.getByRole('button', { name: /login/i }));
+
+    // error message should appear
+    await waitFor(() => {
+      expect(
+        screen.getByRole('alert', { name: /email error/i })
+      ).toBeInTheDocument();
     });
+  });
 
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <UserLoginPage />
-      </BrowserRouter>
-    </Provider>
-  );
+  test('if user submits form with wrong password', async () => {
+    const fakeUserData = {
+      email: 'daniel.jacoshenk@gmail.com',
+      password: 'password',
+    };
 
-  // unregistered user fills in fields
-  userEvent.type(screen.getByPlaceholderText(/email/i), fakeUserData.email);
-  userEvent.type(
-    screen.getByPlaceholderText(/password/i),
-    fakeUserData.password
-  );
+    when(mockedAuth.signInWithEmailAndPassword)
+      .calledWith(fakeUserData.email, fakeUserData.password)
+      .mockRejectedValue({
+        code: 'auth/wrong-password',
+      });
 
-  // unregistered user submits form
-  userEvent.click(screen.getByRole('button', { name: /login/i }));
+    render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <UserLoginPage />
+        </BrowserRouter>
+      </Provider>
+    );
 
-  // username error not should appear
-  expect(screen.queryByRole('alert', { name: /email error/i })).toBeNull();
+    // unregistered user fills in fields
+    userEvent.type(screen.getByPlaceholderText(/email/i), fakeUserData.email);
+    userEvent.type(
+      screen.getByPlaceholderText(/password/i),
+      fakeUserData.password
+    );
 
-  // password error should appear
-  await waitFor(() => {
-    expect(
-      screen.getByRole('alert', { name: /password error/i })
-    ).toBeInTheDocument();
+    // unregistered user submits form
+    userEvent.click(screen.getByRole('button', { name: /login/i }));
+
+    // username error not should appear
+    expect(screen.queryByRole('alert', { name: /email error/i })).toBeNull();
+
+    // password error should appear
+    await waitFor(() => {
+      expect(
+        screen.getByRole('alert', { name: /password error/i })
+      ).toBeInTheDocument();
+    });
   });
 });
 
-test('user is registered and submits form with correct inputs', async () => {
-  jest.useFakeTimers();
+describe('golden path', () => {
+  test('if user submits form successfully', async () => {
+    jest.useFakeTimers();
 
-  const history = createMemoryHistory();
+    const history = createMemoryHistory();
 
-  history.push('/login');
+    history.push('/login');
 
-  const fakeRegisteredUser = {
-    email: 'daniel.jacoshenk@gmail.com',
-    password: 'password123!',
-  };
+    const fakeRegisteredUser = {
+      email: 'daniel.jacoshenk@gmail.com',
+      password: 'password123!',
+    };
 
-  when(mockedAuth.signInWithEmailAndPassword)
-    .calledWith(fakeRegisteredUser.email, fakeRegisteredUser.password)
-    .mockResolvedValue({
-      user: {
-        uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
-      },
-    } as any);
+    when(mockedAuth.signInWithEmailAndPassword)
+      .calledWith(fakeRegisteredUser.email, fakeRegisteredUser.password)
+      .mockResolvedValue({
+        user: {
+          uid: 'iewLUuw7ZSaNilDpsTxmbvVO8T52',
+        },
+      } as any);
 
-  render(
-    <Provider store={store}>
-      <Router history={history}>
-        <UserLoginPage />
-      </Router>
-    </Provider>
-  );
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <UserLoginPage />
+        </Router>
+      </Provider>
+    );
 
-  // current page should be login page
-  expect(history.location.pathname).toBe('/login');
+    // current page should be login page
+    expect(history.location.pathname).toBe('/login');
 
-  // unregistered user fills in fields
-  userEvent.type(
-    screen.getByPlaceholderText(/email/i),
-    fakeRegisteredUser.email
-  );
-  userEvent.type(
-    screen.getByPlaceholderText(/password/i),
-    fakeRegisteredUser.password
-  );
+    // unregistered user fills in fields
+    userEvent.type(
+      screen.getByPlaceholderText(/email/i),
+      fakeRegisteredUser.email
+    );
+    userEvent.type(
+      screen.getByPlaceholderText(/password/i),
+      fakeRegisteredUser.password
+    );
 
-  // unregistered user submits form
-  userEvent.click(screen.getByRole('button', { name: /login/i }));
+    // unregistered user submits form
+    userEvent.click(screen.getByRole('button', { name: /login/i }));
 
-  jest.advanceTimersByTime(4000);
+    jest.advanceTimersByTime(4000);
 
-  // user is routed to the home page
-  await waitFor(() => {
+    // user is routed to the home page
+    await waitFor(() => {
+      expect(history.location.pathname).toBe('/');
+    });
+  });
+
+  test('if user is routed back to the home page', () => {
+    const history = createMemoryHistory();
+
+    history.push('/login');
+
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <UserLoginPage />
+        </Router>
+      </Provider>
+    );
+
+    // expect header link to be rendered
+    expect(screen.getByRole('link', { name: /globe/i })).toBeInTheDocument();
+
+    userEvent.click(screen.getByRole('link', { name: /globe/i }));
+
     expect(history.location.pathname).toBe('/');
   });
-});
-
-test('user clicks on header to go back to the home page', () => {
-  const history = createMemoryHistory();
-
-  history.push('/login');
-
-  render(
-    <Provider store={store}>
-      <Router history={history}>
-        <UserLoginPage />
-      </Router>
-    </Provider>
-  );
-
-  // expect header link to be rendered
-  expect(screen.getByRole('link', { name: /globe/i })).toBeInTheDocument();
-
-  userEvent.click(screen.getByRole('link', { name: /globe/i }));
-
-  expect(history.location.pathname).toBe('/');
 });
