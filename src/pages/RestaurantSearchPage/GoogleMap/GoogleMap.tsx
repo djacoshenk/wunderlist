@@ -39,7 +39,7 @@ const defaultCenter = {
 const defaultZoom = 13;
 
 export default function GoogleMap({ places, mapKey }: Props) {
-  function getMapBounds(maps: any) {
+  function getMapBounds(maps: any): any {
     const bounds = new maps.LatLngBounds();
 
     places.forEach((place) => {
@@ -51,7 +51,7 @@ export default function GoogleMap({ places, mapKey }: Props) {
     return bounds;
   }
 
-  function handleMapBounds(map: any, maps: any) {
+  function handleMapBounds(map: any, maps: any): void {
     const bounds = getMapBounds(maps);
 
     map.fitBounds(bounds);

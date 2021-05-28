@@ -61,12 +61,12 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
   ] = useState<CurrentUserLoggedIn | null>(null);
   const [restaurantIsSaved, setRestaurantIsSaved] = useState(false);
 
-  function formatNameForUrl() {
-    return place.name.split(' ').join('+');
+  function formatNameForUrl(name: string): string {
+    return name.split(' ').join('+');
   }
 
-  function formatAddressForUrl() {
-    return place.location.display_address.join(' ').split(' ').join('+');
+  function formatAddressForUrl(address: string[]): string {
+    return address.join(' ').split(' ').join('+');
   }
 
   const verifyRestaurantIsSaved = useCallback(async () => {
@@ -116,7 +116,7 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
     verifyRestaurantIsSaved();
   }, [verifyRestaurantIsSaved]);
 
-  async function saveRestaurantOnClick(place: Place) {
+  async function saveRestaurantOnClick(place: Place): Promise<void> {
     try {
       // if there is a current user, we want to save the restaurant to the database under their user id
       if (auth.currentUser) {
@@ -151,7 +151,7 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
     }
   }
 
-  async function unsaveRestaurantOnClick(place: Place) {
+  async function unsaveRestaurantOnClick(place: Place): Promise<void> {
     try {
       // if there is a current user, then we want to remove the saved restaurant from the database under their user id
       if (auth.currentUser) {
@@ -254,7 +254,9 @@ export default function RestaurantProfileCard({ place, reviews }: Props) {
           <div className={styles['restaurant-prof-directions-btn']}>
             <Link
               to={{
-                pathname: `https://www.google.com/maps/search/?api=1&query=${formatNameForUrl()}%2C+${formatAddressForUrl()}`,
+                pathname: `https://www.google.com/maps/search/?api=1&query=${formatNameForUrl(
+                  place.name
+                )}%2C+${formatAddressForUrl(place.location.display_address)}`,
               }}
               target='_blank'
             >

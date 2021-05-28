@@ -63,7 +63,7 @@ export default function RestaurantProfilePage() {
     const cancelToken = axios.CancelToken;
     const cancelTokenSource = cancelToken.source();
 
-    async function fetchData(alias: string) {
+    async function fetchData(alias: string): Promise<void> {
       try {
         // fetch data on place
         const placeRes = await axios.get(

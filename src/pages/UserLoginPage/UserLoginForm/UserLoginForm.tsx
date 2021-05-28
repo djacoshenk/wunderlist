@@ -23,17 +23,16 @@ export default function UserLoginForm() {
     email: '',
     password: '',
   });
-  const [
-    userLoginFormErrors,
-    setUserLoginFormErrors,
-  ] = useState<UserLoginFormState>({
+  const [userLoginFormErrors, setUserLoginFormErrors] = useState<
+    UserLoginFormState
+  >({
     email: '',
     password: '',
   });
   const dispatch = useDispatch();
   const history = useHistory();
 
-  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function onInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
 
     setUserLoginForm((prevState) => ({
@@ -42,7 +41,9 @@ export default function UserLoginForm() {
     }));
   }
 
-  async function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmit(
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
     e.preventDefault();
 
     let errors = 0;

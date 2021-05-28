@@ -60,7 +60,7 @@ export default function UserProfilePage() {
   const location = useLocation<LocationState>();
   const params = useParams<ParamsState>();
 
-  function formatLastNameInitial(lastName: string) {
+  function formatLastNameInitial(lastName: string): string {
     return lastName.substring(0, 1);
   }
 

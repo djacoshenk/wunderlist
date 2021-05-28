@@ -3,7 +3,11 @@ type MapIdAction = {
   payload: { id: number };
 };
 
-export function setMapId(id: number) {
+type MapIdState = {
+  mapId: number;
+};
+
+export function setMapId(id: number): MapIdAction {
   return {
     type: 'SET_MAP_ID',
     payload: { id },
@@ -17,7 +21,7 @@ const initialState = {
 export default function mapIdReducer(
   state = initialState,
   action: MapIdAction
-) {
+): MapIdState {
   if (action.type === 'SET_MAP_ID') {
     return { ...state, mapId: action.payload.id };
   } else {

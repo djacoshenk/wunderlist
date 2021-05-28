@@ -25,20 +25,18 @@ const userRegisterFormErrorValues: UserRegisterFormState = {
 };
 
 export default function UserRegisterForm() {
-  const [
-    userRegisterForm,
-    setUserRegisterForm,
-  ] = useState<UserRegisterFormState>({
+  const [userRegisterForm, setUserRegisterForm] = useState<
+    UserRegisterFormState
+  >({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-  const [
-    userRegisterFormErrors,
-    setUserRegisterFormErrors,
-  ] = useState<UserRegisterFormState>({
+  const [userRegisterFormErrors, setUserRegisterFormErrors] = useState<
+    UserRegisterFormState
+  >({
     firstName: '',
     lastName: '',
     email: '',
@@ -48,7 +46,9 @@ export default function UserRegisterForm() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  async function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmit(
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
     e.preventDefault();
 
     let errors = 0;
@@ -168,7 +168,7 @@ export default function UserRegisterForm() {
     }
   }
 
-  function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function onInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { name, value } = e.target;
 
     setUserRegisterForm((prevState) => ({

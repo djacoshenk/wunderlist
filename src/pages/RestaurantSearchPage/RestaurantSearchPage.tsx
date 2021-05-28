@@ -53,7 +53,7 @@ export default function RestaurantSearchPage() {
   async function fetchMorePlaces(
     { term, location }: ParamsState,
     sortByParam: string
-  ) {
+  ): Promise<void> {
     try {
       const { data } = await axios.get(
         `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
@@ -113,7 +113,7 @@ export default function RestaurantSearchPage() {
     const cancelToken = axios.CancelToken;
     const cancelTokenSource = cancelToken.source();
 
-    async function fetchPlaces({ term, location }: ParamsState) {
+    async function fetchPlaces({ term, location }: ParamsState): Promise<void> {
       setIsLoading(true);
 
       try {

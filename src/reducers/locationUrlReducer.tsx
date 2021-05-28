@@ -3,7 +3,11 @@ type LocationUrlAction = {
   payload: { url: string };
 };
 
-export function setLocationUrl(url: string) {
+type LocationUrlState = {
+  locationUrl: string;
+};
+
+export function setLocationUrl(url: string): LocationUrlAction {
   return {
     type: 'SET_LOCATION_URL',
     payload: { url },
@@ -17,7 +21,7 @@ const initialState = {
 export default function locationUrlReducer(
   state = initialState,
   action: LocationUrlAction
-) {
+): LocationUrlState {
   if (action.type === 'SET_LOCATION_URL') {
     return { ...state, locationUrl: action.payload.url };
   } else {

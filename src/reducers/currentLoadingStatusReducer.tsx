@@ -12,7 +12,7 @@ export type LoadingStatusState = {
 export function setCurrentLoadingStatus(
   isLoading: boolean,
   loadingMessage?: string
-) {
+): LoadingStatusAction {
   return {
     type: 'SET_LOADING_STATUS',
     payload: {
@@ -31,7 +31,7 @@ const initialState = {
 export default function currentLoadingStatusReducer(
   state: LoadingStatusState = initialState,
   action: LoadingStatusAction
-) {
+): LoadingStatusState {
   if (action.type === 'SET_LOADING_STATUS') {
     return {
       ...state,
