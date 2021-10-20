@@ -7,7 +7,7 @@ import styles from 'pages/RestaurantSearchPage/SortByButton/SortByButton.module.
 
 type Props = {
   setSortByParam: (sortByParam: SortByParam) => void;
-  fetchPlacesSortBy: (params: ParamsState, sortByParam: SortByParam) => void;
+  fetchPlaces: (params: ParamsState, sortByParam: SortByParam) => void;
 };
 
 type SortByParam = 'best_match' | 'rating' | 'review_count' | 'distance';
@@ -17,10 +17,7 @@ type ParamsState = {
   location: string;
 };
 
-export default function SortByButton({
-  setSortByParam,
-  fetchPlacesSortBy,
-}: Props) {
+export default function SortByButton({ setSortByParam, fetchPlaces }: Props) {
   const items = ['Best Match', 'Rating', 'Review Count', 'Distance'];
   const params = useParams<ParamsState>();
 
@@ -37,20 +34,20 @@ export default function SortByButton({
   useEffect(() => {
     if (selectedItem === 'Best Match') {
       setSortByParam('best_match');
-      fetchPlacesSortBy(params, 'best_match');
+      fetchPlaces(params, 'best_match');
     } else if (selectedItem === 'Rating') {
       setSortByParam('rating');
-      fetchPlacesSortBy(params, 'rating');
+      fetchPlaces(params, 'rating');
     } else if (selectedItem === 'Review Count') {
       setSortByParam('review_count');
-      fetchPlacesSortBy(params, 'review_count');
+      fetchPlaces(params, 'review_count');
     } else if (selectedItem === 'Distance') {
       setSortByParam('distance');
-      fetchPlacesSortBy(params, 'distance');
+      fetchPlaces(params, 'distance');
     } else {
       return;
     }
-  }, [selectedItem, setSortByParam, params, fetchPlacesSortBy]);
+  }, [selectedItem, setSortByParam, params, fetchPlaces]);
 
   return (
     <div className={styles['sort-by-main-container']}>
