@@ -68,7 +68,7 @@ export default function RestaurantCard({ place, index }: Props) {
             </div>
             <div className={styles['price-category-row']}>
               <p>
-                {place.price && `${place.price} \u2022`}
+                {place.price && `${place.price} \u2022 `}
                 {place.categories[0].title}
               </p>
             </div>
