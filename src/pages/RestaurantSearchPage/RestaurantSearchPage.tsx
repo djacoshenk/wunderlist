@@ -51,17 +51,19 @@ export default function RestaurantSearchPage() {
   const params = useParams<ParamsState>();
 
   async function fetchMorePlaces(
-    { term, location }: ParamsState,
+    params: ParamsState,
     sortByParam: string
   ): Promise<void> {
     try {
       const { data } = await axios.get(
-        `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
+        `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search`,
         {
           headers: {
             Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
           },
           params: {
+            term: params.term,
+            location: params.location,
             sort_by: sortByParam,
             limit: 10,
             offset: offset,
@@ -82,18 +84,20 @@ export default function RestaurantSearchPage() {
     }
   }
 
-  const fetchPlacesSortBy = useCallback(
-    async ({ term, location }: ParamsState, sortByParam: string) => {
+  const fetchPlaces = useCallback(
+    async (params: ParamsState, sortByParam: string) => {
       setIsLoading(true);
 
       try {
         const { data } = await axios.get(
-          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
+          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search`,
           {
             headers: {
               Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
             },
             params: {
+              term: params.term,
+              location: params.location,
               sort_by: sortByParam,
               limit: 10,
             },
@@ -110,38 +114,8 @@ export default function RestaurantSearchPage() {
   );
 
   useEffect(() => {
-    const cancelToken = axios.CancelToken;
-    const cancelTokenSource = cancelToken.source();
-
-    async function fetchPlaces({ term, location }: ParamsState): Promise<void> {
-      setIsLoading(true);
-
-      try {
-        const { data } = await axios.get(
-          `${'https://cors-anywhere.herokuapp.com/'}https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`,
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_YELP_CLIENT_SECRET}`,
-            },
-            params: {
-              sort_by: 'best_match',
-              limit: 10,
-            },
-            cancelToken: cancelTokenSource.token,
-          }
-        );
-
-        setPlaces(data.businesses);
-        setIsLoading(false);
-      } catch (err) {
-        Sentry.captureException(err);
-      }
-    }
-
-    fetchPlaces(params);
-
-    return () => cancelTokenSource.cancel();
-  }, [params]);
+    fetchPlaces(params, sortByParam);
+  }, [params, sortByParam, fetchPlaces]);
 
   return (
     <Fragment>
@@ -153,10 +127,7 @@ export default function RestaurantSearchPage() {
       <HamburgerMenuButton />
       <Header />
       <RestaurantSearchBar />
-      <SortByButton
-        setSortByParam={setSortByParam}
-        fetchPlacesSortBy={fetchPlacesSortBy}
-      />
+      <SortByButton setSortByParam={setSortByParam} fetchPlaces={fetchPlaces} />
       {isLoading ? (
         <RestaurntLoaderBubbles />
       ) : (
