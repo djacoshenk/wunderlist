@@ -91,7 +91,7 @@ export default function RestaurantSearchBarLocationParam({
 
     searchId = setTimeout(() => {
       fetchLocationSuggestions(text);
-    }, 200);
+    }, 1000);
   }
 
   return (
