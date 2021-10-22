@@ -10,28 +10,31 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: install-packages
+          name: Install Dependencies
           command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          name: Save Yarn Package cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ./node_modules
+            - .yarn/cache
+            - .yarn/unplugged
       - run:
-          name: build
+          name: Build
           command: yarn build
       - run:
-          name: tsc
+          name: Check Typescript Errors
           command: yarn tsc
       - run:
-          name: lint
+          name: Check Linting Errors
           command: yarn lint
       - run:
-          name: test
+          name: Run Tests
           command: yarn test
       - run:
-          name: code-coverage
+          name: Create Code Coverage
           command: yarn test -- --coverage
   build-e2e:
     docker:
@@ -39,19 +42,22 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          name: Restore Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: install-packages
+          name: Install Dependencies
           command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+          name: Save Yarn Package cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ./node_modules
+            - .yarn/cache
+            - .yarn/unplugged
       - run:
-          name: build
+          name: Build
           command: yarn build
       - run:
-          name: e2e
+          name: Run E2E Tests
           command: yarn cy:ci
 
 workflows:
