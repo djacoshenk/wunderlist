@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Footer from 'pages/HomePage/Footer/Footer';
 import Header from 'pages/HomePage/Header/Header';
@@ -11,10 +11,8 @@ import RestaurantSearchBar from 'shared/RestaurantSearchBar/RestaurantSearchBar'
 import UserLoginRegisterBanner from 'shared/UserLoginRegisterBanner/UserLoginRegisterBanner';
 import { RootState } from 'store/store';
 
-const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-
 export default function HomePage() {
-  const { isLoading } = useTypedSelector((state) => state.loadingStatus);
+  const { isLoading } = useSelector((state: RootState) => state.loadingStatus);
 
   return (
     <Fragment>
