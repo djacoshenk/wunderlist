@@ -14,13 +14,13 @@ describe('sort by button', () => {
 
     cy.fetchSearchResults();
 
-    cy.findByRole('button', { name: /best match/i }).click();
+    cy.findByRole('button', { name: /sort by/i }).click();
 
     cy.findByRole('option', { name: /rating/i }).click();
 
     cy.wait('@sortByRatingResults');
 
-    cy.findByRole('button', { name: /rating/i }).click();
+    cy.findByRole('button', { name: /sort by/i }).click();
 
     cy.findByRole('option', { name: /review count/i }).click();
 
