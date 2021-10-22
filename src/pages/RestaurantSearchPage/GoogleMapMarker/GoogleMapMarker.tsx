@@ -1,4 +1,4 @@
-import { useSelector, useDispatch, TypedUseSelectorHook } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import 'pages/RestaurantSearchPage/GoogleMapMarker/GoogleMapMarker.scss';
@@ -13,8 +13,6 @@ type Props = {
   };
 };
 
-const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-
 const mapIdIconStyles = {
   color: '#333',
   transform: 'translateY(-7px)',
@@ -25,7 +23,7 @@ const mapIdTextStyles = {
 };
 
 export default function GoogleMapMarker({ id, place }: Props): JSX.Element {
-  const { mapId } = useTypedSelector((state) => state.mapId);
+  const { mapId } = useSelector((state: RootState) => state.mapId);
   const dispatch = useDispatch();
 
   return (
