@@ -10,49 +10,49 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: install-packages
-          command: npm install
+          command: yarn install
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
       - run:
           name: build
-          command: npm run build
+          command: yarn build
       - run:
           name: tsc
-          command: npm run tsc
+          command: yarn tsc
       - run:
           name: lint
-          command: npm run lint
+          command: yarn lint
       - run:
           name: test
-          command: npm run test
+          command: yarn test
       - run:
           name: code-coverage
-          command: npm run test -- --coverage
+          command: yarn test -- --coverage
   build-e2e:
     docker:
       - image: cypress/base:14
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: install-packages
           command: npm install
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
       - run:
           name: build
-          command: npm run build
+          command: yarn build
       - run:
           name: e2e
-          command: npm run test:e2e:run
+          command: yarn cy:ci
 
 workflows:
   build-test:
