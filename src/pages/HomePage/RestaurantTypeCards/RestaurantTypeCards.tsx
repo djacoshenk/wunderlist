@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,10 +13,8 @@ import styles from 'pages/HomePage/RestaurantTypeCards/RestaurantTypeCards.modul
 import { setLocationUrl } from 'reducers/locationUrlReducer';
 import { RootState } from 'store/store';
 
-const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-
 export default function RestaurantTypeCards() {
-  const { locationUrl } = useTypedSelector((state) => state.location);
+  const { locationUrl } = useSelector((state: RootState) => state.location);
   const dispatch = useDispatch();
   const [error, setError] = useState('');
 
