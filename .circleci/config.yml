@@ -42,7 +42,7 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: install-packages
-          command: npm install
+          command: yarn install
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
