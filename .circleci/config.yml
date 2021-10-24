@@ -37,7 +37,7 @@ jobs:
           command: yarn test -- --coverage
   build-e2e:
     docker:
-      - image: cypress/base:14.15.3
+      - image: cypress/base:14.15.0
     steps:
       - checkout
       - restore_cache:
